@@ -1,0 +1,10 @@
+{
+  "stepAssemblies": [
+    {
+      "assembly": "AppCore.SpecFlow"
+    }
+  ],
+  "bindingCulture": {
+    "name": "en-US"
+  }
+}
