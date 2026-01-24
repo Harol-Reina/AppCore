@@ -1,0 +1,120 @@
+name: Feature Request
+description: Suggest a new feature for AppCore
+title: "[FEATURE] "
+labels: ["enhancement", "needs-discussion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new feature! Please provide detailed information about your request.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Description
+      description: Is your feature request related to a problem? Please describe.
+      placeholder: I'm frustrated when...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like to see
+      placeholder: I would like AppCore to...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Considered Alternatives
+      description: Describe alternatives you've considered
+      placeholder: I've also considered...
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component Area
+      description: Which component area does this feature relate to?
+      options:
+        - Repository Pattern
+        - Response Wrappers
+        - Exception Handling
+        - Dependency Injection
+        - Validation
+        - Authentication
+        - Logging
+        - Testing Framework
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How important is this feature to you?
+      options:
+        - Low - Nice to have
+        - Medium - Would be helpful
+        - High - Important for my use case
+        - Critical - Blocking my work
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: Use Cases
+      description: Describe specific use cases where this feature would be beneficial
+      placeholder: |
+        This feature would be useful when:
+        1. Working with...
+        2. Implementing...
+        3. Testing...
+
+  - type: textarea
+    id: api-design
+    attributes:
+      label: Proposed API Design
+      description: If applicable, describe how the API should look
+      render: csharp
+      placeholder: |
+        // Example API design
+        public interface INewFeature
+        {
+            Task<Result> DoSomethingAsync();
+        }
+
+  - type: textarea
+    id: breaking-changes
+    attributes:
+      label: Breaking Changes
+      description: Would this feature introduce any breaking changes?
+      placeholder: This feature would/would not introduce breaking changes because...
+
+  - type: checkboxes
+    id: implementation
+    attributes:
+      label: Implementation Willingness
+      description: Are you willing to help implement this feature?
+      options:
+        - label: I would be willing to submit a PR for this feature
+        - label: I would be willing to help with testing
+        - label: I would be willing to help with documentation
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm the following
+      options:
+        - label: I have searched for existing feature requests and this is not a duplicate
+          required: true
+        - label: This feature aligns with AppCore's Clean Architecture principles
+          required: true
+        - label: I have considered backward compatibility implications
+          required: true

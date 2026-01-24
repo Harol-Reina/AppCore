@@ -1,0 +1,275 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [ published ]
+
+env:
+  DOTNET_VERSION: '10.0.x'
+  BUILD_CONFIGURATION: Release
+
+jobs:
+  # Job 1: Build and Test
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build solution
+      run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+    
+    - name: Run unit tests
+      run: |
+        dotnet test tests/AppCore.UnitTests \
+          --configuration ${{ env.BUILD_CONFIGURATION }} \
+          --no-build \
+          --logger "trx;LogFileName=unit-tests.trx" \
+          --collect:"XPlat Code Coverage" \
+          --results-directory ./TestResults
+    
+    - name: Run SpecFlow tests
+      run: |
+        dotnet test tests/AppCore.SpecFlow \
+          --configuration ${{ env.BUILD_CONFIGURATION }} \
+          --no-build \
+          --logger "trx;LogFileName=specflow-tests.trx" \
+          --results-directory ./TestResults
+    
+    - name: Generate code coverage report
+      run: |
+        dotnet tool install --global dotnet-reportgenerator-globaltool
+        reportgenerator \
+          "-reports:./TestResults/**/coverage.cobertura.xml" \
+          "-targetdir:./TestResults/Coverage" \
+          "-reporttypes:Html;Cobertura"
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: ./TestResults/**/*.trx
+    
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: coverage-report
+        path: ./TestResults/Coverage/
+    
+    - name: Code Coverage Summary
+      run: |
+        COVERAGE_PERCENTAGE=$(grep -oPm1 'line-rate="\K[^"]*' ./TestResults/Coverage/Cobertura.xml | awk '{printf "%.1f", $1 * 100}')
+        echo "Code Coverage: ${COVERAGE_PERCENTAGE}%"
+        if (( $(echo "${COVERAGE_PERCENTAGE} < 80" | bc -l) )); then
+          echo "❌ Code coverage is below 80% threshold"
+          exit 1
+        else
+          echo "✅ Code coverage meets 80% threshold"
+        fi
+
+  # Job 2: Code Quality Analysis
+  code-quality:
+    name: Code Quality Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: Install dotnet format
+      run: dotnet tool install --global dotnet-format
+    
+    - name: Check code formatting
+      run: |
+        dotnet format --verify-no-changes --verbosity diagnostic
+    
+    - name: Install security scanner
+      run: dotnet tool install --global security-scan
+    
+    - name: Run security analysis
+      run: |
+        security-scan --project AppCore.sln --output security-report.json
+      continue-on-error: true
+    
+    - name: Upload security report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: security-report
+        path: security-report.json
+
+  # Job 3: Package Creation
+  package:
+    name: Create Package
+    runs-on: ubuntu-latest
+    needs: [build-and-test, code-quality]
+    if: github.event_name == 'push' || github.event_name == 'release'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: Install MinVer
+      run: dotnet tool install --global minver-cli
+    
+    - name: Calculate version
+      id: version
+      run: |
+        VERSION=$(minver -t v)
+        echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+        echo "Calculated version: $VERSION"
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build for packaging
+      run: |
+        dotnet build src/AppCore/AppCore.csproj \
+          --configuration ${{ env.BUILD_CONFIGURATION }} \
+          -p:Version=${{ steps.version.outputs.VERSION }} \
+          -p:AssemblyVersion=${{ steps.version.outputs.VERSION }} \
+          -p:FileVersion=${{ steps.version.outputs.VERSION }}
+    
+    - name: Create NuGet package
+      run: |
+        dotnet pack src/AppCore/AppCore.csproj \
+          --configuration ${{ env.BUILD_CONFIGURATION }} \
+          --no-build \
+          --output ./packages \
+          -p:PackageVersion=${{ steps.version.outputs.VERSION }} \
+          -p:SymbolPackageFormat=snupkg
+    
+    - name: Upload package artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: nuget-packages
+        path: ./packages/*.nupkg
+    
+    - name: Upload symbol packages
+      uses: actions/upload-artifact@v4
+      with:
+        name: symbol-packages
+        path: ./packages/*.snupkg
+
+  # Job 4: Preview Deploy (for develop branch)
+  deploy-preview:
+    name: Deploy to GitHub Packages (Preview)
+    runs-on: ubuntu-latest
+    needs: package
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    environment: preview
+    
+    steps:
+    - name: Download package artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: nuget-packages
+        path: ./packages
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: Publish to GitHub Packages
+      run: |
+        dotnet nuget push "./packages/*.nupkg" \
+          --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" \
+          --api-key ${{ secrets.GITHUB_TOKEN }}
+
+  # Job 5: Production Deploy (for releases)
+  deploy-production:
+    name: Deploy to NuGet.org
+    runs-on: ubuntu-latest
+    needs: package
+    if: github.event_name == 'release'
+    environment: production
+    
+    steps:
+    - name: Download package artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: nuget-packages
+        path: ./packages
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: Publish to NuGet.org
+      run: |
+        dotnet nuget push "./packages/*.nupkg" \
+          --source https://api.nuget.org/v3/index.json \
+          --api-key ${{ secrets.NUGET_API_KEY }}
+
+  # Job 6: Update Documentation
+  update-docs:
+    name: Update Documentation
+    runs-on: ubuntu-latest
+    needs: [build-and-test]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: Generate API documentation
+      run: |
+        dotnet tool install --global DocFX.Console
+        # Configure and run DocFX if documentation generation is needed
+        # docfx docs/docfx.json
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/_site
