@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <Include>[AppCore]*</Include>
+          <Exclude>[AppCore]AppCore.Infrastructure.Data.*.DAOs.*</Exclude>
+          <Exclude>[AppCore]AppCore.Infrastructure.Data.Interceptors.*</Exclude>
+          <Exclude>[AppCore]AppCore.Infrastructure.Converters.*</Exclude>
+          <Exclude>[*.Tests]*</Exclude>
+          <Exclude>[*.SpecFlow]*</Exclude>
+          <Exclude>[*]*.Generated.*</Exclude>
+          <Exclude>[*]*Migrations*</Exclude>
+          <ExcludeByFile>**/*.generated.cs</ExcludeByFile>
+          <ExcludeByFile>**/Migrations/*.cs</ExcludeByFile>
+          <ExcludeByFile>**/Program.cs</ExcludeByFile>
+          <ExcludeByFile>**/Startup.cs</ExcludeByFile>
+          <ExcludeByAttribute>Obsolete</ExcludeByAttribute>
+          <ExcludeByAttribute>GeneratedCodeAttribute</ExcludeByAttribute>
+          <ExcludeByAttribute>CompilerGeneratedAttribute</ExcludeByAttribute>
+          <ExcludeByAttribute>ExcludeFromCodeCoverage</ExcludeByAttribute>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
