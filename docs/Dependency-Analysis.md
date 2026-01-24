@@ -138,13 +138,13 @@
 
 ### Dependencias Opcionales (via feature packages)
 ```xml
-<!-- OrionSoft.AppCore.EntityFramework -->
+<!-- AppCore.EntityFramework -->
 <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.2" />
 
-<!-- OrionSoft.AppCore.Serilog -->
+<!-- AppCore.Serilog -->
 <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
 
-<!-- OrionSoft.AppCore.Swagger -->
+<!-- AppCore.Swagger -->
 <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
 ```
 

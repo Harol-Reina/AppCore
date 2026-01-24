@@ -84,7 +84,7 @@ internal class SerializerException
 
 **Mitigación**: 
 - Agregar `Npgsql.EntityFrameworkCore.PostgreSQL` explícitamente
-- Crear package opcional `OrionSoft.AppCore.PostgreSQL`
+- Crear package opcional `AppCore.PostgreSQL`
 
 #### Swagger/OpenAPI
 ```csharp

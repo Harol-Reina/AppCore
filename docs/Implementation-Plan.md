@@ -133,7 +133,7 @@
 
 #### Semana 9: Migración App.sln
 - [ ] Remover ProjectReference a AppCore
-- [ ] Agregar PackageReference a OrionSoft.AppCore
+- [ ] Agregar PackageReference a AppCore
 - [ ] Validar que toda funcionalidad sigue funcionando
 - [ ] Crear tests de integración end-to-end
 
