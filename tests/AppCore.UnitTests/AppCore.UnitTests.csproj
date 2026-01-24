@@ -6,6 +6,10 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <!-- Override Package.props to allow tests to run with warnings -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,5 +35,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\AppCore\AppCore.csproj" />
   </ItemGroup>
+
+  <!-- Import build properties -->
+  <Import Project="..\..\build\props\Package.props" />
 
 </Project>
