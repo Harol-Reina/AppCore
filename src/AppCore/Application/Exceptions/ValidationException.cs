@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,7 +31,7 @@ public class ValidationException : CustomException {
                                [CallerLineNumber] int sourceLineNumber = 0) 
         : base(new DictionaryError("VAL-003", errorMessage), memberName, sourceFilePath, sourceLineNumber) {
         Errors = new Dictionary<string, string[]> {
-            { propertyName, new[] { errorMessage } }
+            { propertyName, [errorMessage] }
         };
     }
 

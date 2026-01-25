@@ -29,10 +29,10 @@ internal abstract class GenericRepository<E, I, D>(
     private readonly IMappingService<D, E> _daoToEntity = daoToEntity;
     protected DbSet<D> DbSet => _dbContext.Set<D>();
 
-    public async Task<List<E>?> GetAllAsync(params Expression<Func<E, object>>[]? includes) {
+    public async Task<List<E>?> GetAllAsync(params IEnumerable<Expression<Func<E, object>>>? includes) {
         IQueryable<D> query = DbSet.AsNoTracking();;
         try {
-            if (includes is { Length: > 0 }) {
+            if (includes is not null) {
                 foreach (var include in includes) {
                     var daoExpression = ConvertExpression(include);
                     query = query.Include(daoExpression);
@@ -46,11 +46,11 @@ internal abstract class GenericRepository<E, I, D>(
         }
     }
 
-    public async Task<E?> GetByIdAsync(I id, params Expression<Func<E, object>>[]? includes) {
+    public async Task<E?> GetByIdAsync(I id, params IEnumerable<Expression<Func<E, object>>>? includes) {
         if (id is null) throw new ArgumentNullException(nameof(id));
         try {
             IQueryable<D> query = DbSet.AsNoTracking();
-            if (includes is { Length: > 0 }) {
+            if (includes is not null) {
                 foreach (var include in includes) {
                     var daoExpression = ConvertExpression(include);
                     query = query.Include(daoExpression);
@@ -116,12 +116,12 @@ internal abstract class GenericRepository<E, I, D>(
         }
     }
 
-    public async Task<PaginationDto<E>> GetPagedAsync(int page, int pageSize, params Expression<Func<E, object>>[]? includes) {
+    public async Task<PaginationDto<E>> GetPagedAsync(int page, int pageSize, params IEnumerable<Expression<Func<E, object>>>? includes) {
         try {
             var skip = (page - 1) * pageSize;
             var query = DbSet.AsQueryable();
 
-            if (includes is { Length: > 0 }) {
+            if (includes is not null) {
                 foreach (var include in includes) {
                     var daoExpression = ConvertExpression(include);
                     query = query.Include(daoExpression);

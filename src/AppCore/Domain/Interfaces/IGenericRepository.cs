@@ -1,4 +1,4 @@
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using AppCore.Application.DTOs;
 using AppCore.Domain.Common;
 
@@ -15,7 +15,7 @@ public interface IGenericRepository<E, I> where E : BaseEntity<I> {
     /// </summary>
     /// <param name="includes">Expresiones lambda para incluir navegaciones relacionadas.</param>
     /// <returns>Una tarea que representa la operación asincrónica. El resultado de la tarea contiene una lista de entidades.</returns>
-    Task<List<E>?> GetAllAsync(params Expression<Func<E, object>>[]? includes);
+    Task<List<E>?> GetAllAsync(params IEnumerable<Expression<Func<E, object>>>? includes);
 
     /// <summary>
     /// Recupera una entidad por su identificador de forma asincrónica.
@@ -23,7 +23,7 @@ public interface IGenericRepository<E, I> where E : BaseEntity<I> {
     /// <param name="id">El identificador de la entidad.</param>
     /// <param name="includes">Expresiones lambda para incluir navegaciones relacionadas.</param>
     /// <returns>Una tarea que representa la operación asincrónica. El resultado de la tarea contiene la entidad si se encuentra; de lo contrario, null.</returns>
-    Task<E?> GetByIdAsync(I id, params Expression<Func<E, object>>[]? includes);
+    Task<E?> GetByIdAsync(I id, params IEnumerable<Expression<Func<E, object>>>? includes);
 
     /// <summary>
     /// Agrega una nueva entidad de forma asincrónica.
@@ -53,5 +53,5 @@ public interface IGenericRepository<E, I> where E : BaseEntity<I> {
     /// <param name="pageSize">El tamaño de la página.</param>
     /// <param name="includes">Expresiones lambda para incluir navegaciones relacionadas.</param>
     /// <returns>Una tarea que representa la operación asincrónica. El resultado de la tarea contiene una lista de entidades.</returns>
-    Task<PaginationDto<E>> GetPagedAsync(int page, int pageSize, params Expression<Func<E, object>>[]? includes);
+    Task<PaginationDto<E>> GetPagedAsync(int page, int pageSize, params IEnumerable<Expression<Func<E, object>>>? includes);
 }
