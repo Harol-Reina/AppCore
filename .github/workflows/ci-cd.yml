@@ -44,21 +44,39 @@ jobs:
       run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
     
     - name: Run unit tests
+      id: unit-tests
       run: |
+        echo "::group::Running unit tests"
         dotnet test tests/AppCore.UnitTests \
           --configuration ${{ env.BUILD_CONFIGURATION }} \
           --no-build \
           --logger "trx;LogFileName=unit-tests.trx" \
           --collect:"XPlat Code Coverage" \
           --results-directory ./TestResults
+        EXIT_CODE=$?
+        echo "::endgroup::"
+        if [ $EXIT_CODE -ne 0 ]; then
+          echo "::error title=Unit Tests Failed::Unit tests failed with exit code $EXIT_CODE"
+          exit $EXIT_CODE
+        fi
+        echo "::notice title=Unit Tests Passed::All unit tests passed successfully"
     
     - name: Run SpecFlow tests
+      id: specflow-tests
       run: |
+        echo "::group::Running SpecFlow tests"
         dotnet test tests/AppCore.SpecFlow \
           --configuration ${{ env.BUILD_CONFIGURATION }} \
           --no-build \
           --logger "trx;LogFileName=specflow-tests.trx" \
           --results-directory ./TestResults
+        EXIT_CODE=$?
+        echo "::endgroup::"
+        if [ $EXIT_CODE -ne 0 ]; then
+          echo "::error title=SpecFlow Tests Failed::SpecFlow tests failed with exit code $EXIT_CODE"
+          exit $EXIT_CODE
+        fi
+        echo "::notice title=SpecFlow Tests Passed::All SpecFlow tests passed successfully"
     
     - name: Generate code coverage report
       run: |
@@ -83,14 +101,29 @@ jobs:
         path: ./TestResults/Coverage/
     
     - name: Code Coverage Summary
+      id: coverage-gate
       run: |
+        echo "::group::Validating code coverage"
+        if [ ! -f ./TestResults/Coverage/Cobertura.xml ]; then
+          echo "::error title=Coverage Report Missing::Cobertura.xml not found in ./TestResults/Coverage/"
+          exit 1
+        fi
+        
         COVERAGE_PERCENTAGE=$(grep -oPm1 'line-rate="\K[^"]*' ./TestResults/Coverage/Cobertura.xml | awk '{printf "%.1f", $1 * 100}')
-        echo "Code Coverage: ${COVERAGE_PERCENTAGE}%"
+        
+        if [ -z "$COVERAGE_PERCENTAGE" ]; then
+          echo "::error title=Coverage Parse Failed::Could not parse coverage percentage from Cobertura.xml"
+          exit 1
+        fi
+        
+        echo "::endgroup::"
+        echo "📊 Code Coverage: ${COVERAGE_PERCENTAGE}%"
+        
         if (( $(echo "${COVERAGE_PERCENTAGE} < 80" | bc -l) )); then
-          echo "❌ Code coverage is below 80% threshold"
+          echo "::error title=Coverage Below Threshold::Code coverage ${COVERAGE_PERCENTAGE}% is below 80% threshold"
           exit 1
         else
-          echo "✅ Code coverage meets 80% threshold"
+          echo "::notice title=Coverage Gate Passed::Code coverage ${COVERAGE_PERCENTAGE}% meets 80% threshold"
         fi
 
   # Job 2: Code Quality Analysis
@@ -113,16 +146,37 @@ jobs:
       run: dotnet tool install --global dotnet-format
     
     - name: Check code formatting
+      id: format-check
       run: |
+        echo "::group::Checking code formatting"
         dotnet format --verify-no-changes --verbosity diagnostic
+        EXIT_CODE=$?
+        echo "::endgroup::"
+        if [ $EXIT_CODE -ne 0 ]; then
+          echo "::error title=Code Formatting Failed::Code does not meet formatting standards. Run 'dotnet format' locally."
+          exit $EXIT_CODE
+        fi
+        echo "::notice title=Format Check Passed::Code formatting is correct"
     
     - name: Install security scanner
       run: dotnet tool install --global security-scan
     
     - name: Run security analysis
+      id: security-scan
       run: |
+        echo "::group::Running security analysis"
         security-scan --project AppCore.sln --output security-report.json
-      continue-on-error: true
+        EXIT_CODE=$?
+        echo "::endgroup::"
+        
+        if [ $EXIT_CODE -ne 0 ]; then
+          echo "::error title=Security Issues Detected::Security scan found critical issues. Check security-report.json artifact."
+          # Allow scan to fail but report it
+          echo "SECURITY_FAILED=true" >> $GITHUB_ENV
+        else
+          echo "::notice title=Security Scan Passed::No critical security issues detected"
+        fi
+      continue-on-error: false
     
     - name: Upload security report
       uses: actions/upload-artifact@v4
