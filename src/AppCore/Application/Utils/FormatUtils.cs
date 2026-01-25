@@ -1,8 +1,8 @@
-using AppCore.Application.Exceptions;
+﻿using AppCore.Application.Exceptions;
 
 namespace AppCore.Application.Utils;
 
-public static class FormatUtils {
+internal static class FormatUtils {
     public static Guid ParseGuid(string? input, string parameterName = "Id") {
         if (Guid.TryParse(input, out var parsed))
             return parsed;

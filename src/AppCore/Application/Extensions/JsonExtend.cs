@@ -1,18 +1,23 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using AppCore.Application.Exceptions;
+using AppCore.Application.Serialization;
 
 namespace AppCore.Application.Extensions;
 
+/// <summary>
+/// AOT-compatible JSON serialization extensions using source-generated serialization context.
+/// Provides efficient JSON operations without runtime reflection.
+/// </summary>
 public static class JsonExtend {
 
     /// <summary>
-    /// Converts an object to a JsonDocument.
+    /// Converts an object to a JsonDocument using AOT-compatible serialization.
     /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    /// <exception cref="SerializerException"></exception>
+    /// <param name="value">The object to convert</param>
+    /// <returns>A JsonDocument representation of the object</returns>
+    /// <exception cref="SerializerException">Thrown when serialization fails</exception>
     public static JsonDocument? ToJsonDocument(object? value) {
         if (value == null) return null;
         try {
@@ -42,48 +47,63 @@ public static class JsonExtend {
         return JsonDocument.Parse(wrapped);
     }
 
+    /// <summary>
+    /// Converts a JsonDocument to a strongly-typed object using AOT-compatible deserialization.
+    /// </summary>
+    /// <typeparam name="T">The type to deserialize to</typeparam>
+    /// <param name="jsonDocument">The JsonDocument to convert</param>
+    /// <returns>The deserialized object</returns>
+    /// <exception cref="ArgumentException">Thrown when the JSON is invalid</exception>
     public static T FromJsonDocument<T>(this JsonDocument jsonDocument) {
         try {
             string jsonString = jsonDocument.RootElement.GetRawText();
-            return JsonSerializer.Deserialize<T>(jsonString, s_readOptions)!;
+            return JsonSerializer.Deserialize<T>(jsonString, AppCoreJsonContext.Default.Options)!;
         } catch (JsonException) {
             throw new ArgumentException("Invalid JSON string.");
         }
     }
 
-    private static readonly JsonSerializerOptions s_writeOptions = new() {
-        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        WriteIndented = true
-    };
 
-    private static readonly JsonSerializerOptions s_readOptions = new() {
-        PropertyNameCaseInsensitive = true,
-        Converters = {
-            new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
-        }
-    };
-
+    /// <summary>
+    /// Serializes an object to JSON using AOT-compatible source generation.
+    /// </summary>
+    /// <typeparam name="T">The type of object to serialize</typeparam>
+    /// <param name="value">The object to serialize</param>
+    /// <param name="memberName">The calling member name (automatically captured)</param>
+    /// <param name="sourceFilePath">The source file path (automatically captured)</param>
+    /// <param name="sourceLineNumber">The source line number (automatically captured)</param>
+    /// <returns>A JSON string representation of the object</returns>
+    /// <exception cref="SerializerException">Thrown when serialization fails</exception>
     public static string Serialize<T>(T value,
                                       [CallerMemberName] string memberName = "",
                                       [CallerFilePath] string sourceFilePath = "",
                                       [CallerLineNumber] int sourceLineNumber = 0) {
         try {
-            return JsonSerializer.Serialize(value, s_writeOptions);
+            // Use the AOT-compatible JsonSerializerContext for serialization
+            return JsonSerializer.Serialize(value, AppCoreJsonContext.Default.Options);
         } catch (Exception ex) {
             throw new SerializerException(ex, memberName, sourceFilePath, sourceLineNumber);
         }
-
     }
 
+    /// <summary>
+    /// Deserializes a JSON string to an object using AOT-compatible source generation.
+    /// </summary>
+    /// <typeparam name="T">The type to deserialize to</typeparam>
+    /// <param name="value">The JSON string to deserialize</param>
+    /// <param name="memberName">The calling member name (automatically captured)</param>
+    /// <param name="sourceFilePath">The source file path (automatically captured)</param>
+    /// <param name="sourceLineNumber">The source line number (automatically captured)</param>
+    /// <returns>The deserialized object</returns>
+    /// <exception cref="SerializerException">Thrown when deserialization fails</exception>
     public static T? Deserialize<T>(string value,
                                     [CallerMemberName] string memberName = "",
                                     [CallerFilePath] string sourceFilePath = "",
                                     [CallerLineNumber] int sourceLineNumber = 0) {
         if (string.IsNullOrWhiteSpace(value)) return default;
         try {
-            T? data = JsonSerializer.Deserialize<T>(value, s_readOptions);
-            return data;
+            // Use the AOT-compatible JsonSerializerContext for deserialization
+            return JsonSerializer.Deserialize<T>(value, AppCoreJsonContext.Default.Options);
         } catch (Exception ex) {
             throw new SerializerException(ex, memberName, sourceFilePath, sourceLineNumber);
         }
