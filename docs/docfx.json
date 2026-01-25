@@ -1,0 +1,50 @@
+{
+    "metadata": [
+        {
+            "src": [
+                {
+                    "files": [
+                        "AppCore/AppCore.csproj"
+                    ],
+                    "src": "../src"
+                }
+            ],
+            "dest": "api",
+            "disableGitFeatures": false,
+            "disableDefaultFilter": false
+        }
+    ],
+    "build": {
+        "content": [
+            {
+                "files": [
+                    "api/**.yml",
+                    "api/index.md"
+                ]
+            },
+            {
+                "files": [
+                    "**.md",
+                    "**.yml"
+                ],
+                "exclude": [
+                    "_site/**",
+                    "obj/**",
+                    "api/**.yml"
+                ]
+            }
+        ],
+        "resource": [
+            {
+                "files": [
+                    "images/**"
+                ]
+            }
+        ],
+        "dest": "_site",
+        "globalMetadata": {
+            "_appTitle": "AppCore Documentation",
+            "_enableSearch": true
+        }
+    }
+}
