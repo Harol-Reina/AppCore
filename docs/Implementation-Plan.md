@@ -288,6 +288,7 @@
 - [x] Configurar MinVer para versionado automático ✅
 - [x] Integrar versionado automático en pipeline CI ✅
 - [x] Implementar quality gates (tests, coverage, analysis) ✅
+- [x] **🔴 FIX: Tests de Unidad (JsonExtend y GenericRepository) reparados** ✅
 - [ ] **🔴 Migración completa a GitHub Packages (eliminar NuGet.org)**
 - [ ] **🔴 Configurar GitHub Packages como repositorio público**
 - [ ] **🔴 Agregar step de compilación NativeAOT en pipeline**
