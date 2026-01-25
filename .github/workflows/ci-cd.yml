@@ -157,27 +157,46 @@ jobs:
       run: |
         VERSION=$(minver -t v)
         echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
-        echo "Calculated version: $VERSION"
+        echo "::notice title=Package Version::Generated version: $VERSION"
+        echo "📦 Package version: $VERSION"
+    
+    - name: Validate version format
+      run: |
+        VERSION="${{ steps.version.outputs.VERSION }}"
+        if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.-]+)?$ ]]; then
+          echo "::error title=Invalid Version::Version '$VERSION' does not match semantic versioning format"
+          exit 1
+        fi
+        echo "✅ Version format validated: $VERSION"
     
     - name: Restore dependencies
       run: dotnet restore
     
     - name: Build for packaging
       run: |
+        VERSION="${{ steps.version.outputs.VERSION }}"
+        echo "::group::Building AppCore $VERSION"
         dotnet build src/AppCore/AppCore.csproj \
           --configuration ${{ env.BUILD_CONFIGURATION }} \
-          -p:Version=${{ steps.version.outputs.VERSION }} \
-          -p:AssemblyVersion=${{ steps.version.outputs.VERSION }} \
-          -p:FileVersion=${{ steps.version.outputs.VERSION }}
+          -p:Version=$VERSION \
+          -p:AssemblyVersion=$VERSION \
+          -p:FileVersion=$VERSION
+        echo "::endgroup::"
+        echo "✅ Build completed with version: $VERSION"
     
     - name: Create NuGet package
       run: |
+        VERSION="${{ steps.version.outputs.VERSION }}"
+        echo "::group::Packaging AppCore $VERSION"
         dotnet pack src/AppCore/AppCore.csproj \
           --configuration ${{ env.BUILD_CONFIGURATION }} \
           --no-build \
           --output ./packages \
-          -p:PackageVersion=${{ steps.version.outputs.VERSION }} \
+          -p:PackageVersion=$VERSION \
           -p:SymbolPackageFormat=snupkg
+        echo "::endgroup::"
+        echo "✅ Package created: AppCore.$VERSION.nupkg"
+        ls -lh ./packages/
     
     - name: Upload package artifacts
       uses: actions/upload-artifact@v4
@@ -190,6 +209,9 @@ jobs:
       with:
         name: symbol-packages
         path: ./packages/*.snupkg
+    
+    outputs:
+      package-version: ${{ steps.version.outputs.VERSION }}
 
   # Job 4: Preview Deploy (for develop branch)
   deploy-preview:
