@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace AppCore.Application.Exceptions;
 
-public class HttpBaseException : CustomException {
+internal class HttpBaseException : CustomException {
     public int StatusCode { get; }
     
     public HttpBaseException(string message, int statusCode,

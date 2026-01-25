@@ -1,9 +1,9 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
 
-public class ApiDBException : Exception {
+internal class ApiDBException : Exception {
     readonly MessageLog mensaje;
     private string? InnerMessage;
     public ApiDBException(Exception ex,

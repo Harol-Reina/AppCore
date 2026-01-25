@@ -1,4 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Runtime.CompilerServices;
 using AppCore.Application.Exceptions;
 using AppCore.Application.Interfaces;
@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace AppCore.Infrastructure.Services;
 
-public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService {
+internal class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService {
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor
             ?? throw new ArgumentNullException(nameof(httpContextAccessor));
 

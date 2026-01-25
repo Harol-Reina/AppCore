@@ -1,8 +1,8 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
-public class ApiHttpException : Exception {
+internal class ApiHttpException : Exception {
     public MessageLog MessageLog { get; }
 
     public ApiHttpException(Exception ex,

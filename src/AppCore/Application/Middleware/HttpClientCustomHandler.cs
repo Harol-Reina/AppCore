@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using AppCore.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
 using AppCore.Application.Extensions;
 
 namespace AppCore.Application.Middleware;
 
-public class HttpClientCustomHandler(RequestDelegate next) {
+internal class HttpClientCustomHandler(RequestDelegate next) {
 
     private readonly RequestDelegate _next = next;
 
@@ -53,14 +53,14 @@ public class HttpClientCustomHandler(RequestDelegate next) {
                 message = JsonExtend.Serialize(new {
                     message = notFoundException.Message,
                 });
-                httpContext.Response.StatusCode = notFoundException.StatusCode;
+                httpContext.Response.StatusCode = 404;
                 break;
 
             case BadRequestException badRequestException:
                 message = JsonExtend.Serialize(new {
                     message = badRequestException.Message,
                 });
-                httpContext.Response.StatusCode = badRequestException.StatusCode;
+                httpContext.Response.StatusCode = 400;
                 break;
 
             case AuthenticationException auth:
@@ -97,7 +97,7 @@ public class HttpClientCustomHandler(RequestDelegate next) {
             case ApiHttpException apiHttpException:
                 message = JsonExtend.Serialize(new ProblemDetails {
                     Title = apiHttpException.Message,
-                    Detail = apiHttpException.MessageLog.Message
+                    Detail = apiHttpException.MessageLog.Message?.ToString()
                 });
                 httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
                 break;

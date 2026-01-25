@@ -1,9 +1,9 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
 
-public class SerializerException : Exception {
+internal class SerializerException : Exception {
     public MessageLog MessageLog { get; }
     private string? InnerMessage;
     public SerializerException(Exception ex,
