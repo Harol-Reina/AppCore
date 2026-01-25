@@ -54,7 +54,7 @@ public class NotFoundExceptionTests
 
         // Assert
         exception.MessageLog.Tipo.Should().Be("NotFoundException");
-        Assert.Equal(message, exception.MessageLog.Message);
+        ((DictionaryError)exception.MessageLog.Message).Message.Should().Be(message);
         exception.MessageLog.Metodo.Should().NotBeNullOrEmpty();
         exception.MessageLog.Path.Should().NotBeNullOrEmpty();
     }
