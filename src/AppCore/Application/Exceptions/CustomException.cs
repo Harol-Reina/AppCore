@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Text.Json;
 using AppCore.Application.Extensions;
 using AppCore.Application.Wrappers;
@@ -10,7 +10,7 @@ public class CustomException : Exception {
     public CustomException(DictionaryError error,
                               [CallerMemberName] string memberName = "",
                               [CallerFilePath] string sourceFilePath = "",
-                              [CallerLineNumber] int sourceLineNumber = 0) : base("An error occurred while processing your request.") {
+                              [CallerLineNumber] int sourceLineNumber = 0) : base(error.Message) {
         MessageLog = new MessageLog {
             Tipo = GetType().Name,
             Source = base.Source,
@@ -24,10 +24,12 @@ public class CustomException : Exception {
 }
 
 public class DictionaryError {
-    public string Code { get; set; }
-    public string Message { get; set; }
+    public string Code { get; set; } = string.Empty;
+    public string Message { get; set; } = string.Empty;
     public JsonDocument? ProviderMessage { get; set; }
     public dynamic? Exception { get; set; }
+
+    public DictionaryError() { }
 
     public DictionaryError(string code, string message, string? providerMessage = null, dynamic? exception = null) {
         Code = code;
