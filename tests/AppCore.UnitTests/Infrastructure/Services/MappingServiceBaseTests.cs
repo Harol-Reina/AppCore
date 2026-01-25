@@ -1,4 +1,4 @@
-using AppCore.Application.Exceptions;
+﻿using AppCore.Application.Exceptions;
 using AppCore.Infrastructure.Services;
 using FluentAssertions;
 using Xunit;

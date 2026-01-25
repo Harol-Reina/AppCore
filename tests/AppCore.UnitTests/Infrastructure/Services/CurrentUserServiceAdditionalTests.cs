@@ -1,4 +1,4 @@
-using AppCore.Application.Interfaces;
+﻿using AppCore.Application.Interfaces;
 using AppCore.Infrastructure.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;

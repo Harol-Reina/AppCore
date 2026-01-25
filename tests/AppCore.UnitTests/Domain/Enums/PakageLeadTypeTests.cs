@@ -1,4 +1,4 @@
-using AppCore.Domain.Enums;
+﻿using AppCore.Domain.Enums;
 using FluentAssertions;
 using System.Text.Json;
 using Xunit;
