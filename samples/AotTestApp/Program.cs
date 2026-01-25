@@ -1,6 +1,9 @@
 ﻿using System.Diagnostics;
-using AppCore.Application.Wrappers;
+using AotTestApp.Tests;
 using AppCore.Application.DTOs;
+using AppCore.Application.Wrappers;
+using AppCore.Application.Serialization;
+using System.Text.Json;
 
 namespace AotTestApp;
 
@@ -8,62 +11,142 @@ class Program
 {
     static void Main(string[] args)
     {
-        if (args.Length > 0 && args[0] == "benchmark")
+        // Parse command-line arguments
+        var runBenchmark = args.Contains("benchmark") || args.Contains("--benchmark") || args.Contains("-b");
+        var runTests = args.Contains("--tests") || args.Contains("-t");
+        var runAll = args.Length == 0 || args.Contains("--all") || args.Contains("-a");
+
+        Console.WriteLine("╔═══════════════════════════════════════════════════════════╗");
+        Console.WriteLine("║       AppCore NativeAOT Validation Test Suite            ║");
+        Console.WriteLine("╚═══════════════════════════════════════════════════════════╝");
+        Console.WriteLine();
+
+        int exitCode = 0;
+
+        if (runTests || runAll)
         {
-            RunBenchmarks();
-            return;
+            Console.WriteLine("Running comprehensive AOT compatibility tests...\n");
+
+            try
+            {
+                // Run all test suites
+                ExceptionTests.RunAll();
+                JsonSerializationTests.RunAll();
+                CollectionTests.RunAll();
+
+                // Basic integration tests
+                RunBasicIntegrationTests();
+
+                Console.WriteLine("═══════════════════════════════════════════════════════════");
+                Console.WriteLine("  ✅ ALL TESTS PASSED");
+                Console.WriteLine("═══════════════════════════════════════════════════════════\n");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("\n═══════════════════════════════════════════════════════════");
+                Console.WriteLine("  ❌ TEST FAILURE");
+                Console.WriteLine("═══════════════════════════════════════════════════════════");
+                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Stack: {ex.StackTrace}");
+                exitCode = 1;
+            }
         }
 
-        Console.WriteLine("AppCore NativeAOT Compatibility Test");
-        Console.WriteLine("=====================================\n");
+        if (runBenchmark && exitCode == 0)
+        {
+            Console.WriteLine("Running performance benchmarks...\n");
+            RunBenchmarks();
+        }
 
-        // Test 1: Response wrapper
-        TestResponseWrapper();
+        if (exitCode == 0)
+        {
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║           Validation completed successfully!              ║");
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════╝");
+        }
 
-        // Test 2: Pagination
-        TestPagination();
+        Environment.Exit(exitCode);
+    }
 
-        // Test 3: Error handling
-        TestErrorHandling();
 
-        Console.WriteLine("\n✅ All tests completed successfully!");
-        Console.WriteLine("NativeAOT compilation is compatible with AppCore.");
+    static void RunBasicIntegrationTests()
+    {
+        Console.WriteLine("═══════════════════════════════════════════════════════════");
+        Console.WriteLine("  Basic Integration Tests");
+        Console.WriteLine("═══════════════════════════════════════════════════════════");
+
+        Console.Write("  • Response wrapper creation... ");
+        var successResponse = Response<string>.Success("Operation successful", "Test data");
+        var failureResponse = Response<int>.Failure("Operation failed");
+        if (successResponse.Message != "Operation successful" || failureResponse.Message != "Operation failed")
+        {
+            throw new Exception("Response wrapper state incorrect");
+        }
+        Console.WriteLine("✓");
+
+        Console.Write("  • PaginationDto with collection expression... ");
+        var pagination = new PaginationDto<string>
+        {
+            Count = 3,
+            Pages = 1,
+            Results = ["Item1", "Item2", "Item3"]
+        };
+        if (pagination.Count != 3 || pagination.Results.Count != 3)
+        {
+            throw new Exception("PaginationDto initialization failed");
+        }
+        Console.WriteLine("✓");
+
+        Console.Write("  • JSON serialization with AppCoreJsonContext... ");
+        var options = new JsonSerializerOptions
+        {
+            TypeInfoResolver = AppCoreJsonContext.Default
+        };
+        var json = JsonSerializer.Serialize(successResponse, options);
+        if (string.IsNullOrEmpty(json) || !json.Contains("Test data"))
+        {
+            throw new Exception("JSON serialization failed");
+        }
+        Console.WriteLine("✓");
+
+        Console.WriteLine("✅ All basic integration tests passed\n");
     }
 
     static void RunBenchmarks()
     {
         const int Iterations = 100000;
 
-        Console.WriteLine("AppCore Performance Benchmark (NativeAOT)");
-        Console.WriteLine("=========================================\n");
+        Console.WriteLine("═══════════════════════════════════════════════════════════");
+        Console.WriteLine("  AppCore Performance Benchmark (NativeAOT)");
+        Console.WriteLine("═══════════════════════════════════════════════════════════");
 
         // Warmup
-        Console.WriteLine("Warming up...");
+        Console.WriteLine("\n  Warming up...");
         RunResponseBenchmark(1000);
         RunPaginationBenchmark(1000);
         
-        Console.WriteLine("\nRunning benchmarks...\n");
+        Console.WriteLine("\n  Running benchmarks...\n");
 
         // Benchmark Response Wrapper
         var responseTime = RunResponseBenchmark(Iterations);
-        Console.WriteLine($"Response Wrapper: {Iterations:N0} iterations");
-        Console.WriteLine($"  Total Time: {responseTime.TotalMilliseconds:F2} ms");
-        Console.WriteLine($"  Per Operation: {responseTime.TotalMilliseconds / Iterations:F6} ms");
-        Console.WriteLine($"  Operations/sec: {Iterations / responseTime.TotalSeconds:N0}\n");
+        Console.WriteLine($"  Response Wrapper: {Iterations:N0} iterations");
+        Console.WriteLine($"    Total Time: {responseTime.TotalMilliseconds:F2} ms");
+        Console.WriteLine($"    Per Operation: {responseTime.TotalMilliseconds / Iterations:F6} ms");
+        Console.WriteLine($"    Operations/sec: {Iterations / responseTime.TotalSeconds:N0}\n");
 
         // Benchmark Pagination
         var paginationTime = RunPaginationBenchmark(Iterations);
-        Console.WriteLine($"Pagination: {Iterations:N0} iterations");
-        Console.WriteLine($"  Total Time: {paginationTime.TotalMilliseconds:F2} ms");
-        Console.WriteLine($"  Per Operation: {paginationTime.TotalMilliseconds / Iterations:F6} ms");
-        Console.WriteLine($"  Operations/sec: {Iterations / paginationTime.TotalSeconds:N0}\n");
+        Console.WriteLine($"  Pagination: {Iterations:N0} iterations");
+        Console.WriteLine($"    Total Time: {paginationTime.TotalMilliseconds:F2} ms");
+        Console.WriteLine($"    Per Operation: {paginationTime.TotalMilliseconds / Iterations:F6} ms");
+        Console.WriteLine($"    Operations/sec: {Iterations / paginationTime.TotalSeconds:N0}\n");
 
         // Memory stats
         var memory = GC.GetTotalMemory(true) / 1024.0 / 1024.0;
-        Console.WriteLine($"Memory Used: {memory:F2} MB");
-        Console.WriteLine($"GC Gen0 Collections: {GC.CollectionCount(0)}");
-        Console.WriteLine($"GC Gen1 Collections: {GC.CollectionCount(1)}");
-        Console.WriteLine($"GC Gen2 Collections: {GC.CollectionCount(2)}");
+        Console.WriteLine($"  Memory Used: {memory:F2} MB");
+        Console.WriteLine($"  GC Gen0 Collections: {GC.CollectionCount(0)}");
+        Console.WriteLine($"  GC Gen1 Collections: {GC.CollectionCount(1)}");
+        Console.WriteLine($"  GC Gen2 Collections: {GC.CollectionCount(2)}\n");
     }
 
     static TimeSpan RunResponseBenchmark(int iterations)
@@ -108,9 +191,10 @@ class Program
         return sw.Elapsed;
     }
 
+
     static void TestResponseWrapper()
     {
-        Console.WriteLine("Test 1: Response Wrapper");
+        Console.WriteLine("Legacy Test 1: Response Wrapper");
         
         var successResponse = Response<string>.Success("Test successful", "Hello from AppCore with NativeAOT!");
         Console.WriteLine($"  Message: {successResponse.Message}");
@@ -124,7 +208,7 @@ class Program
 
     static void TestPagination()
     {
-        Console.WriteLine("Test 2: Pagination");
+        Console.WriteLine("Legacy Test 2: Pagination");
         
         var paginationDto = new PaginationDto<string>
         {
@@ -142,7 +226,7 @@ class Program
 
     static void TestErrorHandling()
     {
-        Console.WriteLine("Test 3: Error Handling");
+        Console.WriteLine("Legacy Test 3: Error Handling");
         
         try
         {
