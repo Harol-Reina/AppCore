@@ -1,9 +1,9 @@
 namespace AppCore.Application.DTOs;
 
-public class LoginRequest {
+public class LoginRequest(string userName, string passWord) {
     /// <summary>Usuario</summary>
-    public string UserName { get; set; } = null!;
+    public string UserName { get; set; } = userName;
 
     /// <summary>Contraseña de acceso</summary>
-    public string PassWord { get; set; } = null!;
+    public string PassWord { get; set; } = passWord;
 }
