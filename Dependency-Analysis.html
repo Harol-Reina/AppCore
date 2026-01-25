@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>An&#225;lisis de Dependencias - AppCore | AppCore Documentation </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="An&#225;lisis de Dependencias - AppCore | AppCore Documentation ">
+    
+    
+      <link rel="shortcut icon" href="favicon.ico">
+      <link rel="stylesheet" href="styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="styles/docfx.css">
+      <link rel="stylesheet" href="styles/main.css">
+      <meta property="docfx:navrel" content="toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="análisis-de-dependencias---appcore">Análisis de Dependencias - AppCore</h1>
+
+<h2 id="fecha-enero-24-2026">Fecha: Enero 24, 2026</h2>
+<h2 id="fase-1-preparación-y-análisis">Fase 1: Preparación y Análisis</h2>
+<h2 id="1-dependencias-externas-de-appcore">1. Dependencias Externas de AppCore</h2>
+<h3 id="dependencias-principales-csproj">Dependencias Principales (.csproj)</h3>
+<ul>
+<li><strong>Serilog.AspNetCore</strong> 10.0.0 - Logging</li>
+<li><strong>Serilog.Sinks.Console</strong> 6.1.1 - Console logging output</li>
+<li><strong>Serilog.Settings.Configuration</strong> 10.0.0 - Serilog configuration</li>
+<li><strong>Swashbuckle.AspNetCore</strong> 10.1.0 - API documentation</li>
+<li><strong>Microsoft.Extensions.Logging.Abstractions</strong> 10.0.2 - Core logging abstractions</li>
+<li><strong>Microsoft.EntityFrameworkCore.Abstractions</strong> 10.0.2 - ORM abstractions</li>
+<li><strong>AutoMapper.Extensions.Microsoft.DependencyInjection</strong> 12.0.1 - Object mapping</li>
+<li><strong>FluentValidation.DependencyInjectionExtensions</strong> 12.1.1 - Validation framework</li>
+<li><strong>MediatR</strong> 14.0.0 - CQRS/mediator pattern</li>
+<li><strong>Microsoft.AspNetCore.Authentication.JwtBearer</strong> 10.0.2 - JWT authentication</li>
+<li><strong>Microsoft.EntityFrameworkCore</strong> 10.0.2 - ORM framework</li>
+<li><strong>Npgsql.EntityFrameworkCore.PostgreSQL</strong> 10.0.0 - PostgreSQL provider</li>
+</ul>
+<h3 id="categorización-de-dependencias">Categorización de Dependencias</h3>
+<h4 id="-coreessential-mantendrán-como-están">🟢 Core/Essential (mantendrán como están)</h4>
+<ul>
+<li>Microsoft.Extensions.Logging.Abstractions</li>
+<li>Microsoft.EntityFrameworkCore.Abstractions</li>
+<li>Microsoft.EntityFrameworkCore</li>
+<li>MediatR</li>
+</ul>
+<h4 id="-frameworkinfrastructure-revisar-necesidad">🟡 Framework/Infrastructure (revisar necesidad)</h4>
+<ul>
+<li>Microsoft.AspNetCore.Authentication.JwtBearer (¿necesario en biblioteca base?)</li>
+<li>Swashbuckle.AspNetCore (¿necesario en biblioteca base?)</li>
+<li>Npgsql.EntityFrameworkCore.PostgreSQL (específico de PostgreSQL)</li>
+</ul>
+<h4 id="-utilities-evaluar-si-son-realmente-necesarias">🟠 Utilities (evaluar si son realmente necesarias)</h4>
+<ul>
+<li>AutoMapper.Extensions.Microsoft.DependencyInjection</li>
+<li>FluentValidation.DependencyInjectionExtensions</li>
+<li>Serilog packages (¿abstraer logging?)</li>
+</ul>
+<h2 id="2-apis-públicas-identificadas">2. APIs Públicas Identificadas</h2>
+<h3 id="application-layer---interfaces-públicas">Application Layer - Interfaces Públicas</h3>
+<pre><code>├── ICurrentUserService - Gestión de usuario actual
+├── IDateTimeService - Abstracción de tiempo
+└── IEndpointGroupBase - Base para endpoints
+</code></pre>
+<h3 id="domain-layer---interfaces-públicas">Domain Layer - Interfaces Públicas</h3>
+<pre><code>├── IGenericRepository&lt;E,I&gt; - Repositorio genérico
+└── IHttpRequestRepository - Cliente HTTP
+</code></pre>
+<h3 id="application-layer---dtos-y-wrappers">Application Layer - DTOs y Wrappers</h3>
+<pre><code>├── DTOs/
+│   ├── EmailRequest
+│   ├── LoginRequest
+│   ├── LoginResponse
+│   ├── MetaInfo
+│   ├── PaginationDto&lt;T&gt;
+│   └── PaginationResponse
+└── Wrappers/
+    └── Response&lt;T&gt; (probable ResponseWrapper)
+</code></pre>
+<h3 id="application-layer---exceptions">Application Layer - Exceptions</h3>
+<pre><code>├── ApiDBException
+├── ApiHttpException
+├── AuthenticationException
+├── BadRequestException
+├── CustomException
+├── ForbiddenAccessException
+├── HttpBaseException
+├── MappingException
+├── NotFoundException
+├── OperationException
+├── SerializerException
+└── ValidationException
+</code></pre>
+<h2 id="3-estructura-interna-vs-pública">3. Estructura Interna vs Pública</h2>
+<h3 id="-apis-que-deben-ser-internas">🔴 APIs que deben ser INTERNAS</h3>
+<ul>
+<li>Behaviours/ (MediatR behaviors específicos)</li>
+<li>Infrastructure/ específicos (DAOs, Converters)</li>
+<li>Middleware/ específicos</li>
+<li>Utils/ internos</li>
+</ul>
+<h3 id="-apis-que-deben-ser-públicas">🟢 APIs que deben ser PÚBLICAS</h3>
+<ul>
+<li>Interfaces principales (IGenericRepository, ICurrentUserService, etc.)</li>
+<li>DTOs de entrada/salida</li>
+<li>Exceptions públicas</li>
+<li>Extensions de configuración</li>
+<li>Wrappers de respuesta</li>
+</ul>
+<h2 id="4-proyectos-de-testing-actuales">4. Proyectos de Testing Actuales</h2>
+<h3 id="appcoreunittests">AppCore.UnitTests</h3>
+<ul>
+<li><strong>Framework</strong>: xUnit 2.9.3</li>
+<li><strong>Mocking</strong>: Moq 4.20.72, AutoFixture</li>
+<li><strong>Assertions</strong>: FluentAssertions 8.8.0</li>
+<li><strong>Coverage</strong>: coverlet.collector 6.0.4</li>
+<li><strong>Status</strong>: ✅ Configurado adecuadamente</li>
+</ul>
+<h3 id="appcorespecflow">AppCore.SpecFlow</h3>
+<ul>
+<li><strong>Framework</strong>: SpecFlow 3.9.74 con xUnit</li>
+<li><strong>Status</strong>: ⚠️ Básico configurado, necesita features específicas</li>
+<li><strong>Feature actual</strong>: GenericRepository.feature (basic)</li>
+</ul>
+<h2 id="5-posibles-breaking-changes-identificados">5. Posibles Breaking Changes Identificados</h2>
+<h3 id="cambios-en-visibilidad">Cambios en Visibilidad</h3>
+<ul>
+<li>Marcar clases DAO como <code>internal</code></li>
+<li>Marcar behaviors específicos como <code>internal</code></li>
+<li>Marcar converters internos como <code>internal</code></li>
+</ul>
+<h3 id="cambios-en-interfaces">Cambios en Interfaces</h3>
+<ul>
+<li>IGenericRepository puede necesitar simplificación</li>
+<li>Abstracción de dependencias específicas de PostgreSQL</li>
+</ul>
+<h3 id="cambios-en-dependencias">Cambios en Dependencias</h3>
+<ul>
+<li>Mover Swashbuckle a package opcional</li>
+<li>Abstraer Serilog detrás de ILogger</li>
+<li>Evaluar si JWT debe ser parte del core</li>
+</ul>
+<h2 id="6-recomendaciones-para-nuget-package">6. Recomendaciones para NuGet Package</h2>
+<h3 id="dependencias-mínimas-sugeridas">Dependencias Mínimas Sugeridas</h3>
+<pre><code class="lang-xml">&lt;PackageReference Include=&quot;Microsoft.Extensions.Logging.Abstractions&quot; Version=&quot;10.0.2&quot; /&gt;
+&lt;PackageReference Include=&quot;Microsoft.EntityFrameworkCore.Abstractions&quot; Version=&quot;10.0.2&quot; /&gt;
+&lt;PackageReference Include=&quot;MediatR&quot; Version=&quot;14.0.0&quot; /&gt;
+&lt;PackageReference Include=&quot;FluentValidation.DependencyInjectionExtensions&quot; Version=&quot;12.1.1&quot; /&gt;
+</code></pre>
+<h3 id="dependencias-opcionales-via-feature-packages">Dependencias Opcionales (via feature packages)</h3>
+<pre><code class="lang-xml">&lt;!-- AppCore.EntityFramework --&gt;
+&lt;PackageReference Include=&quot;Microsoft.EntityFrameworkCore&quot; Version=&quot;10.0.2&quot; /&gt;
+
+&lt;!-- AppCore.Serilog --&gt;
+&lt;PackageReference Include=&quot;Serilog.AspNetCore&quot; Version=&quot;10.0.0&quot; /&gt;
+
+&lt;!-- AppCore.Swagger --&gt;
+&lt;PackageReference Include=&quot;Swashbuckle.AspNetCore&quot; Version=&quot;10.1.0&quot; /&gt;
+</code></pre>
+<h2 id="7-plan-de-matriz-de-compatibilidad">7. Plan de Matriz de Compatibilidad</h2>
+<h3 id="framework-targets">Framework Targets</h3>
+<ul>
+<li>.NET 10.0 (actual)</li>
+<li>.NET 9.0 (considerar para compatibilidad)</li>
+<li>.NET 8.0 LTS (considerar para compatibilidad)</li>
+</ul>
+<h3 id="niveles-de-compatibilidad">Niveles de Compatibilidad</h3>
+<ul>
+<li><strong>Source Compatible</strong>: API signatures no cambian</li>
+<li><strong>Binary Compatible</strong>: Assemblies existentes siguen funcionando</li>
+<li><strong>Behavior Compatible</strong>: Funcionalidad equivalente</li>
+</ul>
+<hr>
+<p><em>Documento generado automáticamente durante Fase 1 de restructuración</em></p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/Dependency-Analysis.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

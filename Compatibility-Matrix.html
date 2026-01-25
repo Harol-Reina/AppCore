@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Matriz de Compatibilidad - AppCore v2.0 | AppCore Documentation </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Matriz de Compatibilidad - AppCore v2.0 | AppCore Documentation ">
+    
+    
+      <link rel="shortcut icon" href="favicon.ico">
+      <link rel="stylesheet" href="styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="styles/docfx.css">
+      <link rel="stylesheet" href="styles/main.css">
+      <meta property="docfx:navrel" content="toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="matriz-de-compatibilidad---appcore-v20">Matriz de Compatibilidad - AppCore v2.0</h1>
+
+<h2 id="fecha-enero-24-2026">Fecha: Enero 24, 2026</h2>
+<h2 id="fase-1-preparación-y-análisis---tarea-4">Fase 1: Preparación y Análisis - Tarea 4</h2>
+<h2 id="1-matriz-de-compatibilidad-por-componente">1. Matriz de Compatibilidad por Componente</h2>
+<h3 id="-leyenda-de-compatibilidad">🎯 Leyenda de Compatibilidad</h3>
+<ul>
+<li>✅ <strong>Compatible</strong>: No requiere cambios</li>
+<li>⚠️ <strong>Deprecated</strong>: Funciona con warnings, cambios requeridos en futuro</li>
+<li>❌ <strong>Breaking</strong>: Requiere cambios inmediatos</li>
+<li>🆕 <strong>New</strong>: Nueva funcionalidad disponible</li>
+</ul>
+<hr>
+<h2 id="2-apis-públicas---matriz-de-compatibilidad">2. APIs Públicas - Matriz de Compatibilidad</h2>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>v1.x</th>
+<th>v2.x</th>
+<th>Compatibilidad</th>
+<th>Acción Requerida</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Domain Interfaces</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>IGenericRepository&lt;E,I&gt;</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><code>IHttpRequestRepository</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><strong>Application Interfaces</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ICurrentUserService</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><code>IDateTimeService</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><code>IEndpointGroupBase</code></td>
+<td>✅</td>
+<td>⚠️</td>
+<td>⚠️ Evaluación</td>
+<td>TBD</td>
+</tr>
+<tr>
+<td><strong>DTOs &amp; Wrappers</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Response&lt;T&gt;</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><code>HttpResponse&lt;T&gt;</code></td>
+<td>✅</td>
+<td>⚠️</td>
+<td>⚠️ Deprecated</td>
+<td>Migrar a <code>Response&lt;T&gt;</code></td>
+</tr>
+<tr>
+<td><code>PaginationDto&lt;T&gt;</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><code>PaginationResponse</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><code>PageResult&lt;T&gt;</code></td>
+<td>✅</td>
+<td>⚠️</td>
+<td>⚠️ Deprecated</td>
+<td>Migrar a <code>Response&lt;T&gt;</code></td>
+</tr>
+<tr>
+<td><strong>Core DTOs</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>LoginRequest</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><code>LoginResponse</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><code>EmailRequest</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><code>MetaInfo</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="3-apis-internas---breaking-changes">3. APIs Internas - Breaking Changes</h2>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>v1.x</th>
+<th>v2.x</th>
+<th>Impacto</th>
+<th>Alternativa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Infrastructure Layer</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>GenericRepository&lt;E,I,D&gt;</code></td>
+<td>public</td>
+<td>internal</td>
+<td>❌ Breaking</td>
+<td><code>IGenericRepository&lt;E,I&gt;</code></td>
+</tr>
+<tr>
+<td><code>BaseDao&lt;I&gt;</code></td>
+<td>public</td>
+<td>internal</td>
+<td>❌ Breaking</td>
+<td><code>BaseEntity&lt;I&gt;</code></td>
+</tr>
+<tr>
+<td><code>AuditableBaseDao</code></td>
+<td>public</td>
+<td>internal</td>
+<td>❌ Breaking</td>
+<td><code>AuditableEntity</code></td>
+</tr>
+<tr>
+<td><strong>Behaviors</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ValidationBehaviour</code></td>
+<td>public</td>
+<td>internal</td>
+<td>❌ Breaking</td>
+<td>Auto-registered via DI</td>
+</tr>
+<tr>
+<td><code>UnhandledExceptionBehaviour</code></td>
+<td>public</td>
+<td>internal</td>
+<td>❌ Breaking</td>
+<td>Auto-registered via DI</td>
+</tr>
+<tr>
+<td><strong>Specific Exceptions</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ApiDBException</code></td>
+<td>public</td>
+<td>internal</td>
+<td>❌ Breaking</td>
+<td><code>CustomException</code></td>
+</tr>
+<tr>
+<td><code>ApiHttpException</code></td>
+<td>public</td>
+<td>internal</td>
+<td>❌ Breaking</td>
+<td><code>CustomException</code></td>
+</tr>
+<tr>
+<td><code>HttpBaseException</code></td>
+<td>public</td>
+<td>internal</td>
+<td>❌ Breaking</td>
+<td><code>CustomException</code></td>
+</tr>
+<tr>
+<td><code>MappingException</code></td>
+<td>public</td>
+<td>internal</td>
+<td>❌ Breaking</td>
+<td><code>CustomException</code></td>
+</tr>
+<tr>
+<td><code>SerializerException</code></td>
+<td>public</td>
+<td>internal</td>
+<td>❌ Breaking</td>
+<td><code>CustomException</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-dependencias-externas---matriz-de-impacto">4. Dependencias Externas - Matriz de Impacto</h2>
+<table>
+<thead>
+<tr>
+<th>Dependencia</th>
+<th>v1.x Status</th>
+<th>v2.x Status</th>
+<th>Impacto</th>
+<th>Migración</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Core Dependencies</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Microsoft.Extensions.Logging.Abstractions</code></td>
+<td>✅ Incluido</td>
+<td>✅ Incluido</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><code>Microsoft.EntityFrameworkCore.Abstractions</code></td>
+<td>✅ Incluido</td>
+<td>✅ Incluido</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><code>MediatR</code></td>
+<td>✅ Incluido</td>
+<td>✅ Incluido</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><code>FluentValidation.DependencyInjectionExtensions</code></td>
+<td>✅ Incluido</td>
+<td>✅ Incluido</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><strong>Optional Dependencies</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Microsoft.EntityFrameworkCore</code></td>
+<td>✅ Incluido</td>
+<td>✅ Incluido</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><code>AutoMapper.Extensions.Microsoft.DependencyInjection</code></td>
+<td>✅ Incluido</td>
+<td>✅ Incluido</td>
+<td>✅ Compatible</td>
+<td>Ninguna</td>
+</tr>
+<tr>
+<td><strong>Potentially Optional</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Npgsql.EntityFrameworkCore.PostgreSQL</code></td>
+<td>✅ Incluido</td>
+<td>⚠️ Opcional</td>
+<td>⚠️ Requiere decisión</td>
+<td>Agregar explícitamente si necesario</td>
+</tr>
+<tr>
+<td><code>Swashbuckle.AspNetCore</code></td>
+<td>✅ Incluido</td>
+<td>⚠️ Opcional</td>
+<td>⚠️ Evaluación</td>
+<td>Mover a package opcional</td>
+</tr>
+<tr>
+<td><code>Microsoft.AspNetCore.Authentication.JwtBearer</code></td>
+<td>✅ Incluido</td>
+<td>⚠️ Evaluación</td>
+<td>⚠️ TBD</td>
+<td>TBD</td>
+</tr>
+<tr>
+<td><strong>Logging</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Serilog.AspNetCore</code></td>
+<td>✅ Incluido</td>
+<td>⚠️ Opcional</td>
+<td>⚠️ Evaluación</td>
+<td>Abstraer detrás de ILogger</td>
+</tr>
+<tr>
+<td><code>Serilog.Sinks.Console</code></td>
+<td>✅ Incluido</td>
+<td>⚠️ Opcional</td>
+<td>⚠️ Evaluación</td>
+<td>Mover a package opcional</td>
+</tr>
+<tr>
+<td><code>Serilog.Settings.Configuration</code></td>
+<td>✅ Incluido</td>
+<td>⚠️ Opcional</td>
+<td>⚠️ Evaluación</td>
+<td>Mover a package opcional</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="5-compatibilidad-por-patrón-de-uso">5. Compatibilidad por Patrón de Uso</h2>
+<h3 id="-uso-compatible-sin-cambios-requeridos">✅ Uso Compatible (Sin cambios requeridos)</h3>
+<h4 id="patrón-1-uso-de-interfaces">Patrón 1: Uso de Interfaces</h4>
+<pre><code class="lang-csharp">// ANTES y DESPUÉS - Idéntico
+public class UserService 
+{
+    private readonly IGenericRepository&lt;User, int&gt; _repository;
+    private readonly ICurrentUserService _currentUser;
+    
+    public UserService(
+        IGenericRepository&lt;User, int&gt; repository, 
+        ICurrentUserService currentUser)
+    {
+        _repository = repository;
+        _currentUser = currentUser;
+    }
+    
+    public async Task&lt;Response&lt;User&gt;&gt; GetUserAsync(int id)
+    {
+        var user = await _repository.GetByIdAsync(id);
+        return Response&lt;User&gt;.Success(user);
+    }
+}
+</code></pre>
+<h4 id="patrón-2-exception-handling-base">Patrón 2: Exception Handling Base</h4>
+<pre><code class="lang-csharp">// ANTES y DESPUÉS - Compatible
+try 
+{
+    await _repository.AddAsync(entity);
+}
+catch (ValidationException ex)  // ✅ Sigue siendo público
+{
+    return Response&lt;T&gt;.Failure(ex.Message);
+}
+catch (CustomException ex)      // ✅ Base exception pública
+{
+    return Response&lt;T&gt;.Failure(ex.Message);
+}
+</code></pre>
+<h3 id="-uso-incompatible-cambios-requeridos">❌ Uso Incompatible (Cambios requeridos)</h3>
+<h4 id="patrón-3-herencia-directa-de-implementación">Patrón 3: Herencia Directa de Implementación</h4>
+<pre><code class="lang-csharp">// ANTES - Funcionaba
+public class UserRepository : GenericRepository&lt;User, int, UserDao&gt;
+{
+    public UserRepository(AppDbContext context) : base(context) { }
+}
+
+// DESPUÉS - Breaking change
+// GenericRepository&lt;,,&gt; ahora es internal
+public class UserRepository : IGenericRepository&lt;User, int&gt;
+{
+    // Implementación propia o usar servicio registrado
+}
+</code></pre>
+<h4 id="patrón-4-exception-handling-específico">Patrón 4: Exception Handling Específico</h4>
+<pre><code class="lang-csharp">// ANTES - Funcionaba
+try 
+{
+    await _repository.AddAsync(entity);
+}
+catch (ApiDBException ex)  // ❌ Ahora es internal
+{
+    _logger.LogError(ex, &quot;Database error&quot;);
+}
+
+// DESPUÉS - Requerido
+catch (CustomException ex) // ✅ Usar base exception
+{
+    _logger.LogError(ex, &quot;Operation error&quot;);
+}
+</code></pre>
+<h3 id="-uso-deprecated-cambios-recomendados">⚠️ Uso Deprecated (Cambios recomendados)</h3>
+<h4 id="patrón-5-wrappers-duplicados">Patrón 5: Wrappers Duplicados</h4>
+<pre><code class="lang-csharp">// ANTES - Funcionaba
+public HttpResponse&lt;User&gt; GetUser(int id)
+{
+    return new HttpResponse&lt;User&gt; { Data = user };
+}
+
+// DESPUÉS - Deprecated warning
+[Obsolete(&quot;Use Response&lt;T&gt; instead&quot;)]
+public HttpResponse&lt;User&gt; GetUser(int id)  // ⚠️ Deprecated
+{
+    return new Response&lt;User&gt; { Data = user }; // ✅ Use this
+}
+</code></pre>
+<hr>
+<h2 id="6-matriz-de-compatibilidad-por-target-framework">6. Matriz de Compatibilidad por Target Framework</h2>
+<table>
+<thead>
+<tr>
+<th>Target Framework</th>
+<th>v1.x Support</th>
+<th>v2.x Support</th>
+<th>Compatibility</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.NET 8.0 LTS</td>
+<td>❌</td>
+<td>🆕</td>
+<td>🆕 New Support</td>
+<td>Multi-targeting</td>
+</tr>
+<tr>
+<td>.NET 9.0</td>
+<td>❌</td>
+<td>🆕</td>
+<td>🆕 New Support</td>
+<td>Multi-targeting</td>
+</tr>
+<tr>
+<td>.NET 10.0</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>Primary target</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="7-di-registration-compatibility-matrix">7. DI Registration Compatibility Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Registration Pattern</th>
+<th>v1.x</th>
+<th>v2.x</th>
+<th>Compatibility</th>
+<th>Migration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Single Method</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>services.AddAppCore()</code></td>
+<td>✅</td>
+<td>⚠️</td>
+<td>⚠️ Deprecated</td>
+<td>Mantener por compatibilidad</td>
+</tr>
+<tr>
+<td><strong>Granular Methods</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>services.AddAppCoreCore()</code></td>
+<td>❌</td>
+<td>🆕</td>
+<td>🆕 New</td>
+<td>Registro de APIs públicas</td>
+</tr>
+<tr>
+<td><code>services.AddAppCorePostgreSQL()</code></td>
+<td>❌</td>
+<td>🆕</td>
+<td>🆕 New</td>
+<td>PostgreSQL specific</td>
+</tr>
+<tr>
+<td><code>services.AddAppCoreSerilog()</code></td>
+<td>❌</td>
+<td>🆕</td>
+<td>🆕 New</td>
+<td>Logging specific</td>
+</tr>
+<tr>
+<td><strong>Manual Registration</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Manual service registration</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>Sigue funcionando</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="8-testing-compatibility-matrix">8. Testing Compatibility Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Test Pattern</th>
+<th>v1.x</th>
+<th>v2.x</th>
+<th>Compatibility</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unit Testing</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Interface mocking</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>No changes needed</td>
+</tr>
+<tr>
+<td>Concrete class testing</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌ Breaking</td>
+<td>Use interface abstractions</td>
+</tr>
+<tr>
+<td><strong>Integration Testing</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Service container testing</td>
+<td>✅</td>
+<td>⚠️</td>
+<td>⚠️ Partial</td>
+<td>Update DI registration</td>
+</tr>
+<tr>
+<td>End-to-end testing</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+<td>No changes if using interfaces</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="9-migration-path-matrix">9. Migration Path Matrix</h2>
+<h3 id="low-risk-migration-recommended-first">Low Risk Migration (Recommended first)</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Risk Level</th>
+<th>Effort</th>
+<th>Timeline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ Interface-only consumers</td>
+<td>🟢 Low</td>
+<td>1-2 hours</td>
+<td>Week 1</td>
+</tr>
+<tr>
+<td>✅ DI registration updates</td>
+<td>🟢 Low</td>
+<td>2-4 hours</td>
+<td>Week 1</td>
+</tr>
+<tr>
+<td>✅ Exception handling base classes</td>
+<td>🟢 Low</td>
+<td>1-2 hours</td>
+<td>Week 1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="medium-risk-migration">Medium Risk Migration</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Risk Level</th>
+<th>Effort</th>
+<th>Timeline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⚠️ Wrapper consolidation</td>
+<td>🟡 Medium</td>
+<td>4-8 hours</td>
+<td>Week 2-3</td>
+</tr>
+<tr>
+<td>⚠️ Dependency package additions</td>
+<td>🟡 Medium</td>
+<td>2-4 hours</td>
+<td>Week 2</td>
+</tr>
+<tr>
+<td>⚠️ Configuration updates</td>
+<td>🟡 Medium</td>
+<td>4-6 hours</td>
+<td>Week 2-3</td>
+</tr>
+</tbody>
+</table>
+<h3 id="high-risk-migration-requires-careful-planning">High Risk Migration (Requires careful planning)</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Risk Level</th>
+<th>Effort</th>
+<th>Timeline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌ Concrete class inheritance</td>
+<td>🔴 High</td>
+<td>8-16 hours</td>
+<td>Week 3-4</td>
+</tr>
+<tr>
+<td>❌ Specific exception handling</td>
+<td>🔴 High</td>
+<td>4-8 hours</td>
+<td>Week 3-4</td>
+</tr>
+<tr>
+<td>❌ Internal API usage</td>
+<td>🔴 High</td>
+<td>8-24 hours</td>
+<td>Week 3-5</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="10-validation-checklist">10. Validation Checklist</h2>
+<h3 id="pre-migration-validation">Pre-Migration Validation</h3>
+<ul>
+<li>[ ] ✅ Inventory all AppCore usage patterns in consumer applications</li>
+<li>[ ] ✅ Identify concrete class inheritance instances</li>
+<li>[ ] ✅ Catalog specific exception handling code</li>
+<li>[ ] ✅ Document custom DI registration patterns</li>
+<li>[ ] ✅ Create compatibility test suite</li>
+</ul>
+<h3 id="post-migration-validation">Post-Migration Validation</h3>
+<ul>
+<li>[ ] ✅ All unit tests pass</li>
+<li>[ ] ✅ Integration tests pass</li>
+<li>[ ] ✅ No compilation errors</li>
+<li>[ ] ✅ No runtime exceptions related to missing types</li>
+<li>[ ] ✅ Performance benchmarks within acceptable range</li>
+<li>[ ] ✅ Memory usage patterns stable</li>
+</ul>
+<h3 id="rollback-plan">Rollback Plan</h3>
+<ul>
+<li>[ ] ✅ Maintain v1.x package availability</li>
+<li>[ ] ✅ Document rollback procedure</li>
+<li>[ ] ✅ Test rollback scenarios</li>
+<li>[ ] ✅ Prepare hotfix process for critical issues</li>
+</ul>
+<hr>
+<p><em>Matriz generada durante Fase 1 - Tarea 4: Matriz de Compatibilidad</em></p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/Compatibility-Matrix.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

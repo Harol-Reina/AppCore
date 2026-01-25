@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class AppCoreJsonContext | AppCore Documentation </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class AppCoreJsonContext | AppCore Documentation ">
+    
+    <meta name="description" content="AOT-compatible JSON serialization context for AppCore types. This provides compile-time source generation for JSON serialization, eliminating the need for runtime reflection in Native AOT scenarios.">
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="AppCore.Application.Serialization.AppCoreJsonContext">
+
+
+
+  <h1 id="AppCore_Application_Serialization_AppCoreJsonContext" data-uid="AppCore.Application.Serialization.AppCoreJsonContext" class="text-break">Class AppCoreJsonContext</h1>
+  <div class="markdown level0 summary"><p>AOT-compatible JSON serialization context for AppCore types.
+This provides compile-time source generation for JSON serialization,
+eliminating the need for runtime reflection in Native AOT scenarios.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.jsonserializercontext">JsonSerializerContext</a></div>
+    <div class="level2"><span class="xref">AppCoreJsonContext</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.ijsontypeinforesolver">IJsonTypeInfoResolver</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.jsonserializercontext.options">JsonSerializerContext.Options</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="AppCore.html">AppCore</a>.<a class="xref" href="AppCore.Application.html">Application</a>.<a class="xref" href="AppCore.Application.Serialization.html">Serialization</a></h6>
+  <h6><strong>Assembly</strong>: AppCore.dll</h6>
+  <h5 id="AppCore_Application_Serialization_AppCoreJsonContext_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonSerializable(typeof(Response&lt;object&gt;))]
+[JsonSerializable(typeof(Response&lt;string&gt;))]
+[JsonSerializable(typeof(Response&lt;int&gt;))]
+[JsonSerializable(typeof(Response&lt;long&gt;))]
+[JsonSerializable(typeof(Response&lt;bool&gt;))]
+[JsonSerializable(typeof(Response&lt;Guid&gt;))]
+[JsonSerializable(typeof(Response&lt;DictionaryError&gt;))]
+[JsonSerializable(typeof(Response&lt;PaginationDto&lt;int&gt;&gt;))]
+[JsonSerializable(typeof(HttpResponse&lt;object&gt;))]
+[JsonSerializable(typeof(HttpResponse&lt;string&gt;))]
+[JsonSerializable(typeof(HttpResponse&lt;EmailRequest&gt;))]
+[JsonSerializable(typeof(ErrorResponse))]
+[JsonSerializable(typeof(MappingErrorResponse))]
+[JsonSerializable(typeof(CustomErrorResponse))]
+[JsonSerializable(typeof(PaginationResponse&lt;object&gt;))]
+[JsonSerializable(typeof(PaginationDto&lt;object&gt;))]
+[JsonSerializable(typeof(PaginationDto&lt;string&gt;))]
+[JsonSerializable(typeof(PaginationDto&lt;int&gt;))]
+[JsonSerializable(typeof(BaseEntity&lt;int&gt;))]
+[JsonSerializable(typeof(BaseEntity&lt;long&gt;))]
+[JsonSerializable(typeof(BaseEntity&lt;string&gt;))]
+[JsonSerializable(typeof(AuditableEntity))]
+[JsonSerializable(typeof(HttpAuditEntity))]
+[JsonSerializable(typeof(AttachmentFile))]
+[JsonSerializable(typeof(EmailRequest))]
+[JsonSerializable(typeof(DictionaryError))]
+[JsonSerializable(typeof(MessageLog))]
+[JsonSerializable(typeof(ValidationProblemDetails))]
+[JsonSerializable(typeof(ProblemDetails))]
+[JsonSerializable(typeof(string))]
+[JsonSerializable(typeof(int))]
+[JsonSerializable(typeof(long))]
+[JsonSerializable(typeof(bool))]
+[JsonSerializable(typeof(DateTime))]
+[JsonSerializable(typeof(DateOnly))]
+[JsonSerializable(typeof(TimeOnly))]
+[JsonSerializable(typeof(Dictionary&lt;string, object&gt;))]
+[JsonSerializable(typeof(List&lt;string&gt;))]
+[JsonSerializable(typeof(List&lt;DictionaryError&gt;))]
+[JsonSerializable(typeof(JsonTestModel))]
+[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, WriteIndented = true, PropertyNameCaseInsensitive = true, GenerationMode = JsonSourceGenerationMode.Default)]
+public class AppCoreJsonContext : JsonSerializerContext, IJsonTypeInfoResolver</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext__ctor.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.g.cs/#L38">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext__ctor_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.#ctor*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext__ctor" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.#ctor">AppCoreJsonContext()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AppCoreJsonContext()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext__ctor_System_Text_Json_JsonSerializerOptions_.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.%23ctor(System.Text.Json.JsonSerializerOptions)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.g.cs/#L43">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext__ctor_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.#ctor*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext__ctor_System_Text_Json_JsonSerializerOptions_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.#ctor(System.Text.Json.JsonSerializerOptions)">AppCoreJsonContext(JsonSerializerOptions)</h4>
+  <div class="markdown level1 summary"><p>Creates an instance of <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.jsonserializercontext">JsonSerializerContext</a> and binds it with the indicated <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AppCoreJsonContext(JsonSerializerOptions options)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a></td>
+        <td><span class="parametername">options</span></td>
+        <td><p>The run time provided options for the context instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_AttachmentFile.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.AttachmentFile%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.AttachmentFile.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_AttachmentFile_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.AttachmentFile*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_AttachmentFile" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.AttachmentFile">AttachmentFile</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;AttachmentFile&gt; AttachmentFile { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.DTOs.AttachmentFile.html">AttachmentFile</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_AuditableEntity.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.AuditableEntity%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.AuditableEntity.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_AuditableEntity_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.AuditableEntity*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_AuditableEntity" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.AuditableEntity">AuditableEntity</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;AuditableEntity&gt; AuditableEntity { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Domain.Common.AuditableEntity.html">AuditableEntity</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_BaseEntityInt32.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.BaseEntityInt32%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.BaseEntityInt32.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_BaseEntityInt32_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.BaseEntityInt32*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_BaseEntityInt32" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.BaseEntityInt32">BaseEntityInt32</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;BaseEntity&lt;int&gt;&gt; BaseEntityInt32 { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Domain.Common.BaseEntity-1.html">BaseEntity</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_BaseEntityInt64.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.BaseEntityInt64%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.BaseEntityInt64.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_BaseEntityInt64_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.BaseEntityInt64*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_BaseEntityInt64" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.BaseEntityInt64">BaseEntityInt64</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;BaseEntity&lt;long&gt;&gt; BaseEntityInt64 { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Domain.Common.BaseEntity-1.html">BaseEntity</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_BaseEntityString.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.BaseEntityString%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.BaseEntityString.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_BaseEntityString_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.BaseEntityString*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_BaseEntityString" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.BaseEntityString">BaseEntityString</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;BaseEntity&lt;string&gt;&gt; BaseEntityString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Domain.Common.BaseEntity-1.html">BaseEntity</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_Boolean.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.Boolean%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.Boolean.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_Boolean_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.Boolean*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_Boolean" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.Boolean">Boolean</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;bool&gt; Boolean { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_CustomErrorResponse.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.CustomErrorResponse%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.CustomErrorResponse.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_CustomErrorResponse_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.CustomErrorResponse*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_CustomErrorResponse" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.CustomErrorResponse">CustomErrorResponse</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;CustomErrorResponse&gt; CustomErrorResponse { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.CustomErrorResponse.html">CustomErrorResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_DateOnly.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.DateOnly%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.DateOnly.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_DateOnly_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.DateOnly*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_DateOnly" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.DateOnly">DateOnly</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;DateOnly&gt; DateOnly { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.dateonly">DateOnly</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_DateTime.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.DateTime%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.DateTime.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_DateTime_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.DateTime*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_DateTime" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.DateTime">DateTime</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;DateTime&gt; DateTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_Default.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.Default%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.g.cs/#L30">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_Default_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.Default*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_Default" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.Default">Default</h4>
+  <div class="markdown level1 summary"><p>The default <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.jsonserializercontext">JsonSerializerContext</a> associated with a default <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AppCoreJsonContext Default { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AppCore.Application.Serialization.AppCoreJsonContext.html">AppCoreJsonContext</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_DictionaryError.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.DictionaryError%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.DictionaryError.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_DictionaryError_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.DictionaryError*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_DictionaryError" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.DictionaryError">DictionaryError</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;DictionaryError&gt; DictionaryError { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Exceptions.DictionaryError.html">DictionaryError</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_DictionaryStringObject.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.DictionaryStringObject%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.DictionaryStringObject.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_DictionaryStringObject_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.DictionaryStringObject*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_DictionaryStringObject" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.DictionaryStringObject">DictionaryStringObject</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;Dictionary&lt;string, object&gt;&gt; DictionaryStringObject { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_DictionaryStringString.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.DictionaryStringString%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.DictionaryStringString.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_DictionaryStringString_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.DictionaryStringString*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_DictionaryStringString" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.DictionaryStringString">DictionaryStringString</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;Dictionary&lt;string, string&gt;&gt; DictionaryStringString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_EmailRequest.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.EmailRequest%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.EmailRequest.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_EmailRequest_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.EmailRequest*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_EmailRequest" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.EmailRequest">EmailRequest</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;EmailRequest&gt; EmailRequest { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.DTOs.EmailRequest.html">EmailRequest</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ErrorResponse.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ErrorResponse%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ErrorResponse.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ErrorResponse_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ErrorResponse*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ErrorResponse" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ErrorResponse">ErrorResponse</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;ErrorResponse&gt; ErrorResponse { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.ErrorResponse.html">ErrorResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_GeneratedSerializerOptions.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.GeneratedSerializerOptions%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.g.cs/#L35">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_GeneratedSerializerOptions_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.GeneratedSerializerOptions*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_GeneratedSerializerOptions" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.GeneratedSerializerOptions">GeneratedSerializerOptions</h4>
+  <div class="markdown level1 summary"><p>The source-generated options associated with this context.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override JsonSerializerOptions? GeneratedSerializerOptions { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.jsonserializercontext.generatedserializeroptions">JsonSerializerContext.GeneratedSerializerOptions</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_Guid.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.Guid%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.Guid.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_Guid_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.Guid*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_Guid" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.Guid">Guid</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;Guid&gt; Guid { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_HttpAuditEntity.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.HttpAuditEntity%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.HttpAuditEntity.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_HttpAuditEntity_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.HttpAuditEntity*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_HttpAuditEntity" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.HttpAuditEntity">HttpAuditEntity</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;HttpAuditEntity&gt; HttpAuditEntity { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Domain.Entities.Integrators.HttpAuditEntity.html">HttpAuditEntity</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_HttpMethod.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.HttpMethod%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.HttpMethod.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_HttpMethod_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.HttpMethod*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_HttpMethod" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.HttpMethod">HttpMethod</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;HttpMethod&gt; HttpMethod { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.net.http.httpmethod">HttpMethod</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_HttpResponseEmailRequest.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.HttpResponseEmailRequest%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.HttpResponseEmailRequest.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_HttpResponseEmailRequest_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.HttpResponseEmailRequest*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_HttpResponseEmailRequest" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.HttpResponseEmailRequest">HttpResponseEmailRequest</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;HttpResponse&lt;EmailRequest&gt;&gt; HttpResponseEmailRequest { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.HttpResponse-1.html">HttpResponse</a>&lt;<a class="xref" href="AppCore.Application.DTOs.EmailRequest.html">EmailRequest</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_HttpResponseObject.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.HttpResponseObject%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.HttpResponseObject.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_HttpResponseObject_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.HttpResponseObject*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_HttpResponseObject" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.HttpResponseObject">HttpResponseObject</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;HttpResponse&lt;object&gt;&gt; HttpResponseObject { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.HttpResponse-1.html">HttpResponse</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_HttpResponseString.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.HttpResponseString%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.HttpResponseString.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_HttpResponseString_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.HttpResponseString*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_HttpResponseString" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.HttpResponseString">HttpResponseString</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;HttpResponse&lt;string&gt;&gt; HttpResponseString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.HttpResponse-1.html">HttpResponse</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_HttpStatusCode.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.HttpStatusCode%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.HttpStatusCode.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_HttpStatusCode_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.HttpStatusCode*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_HttpStatusCode" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.HttpStatusCode">HttpStatusCode</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;HttpStatusCode&gt; HttpStatusCode { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.net.httpstatuscode">HttpStatusCode</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_IDictionaryStringObject.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.IDictionaryStringObject%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.IDictionaryStringObject.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_IDictionaryStringObject_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.IDictionaryStringObject*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_IDictionaryStringObject" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.IDictionaryStringObject">IDictionaryStringObject</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;IDictionary&lt;string, object&gt;&gt; IDictionaryStringObject { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_IDictionaryStringString.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.IDictionaryStringString%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.IDictionaryStringString.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_IDictionaryStringString_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.IDictionaryStringString*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_IDictionaryStringString" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.IDictionaryStringString">IDictionaryStringString</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;IDictionary&lt;string, string&gt;&gt; IDictionaryStringString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_IDictionaryStringStringArray.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.IDictionaryStringStringArray%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.IDictionaryStringStringArray.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_IDictionaryStringStringArray_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.IDictionaryStringStringArray*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_IDictionaryStringStringArray" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.IDictionaryStringStringArray">IDictionaryStringStringArray</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;IDictionary&lt;string, string[]&gt;&gt; IDictionaryStringStringArray { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_Int32.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.Int32%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.Int32.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_Int32_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.Int32*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_Int32" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.Int32">Int32</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;int&gt; Int32 { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_Int64.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.Int64%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.Int64.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_Int64_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.Int64*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_Int64" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.Int64">Int64</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;long&gt; Int64 { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_JsonDocument.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.JsonDocument%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.JsonDocument.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_JsonDocument_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.JsonDocument*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_JsonDocument" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.JsonDocument">JsonDocument</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;JsonDocument&gt; JsonDocument { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.jsondocument">JsonDocument</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_JsonTestModel.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.JsonTestModel%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.JsonTestModel.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_JsonTestModel_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.JsonTestModel*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_JsonTestModel" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.JsonTestModel">JsonTestModel</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;JsonTestModel&gt; JsonTestModel { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Serialization.JsonTestModel.html">JsonTestModel</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ListAttachmentFile.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ListAttachmentFile%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ListAttachmentFile.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ListAttachmentFile_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ListAttachmentFile*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ListAttachmentFile" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ListAttachmentFile">ListAttachmentFile</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;List&lt;AttachmentFile&gt;&gt; ListAttachmentFile { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="AppCore.Application.DTOs.AttachmentFile.html">AttachmentFile</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ListDictionaryError.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ListDictionaryError%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ListDictionaryError.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ListDictionaryError_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ListDictionaryError*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ListDictionaryError" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ListDictionaryError">ListDictionaryError</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;List&lt;DictionaryError&gt;&gt; ListDictionaryError { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="AppCore.Application.Exceptions.DictionaryError.html">DictionaryError</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ListInt32.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ListInt32%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ListInt32.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ListInt32_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ListInt32*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ListInt32" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ListInt32">ListInt32</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;List&lt;int&gt;&gt; ListInt32 { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ListObject.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ListObject%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ListObject.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ListObject_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ListObject*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ListObject" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ListObject">ListObject</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;List&lt;object&gt;&gt; ListObject { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ListString.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ListString%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ListString.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ListString_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ListString*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ListString" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ListString">ListString</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;List&lt;string&gt;&gt; ListString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_MappingErrorResponse.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.MappingErrorResponse%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.MappingErrorResponse.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_MappingErrorResponse_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.MappingErrorResponse*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_MappingErrorResponse" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.MappingErrorResponse">MappingErrorResponse</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;MappingErrorResponse&gt; MappingErrorResponse { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.MappingErrorResponse.html">MappingErrorResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_MessageLog.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.MessageLog%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.MessageLog.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_MessageLog_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.MessageLog*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_MessageLog" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.MessageLog">MessageLog</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;MessageLog&gt; MessageLog { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.MessageLog.html">MessageLog</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_NullableDateTime.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.NullableDateTime%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.NullableDateTime.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_NullableDateTime_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.NullableDateTime*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_NullableDateTime" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.NullableDateTime">NullableDateTime</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;DateTime?&gt; NullableDateTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a>?&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_NullableHttpStatusCode.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.NullableHttpStatusCode%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.NullableHttpStatusCode.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_NullableHttpStatusCode_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.NullableHttpStatusCode*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_NullableHttpStatusCode" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.NullableHttpStatusCode">NullableHttpStatusCode</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;HttpStatusCode?&gt; NullableHttpStatusCode { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.net.httpstatuscode">HttpStatusCode</a>?&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_NullableInt32.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.NullableInt32%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.NullableInt32.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_NullableInt32_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.NullableInt32*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_NullableInt32" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.NullableInt32">NullableInt32</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;int?&gt; NullableInt32 { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_Object.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.Object%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.Object.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_Object_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.Object*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_Object" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.Object">Object</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;object&gt; Object { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_PaginationDtoInt32.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.PaginationDtoInt32%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.PaginationDtoInt32.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_PaginationDtoInt32_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.PaginationDtoInt32*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_PaginationDtoInt32" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.PaginationDtoInt32">PaginationDtoInt32</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;PaginationDto&lt;int&gt;&gt; PaginationDtoInt32 { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.DTOs.PaginationDto-1.html">PaginationDto</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_PaginationDtoObject.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.PaginationDtoObject%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.PaginationDtoObject.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_PaginationDtoObject_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.PaginationDtoObject*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_PaginationDtoObject" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.PaginationDtoObject">PaginationDtoObject</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;PaginationDto&lt;object&gt;&gt; PaginationDtoObject { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.DTOs.PaginationDto-1.html">PaginationDto</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_PaginationDtoString.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.PaginationDtoString%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.PaginationDtoString.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_PaginationDtoString_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.PaginationDtoString*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_PaginationDtoString" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.PaginationDtoString">PaginationDtoString</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;PaginationDto&lt;string&gt;&gt; PaginationDtoString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.DTOs.PaginationDto-1.html">PaginationDto</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_PaginationResponseObject.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.PaginationResponseObject%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.PaginationResponseObject.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_PaginationResponseObject_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.PaginationResponseObject*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_PaginationResponseObject" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.PaginationResponseObject">PaginationResponseObject</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;PaginationResponse&lt;object&gt;&gt; PaginationResponseObject { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.DTOs.PaginationResponse-1.html">PaginationResponse</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ProblemDetails.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ProblemDetails%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ProblemDetails.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ProblemDetails_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ProblemDetails*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ProblemDetails" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ProblemDetails">ProblemDetails</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;ProblemDetails&gt; ProblemDetails { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.problemdetails">ProblemDetails</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ResponseBoolean.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ResponseBoolean%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ResponseBoolean.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseBoolean_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseBoolean*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseBoolean" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseBoolean">ResponseBoolean</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;Response&lt;bool&gt;&gt; ResponseBoolean { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.Response-1.html">Response</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ResponseDictionaryError.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ResponseDictionaryError%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ResponseDictionaryError.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseDictionaryError_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseDictionaryError*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseDictionaryError" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseDictionaryError">ResponseDictionaryError</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;Response&lt;DictionaryError&gt;&gt; ResponseDictionaryError { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.Response-1.html">Response</a>&lt;<a class="xref" href="AppCore.Application.Exceptions.DictionaryError.html">DictionaryError</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ResponseGuid.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ResponseGuid%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ResponseGuid.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseGuid_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseGuid*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseGuid" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseGuid">ResponseGuid</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;Response&lt;Guid&gt;&gt; ResponseGuid { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.Response-1.html">Response</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ResponseInt32.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ResponseInt32%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ResponseInt32.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseInt32_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseInt32*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseInt32" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseInt32">ResponseInt32</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;Response&lt;int&gt;&gt; ResponseInt32 { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.Response-1.html">Response</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ResponseInt64.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ResponseInt64%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ResponseInt64.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseInt64_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseInt64*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseInt64" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseInt64">ResponseInt64</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;Response&lt;long&gt;&gt; ResponseInt64 { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.Response-1.html">Response</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ResponseObject.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ResponseObject%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ResponseObject.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseObject_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseObject*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseObject" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseObject">ResponseObject</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;Response&lt;object&gt;&gt; ResponseObject { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.Response-1.html">Response</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ResponsePaginationDtoInt32.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ResponsePaginationDtoInt32%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ResponsePaginationDtoInt32.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ResponsePaginationDtoInt32_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponsePaginationDtoInt32*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ResponsePaginationDtoInt32" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponsePaginationDtoInt32">ResponsePaginationDtoInt32</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;Response&lt;PaginationDto&lt;int&gt;&gt;&gt; ResponsePaginationDtoInt32 { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.Response-1.html">Response</a>&lt;<a class="xref" href="AppCore.Application.DTOs.PaginationDto-1.html">PaginationDto</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ResponseString.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ResponseString%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ResponseString.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseString_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseString*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ResponseString" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ResponseString">ResponseString</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;Response&lt;string&gt;&gt; ResponseString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="AppCore.Application.Wrappers.Response-1.html">Response</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_String.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.String%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.String.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_String_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.String*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_String" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.String">String</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;string&gt; String { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_StringArray.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.StringArray%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.StringArray.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_StringArray_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.StringArray*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_StringArray" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.StringArray">StringArray</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;string[]&gt; StringArray { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_TimeOnly.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.TimeOnly%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.TimeOnly.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_TimeOnly_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.TimeOnly*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_TimeOnly" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.TimeOnly">TimeOnly</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;TimeOnly&gt; TimeOnly { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timeonly">TimeOnly</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_ValidationProblemDetails.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.ValidationProblemDetails%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.ValidationProblemDetails.g.cs/#L19">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_ValidationProblemDetails_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ValidationProblemDetails*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_ValidationProblemDetails" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.ValidationProblemDetails">ValidationProblemDetails</h4>
+  <div class="markdown level1 summary"><p>Defines the source generated JSON serialization contract metadata for a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonTypeInfo&lt;ValidationProblemDetails&gt; ValidationProblemDetails { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo-1">JsonTypeInfo</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails">ValidationProblemDetails</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext_GetTypeInfo_System_Type_.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext.GetTypeInfo(System.Type)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.GetJsonTypeInfo.g.cs/#L14">View Source</a>
+  </span>
+  <a id="AppCore_Application_Serialization_AppCoreJsonContext_GetTypeInfo_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.GetTypeInfo*"></a>
+  <h4 id="AppCore_Application_Serialization_AppCoreJsonContext_GetTypeInfo_System_Type_" data-uid="AppCore.Application.Serialization.AppCoreJsonContext.GetTypeInfo(System.Type)">GetTypeInfo(Type)</h4>
+  <div class="markdown level1 summary"><p>Gets metadata for the specified type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override JsonTypeInfo? GetTypeInfo(Type type)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>The type to fetch metadata for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.jsontypeinfo">JsonTypeInfo</a></td>
+        <td><p>The metadata for the specified type, or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> if the context has no metadata for the type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.jsonserializercontext.gettypeinfo">JsonSerializerContext.GetTypeInfo(Type)</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.serialization.metadata.ijsontypeinforesolver">IJsonTypeInfoResolver</a>
+  </div>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Serialization_AppCoreJsonContext.md&amp;value=---%0Auid%3A%20AppCore.Application.Serialization.AppCoreJsonContext%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/obj/Release/net10.0/System.Text.Json.SourceGeneration/System.Text.Json.SourceGeneration.JsonSourceGenerator/AppCoreJsonContext.HttpStatusCode.g.cs/#L11" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

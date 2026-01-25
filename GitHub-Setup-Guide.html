@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Gu&#237;a de Configuraci&#243;n de GitHub para AppCore | AppCore Documentation </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Gu&#237;a de Configuraci&#243;n de GitHub para AppCore | AppCore Documentation ">
+    
+    
+      <link rel="shortcut icon" href="favicon.ico">
+      <link rel="stylesheet" href="styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="styles/docfx.css">
+      <link rel="stylesheet" href="styles/main.css">
+      <meta property="docfx:navrel" content="toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="guía-de-configuración-de-github-para-appcore">Guía de Configuración de GitHub para AppCore</h1>
+
+<p>Esta guía proporciona los pasos detallados para configurar el proyecto AppCore en GitHub y asegurar que el pipeline CI/CD funcione correctamente.</p>
+<h2 id="-requisitos-previos">📋 Requisitos Previos</h2>
+<ul>
+<li>Cuenta de GitHub</li>
+<li>Git instalado localmente</li>
+<li>.NET 10.0.x SDK instalado</li>
+<li><strong>✅ GitHub Packages</strong> (repositorio NuGet público oficial)</li>
+<li><strong>⚠️ NuGet.org</strong> (Ya NO se utiliza - migrado completamente a GitHub Packages)</li>
+</ul>
+<h2 id="-paso-1-creación-del-repositorio-en-github">🚀 Paso 1: Creación del Repositorio en GitHub</h2>
+<h3 id="11-crear-el-repositorio">1.1 Crear el Repositorio</h3>
+<ol>
+<li><p>Ve a <a href="https://github.com">GitHub</a> e inicia sesión</p>
+</li>
+<li><p>Haz clic en el botón <strong>&quot;New&quot;</strong> (Nuevo) o <strong>&quot;Create repository&quot;</strong></p>
+</li>
+<li><p>Configura el repositorio:</p>
+<ul>
+<li><strong>Repository name:</strong> <code>AppCore</code></li>
+<li><strong>Description:</strong> <code>Clean Architecture foundation library providing common patterns, utilities, and abstractions for .NET applications.</code></li>
+<li><strong>Visibility:</strong> Público o Privado (según tu preferencia)</li>
+<li><strong>⚠️ NO</strong> inicializes con README, .gitignore o License (ya los tienes localmente)</li>
+</ul>
+</li>
+<li><p>Haz clic en <strong>&quot;Create repository&quot;</strong></p>
+</li>
+</ol>
+<h3 id="12-configurar-el-repositorio-local">1.2 Configurar el Repositorio Local</h3>
+<pre><code class="lang-bash"># Navega a tu directorio del proyecto
+cd /media/Data/Source/OrionSoft/AppCore-Standalone
+
+# Inicializar Git si no está inicializado
+git init
+
+# Agregar el remote origin
+git remote add origin https://github.com/TU_USUARIO/AppCore.git
+
+# Verificar la configuración del remote
+git remote -v
+</code></pre>
+<h2 id="-paso-2-configuración-de-secrets-y-variables">⚙️ Paso 2: Configuración de Secrets y Variables</h2>
+<p>El pipeline CI/CD requiere varios secrets y variables de entorno configurados en GitHub.</p>
+<h3 id="21-acceder-a-la-configuración-de-secrets">2.1 Acceder a la Configuración de Secrets</h3>
+<ol>
+<li>Ve a tu repositorio en GitHub</li>
+<li>Haz clic en <strong>&quot;Settings&quot;</strong> (Configuración)</li>
+<li>En el menú lateral, selecciona <strong>&quot;Secrets and variables&quot;</strong> &gt; <strong>&quot;Actions&quot;</strong></li>
+</ol>
+<h3 id="22-configurar-secrets-requeridos">2.2 Configurar Secrets Requeridos</h3>
+<h4 id="-github-packages-repositorio-oficial---automático">✅ GitHub Packages (Repositorio Oficial - Automático)</h4>
+<ul>
+<li><code>GITHUB_TOKEN</code> se genera automáticamente por GitHub Actions</li>
+<li><strong>No requiere configuración manual</strong></li>
+<li>Tiene permisos para publicar en GitHub Packages</li>
+<li>Es el método <strong>oficial y recomendado</strong> para AppCore</li>
+</ul>
+<h4 id="-nugetorg-deprecado---ya-no-se-utiliza">⚠️ NuGet.org (DEPRECADO - Ya NO se utiliza)</h4>
+<p><strong>IMPORTANTE:</strong> AppCore ha migrado completamente a GitHub Packages como repositorio NuGet público.
+Ya <strong>NO es necesario</strong> configurar <code>NUGET_API_KEY</code> ni usar NuGet.org.</p>
+<p>Si tienes configurado <code>NUGET_API_KEY</code> de versiones anteriores, puedes eliminarlo de forma segura.</p>
+<h3 id="23-configurar-permisos-de-github-packages">2.3 Configurar Permisos de GitHub Packages</h3>
+<p>Para que el pipeline pueda publicar en GitHub Packages:</p>
+<ol>
+<li>Ve a tu repositorio en GitHub</li>
+<li><strong>Settings</strong> &gt; <strong>Actions</strong> &gt; <strong>General</strong></li>
+<li>En la sección <strong>&quot;Workflow permissions&quot;</strong>:
+<ul>
+<li>✅ Selecciona <strong>&quot;Read and write permissions&quot;</strong></li>
+<li>✅ Marca <strong>&quot;Allow GitHub Actions to create and approve pull requests&quot;</strong></li>
+</ul>
+</li>
+<li>Haz clic en <strong>&quot;Save&quot;</strong></li>
+</ol>
+<h3 id="24-configurar-visibilidad-del-paquete-público">2.4 Configurar Visibilidad del Paquete (Público)</h3>
+<p>Para que el paquete sea accesible públicamente desde GitHub Packages:</p>
+<ol>
+<li>Una vez publicado el primer paquete, ve a la página principal de tu repositorio</li>
+<li>En la barra lateral derecha, busca la sección <strong>&quot;Packages&quot;</strong></li>
+<li>Haz clic en el paquete <strong>AppCore</strong></li>
+<li>Ve a <strong>&quot;Package settings&quot;</strong></li>
+<li>En la sección <strong>&quot;Danger Zone&quot;</strong> &gt; <strong>&quot;Change package visibility&quot;</strong>:
+<ul>
+<li>Selecciona <strong>&quot;Public&quot;</strong></li>
+<li>Confirma el cambio</li>
+</ul>
+</li>
+</ol>
+<h2 id="-paso-3-configuración-de-environments">🔧 Paso 3: Configuración de Environments</h2>
+<p>El pipeline usa dos environments diferentes para staging y producción.</p>
+<h3 id="31-configurar-environment-preview">3.1 Configurar Environment &quot;preview&quot;</h3>
+<ol>
+<li>En GitHub, ve a <strong>Settings</strong> &gt; <strong>Environments</strong></li>
+<li>Haz clic en <strong>&quot;New environment&quot;</strong></li>
+<li>Nombre: <code>preview</code></li>
+<li>Configuración opcional:
+<ul>
+<li><strong>Protection rules:</strong> Ninguna (para desarrollo)</li>
+<li><strong>Environment secrets:</strong> Ninguno adicional requerido</li>
+</ul>
+</li>
+</ol>
+<h3 id="32-configurar-environment-production">3.2 Configurar Environment &quot;production&quot;</h3>
+<ol>
+<li>Crear environment: <code>production</code></li>
+<li><strong>Protection rules recomendadas:</strong>
+<ul>
+<li>✅ <strong>Required reviewers:</strong> Agrégarte a ti mismo</li>
+<li>✅ <strong>Wait timer:</strong> 10 minutos (opcional)</li>
+<li>✅ <strong>Deployment branches:</strong> Solo <code>main</code></li>
+</ul>
+</li>
+<li><strong>Environment secrets:</strong>
+<ul>
+<li>Aquí puedes agregar secrets específicos de producción si es necesario</li>
+</ul>
+</li>
+</ol>
+<h2 id="-paso-4-configurar-github-pages-opcional">📄 Paso 4: Configurar GitHub Pages (Opcional)</h2>
+<p>Para documentación automática:</p>
+<ol>
+<li>Ve a <strong>Settings</strong> &gt; <strong>Pages</strong></li>
+<li><strong>Source:</strong> Deploy from a branch</li>
+<li><strong>Branch:</strong> <code>gh-pages</code> / <code>/ (root)</code></li>
+<li>Haz clic en <strong>&quot;Save&quot;</strong></li>
+</ol>
+<h2 id="-paso-5-configurar-branch-protection-rules">🛡️ Paso 5: Configurar Branch Protection Rules</h2>
+<h3 id="51-proteger-la-rama-main">5.1 Proteger la rama main</h3>
+<ol>
+<li>Ve a <strong>Settings</strong> &gt; <strong>Branches</strong></li>
+<li>Haz clic en <strong>&quot;Add rule&quot;</strong></li>
+<li><strong>Branch name pattern:</strong> <code>main</code></li>
+<li>Configurar protecciones:
+<ul>
+<li>✅ <strong>Require a pull request before merging</strong></li>
+<li>✅ <strong>Require status checks to pass before merging</strong></li>
+<li>✅ <strong>Require branches to be up to date before merging</strong></li>
+<li>✅ <strong>Status checks:</strong> Seleccionar:
+<ul>
+<li><code>Build and Test</code></li>
+<li><code>Code Quality Analysis</code></li>
+</ul>
+</li>
+<li>✅ <strong>Restrict pushes that create files larger than 100 MB</strong></li>
+</ul>
+</li>
+</ol>
+<h3 id="52-configurar-rama-develop-opcional">5.2 Configurar rama develop (Opcional)</h3>
+<p>Repetir el proceso anterior para la rama <code>develop</code> si planeas usarla.</p>
+<h2 id="-paso-6-verificar-configuración-del-proyecto">📦 Paso 6: Verificar Configuración del Proyecto</h2>
+<h3 id="61-verificar-urls-en-appcorecsproj">6.1 Verificar URLs en AppCore.csproj</h3>
+<p>Asegúrate de que las URLs en el archivo <code>src/AppCore/AppCore.csproj</code> sean correctas:</p>
+<pre><code class="lang-xml">&lt;PackageProjectUrl&gt;https://github.com/TU_USUARIO/AppCore&lt;/PackageProjectUrl&gt;
+&lt;RepositoryUrl&gt;https://github.com/TU_USUARIO/AppCore.git&lt;/RepositoryUrl&gt;
+</code></pre>
+<p><strong>⚠️ Reemplaza <code>TU_USUARIO</code> con tu usuario real de GitHub</strong></p>
+<h3 id="62-verificar-sonar-projectproperties">6.2 Verificar sonar-project.properties</h3>
+<p>Si usas SonarCloud, actualizar <code>sonar-project.properties</code>:</p>
+<pre><code class="lang-properties">sonar.organization=TU_ORGANIZACION_SONAR
+</code></pre>
+<h2 id="-paso-7-primer-push-y-validación">🚀 Paso 7: Primer Push y Validación</h2>
+<h3 id="71-realizar-el-primer-commit">7.1 Realizar el Primer Commit</h3>
+<pre><code class="lang-bash"># Agregar todos los archivos
+git add .
+
+# Crear el commit inicial
+git commit -m &quot;feat: initial AppCore project setup
+
+- Clean Architecture foundation library
+- CI/CD pipeline with GitHub Actions
+- Unit tests and SpecFlow BDD tests
+- Code coverage and quality analysis
+- NuGet package creation&quot;
+
+# Crear y cambiar a la rama main
+git branch -M main
+
+# Push inicial
+git push -u origin main
+</code></pre>
+<h3 id="72-crear-rama-develop">7.2 Crear Rama Develop</h3>
+<pre><code class="lang-bash"># Crear rama develop
+git checkout -b develop
+
+# Push de la rama develop
+git push -u origin develop
+</code></pre>
+<h2 id="-paso-8-verificar-que-el-pipeline-funcione">✅ Paso 8: Verificar que el Pipeline Funcione</h2>
+<h3 id="81-verificar-actions">8.1 Verificar Actions</h3>
+<ol>
+<li>Ve a tu repositorio en GitHub</li>
+<li>Haz clic en la pestaña <strong>&quot;Actions&quot;</strong></li>
+<li>Deberías ver el workflow <strong>&quot;CI/CD Pipeline&quot;</strong> ejecutándose o completado</li>
+</ol>
+<h3 id="82-verificar-jobs-ejecutados">8.2 Verificar Jobs Ejecutados</h3>
+<p>El pipeline debe ejecutar estos jobs exitosamente:</p>
+<ul>
+<li>✅ <strong>Build and Test</strong> - Construye y ejecuta pruebas</li>
+<li>✅ <strong>Code Quality Analysis</strong> - Análisis de calidad de código</li>
+<li>✅ <strong>Create Package</strong> - Crea el paquete NuGet</li>
+<li>✅ <strong>Update Documentation</strong> - Actualiza documentación (solo en main)</li>
+</ul>
+<h3 id="83-verificar-artifacts">8.3 Verificar Artifacts</h3>
+<p>Después de una ejecución exitosa, deberías ver estos artifacts:</p>
+<ul>
+<li><code>test-results</code> - Resultados de pruebas</li>
+<li><code>coverage-report</code> - Reporte de cobertura</li>
+<li><code>nuget-packages</code> - Paquetes .nupkg generados</li>
+<li><code>symbol-packages</code> - Paquetes de símbolos .snupkg</li>
+</ul>
+<h2 id="-paso-9-workflow-de-desarrollo">🔄 Paso 9: Workflow de Desarrollo</h2>
+<h3 id="91-para-desarrollo-rama-develop">9.1 Para Desarrollo (rama develop)</h3>
+<pre><code class="lang-bash"># Trabajar en develop
+git checkout develop
+git pull origin develop
+
+# Hacer cambios...
+git add .
+git commit -m &quot;feat: new feature description&quot;
+git push origin develop
+</code></pre>
+<p><strong>Resultado:</strong> Se ejecuta el pipeline y se publica en GitHub Packages como preview.</p>
+<h3 id="92-para-producción-rama-main">9.2 Para Producción (rama main)</h3>
+<pre><code class="lang-bash"># Crear Pull Request desde develop a main
+# Revisar y aprobar el PR
+# Merge del PR a main
+</code></pre>
+<p><strong>Resultado:</strong> Se ejecuta el pipeline completo y actualiza documentación.</p>
+<h3 id="93-para-releases">9.3 Para Releases</h3>
+<pre><code class="lang-bash"># Desde main, crear un tag de release
+git tag -a v1.0.0 -m &quot;Release version 1.0.0&quot;
+git push origin v1.0.0
+
+# Crear release en GitHub UI
+</code></pre>
+<p><strong>Resultado:</strong> El paquete se publica automáticamente en GitHub Packages con la versión del tag.</p>
+<h2 id="-paso-10-consumir-el-paquete-desde-github-packages">📦 Paso 10: Consumir el Paquete desde GitHub Packages</h2>
+<h3 id="101-configurar-nuget-source-una-vez-por-máquina">10.1 Configurar NuGet Source (Una vez por máquina)</h3>
+<p>Para consumir paquetes públicos de GitHub Packages, configura el source en tu sistema:</p>
+<pre><code class="lang-bash"># Agregar GitHub Packages como source de NuGet
+dotnet nuget add source https://nuget.pkg.github.com/TU_USUARIO/index.json \
+  --name github \
+  --username TU_USUARIO \
+  --password TU_GITHUB_PAT \
+  --store-password-in-clear-text
+</code></pre>
+<p><strong>Nota:</strong> Necesitas un Personal Access Token (PAT) de GitHub con scope <code>read:packages</code>.</p>
+<h4 id="crear-personal-access-token">Crear Personal Access Token</h4>
+<ol>
+<li>Ve a GitHub &gt; <strong>Settings</strong> &gt; <strong>Developer settings</strong> &gt; <strong>Personal access tokens</strong> &gt; <strong>Tokens (classic)</strong></li>
+<li>Haz clic en <strong>&quot;Generate new token&quot;</strong> &gt; <strong>&quot;Generate new token (classic)&quot;</strong></li>
+<li>Configuración:
+<ul>
+<li><strong>Note:</strong> <code>AppCore Package Read</code></li>
+<li><strong>Expiration:</strong> 90 días (o más)</li>
+<li><strong>Scopes:</strong> ✅ <code>read:packages</code></li>
+</ul>
+</li>
+<li>Copia el token generado</li>
+</ol>
+<h3 id="102-configurar-en-proyecto-nugetconfig">10.2 Configurar en Proyecto (nuget.config)</h3>
+<p>Alternativamente, puedes configurar por proyecto creando un <code>nuget.config</code>:</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;configuration&gt;
+  &lt;packageSources&gt;
+    &lt;clear /&gt;
+    &lt;add key=&quot;nuget.org&quot; value=&quot;https://api.nuget.org/v3/index.json&quot; protocolVersion=&quot;3&quot; /&gt;
+    &lt;add key=&quot;github&quot; value=&quot;https://nuget.pkg.github.com/TU_USUARIO/index.json&quot; /&gt;
+  &lt;/packageSources&gt;
+  &lt;packageSourceCredentials&gt;
+    &lt;github&gt;
+      &lt;add key=&quot;Username&quot; value=&quot;TU_USUARIO&quot; /&gt;
+      &lt;add key=&quot;ClearTextPassword&quot; value=&quot;TU_GITHUB_PAT&quot; /&gt;
+    &lt;/github&gt;
+  &lt;/packageSourceCredentials&gt;
+&lt;/configuration&gt;
+</code></pre>
+<h3 id="103-instalar-el-paquete">10.3 Instalar el Paquete</h3>
+<pre><code class="lang-bash"># Instalar AppCore desde GitHub Packages
+dotnet add package AppCore --version 1.0.0 --source github
+
+# O editar manualmente el .csproj
+</code></pre>
+<pre><code class="lang-xml">&lt;ItemGroup&gt;
+  &lt;PackageReference Include=&quot;AppCore&quot; Version=&quot;1.0.0&quot; /&gt;
+&lt;/ItemGroup&gt;
+</code></pre>
+<h3 id="104-usar-en-docker--cicd">10.4 Usar en Docker / CI/CD</h3>
+<p>Para usar en ambientes de CI/CD o Docker:</p>
+<pre><code class="lang-dockerfile"># Dockerfile
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /app
+
+# Configurar GitHub Packages
+ARG GITHUB_PAT
+RUN dotnet nuget add source https://nuget.pkg.github.com/TU_USUARIO/index.json \
+    --name github \
+    --username TU_USUARIO \
+    --password ${GITHUB_PAT} \
+    --store-password-in-clear-text
+
+# Restaurar y compilar
+COPY . .
+RUN dotnet restore
+RUN dotnet build
+</code></pre>
+<pre><code class="lang-yaml"># GitHub Actions
+- name: Restore packages
+  run: dotnet restore
+  env:
+    NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+</code></pre>
+<h2 id="-solución-de-problemas-comunes">🐛 Solución de Problemas Comunes</h2>
+<h3 id="error-remote-origin-already-exists">Error: &quot;remote origin already exists&quot;</h3>
+<pre><code class="lang-bash">git remote remove origin
+git remote add origin https://github.com/TU_USUARIO/AppCore.git
+</code></pre>
+<h3 id="error-coverage-threshold-not-met">Error: &quot;Coverage threshold not met&quot;</h3>
+<ul>
+<li>El pipeline requiere al menos 80% de cobertura de código</li>
+<li>Revisa el reporte de cobertura en los artifacts</li>
+<li>Agrega más pruebas unitarias si es necesario</li>
+</ul>
+<h3 id="error-unable-to-load-the-service-index-for-source-github-packages">Error: &quot;Unable to load the service index for source&quot; (GitHub Packages)</h3>
+<p><strong>Causa:</strong> Autenticación incorrecta o token sin permisos.</p>
+<p><strong>Solución:</strong></p>
+<ol>
+<li>Verifica que tu PAT tenga el scope <code>read:packages</code></li>
+<li>Asegúrate de usar el username correcto de GitHub</li>
+<li>Regenera el PAT si es necesario</li>
+</ol>
+<pre><code class="lang-bash"># Listar sources configurados
+dotnet nuget list source
+
+# Remover y re-agregar el source
+dotnet nuget remove source github
+dotnet nuget add source https://nuget.pkg.github.com/TU_USUARIO/index.json \
+  --name github \
+  --username TU_USUARIO \
+  --password NUEVO_PAT \
+  --store-password-in-clear-text
+</code></pre>
+<h3 id="error-package-appcore-is-not-found">Error: &quot;Package 'AppCore' is not found&quot;</h3>
+<p><strong>Causa:</strong> El paquete no está marcado como público en GitHub Packages.</p>
+<p><strong>Solución:</strong></p>
+<ol>
+<li>Ve a GitHub &gt; tu repositorio &gt; <strong>Packages</strong></li>
+<li>Selecciona el paquete <strong>AppCore</strong></li>
+<li><strong>Package settings</strong> &gt; <strong>Change package visibility</strong> &gt; <strong>Public</strong></li>
+<li>Confirma el cambio</li>
+</ol>
+<h3 id="error-de-permisos-en-github-actions-para-publicar">Error de permisos en GitHub Actions para publicar</h3>
+<p><strong>Causa:</strong> Workflow permissions no están configurados correctamente.</p>
+<p><strong>Solución:</strong></p>
+<ol>
+<li>Ve a <strong>Settings</strong> &gt; <strong>Actions</strong> &gt; <strong>General</strong></li>
+<li>En <strong>&quot;Workflow permissions&quot;</strong>, selecciona <strong>&quot;Read and write permissions&quot;</strong></li>
+<li>Guarda los cambios y re-ejecuta el workflow</li>
+</ol>
+<h2 id="-recursos-adicionales">📚 Recursos Adicionales</h2>
+<ul>
+<li><a href="https://docs.github.com/en/actions">GitHub Actions Documentation</a></li>
+<li><a href="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-nuget-registry">GitHub Packages for .NET</a></li>
+<li><a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package">NuGet Package Publishing</a></li>
+<li><a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">Personal Access Tokens</a></li>
+<li><a href="NativeAOT-Compatibility-Report.html">NativeAOT Compatibility</a></li>
+</ul>
+<h2 id="-checklist-final">🎯 Checklist Final</h2>
+<p>Antes de considerar la configuración completa, verifica:</p>
+<ul>
+<li>[ ] Repositorio creado en GitHub</li>
+<li>[ ] <strong>Workflow permissions</strong> configurados (Read and write)</li>
+<li>[ ] Environments configurados (<code>preview</code>, <code>production</code>)</li>
+<li>[ ] Branch protection rules activas</li>
+<li>[ ] URLs actualizadas en <code>AppCore.csproj</code></li>
+<li>[ ] Primer push exitoso</li>
+<li>[ ] Pipeline CI/CD ejecutándose correctamente</li>
+<li>[ ] Paquete publicado en <strong>GitHub Packages</strong></li>
+<li>[ ] <strong>Package visibility</strong> configurada como <strong>Public</strong></li>
+<li>[ ] Tests pasando (Unit tests y SpecFlow)</li>
+<li>[ ] NativeAOT compilation exitosa</li>
+<li>[ ] Cobertura de código &gt;= 80%</li>
+<li>[ ] Consumers pueden instalar el paquete desde GitHub Packages</li>
+</ul>
+<hr>
+<h2 id="-soporte">📞 Soporte</h2>
+<p>Si encuentras problemas durante la configuración:</p>
+<ol>
+<li>Revisa los logs del pipeline en la pestaña &quot;Actions&quot;</li>
+<li>Verifica que todos los secrets estén configurados</li>
+<li>Consulta la documentación de GitHub Actions</li>
+<li>Revisa este documento para pasos faltantes</li>
+</ol>
+<p><strong>¡Tu pipeline CI/CD está listo para funcionar! 🚀</strong></p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/GitHub-Setup-Guide.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

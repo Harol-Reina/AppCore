@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Breaking Changes Potenciales - AppCore Restructuraci&#243;n | AppCore Documentation </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Breaking Changes Potenciales - AppCore Restructuraci&#243;n | AppCore Documentation ">
+    
+    
+      <link rel="shortcut icon" href="favicon.ico">
+      <link rel="stylesheet" href="styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="styles/docfx.css">
+      <link rel="stylesheet" href="styles/main.css">
+      <meta property="docfx:navrel" content="toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="breaking-changes-potenciales---appcore-restructuración">Breaking Changes Potenciales - AppCore Restructuración</h1>
+
+<h2 id="fecha-enero-24-2026">Fecha: Enero 24, 2026</h2>
+<h2 id="fase-1-preparación-y-análisis---tarea-3">Fase 1: Preparación y Análisis - Tarea 3</h2>
+<h2 id="1-cambios-de-visibilidad-breaking">1. Cambios de Visibilidad (BREAKING)</h2>
+<h3 id="-infrastructure-layer---apis-que-se-volverán-internas">🔴 Infrastructure Layer - APIs que se volverán internas</h3>
+<h4 id="clases-que-cambiarán-de-public-a-internal">Clases que cambiarán de <code>public</code> a <code>internal</code></h4>
+<pre><code class="lang-csharp">// ANTES (accesible desde consumidores)
+public class GenericRepository&lt;E, I, D&gt; where D : BaseDao&lt;I&gt;
+
+// DESPUÉS (solo interno a AppCore)  
+internal class GenericRepository&lt;E, I, D&gt; where D : BaseDao&lt;I&gt;
+</code></pre>
+<p><strong>Impacto</strong>: ⚠️ ALTO - Consumidores que hereden directamente de <code>GenericRepository&lt;,,&gt;</code> fallarán en compilación.</p>
+<p><strong>Mitigación</strong>: Usar interface <code>IGenericRepository&lt;E,I&gt;</code> en lugar de la implementación concreta.</p>
+<h4 id="daos-y-clases-base-internas">DAOs y clases base internas</h4>
+<pre><code class="lang-csharp">// ANTES
+public class BaseDao&lt;I&gt;
+public class AuditableBaseDao
+
+// DESPUÉS  
+internal class BaseDao&lt;I&gt;
+internal class AuditableBaseDao
+</code></pre>
+<p><strong>Impacto</strong>: ⚠️ MEDIO - Consumidores que referencien directamente DAOs.</p>
+<h3 id="-behaviors-de-mediatr">🔴 Behaviors de MediatR</h3>
+<pre><code class="lang-csharp">// ANTES
+public class ValidationBehaviour&lt;TRequest, TResponse&gt;
+public class UnhandledExceptionBehaviour&lt;TRequest, TResponse&gt;
+
+// DESPUÉS
+internal class ValidationBehaviour&lt;TRequest, TResponse&gt;
+internal class UnhandledExceptionBehaviour&lt;TRequest, TResponse&gt;
+</code></pre>
+<p><strong>Impacto</strong>: ⚠️ BAJO - Normalmente registrados via DI, no accedidos directamente.</p>
+<h3 id="-exceptions-específicas">🔴 Exceptions Específicas</h3>
+<pre><code class="lang-csharp">// ANTES
+public class ApiDBException
+public class ApiHttpException
+public class HttpBaseException
+public class MappingException
+public class SerializerException
+
+// DESPUÉS
+internal class ApiDBException
+internal class ApiHttpException  
+internal class HttpBaseException
+internal class MappingException
+internal class SerializerException
+</code></pre>
+<p><strong>Impacto</strong>: ⚠️ MEDIO - Código que capture específicamente estas excepciones.</p>
+<p><strong>Mitigación</strong>: Usar <code>CustomException</code> base o exceptions públicas más generales.</p>
+<h2 id="2-cambios-en-dependencias-breaking">2. Cambios en Dependencias (BREAKING)</h2>
+<h3 id="-dependencias-específicas-removidas-del-package-público">🔴 Dependencias específicas removidas del package público</h3>
+<h4 id="postgresql-provider">PostgreSQL Provider</h4>
+<pre><code class="lang-csharp">// ANTES: Incluido automáticamente
+&lt;PackageReference Include=&quot;Npgsql.EntityFrameworkCore.PostgreSQL&quot; Version=&quot;10.0.0&quot; /&gt;
+
+// DESPUÉS: Opcional, consumidor debe agregarlo
+// Solo abstracciones en el paquete base
+</code></pre>
+<p><strong>Impacto</strong>: ⚠️ ALTO - Aplicaciones que dependan de PostgreSQL automáticamente.</p>
+<p><strong>Mitigación</strong>:</p>
+<ul>
+<li>Agregar <code>Npgsql.EntityFrameworkCore.PostgreSQL</code> explícitamente</li>
+<li>Crear package opcional <code>AppCore.PostgreSQL</code></li>
+</ul>
+<h4 id="swaggeropenapi">Swagger/OpenAPI</h4>
+<pre><code class="lang-csharp">// ANTES: Incluido automáticamente
+&lt;PackageReference Include=&quot;Swashbuckle.AspNetCore&quot; Version=&quot;10.1.0&quot; /&gt;
+
+// DESPUÉS: Opcional
+// Solo si el consumidor necesita documentación API
+</code></pre>
+<p><strong>Impacto</strong>: ⚠️ BAJO - La mayoría de APIs web ya incluyen Swagger explícitamente.</p>
+<h4 id="jwt-authentication">JWT Authentication</h4>
+<pre><code class="lang-csharp">// ANTES: Incluido automáticamente  
+&lt;PackageReference Include=&quot;Microsoft.AspNetCore.Authentication.JwtBearer&quot; Version=&quot;10.0.2&quot; /&gt;
+
+// DESPUÉS: Evaluar si mover a package opcional
+</code></pre>
+<p><strong>Impacto</strong>: ⚠️ MEDIO - <code>ICurrentUserService</code> depende de JWT.</p>
+<h2 id="3-cambios-en-estructura-de-apis-potentially-breaking">3. Cambios en Estructura de APIs (POTENTIALLY BREAKING)</h2>
+<h3 id="-simplificación-de-igenericrepository">🟡 Simplificación de IGenericRepository</h3>
+<h4 id="cambio-en-signatura-del-constructor">Cambio en signatura del constructor</h4>
+<pre><code class="lang-csharp">// ANTES: Expone detalles de implementación
+public class ConcreteRepository : GenericRepository&lt;Entity, int, EntityDao&gt;
+
+// DESPUÉS: API más limpia
+public class ConcreteRepository : IGenericRepository&lt;Entity, int&gt;
+</code></pre>
+<p><strong>Impacto</strong>: ⚠️ ALTO para herencia directa, ✅ NINGUNO para uso via interface.</p>
+<h3 id="-consolidación-de-response-wrappers">🟡 Consolidación de Response Wrappers</h3>
+<h4 id="posible-unificación">Posible unificación</h4>
+<pre><code class="lang-csharp">// ANTES: Múltiples wrappers
+public class Response&lt;T&gt;
+public class HttpResponse&lt;T&gt;  
+public class PageResult&lt;T&gt;
+
+// DESPUÉS: Wrapper único optimizado
+public class Response&lt;T&gt;
+// HttpResponse&lt;T&gt; -&gt; obsoleto
+// PageResult&lt;T&gt; -&gt; integrado en Response&lt;T&gt;
+</code></pre>
+<p><strong>Impacto</strong>: ⚠️ MEDIO - Código que use <code>HttpResponse&lt;T&gt;</code> específicamente.</p>
+<h2 id="4-cambios-en-configuración-breaking">4. Cambios en Configuración (BREAKING)</h2>
+<h3 id="-service-registration-changes">🔴 Service Registration Changes</h3>
+<h4 id="extensions-de-di">Extensions de DI</h4>
+<pre><code class="lang-csharp">// ANTES: Registro automático de servicios internos
+services.AddAppCore(); // registra todo automáticamente
+
+// DESPUÉS: Registro más granular
+services.AddAppCoreCore();        // Solo APIs públicas
+services.AddAppCorePostgreSQL();  // Extensión específica PostgreSQL
+services.AddAppCoreSerilog();     // Extensión específica logging
+</code></pre>
+<p><strong>Impacto</strong>: ⚠️ ALTO - Cambios en startup/configuration.</p>
+<p><strong>Mitigación</strong>: Mantener <code>AddAppCore()</code> como método de compatibilidad.</p>
+<h2 id="5-cambios-en-serializaciónjson-potentially-breaking">5. Cambios en Serialización/JSON (POTENTIALLY BREAKING)</h2>
+<h3 id="-jsonconverters-específicos">🟡 JsonConverters específicos</h3>
+<pre><code class="lang-csharp">// Si existen JsonConverters específicos en JsonExtend
+// Evaluar si deben ser públicos o internos
+</code></pre>
+<p><strong>Impacto</strong>: ⚠️ TBD - Depende de implementación actual.</p>
+<h2 id="6-target-framework-changes-potentially-breaking">6. Target Framework Changes (POTENTIALLY BREAKING)</h2>
+<h3 id="-multi-targeting-support">🟡 Multi-targeting support</h3>
+<pre><code class="lang-csharp">// ANTES: Solo .NET 10.0
+&lt;TargetFramework&gt;net10.0&lt;/TargetFramework&gt;
+
+// DESPUÉS: Posible multi-targeting
+&lt;TargetFrameworks&gt;net8.0;net9.0;net10.0&lt;/TargetFrameworks&gt;
+</code></pre>
+<p><strong>Impacto</strong>: ✅ POSITIVO - Mayor compatibilidad, pero podría afectar APIs específicas de versión.</p>
+<h2 id="7-plan-de-mitigación-de-breaking-changes">7. Plan de Mitigación de Breaking Changes</h2>
+<h3 id="estrategia-de-versionado-semántico">Estrategia de Versionado Semántico</h3>
+<h4 id="version-200-major-breaking-release">Version 2.0.0 (Major Breaking Release)</h4>
+<ul>
+<li>✅ Cambios de visibilidad (internal)</li>
+<li>✅ Simplificación de APIs</li>
+<li>✅ Restructuración de dependencias</li>
+</ul>
+<h4 id="compatibility-shims-temporal">Compatibility Shims (Temporal)</h4>
+<pre><code class="lang-csharp">// Obsolete wrappers para transición
+[Obsolete(&quot;Use Response&lt;T&gt; instead. Will be removed in v3.0.0&quot;)]
+public class HttpResponse&lt;T&gt; : Response&lt;T&gt; { }
+
+[Obsolete(&quot;Use IGenericRepository&lt;E,I&gt; interface. Will be removed in v3.0.0&quot;)]
+public abstract class GenericRepositoryBase&lt;E, I&gt; : IGenericRepository&lt;E, I&gt; { }
+</code></pre>
+<h3 id="migration-guide">Migration Guide</h3>
+<pre><code class="lang-csharp">// STEP 1: Cambiar implementaciones concretas por interfaces
+// ANTES
+public class MyRepository : GenericRepository&lt;User, int, UserDao&gt;
+
+// DESPUÉS  
+public class MyRepository : IGenericRepository&lt;User, int&gt;
+
+// STEP 2: Agregar dependencias específicas explícitamente
+// ANTES: Automático
+// DESPUÉS: En .csproj
+&lt;PackageReference Include=&quot;Npgsql.EntityFrameworkCore.PostgreSQL&quot; Version=&quot;10.0.0&quot; /&gt;
+
+// STEP 3: Actualizar DI registration
+// ANTES
+services.AddAppCore();
+
+// DESPUÉS  
+services.AddAppCoreCore();
+services.AddAppCorePostgreSQL();
+</code></pre>
+<h2 id="8-testing-de-compatibilidad">8. Testing de Compatibilidad</h2>
+<h3 id="test-matrix">Test Matrix</h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>v1.x Consumer</th>
+<th>v2.x AppCore</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interface usage</td>
+<td>✅ Uses IGenericRepository</td>
+<td>✅</td>
+<td>✅ Compatible</td>
+</tr>
+<tr>
+<td>Concrete inheritance</td>
+<td>❌ Inherits GenericRepository</td>
+<td>✅</td>
+<td>❌ Compile Error</td>
+</tr>
+<tr>
+<td>Exception catching</td>
+<td>❌ Catches ApiDBException</td>
+<td>✅</td>
+<td>❌ Won't catch</td>
+</tr>
+<tr>
+<td>DI Registration</td>
+<td>✅ Uses AddAppCore()</td>
+<td>✅</td>
+<td>⚠️ Deprecated warning</td>
+</tr>
+</tbody>
+</table>
+<h3 id="automated-breaking-change-detection">Automated Breaking Change Detection</h3>
+<pre><code class="lang-bash"># Using Microsoft.CodeAnalysis.PublicApiAnalyzers
+dotnet add package Microsoft.CodeAnalysis.PublicApiAnalyzers
+
+# Generate baseline
+dotnet pack --configuration Release --verbosity normal
+
+# Compare APIs
+# Implement script para comparar assemblies v1 vs v2
+</code></pre>
+<h2 id="9-cronograma-de-breaking-changes">9. Cronograma de Breaking Changes</h2>
+<h3 id="pre-release-v200-preview">Pre-Release (v2.0.0-preview)</h3>
+<ul>
+<li><strong>Semana 5</strong>: Implementar cambios de visibilidad</li>
+<li><strong>Semana 6</strong>: Testing compatibility matrix</li>
+<li><strong>Semana 7</strong>: Documentation y migration guide</li>
+</ul>
+<h3 id="release-candidato-v200-rc">Release Candidato (v2.0.0-rc)</h3>
+<ul>
+<li><strong>Semana 8</strong>: Validación final con consumidores</li>
+<li><strong>Semana 9</strong>: Ajustes basados en feedback</li>
+</ul>
+<h3 id="release-final-v200">Release Final (v2.0.0)</h3>
+<ul>
+<li><strong>Semana 10</strong>: Release con migration guide completa</li>
+</ul>
+<h3 id="support-timeline">Support Timeline</h3>
+<ul>
+<li><strong>v1.x</strong>: Mantener por 6 meses (solo critical fixes)</li>
+<li><strong>v2.x</strong>: Soporte completo a partir de release</li>
+</ul>
+<hr>
+<h2 id="10-checklist-de-validación-breaking-changes">10. Checklist de Validación Breaking Changes</h2>
+<ul>
+<li>[ ] ✅ Todas las APIs internas marcadas como <code>internal</code></li>
+<li>[ ] ✅ Migration guide documentado</li>
+<li>[ ] ✅ Compatibility matrix tested</li>
+<li>[ ] ✅ Obsolete attributes en APIs deprecated</li>
+<li>[ ] ✅ Unit tests para nuevas APIs públicas</li>
+<li>[ ] ✅ Integration tests con consumidores principales</li>
+<li>[ ] ✅ Performance benchmarks comparativos</li>
+<li>[ ] ✅ Documentation actualizada</li>
+</ul>
+<hr>
+<p><em>Documento generado durante Fase 1 - Tarea 3: Documentación de Breaking Changes</em></p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/Breaking-Changes-Analysis.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Plan de Integraci&#243;n y Validaci&#243;n - AppCore | AppCore Documentation </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Plan de Integraci&#243;n y Validaci&#243;n - AppCore | AppCore Documentation ">
+    
+    
+      <link rel="shortcut icon" href="favicon.ico">
+      <link rel="stylesheet" href="styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="styles/docfx.css">
+      <link rel="stylesheet" href="styles/main.css">
+      <meta property="docfx:navrel" content="toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="plan-de-integración-y-validación---appcore">Plan de Integración y Validación - AppCore</h1>
+
+<h2 id="fecha-enero-24-2026">Fecha: Enero 24, 2026</h2>
+<h2 id="complemento-al-plan-de-implementación">Complemento al Plan de Implementación</h2>
+<h2 id="-objetivo">🎯 Objetivo</h2>
+<p>Este documento especifica el proceso sistemático de integración y validación que debe seguirse después de completar cada fase del desarrollo, asegurando que todas las funcionalidades trabajen correctamente antes de actualizar la documentación oficial.</p>
+<h2 id="-estándares-obligatorios-de-desarrollo">📋 Estándares Obligatorios de Desarrollo</h2>
+<h3 id="-política-de-commit-con-aprobación-explícita">🔄 Política de Commit con Aprobación Explícita</h3>
+<h4 id="principio-fundamental">Principio Fundamental</h4>
+<blockquote>
+<p><strong>La IA nunca ejecuta <code>git commit</code> automáticamente.</strong></p>
+</blockquote>
+<p>La IA <strong>solo puede proponer commits</strong>. Un commit se ejecuta <strong>únicamente</strong> tras aprobación explícita del usuario.</p>
+<h4 id="flujo-estándar-de-trabajo-commit-approval-flow">Flujo Estándar de Trabajo (Commit Approval Flow)</h4>
+<ol>
+<li><p><strong>Implementación de Cambios</strong></p>
+<ul>
+<li>La IA realiza los cambios solicitados según la especificación</li>
+<li>Los cambios quedan en estado <em>working tree</em> o <em>staged</em>, pero <strong>sin commit</strong></li>
+</ul>
+</li>
+<li><p><strong>Stage &amp; Summary</strong>
+La IA presenta:</p>
+<ul>
+<li>Lista de archivos modificados</li>
+<li>Resumen de intención del cambio</li>
+<li>Riesgos o impactos relevantes</li>
+</ul>
+</li>
+<li><p><strong>Propuesta de Commit (Commit Proposal)</strong>
+Para cada commit propuesto, la IA debe mostrar:</p>
+<ul>
+<li>Identificador del commit propuesto (Commit 1, Commit 2, etc.)</li>
+<li>Mensaje en formato <strong>Conventional Commits</strong></li>
+<li>Alcance funcional del commit (qué incluye)</li>
+<li>Exclusiones explícitas (qué NO incluye)</li>
+</ul>
+</li>
+<li><p><strong>Punto de Aprobación (Approval Gate)</strong>
+El flujo <strong>se detiene</strong> hasta recibir una instrucción explícita del usuario.</p>
+<p>Comandos válidos del usuario:</p>
+<ul>
+<li><code>APPROVE COMMIT &lt;n&gt;</code> → Ejecuta solo el commit indicado</li>
+<li><code>APPROVE ALL</code> → Ejecuta todos los commits propuestos</li>
+<li><code>CHANGE: &lt;instrucciones&gt;</code> → Solicita ajustes antes de aprobar</li>
+<li><code>CANCEL</code> → Descarta los cambios propuestos</li>
+</ul>
+</li>
+<li><p><strong>Ejecución del Commit</strong></p>
+<ul>
+<li>Solo tras aprobación explícita</li>
+<li>Se ejecuta el commit localmente</li>
+<li>Se reporta el hash generado</li>
+</ul>
+</li>
+<li><p><strong>Post-Commit</strong></p>
+<ul>
+<li>Actualización de documentación o métricas si aplica</li>
+<li>Continuación del siguiente micro-sprint</li>
+</ul>
+</li>
+</ol>
+<h4 id="registro-de-commits">Registro de Commits</h4>
+<p><strong>Formato Nuevo (OBLIGATORIO):</strong></p>
+<p><strong>Commits propuestos (pendientes de aprobación):</strong></p>
+<ol>
+<li><code>&lt;mensaje commit&gt;</code> — <code>&lt;archivos/área&gt;</code> — <code>&lt;objetivo&gt;</code></li>
+</ol>
+<p><strong>Commits aprobados (ejecutados):</strong></p>
+<ol>
+<li><code>&lt;mensaje commit&gt;</code> — <code>&lt;hash&gt;</code></li>
+</ol>
+<h4 id="política-de-tamaño-y-frecuencia-de-commits">Política de Tamaño y Frecuencia de Commits</h4>
+<ul>
+<li>1 commit = 1 intención clara</li>
+<li>Máximo recomendado:
+<ul>
+<li>1–5 archivos por commit</li>
+<li>Excepcionalmente más, solo en refactors mecánicos</li>
+</ul>
+</li>
+<li>Documentación y código:
+<ul>
+<li>Preferir commits separados (<code>feat/fix</code> y luego <code>docs:</code>)</li>
+</ul>
+</li>
+</ul>
+<h4 id="estrategia-de-micro-sprints">Estrategia de Micro-Sprints</h4>
+<ul>
+<li>Reemplazar &quot;1 semana completa&quot; por <strong>micro-sprints de 0.5–1 día</strong></li>
+<li>Cada micro-sprint debe producir:
+<ul>
+<li>Cambios verificables</li>
+<li>Tests pasando</li>
+<li>1–3 commits propuestos (máximo)</li>
+</ul>
+</li>
+<li>La semana se considera un <strong>contenedor de micro-sprints</strong>, no una única ejecución</li>
+</ul>
+<h4 id="plantilla-para-solicitudes-a-la-ia">Plantilla para Solicitudes a la IA</h4>
+<p><strong>Contexto:</strong></p>
+<ul>
+<li>Objetivo del cambio</li>
+<li>Restricciones técnicas</li>
+</ul>
+<p><strong>Especificación:</strong></p>
+<ul>
+<li>Criterios de aceptación</li>
+<li>Archivos/áreas permitidas</li>
+<li>Archivos/áreas prohibidas</li>
+</ul>
+<p><strong>Plan de commits esperado:</strong></p>
+<ul>
+<li>Número máximo de commits</li>
+<li>Regla: solo proponer, no ejecutar</li>
+</ul>
+<p><strong>Salida requerida:</strong></p>
+<ul>
+<li>Lista de archivos modificados</li>
+<li>Resumen de cambios</li>
+<li>Propuesta de commits</li>
+</ul>
+<h4 id="regla-de-oro">Regla de Oro</h4>
+<blockquote>
+<p>❝Si el usuario no escribió APPROVE, el commit no existe❞</p>
+</blockquote>
+<h3 id="-conventional-commits---obligatorio">🎯 Conventional Commits - OBLIGATORIO</h3>
+<p><strong>TODOS los commits en este proyecto DEBEN seguir las convenciones de Conventional Commits sin excepción.</strong></p>
+<h4 id="estructura-requerida">Estructura Requerida</h4>
+<pre><code>&lt;type&gt;[optional scope]: &lt;description&gt;
+
+[optional body]
+
+[optional footer(s)]
+</code></pre>
+<h4 id="tipos-de-commit-permitidos">Tipos de Commit Permitidos</h4>
+<ul>
+<li><code>feat</code>: Nueva funcionalidad</li>
+<li><code>fix</code>: Corrección de bugs</li>
+<li><code>refactor</code>: Refactorización sin cambios funcionales</li>
+<li><code>docs</code>: Cambios en documentación</li>
+<li><code>test</code>: Agregar o modificar tests</li>
+<li><code>chore</code>: Tareas de mantenimiento</li>
+<li><code>perf</code>: Mejoras de performance</li>
+<li><code>style</code>: Cambios de formato</li>
+<li><code>ci</code>: Cambios en CI/CD</li>
+<li><code>build</code>: Cambios en sistema de build</li>
+</ul>
+<h4 id="enforcement">Enforcement</h4>
+<ul>
+<li>✅ Git hooks configurados para validar formato</li>
+<li>✅ PR reviews deben verificar compliance</li>
+<li>✅ Breaking changes DEBEN incluir <code>BREAKING CHANGE:</code> en footer</li>
+<li>✅ Scopes deben ser relevantes al área modificada</li>
+<li>✅ <strong>Aprobación explícita del usuario requerida antes de ejecutar commit</strong></li>
+</ul>
+<h2 id="-proceso-de-validación-post-integración">🔍 Proceso de Validación Post-Integración</h2>
+<h3 id="scripts-de-validación-obligatorios">Scripts de Validación Obligatorios</h3>
+<p>Antes de marcar cualquier fase como <strong>COMPLETADA</strong>, se DEBEN ejecutar los siguientes scripts:</p>
+<h4 id="1-script-de-cobertura-de-tests">1. Script de Cobertura de Tests</h4>
+<pre><code class="lang-bash">cd build/coverage
+./collect-coverage.sh
+</code></pre>
+<p><strong>Valida:</strong></p>
+<ul>
+<li>Ejecución de todos los tests unitarios</li>
+<li>Generación de reportes de cobertura</li>
+<li>Cálculo de métricas de cobertura de línea y rama</li>
+<li>Validación de umbrales mínimos</li>
+</ul>
+<h4 id="2-script-de-build-y-análisis">2. Script de Build y Análisis</h4>
+<pre><code class="lang-bash">cd build/scripts  
+./build-and-analyze.sh
+</code></pre>
+<p><strong>Valida:</strong></p>
+<ul>
+<li>Build completo sin errores</li>
+<li>Análisis estático de código (SonarQube)</li>
+<li>Validación de quality gates</li>
+<li>Verificación de dependencias</li>
+</ul>
+<h3 id="criterios-de-aceptación-post-validación">Criterios de Aceptación Post-Validación</h3>
+<p>Una fase SOLO se considera <strong>COMPLETADA</strong> cuando cumple:</p>
+<h4 id="-métricas-de-calidad">✅ Métricas de Calidad</h4>
+<ul>
+<li><strong>Cobertura de línea</strong>: ≥ 80% (objetivo final)</li>
+<li><strong>Cobertura de rama</strong>: ≥ 70% (objetivo final)</li>
+<li><strong>Tests unitarios</strong>: 100% passing</li>
+<li><strong>Tests BDD</strong>: ≥ 90% passing</li>
+<li><strong>SonarQube issues</strong>: 0 blocker, &lt; 5 major</li>
+</ul>
+<h4 id="-validación-de-scripts">✅ Validación de Scripts</h4>
+<ul>
+<li><strong>collect-coverage.sh</strong>: Ejecución exitosa sin errores</li>
+<li><strong>build-and-analyze.sh</strong>: Passed todos los quality gates</li>
+<li><strong>Build time</strong>: Dentro de SLA definido</li>
+<li><strong>Memory usage</strong>: Sin memory leaks detectados</li>
+</ul>
+<h4 id="-documentación">✅ Documentación</h4>
+<ul>
+<li><strong>Plan de implementación</strong>: Actualizado con logros reales</li>
+<li><strong>Métricas</strong>: Reflejan valores reales obtenidos</li>
+<li><strong>Issues conocidos</strong>: Documentados con workarounds</li>
+<li><strong>Evidencia</strong>: Enlaces a reportes de coverage/análisis</li>
+</ul>
+<h2 id="-template-para-actualización-del-plan">📊 Template para Actualización del Plan</h2>
+<p>Cuando una fase pase todas las validaciones, actualizar el plan usando:</p>
+<pre><code class="lang-markdown">### 📊 Estado Actual de la Fase X (Completada)
+**Fecha de finalización:** [FECHA REAL]
+
+**Logros principales:**
+- ✅ [Logro específico con evidencia]
+- ✅ [Característica implementada con prueba]
+- ✅ [Milestone alcanzado con métrica]
+
+**Métricas alcanzadas:**
+- Cobertura de línea: [X.Y]% (✅ objetivo ≥ 80%)
+- Cobertura de rama: [X.Y]% (✅ objetivo ≥ 70%)
+- Tests unitarios: [passing]/[total] ([percentage]%)
+- Tests BDD: [passing]/[total] ([percentage]%)
+- Build time: [X.Y]s (✅ objetivo &lt; [target]s)
+- SonarQube issues: [blockers]/[major]/[minor]
+
+**Evidencia de validación:**
+- ✅ collect-coverage.sh: [timestamp] - SUCCESS
+- ✅ build-and-analyze.sh: [timestamp] - PASSED
+- ✅ Coverage report: [link to report]
+- ✅ SonarQube dashboard: [link to dashboard]
+- ✅ All tests passed: [link to test results]
+
+**Issues identificados:**
+- ⚠️ [Issue minor con workaround]
+- 📝 [Mejora sugerida para próxima fase]
+
+**Próximos pasos:**
+- 🎯 [Preparación para siguiente fase]
+- 📋 [Actualización necesaria en documentación]
+</code></pre>
+<h2 id="-flujo-de-trabajo-de-validación">🔄 Flujo de Trabajo de Validación</h2>
+<h3 id="proceso-step-by-step">Proceso Step-by-Step</h3>
+<ol>
+<li><p><strong>Desarrollo Completado</strong></p>
+<ul>
+<li>Todos los commits siguen Conventional Commits</li>
+<li>Features implementadas según especificaciones</li>
+<li>Tests unitarios y BDD creados</li>
+</ul>
+</li>
+<li><p><strong>Pre-Validación</strong></p>
+<pre><code class="lang-bash"># Ejecutar tests localmente
+dotnet test
+
+# Verificar formato de commits
+git log --oneline -10
+</code></pre>
+</li>
+<li><p><strong>Validación Formal</strong></p>
+<pre><code class="lang-bash"># Script de cobertura
+cd build/coverage &amp;&amp; ./collect-coverage.sh
+
+# Script de build y análisis  
+cd ../scripts &amp;&amp; ./build-and-analyze.sh
+</code></pre>
+</li>
+<li><p><strong>Evaluación de Criterios</strong></p>
+<ul>
+<li>✅ Todos los scripts exitosos</li>
+<li>✅ Métricas dentro de objetivos</li>
+<li>✅ Quality gates passed</li>
+<li>✅ Sin issues críticos</li>
+</ul>
+</li>
+<li><p><strong>Actualización del Plan</strong></p>
+<ul>
+<li>Commit con template de actualización</li>
+<li>Push de cambios documentados</li>
+<li>Marcar fase como completada</li>
+</ul>
+</li>
+<li><p><strong>Notificación al Equipo</strong></p>
+<ul>
+<li>Comunicar completion de fase</li>
+<li>Compartir métricas alcanzadas</li>
+<li>Preparar siguiente fase</li>
+</ul>
+</li>
+</ol>
+<h2 id="-qué-hacer-si-fallan-las-validaciones">🚨 Qué Hacer Si Fallan las Validaciones</h2>
+<h3 id="si-collect-coveragesh-falla">Si collect-coverage.sh Falla</h3>
+<ol>
+<li><p><strong>Verificar tests unitarios</strong></p>
+<pre><code class="lang-bash">dotnet test --verbosity normal
+</code></pre>
+</li>
+<li><p><strong>Revisar configuration</strong></p>
+<pre><code class="lang-bash">cat coverage.runsettings
+</code></pre>
+</li>
+<li><p><strong>Ejecutar manualmente</strong></p>
+<pre><code class="lang-bash">dotnet test --collect:&quot;XPlat Code Coverage&quot; --settings coverage.runsettings
+</code></pre>
+</li>
+<li><p><strong>Documentar issue</strong></p>
+<ul>
+<li>Crear issue en GitHub/Azure DevOps</li>
+<li>Incluir logs de error</li>
+<li>Asignar prioridad</li>
+</ul>
+</li>
+</ol>
+<h3 id="si-build-and-analyzesh-falla">Si build-and-analyze.sh Falla</h3>
+<ol>
+<li><p><strong>Verificar build local</strong></p>
+<pre><code class="lang-bash">dotnet build --verbosity normal
+</code></pre>
+</li>
+<li><p><strong>Revisar SonarQube issues</strong></p>
+<ul>
+<li>Acceder al dashboard</li>
+<li>Identificar blockers/majors</li>
+<li>Priorizar fixes</li>
+</ul>
+</li>
+<li><p><strong>Fix crítico</strong></p>
+<ul>
+<li>Resolver issues blocker primero</li>
+<li>Commit con fix: <code>fix(sonar): resolve critical issue XYZ</code></li>
+<li>Re-ejecutar script</li>
+</ul>
+</li>
+</ol>
+<h2 id="-responsabilidades-del-equipo">👥 Responsabilidades del Equipo</h2>
+<h3 id="-desarrolladores">🔧 Desarrolladores</h3>
+<ul>
+<li>✅ Usar Conventional Commits en TODOS los commits</li>
+<li>✅ Ejecutar collect-coverage.sh antes de PR</li>
+<li>✅ Verificar que build-and-analyze.sh pasa</li>
+<li>✅ Actualizar métricas reales en plan</li>
+<li>✅ Documentar issues encontrados</li>
+</ul>
+<h3 id="-tech-lead">👨‍💼 Tech Lead</h3>
+<ul>
+<li>✅ Revisar compliance de Conventional Commits</li>
+<li>✅ Aprobar actualizaciones del plan</li>
+<li>✅ Validar criterios de aceptación de fases</li>
+<li>✅ Asegurar evidencia de validación completa</li>
+<li>✅ Comunicar completion de fases</li>
+</ul>
+<h3 id="-qa-engineer">🧪 QA Engineer</h3>
+<ul>
+<li>✅ Validar ejecución de scripts de coverage</li>
+<li>✅ Verificar métricas reportadas son precisas</li>
+<li>✅ Confirmar que quality gates están configurados</li>
+<li>✅ Testear escenarios de integración</li>
+<li>✅ Validar documentación de issues</li>
+</ul>
+<h2 id="-métricas-de-proceso">📈 Métricas de Proceso</h2>
+<h3 id="indicadores-de-eficiencia-del-proceso">Indicadores de Eficiencia del Proceso</h3>
+<ul>
+<li><strong>Tiempo promedio de validación</strong>: &lt; 30 minutos</li>
+<li><strong>Tasa de fallo en primera validación</strong>: &lt; 20%</li>
+<li><strong>Tiempo de resolución de fallos</strong>: &lt; 2 horas</li>
+<li><strong>Accuracy de métricas reportadas</strong>: 100%</li>
+<li><strong>Compliance con Conventional Commits</strong>: 100%</li>
+</ul>
+<h3 id="reportes-requeridos">Reportes Requeridos</h3>
+<h4 id="semanal">Semanal</h4>
+<ul>
+<li>Status de fases completadas</li>
+<li>Métricas de cobertura trending</li>
+<li>Issues críticos identificados</li>
+<li>Performance de scripts</li>
+</ul>
+<h4 id="por-fase">Por Fase</h4>
+<ul>
+<li>Reporte completo de validación</li>
+<li>Comparativo con objetivos</li>
+<li>Lessons learned</li>
+<li>Mejoras al proceso</li>
+</ul>
+<h2 id="-configuración-de-automatización">🔧 Configuración de Automatización</h2>
+<h3 id="git-hooks-recomendado">Git Hooks (Recomendado)</h3>
+<pre><code class="lang-bash"># .git/hooks/commit-msg
+#!/bin/sh
+commit_regex='^(feat|fix|refactor|docs|test|chore|perf|style|ci|build)(\(.+\))?: .{1,72}$'
+
+if ! grep -qE &quot;$commit_regex&quot; &quot;$1&quot;; then
+    echo &quot;❌ Invalid commit message format!&quot;
+    echo &quot;Format: &lt;type&gt;[optional scope]: &lt;description&gt;&quot;
+    echo &quot;Example: feat(auth): add JWT token validation&quot;
+    exit 1
+fi
+</code></pre>
+<h3 id="cicd-integration">CI/CD Integration</h3>
+<pre><code class="lang-yaml"># .github/workflows/validation.yml
+name: Post-Integration Validation
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run Coverage Script
+        run: |
+          cd build/coverage
+          chmod +x collect-coverage.sh
+          ./collect-coverage.sh
+          
+      - name: Run Build and Analysis  
+        run: |
+          cd build/scripts
+          chmod +x build-and-analyze.sh
+          ./build-and-analyze.sh
+</code></pre>
+<hr>
+<p><strong>Nota</strong>: Este plan de integración es parte integral del Plan de Implementación principal. Debe seguirse rigurosamente para asegurar la calidad y trazabilidad del proceso de desarrollo.</p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/Integration-Plan.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

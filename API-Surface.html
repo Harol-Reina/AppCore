@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>AppCore API Surface Definition | AppCore Documentation </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="AppCore API Surface Definition | AppCore Documentation ">
+    
+    
+      <link rel="shortcut icon" href="favicon.ico">
+      <link rel="stylesheet" href="styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="styles/docfx.css">
+      <link rel="stylesheet" href="styles/main.css">
+      <meta property="docfx:navrel" content="toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="appcore-api-surface-definition">AppCore API Surface Definition</h1>
+
+<h2 id="public-api-expuesta-a-consumidores">Public API (Expuesta a consumidores)</h2>
+<h3 id="application-layer---interfaces">Application Layer - Interfaces</h3>
+<ul>
+<li><code>ICurrentUserService</code> - Gestión de usuario actual</li>
+<li><code>IDateTimeService</code> - Abstracción de tiempo</li>
+<li><code>IEndpointGroupBase</code> - Base para endpoints</li>
+</ul>
+<h3 id="application-layer---dtos-y-wrappers">Application Layer - DTOs y Wrappers</h3>
+<ul>
+<li><code>Response&lt;T&gt;</code> - Wrapper de respuesta estándar</li>
+<li><code>PaginationDto&lt;T&gt;</code> - Paginación genérica</li>
+<li><code>HttpResponse&lt;T&gt;</code> - Respuesta HTTP tipada</li>
+<li>DTOs base: <code>LoginRequest</code>, <code>LoginResponse</code>, <code>EmailRequest</code></li>
+</ul>
+<h3 id="application-layer---exceptions">Application Layer - Exceptions</h3>
+<ul>
+<li><code>ValidationException</code> - Validaciones</li>
+<li><code>NotFoundException</code> - Recurso no encontrado</li>
+<li><code>BadRequestException</code> - Solicitud inválida</li>
+<li><code>CustomException</code> - Excepciones personalizadas</li>
+</ul>
+<h3 id="domain-layer---base-classes">Domain Layer - Base Classes</h3>
+<ul>
+<li><code>BaseEntity&lt;T&gt;</code> - Entidad base</li>
+<li><code>AuditableEntity</code> - Entidad auditable</li>
+<li><code>IGenericRepository&lt;E,I&gt;</code> - Repositorio genérico</li>
+</ul>
+<h3 id="infrastructure-layer---services">Infrastructure Layer - Services</h3>
+<ul>
+<li><code>HttpService</code> - Cliente HTTP base</li>
+<li><code>GenericRepository&lt;E,I,D&gt;</code> - Implementación repositorio</li>
+<li><code>DateTimeService</code> - Implementación tiempo</li>
+<li><code>CurrentUserService</code> - Implementación usuario</li>
+</ul>
+<h3 id="extensions-y-utilities">Extensions y Utilities</h3>
+<ul>
+<li><code>JsonExtend</code> - Utilidades JSON</li>
+<li><code>ServiceExtensions</code> - Extensiones DI</li>
+<li><code>Configuration</code> - Utilidades configuración</li>
+</ul>
+<h2 id="internal-api-solo-para-appcore">Internal API (Solo para AppCore)</h2>
+<h3 id="infrastructure-internals">Infrastructure Internals</h3>
+<ul>
+<li>Clases DAO concretas (<code>BaseDao</code>, <code>AuditableBaseDao</code>)</li>
+<li>Interceptors específicos (<code>SaveChangesInterceptor</code>)</li>
+<li>Middlewares internos</li>
+<li>Converters específicos</li>
+</ul>
+<h3 id="application-internals">Application Internals</h3>
+<ul>
+<li>Behaviors de MediatR</li>
+<li>Validadores internos</li>
+<li>Mappers específicos</li>
+<li>Utilidades internas</li>
+</ul>
+<h2 id="flujo-de-migración">Flujo de Migración</h2>
+<ol>
+<li><strong>Marcar APIs internas</strong>: Usar <code>internal</code> keyword</li>
+<li><strong>Documentar API pública</strong>: XML docs completa</li>
+<li><strong>Crear ejemplos de uso</strong>: Para cada API pública</li>
+<li><strong>Versioning contract</strong>: Seguir SemVer estrictamente</li>
+</ol>
+<h2 id="interfaces-que-necesitan-refactoring">Interfaces que necesitan refactoring</h2>
+<pre><code class="lang-csharp">// Antes (expone detalles internos)
+public class GenericRepository&lt;E, I, D&gt; 
+    where D : BaseDao&lt;I&gt;
+
+// Después (oculta implementación)
+public abstract class GenericRepository&lt;E, I&gt; : IGenericRepository&lt;E, I&gt;
+    where E : BaseEntity&lt;I&gt;
+{
+    internal abstract D ToDao(E entity);
+    internal abstract E ToEntity(D dao);
+}
+</code></pre>
+<h2 id="breaking-changes-policy">Breaking Changes Policy</h2>
+<ul>
+<li><strong>Major</strong>: Cambios en interfaces públicas, eliminación de APIs</li>
+<li><strong>Minor</strong>: Nuevas APIs, deprecation warnings</li>
+<li><strong>Patch</strong>: Bug fixes, improvements internos</li>
+</ul>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/API-Surface.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

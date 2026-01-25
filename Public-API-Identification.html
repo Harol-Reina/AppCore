@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Identificaci&#243;n de APIs P&#250;blicas vs Internas - AppCore | AppCore Documentation </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Identificaci&#243;n de APIs P&#250;blicas vs Internas - AppCore | AppCore Documentation ">
+    
+    
+      <link rel="shortcut icon" href="favicon.ico">
+      <link rel="stylesheet" href="styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="styles/docfx.css">
+      <link rel="stylesheet" href="styles/main.css">
+      <meta property="docfx:navrel" content="toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="identificación-de-apis-públicas-vs-internas---appcore">Identificación de APIs Públicas vs Internas - AppCore</h1>
+
+<h2 id="fecha-enero-24-2026">Fecha: Enero 24, 2026</h2>
+<h2 id="fase-1-preparación-y-análisis---tarea-2">Fase 1: Preparación y Análisis - Tarea 2</h2>
+<h2 id="1-apis-públicas-identificadas">1. APIs Públicas Identificadas</h2>
+<h3 id="-domain-layer---interfaces-públicas">🟢 Domain Layer - Interfaces Públicas</h3>
+<h4 id="igenericrepositorye-i">IGenericRepository&lt;E, I&gt;</h4>
+<pre><code class="lang-csharp">namespace AppCore.Domain.Interfaces;
+public interface IGenericRepository&lt;E, I&gt; where E : BaseEntity&lt;I&gt;
+{
+    // CRUD Operations
+    Task&lt;List&lt;E&gt;?&gt; GetAllAsync(params Expression&lt;Func&lt;E, object&gt;&gt;[]? includes);
+    Task&lt;PaginationDto&lt;E&gt;?&gt; GetPagedAsync(int pageNumber, int pageSize, params Expression&lt;Func&lt;E, object&gt;&gt;[]? includes);
+    Task&lt;E?&gt; GetByIdAsync(I id, params Expression&lt;Func&lt;E, object&gt;&gt;[]? includes);
+    Task&lt;E?&gt; AddAsync(E entity);
+    Task UpdateAsync(E entity);
+    Task DeleteAsync(E entity);
+    
+    // Query Operations  
+    Task&lt;List&lt;E&gt;?&gt; FindAsync(Expression&lt;Func&lt;E, bool&gt;&gt; expression, params Expression&lt;Func&lt;E, object&gt;&gt;[]? includes);
+    Task&lt;E?&gt; FindFirstAsync(Expression&lt;Func&lt;E, bool&gt;&gt; expression, params Expression&lt;Func&lt;E, object&gt;&gt;[]? includes);
+    Task&lt;int&gt; CountAsync(Expression&lt;Func&lt;E, bool&gt;&gt;? expression = null);
+    Task&lt;bool&gt; AnyAsync(Expression&lt;Func&lt;E, bool&gt;&gt;? expression = null);
+}
+</code></pre>
+<p><strong>Status</strong>: ✅ PÚBLICA - Interface principal para repositorios</p>
+<h4 id="ihttprequestrepository">IHttpRequestRepository</h4>
+<pre><code class="lang-csharp">namespace AppCore.Domain.Interfaces;
+// Pendiente de revisión
+</code></pre>
+<p><strong>Status</strong>: ⚠️ REVISAR - Evaluar si debe ser pública</p>
+<h3 id="-application-layer---interfaces-públicas">🟢 Application Layer - Interfaces Públicas</h3>
+<h4 id="icurrentuserservice">ICurrentUserService</h4>
+<pre><code class="lang-csharp">namespace AppCore.Application.Interfaces;
+public interface ICurrentUserService 
+{
+    string GetUserId([CallerMemberName] string memberName = &quot;&quot;);
+    string GetUserName([CallerMemberName] string memberName = &quot;&quot;);  
+    string GetToken([CallerMemberName] string memberName = &quot;&quot;);
+    JwtSecurityToken GetJwtToken([CallerMemberName] string memberName = &quot;&quot;);
+    string GetXtraceId([CallerMemberName] string memberName = &quot;&quot;);
+}
+</code></pre>
+<p><strong>Status</strong>: ✅ PÚBLICA - Interface esencial para autenticación</p>
+<h4 id="idatetimeservice">IDateTimeService</h4>
+<pre><code class="lang-csharp">namespace AppCore.Application.Interfaces;
+// Pendiente de revisión
+</code></pre>
+<p><strong>Status</strong>: ✅ PÚBLICA - Abstracción de tiempo</p>
+<h4 id="iendpointgroupbase">IEndpointGroupBase</h4>
+<pre><code class="lang-csharp">namespace AppCore.Application.Interfaces;
+// Pendiente de revisión
+</code></pre>
+<p><strong>Status</strong>: ⚠️ REVISAR - Evaluar necesidad pública</p>
+<h3 id="-application-layer---dtos-públicos">🟢 Application Layer - DTOs Públicos</h3>
+<h4 id="response-wrapper-principal">Response<t> (Wrapper Principal)</t></h4>
+<pre><code class="lang-csharp">namespace AppCore.Application.Wrappers;
+public class Response&lt;T&gt;
+{
+    public string? Message { get; init; }
+    public T? Data { get; set; }
+    
+    public static Response&lt;T&gt; Success(string message, T? data = default);
+    public static Response&lt;T&gt; Success(T data);
+    public static Response&lt;T&gt; Failure(string message, T? data = default);
+}
+</code></pre>
+<p><strong>Status</strong>: ✅ PÚBLICA - Wrapper principal de respuestas</p>
+<h4 id="paginationdto">PaginationDto<t></t></h4>
+<pre><code class="lang-csharp">namespace AppCore.Application.DTOs;
+public class PaginationDto&lt;T&gt;
+{
+    // Properties de paginación
+}
+</code></pre>
+<p><strong>Status</strong>: ✅ PÚBLICA - DTO esencial para paginación</p>
+<h4 id="dtos-de-autenticación">DTOs de Autenticación</h4>
+<pre><code class="lang-csharp">namespace AppCore.Application.DTOs;
+public class LoginRequest { }      // ✅ PÚBLICA
+public class LoginResponse { }     // ✅ PÚBLICA  
+public class EmailRequest { }      // ✅ PÚBLICA
+</code></pre>
+<h3 id="-application-layer---exceptions-públicas">🟢 Application Layer - Exceptions Públicas</h3>
+<h4 id="exceptions-base">Exceptions Base</h4>
+<pre><code class="lang-csharp">namespace AppCore.Application.Exceptions;
+public abstract class CustomException : Exception         // ✅ PÚBLICA
+public class BadRequestException : CustomException        // ✅ PÚBLICA
+public class NotFoundException : CustomException          // ✅ PÚBLICA
+public class ValidationException : CustomException       // ✅ PÚBLICA
+public class AuthenticationException : CustomException   // ✅ PÚBLICA
+public class ForbiddenAccessException : CustomException  // ✅ PÚBLICA
+</code></pre>
+<h4 id="exceptions-internasespecíficas">Exceptions Internas/Específicas</h4>
+<pre><code class="lang-csharp">namespace AppCore.Application.Exceptions;
+public class ApiDBException : CustomException            // 🔴 INTERNA
+public class ApiHttpException : CustomException          // 🔴 INTERNA
+public class HttpBaseException : CustomException         // 🔴 INTERNA
+public class MappingException : CustomException          // 🔴 INTERNA
+public class OperationException : CustomException        // ⚠️ REVISAR
+public class SerializerException : CustomException       // 🔴 INTERNA
+</code></pre>
+<h2 id="2-apis-que-deben-ser-internas">2. APIs que deben ser INTERNAS</h2>
+<h3 id="-infrastructure-layer---todas-internas">🔴 Infrastructure Layer - Todas Internas</h3>
+<pre><code class="lang-csharp">namespace AppCore.Infrastructure;
+// Todo el namespace debe ser internal
+internal class GenericRepository&lt;E, I, D&gt;    // Implementación específica
+internal class BaseDao&lt;I&gt;                    // DAO base
+internal class AuditableBaseDao              // DAO auditable
+internal class SaveChangesInterceptor        // Interceptor específico
+</code></pre>
+<h3 id="-application-layer---behaviors-y-middleware">🔴 Application Layer - Behaviors y Middleware</h3>
+<pre><code class="lang-csharp">namespace AppCore.Application.Behaviours;
+internal class ValidationBehaviour&lt;TRequest, TResponse&gt;      // MediatR behavior
+internal class UnhandledExceptionBehaviour&lt;TRequest, TResponse&gt;  // MediatR behavior
+
+namespace AppCore.Application.Middleware;
+// Todos los middlewares específicos deben ser internos
+</code></pre>
+<h3 id="-application-layer---utilities-internos">🔴 Application Layer - Utilities Internos</h3>
+<pre><code class="lang-csharp">namespace AppCore.Application.Utils;
+// Utilities específicos que no son parte de la API pública
+</code></pre>
+<h2 id="3-apis-con-decisión-pendiente">3. APIs con Decisión Pendiente</h2>
+<h3 id="-extensions-y-configuration">⚠️ Extensions y Configuration</h3>
+<pre><code class="lang-csharp">namespace AppCore.Application.Extensions;
+public static class ServiceExtensions        // ⚠️ EVALUAR - ¿Pública para DI?
+public static class AppExtensions           // ⚠️ EVALUAR - ¿Pública para configuración?
+public static class JsonExtend              // ⚠️ EVALUAR - ¿Utility pública?
+</code></pre>
+<h3 id="-wrappers-adicionales">⚠️ Wrappers Adicionales</h3>
+<pre><code class="lang-csharp">namespace AppCore.Application.Wrappers;
+public class HttpResponse&lt;T&gt;                 // ⚠️ EVALUAR - ¿Duplica Response&lt;T&gt;?
+public class PageResult&lt;T&gt;                   // ⚠️ EVALUAR - ¿Relacionado con PaginationDto?
+public class MessageLog                      // 🔴 INTERNA - Logging específico
+</code></pre>
+<h2 id="4-domain-layer---entities-base">4. Domain Layer - Entities Base</h2>
+<h3 id="-base-entities-públicas">🟢 Base Entities (Públicas)</h3>
+<pre><code class="lang-csharp">namespace AppCore.Domain.Common;
+public abstract class BaseEntity&lt;I&gt;         // ✅ PÚBLICA - Base para todas las entidades
+{
+    public virtual I Id { get; set; }
+}
+
+public abstract class AuditableEntity : BaseEntity&lt;Guid&gt;  // ✅ PÚBLICA - Auditoría
+{
+    public DateTime Created { get; set; }
+    public string? CreatedBy { get; set; }
+    public DateTime? LastModified { get; set; }
+    public string? LastModifiedBy { get; set; }
+}
+</code></pre>
+<h2 id="5-enumeraciones-y-constants">5. Enumeraciones y Constants</h2>
+<h3 id="-enums-públicos-si-existen">🟢 Enums Públicos (si existen)</h3>
+<pre><code class="lang-csharp">namespace AppCore.Domain.Enums;
+// Todos los enums de dominio deberían ser públicos
+</code></pre>
+<h2 id="6-plan-de-refactoring-de-visibilidad">6. Plan de Refactoring de Visibilidad</h2>
+<h3 id="acciones-inmediatas">Acciones Inmediatas</h3>
+<ol>
+<li><p><strong>Marcar como <code>internal</code></strong>:</p>
+<pre><code class="lang-csharp">// Infrastructure layer completa
+namespace AppCore.Infrastructure { /* todo internal */ }
+
+// Behaviors específicos
+internal class ValidationBehaviour&lt;TRequest, TResponse&gt;
+internal class UnhandledExceptionBehaviour&lt;TRequest, TResponse&gt;
+
+// Exceptions específicas
+internal class ApiDBException
+internal class ApiHttpException
+internal class HttpBaseException
+internal class MappingException
+internal class SerializerException
+</code></pre>
+</li>
+<li><p><strong>Mantener como <code>public</code></strong>:</p>
+<pre><code class="lang-csharp">// Domain interfaces
+public interface IGenericRepository&lt;E, I&gt;
+
+// Application interfaces  
+public interface ICurrentUserService
+public interface IDateTimeService
+
+// Base entities
+public abstract class BaseEntity&lt;I&gt;
+public abstract class AuditableEntity
+
+// Main wrappers &amp; DTOs
+public class Response&lt;T&gt;
+public class PaginationDto&lt;T&gt;
+
+// Core exceptions
+public class CustomException
+public class BadRequestException
+public class NotFoundException
+public class ValidationException
+public class AuthenticationException
+</code></pre>
+</li>
+<li><p><strong>Evaluar caso por caso</strong>:</p>
+<ul>
+<li>ServiceExtensions (¿necesario para DI?)</li>
+<li>JsonExtend (¿utility pública?)</li>
+<li>HttpResponse<t> vs Response<t></t></t></li>
+<li>IEndpointGroupBase (¿necesario público?)</li>
+</ul>
+</li>
+</ol>
+<h2 id="7-documentación-xml-requerida">7. Documentación XML Requerida</h2>
+<p>Todas las APIs públicas necesitan documentación XML completa:</p>
+<pre><code class="lang-csharp">/// &lt;summary&gt;
+/// Interfaz de repositorio genérico para realizar operaciones CRUD en entidades.
+/// &lt;/summary&gt;
+/// &lt;typeparam name=&quot;E&quot;&gt;El tipo de la entidad de dominio.&lt;/typeparam&gt;
+/// &lt;typeparam name=&quot;I&quot;&gt;El tipo del identificador de la entidad.&lt;/typeparam&gt;
+/// &lt;example&gt;
+/// &lt;code&gt;
+/// var repository = serviceProvider.GetService&amp;lt;IGenericRepository&amp;lt;User, int&amp;gt;&amp;gt;();
+/// var user = await repository.GetByIdAsync(1);
+/// &lt;/code&gt;
+/// &lt;/example&gt;
+public interface IGenericRepository&lt;E, I&gt; where E : BaseEntity&lt;I&gt;
+</code></pre>
+<hr>
+<p><em>Documento generado durante Fase 1 - Tarea 2: Identificación de APIs públicas</em></p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/Public-API-Identification.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

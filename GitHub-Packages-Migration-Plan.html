@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Plan de Actualizaci&#243;n CI/CD para Repositorio NuGet P&#250;blico en GitHub | AppCore Documentation </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Plan de Actualizaci&#243;n CI/CD para Repositorio NuGet P&#250;blico en GitHub | AppCore Documentation ">
+    
+    
+      <link rel="shortcut icon" href="favicon.ico">
+      <link rel="stylesheet" href="styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="styles/docfx.css">
+      <link rel="stylesheet" href="styles/main.css">
+      <meta property="docfx:navrel" content="toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="plan-de-actualización-cicd-para-repositorio-nuget-público-en-github">Plan de Actualización CI/CD para Repositorio NuGet Público en GitHub</h1>
+
+<h2 id="fase-3-refactoring-api-design-y-modernización-semana-5-7">Fase 3: Refactoring, API Design y Modernización (Semana 5-7)</h2>
+<hr>
+<h2 id="-resumen-ejecutivo">📋 Resumen Ejecutivo</h2>
+<p>Este documento detalla el plan de actualización para alinear la infraestructura CI/CD con la decisión arquitectónica de usar <strong>GitHub Packages como repositorio NuGet público</strong> durante la Fase 3 del proyecto AppCore.</p>
+<h3 id="-objetivos-de-la-actualización">🎯 Objetivos de la Actualización</h3>
+<ul>
+<li>Migrar de NuGet.org a GitHub Packages como repositorio principal</li>
+<li>Establecer GitHub Packages como repositorio <strong>público</strong></li>
+<li>Actualizar pipeline CI/CD para nueva estrategia de publicación</li>
+<li>Sincronizar documentación con cambios arquitectónicos</li>
+<li>Implementar durante Semana 5-7 sin interrumpir desarrollo</li>
+</ul>
+<hr>
+<h2 id="-análisis-de-configuración-actual">🔍 Análisis de Configuración Actual</h2>
+<h3 id="-estado-actual-del-pipeline-cicd-fase-1">✅ Estado Actual del Pipeline CI/CD (Fase 1)</h3>
+<p><strong>Configuración Existente:</strong></p>
+<pre><code class="lang-yaml"># Actual: Doble publicación
+deploy-preview:     # GitHub Packages (develop branch)
+deploy-production:  # NuGet.org (releases)
+</code></pre>
+<p><strong>Problemas Identificados:</strong></p>
+<ol>
+<li><strong>🔴 Estrategia dividida:</strong> GitHub Packages solo para preview</li>
+<li><strong>🔴 NuGet.org como primario:</strong> Inconsistente con nueva arquitectura</li>
+<li><strong>🔴 Configuración pública incompleta:</strong> GitHub Packages configurado como privado por defecto</li>
+<li><strong>🔴 Documentación desalineada:</strong> GitHub-Setup-Guide.md refleja estrategia mixta</li>
+</ol>
+<h3 id="-evaluación-de-impacto">📊 Evaluación de Impacto</h3>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Estado Actual</th>
+<th>Cambio Requerido</th>
+<th>Criticidad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pipeline CI/CD</td>
+<td>Doble publicación</td>
+<td>GitHub Packages único</td>
+<td>🔴 Alta</td>
+</tr>
+<tr>
+<td>Secrets Management</td>
+<td>NUGET_API_KEY required</td>
+<td>GitHub Token únicamente</td>
+<td>🟡 Media</td>
+</tr>
+<tr>
+<td>Environment Config</td>
+<td>preview/production split</td>
+<td>Unified GitHub strategy</td>
+<td>🟡 Media</td>
+</tr>
+<tr>
+<td>Package Visibility</td>
+<td>Mixed public/private</td>
+<td>Public en GitHub Packages</td>
+<td>🔴 Alta</td>
+</tr>
+<tr>
+<td>Documentation</td>
+<td>Mixed strategy docs</td>
+<td>GitHub-only strategy</td>
+<td>🟡 Media</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="-modificaciones-específicas-del-pipeline">🛠️ Modificaciones Específicas del Pipeline</h2>
+<h3 id="1-eliminación-de-dependencia-nugetorg">1. <strong>Eliminación de Dependencia NuGet.org</strong></h3>
+<h4 id="11-remover-job-deploy-production">1.1 Remover Job <code>deploy-production</code></h4>
+<p><strong>Archivo:</strong> <code>.github/workflows/ci-cd.yml</code> (líneas 221-245)</p>
+<p><strong>Acción:</strong> Eliminar completamente el job de publicación a NuGet.org</p>
+<pre><code class="lang-yaml"># REMOVER ESTE JOB COMPLETO:
+deploy-production:
+  name: Deploy to NuGet.org
+  runs-on: ubuntu-latest
+  needs: package
+  if: github.event_name == 'release'
+  environment: production
+  # ... resto del job
+</code></pre>
+<h4 id="12-simplificar-secrets-requeridos">1.2 Simplificar Secrets Requeridos</h4>
+<p><strong>Cambios:</strong></p>
+<ul>
+<li>❌ <strong>Eliminar:</strong> <code>NUGET_API_KEY</code> secret requirement</li>
+<li>✅ <strong>Mantener:</strong> <code>GITHUB_TOKEN</code> (automático)</li>
+<li>✅ <strong>Agregar:</strong> Configuración de permisos explícitos</li>
+</ul>
+<h3 id="2-reconfiguración-de-github-packages">2. <strong>Reconfiguración de GitHub Packages</strong></h3>
+<h4 id="21-unificar-strategy-de-publicación">2.1 Unificar Strategy de Publicación</h4>
+<p><strong>Cambio:</strong> Convertir <code>deploy-preview</code> en job principal</p>
+<pre><code class="lang-yaml"># ACTUAL
+deploy-preview:
+  if: github.ref == 'refs/heads/develop' &amp;&amp; github.event_name == 'push'
+
+# NUEVO  
+deploy-github-packages:
+  if: github.event_name == 'push' || github.event_name == 'release'
+</code></pre>
+<h4 id="22-configurar-publicación-pública">2.2 Configurar Publicación Pública</h4>
+<p><strong>Agregar configuración explícita:</strong></p>
+<pre><code class="lang-yaml">- name: Configure package visibility
+  run: |
+    # Ensure package will be public
+    echo &quot;Setting package visibility to public&quot;
+    
+- name: Publish to GitHub Packages  
+  run: |
+    dotnet nuget push &quot;./packages/*.nupkg&quot; \
+      --source &quot;https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json&quot; \
+      --api-key ${{ secrets.GITHUB_TOKEN }} \
+      --skip-duplicate
+  env:
+    NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+</code></pre>
+<h3 id="3-actualización-de-permissions">3. <strong>Actualización de Permissions</strong></h3>
+<h4 id="31-agregar-permissions-block">3.1 Agregar Permissions Block</h4>
+<p><strong>Ubicación:</strong> Inicio del archivo workflow</p>
+<pre><code class="lang-yaml">name: CI/CD Pipeline
+
+permissions:
+  contents: read
+  packages: write
+  pull-requests: read
+  issues: read
+</code></pre>
+<h3 id="4-modernización-de-environment-strategy">4. <strong>Modernización de Environment Strategy</strong></h3>
+<h4 id="41-simplificar-environments">4.1 Simplificar Environments</h4>
+<p><strong>Cambios:</strong></p>
+<ul>
+<li>❌ <strong>Eliminar:</strong> Environment <code>production</code></li>
+<li>✅ <strong>Mantener:</strong> Environment <code>preview</code> (renombrar a <code>github-packages</code>)</li>
+<li>✅ <strong>Agregar:</strong> Environment <code>release</code> para tags</li>
+</ul>
+<h4 id="42-nueva-configuración-de-environments">4.2 Nueva Configuración de Environments</h4>
+<pre><code class="lang-yaml"># Para pushes a develop/main
+deploy-development:
+  environment: github-packages
+  if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
+
+# Para releases/tags  
+deploy-release:
+  environment: release
+  if: github.event_name == 'release'
+</code></pre>
+<hr>
+<h2 id="-actualización-del-github-setup-guidemd">📝 Actualización del GitHub-Setup-Guide.md</h2>
+<h3 id="-modificaciones-requeridas">🔄 Modificaciones Requeridas</h3>
+<h4 id="1-sección-configuración-de-secrets-y-variables">1. <strong>Sección &quot;Configuración de Secrets y Variables&quot;</strong></h4>
+<p><strong>Cambios:</strong></p>
+<ul>
+<li>❌ <strong>Remover:</strong> Instrucciones para <code>NUGET_API_KEY</code></li>
+<li>❌ <strong>Remover:</strong> Sección &quot;Obtener API Key de NuGet.org&quot;</li>
+<li>✅ <strong>Simplificar:</strong> Focus únicamente en <code>GITHUB_TOKEN</code></li>
+<li>✅ <strong>Agregar:</strong> Configuración de package visibility</li>
+</ul>
+<h4 id="2-sección-configuración-de-environments">2. <strong>Sección &quot;Configuración de Environments&quot;</strong></h4>
+<p><strong>Cambios:</strong></p>
+<ul>
+<li>❌ <strong>Remover:</strong> Environment <code>production</code></li>
+<li>✅ <strong>Renombrar:</strong> <code>preview</code> → <code>github-packages</code></li>
+<li>✅ <strong>Agregar:</strong> Environment <code>release</code> para tags</li>
+<li>✅ <strong>Actualizar:</strong> Protection rules para GitHub Packages</li>
+</ul>
+<h4 id="3-sección-verificar-que-el-pipeline-funcione">3. <strong>Sección &quot;Verificar que el Pipeline Funcione&quot;</strong></h4>
+<p><strong>Cambios:</strong></p>
+<ul>
+<li>✅ <strong>Actualizar:</strong> Lista de jobs esperados</li>
+<li>✅ <strong>Remover:</strong> Referencias a NuGet.org</li>
+<li>✅ <strong>Agregar:</strong> Verificación de GitHub Packages visibility</li>
+</ul>
+<h4 id="4-sección-workflow-de-desarrollo">4. <strong>Sección &quot;Workflow de Desarrollo&quot;</strong></h4>
+<p><strong>Cambios:</strong></p>
+<ul>
+<li>✅ <strong>Actualizar:</strong> Flujo para releases</li>
+<li>✅ <strong>Remover:</strong> Referencias a NuGet.org</li>
+<li>✅ <strong>Agregar:</strong> Instrucciones para consumir desde GitHub Packages</li>
+</ul>
+<h4 id="5-nueva-sección-configurar-package-visibility-pública">5. <strong>Nueva Sección: &quot;Configurar Package Visibility Pública&quot;</strong></h4>
+<p><strong>Agregar:</strong></p>
+<pre><code class="lang-markdown">### Configurar Visibilidad Pública del Package
+
+1. Ve a tu repositorio en GitHub
+2. Después del primer push, ve a **Packages** 
+3. Selecciona tu package `AppCore`
+4. Ve a **Settings** del package
+5. En **Danger Zone** &gt; **Change package visibility**
+6. Selecciona **Public**
+7. Confirma el cambio
+</code></pre>
+<h3 id="-lista-específica-de-updates-para-github-setup-guidemd">📋 Lista Específica de Updates para GitHub-Setup-Guide.md</h3>
+<table>
+<thead>
+<tr>
+<th>Sección</th>
+<th>Líneas Aprox.</th>
+<th>Acción</th>
+<th>Prioridad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Paso 2: Secrets</td>
+<td>45-85</td>
+<td>Remover NuGet.org, simplificar</td>
+<td>🔴 Alta</td>
+</tr>
+<tr>
+<td>Paso 3: Environments</td>
+<td>95-125</td>
+<td>Renombrar y actualizar</td>
+<td>🔴 Alta</td>
+</tr>
+<tr>
+<td>Paso 6: URLs proyecto</td>
+<td>165-180</td>
+<td>Mantener, validar</td>
+<td>🟡 Media</td>
+</tr>
+<tr>
+<td>Paso 8: Verificación</td>
+<td>215-245</td>
+<td>Actualizar jobs esperados</td>
+<td>🔴 Alta</td>
+</tr>
+<tr>
+<td>Paso 9: Workflows</td>
+<td>255-290</td>
+<td>Actualizar release process</td>
+<td>🔴 Alta</td>
+</tr>
+<tr>
+<td>Nueva: Package Visibility</td>
+<td>N/A</td>
+<td>Agregar sección completa</td>
+<td>🔴 Alta</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="-plan-de-implementación-fase-3">🚀 Plan de Implementación Fase 3</h2>
+<h3 id="-semana-5-preparación-y-análisis-días-1-3">📅 <strong>Semana 5: Preparación y Análisis (Días 1-3)</strong></h3>
+<h4 id="día-1-análisis-de-dependencias">Día 1: Análisis de Dependencias</h4>
+<ul>
+<li>[ ] <strong>Audit actual:</strong> Revisar consumers actuales de packages</li>
+<li>[ ] <strong>Impact assessment:</strong> Identificar aplicaciones que usan preview packages</li>
+<li>[ ] <strong>Migration strategy:</strong> Planificar migración de consumers existentes</li>
+</ul>
+<h4 id="día-2-backup-y-preparación">Día 2: Backup y Preparación</h4>
+<ul>
+<li>[ ] <strong>Branch protection:</strong> Crear branch <code>feature/github-packages-migration</code></li>
+<li>[ ] <strong>Backup actual:</strong> Tag actual configuration como <code>v1.0-nuget-org-config</code></li>
+<li>[ ] <strong>Documentation:</strong> Documentar estado actual para rollback</li>
+</ul>
+<h4 id="día-3-environment-setup">Día 3: Environment Setup</h4>
+<ul>
+<li>[ ] <strong>GitHub settings:</strong> Configurar package settings en repositorio</li>
+<li>[ ] <strong>Permissions:</strong> Verificar permissions de GITHUB_TOKEN</li>
+<li>[ ] <strong>Test environment:</strong> Crear entorno de pruebas</li>
+</ul>
+<h3 id="-semana-6-implementación-core-días-4-8">📅 <strong>Semana 6: Implementación Core (Días 4-8)</strong></h3>
+<h4 id="día-4-pipeline-modifications">Día 4: Pipeline Modifications</h4>
+<ul>
+<li>[ ] <strong>Update workflow:</strong> Modificar <code>.github/workflows/ci-cd.yml</code></li>
+<li>[ ] <strong>Remove NuGet.org:</strong> Eliminar job <code>deploy-production</code></li>
+<li>[ ] <strong>Update permissions:</strong> Agregar permissions block</li>
+<li>[ ] <strong>Test build:</strong> Validar que build sigue funcionando</li>
+</ul>
+<h4 id="día-5-github-packages-configuration">Día 5: GitHub Packages Configuration</h4>
+<ul>
+<li>[ ] <strong>Unify deployment:</strong> Convertir preview en main deployment</li>
+<li>[ ] <strong>Public configuration:</strong> Configurar publicación pública</li>
+<li>[ ] <strong>Environment update:</strong> Actualizar environment strategy</li>
+<li>[ ] <strong>Test deployment:</strong> Deploy test package</li>
+</ul>
+<h4 id="día-6-documentation-updates">Día 6: Documentation Updates</h4>
+<ul>
+<li>[ ] <strong>Update guide:</strong> Modificar <code>GitHub-Setup-Guide.md</code></li>
+<li>[ ] <strong>Remove NuGet.org:</strong> Eliminar secciones irrelevantes</li>
+<li>[ ] <strong>Add GitHub Packages:</strong> Agregar configuración específica</li>
+<li>[ ] <strong>Review accuracy:</strong> Validar accuracy de instrucciones</li>
+</ul>
+<h4 id="día-7-testing-integration">Día 7: Testing Integration</h4>
+<ul>
+<li>[ ] <strong>End-to-end test:</strong> Test completo del pipeline</li>
+<li>[ ] <strong>Package consumption:</strong> Test consuming package desde GitHub</li>
+<li>[ ] <strong>Visibility verification:</strong> Verificar package es público</li>
+<li>[ ] <strong>Documentation test:</strong> Seguir guía step-by-step</li>
+</ul>
+<h4 id="día-8-refinement">Día 8: Refinement</h4>
+<ul>
+<li>[ ] <strong>Fix issues:</strong> Resolver problemas encontrados en testing</li>
+<li>[ ] <strong>Performance check:</strong> Verificar performance del nuevo pipeline</li>
+<li>[ ] <strong>Security review:</strong> Review de security settings</li>
+</ul>
+<h3 id="-semana-7-validación-y-documentación-días-9-10">📅 <strong>Semana 7: Validación y Documentación (Días 9-10)</strong></h3>
+<h4 id="día-9-comprehensive-testing">Día 9: Comprehensive Testing</h4>
+<ul>
+<li>[ ] <strong>Multi-branch test:</strong> Test en develop, main y release</li>
+<li>[ ] <strong>Consumer migration:</strong> Migrar al menos un consumer interno</li>
+<li>[ ] <strong>Performance benchmark:</strong> Comparar con pipeline anterior</li>
+<li>[ ] <strong>Rollback test:</strong> Validar strategy de rollback</li>
+</ul>
+<h4 id="día-10-final-documentation-y-hand-off">Día 10: Final Documentation y Hand-off</h4>
+<ul>
+<li>[ ] <strong>Complete documentation:</strong> Finalizar todas las guías</li>
+<li>[ ] <strong>Migration guide:</strong> Crear guía para consumers</li>
+<li>[ ] <strong>Team training:</strong> Brief al equipo sobre cambios</li>
+<li>[ ] <strong>Go-live preparation:</strong> Preparar para merge a main</li>
+</ul>
+<hr>
+<h2 id="-consideraciones-de-riesgo-y-mitigación">⚠️ Consideraciones de Riesgo y Mitigación</h2>
+<h3 id="-riesgos-de-alto-impacto">🔴 <strong>Riesgos de Alto Impacto</strong></h3>
+<h4 id="1-package-consumption-breaking">1. <strong>Package Consumption Breaking</strong></h4>
+<p><strong>Riesgo:</strong> Aplicaciones existentes no pueden consumir packages
+<strong>Mitigación:</strong></p>
+<ul>
+<li>Mantener packages actuales en NuGet.org hasta migración completa</li>
+<li>Crear bridge documentation para migración</li>
+<li>Test exhaustivo con consumers internos</li>
+</ul>
+<h4 id="2-public-package-security">2. <strong>Public Package Security</strong></h4>
+<p><strong>Riesgo:</strong> Exposición accidental de código sensible
+<strong>Mitigación:</strong></p>
+<ul>
+<li>Code review exhaustivo antes de hacer público</li>
+<li>Audit de dependencies por security vulnerabilities</li>
+<li>Configuration de automated security scanning</li>
+</ul>
+<h4 id="3-github-packages-rate-limiting">3. <strong>GitHub Packages Rate Limiting</strong></h4>
+<p><strong>Riesgo:</strong> Limits de GitHub Packages afecten desarrollo
+<strong>Mitigación:</strong></p>
+<ul>
+<li>Monitor usage patterns</li>
+<li>Implement caching strategies</li>
+<li>Plan for GitHub Enterprise si necessary</li>
+</ul>
+<h3 id="-riesgos-de-medio-impacto">🟡 <strong>Riesgos de Medio Impacto</strong></h3>
+<h4 id="4-developer-experience-degradation">4. <strong>Developer Experience Degradation</strong></h4>
+<p><strong>Riesgo:</strong> Más complejo consumir packages desde GitHub
+<strong>Mitigación:</strong></p>
+<ul>
+<li>Clear documentation para setup</li>
+<li>Automated scripts para configuration</li>
+<li>Team training sessions</li>
+</ul>
+<h4 id="5-cicd-performance-impact">5. <strong>CI/CD Performance Impact</strong></h4>
+<p><strong>Riesgo:</strong> Pipeline más lento con GitHub Packages
+<strong>Mitigación:</strong></p>
+<ul>
+<li>Benchmark actual vs nuevo performance</li>
+<li>Optimize package upload process</li>
+<li>Parallel job execution donde posible</li>
+</ul>
+<hr>
+<h2 id="-métricas-de-éxito">🎯 Métricas de Éxito</h2>
+<h3 id="-kpis-para-validar-migración-exitosa">📊 <strong>KPIs para Validar Migración Exitosa</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Baseline Actual</th>
+<th>Target Post-Migración</th>
+<th>Método de Medición</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Build Time</strong></td>
+<td>~1.3s</td>
+<td>&lt; 2.0s</td>
+<td>GitHub Actions duration</td>
+</tr>
+<tr>
+<td><strong>Package Upload Time</strong></td>
+<td>~30s</td>
+<td>&lt; 45s</td>
+<td>Pipeline logs</td>
+</tr>
+<tr>
+<td><strong>Package Download Time</strong></td>
+<td>~5s</td>
+<td>&lt; 10s</td>
+<td>Consumer test time</td>
+</tr>
+<tr>
+<td><strong>Pipeline Success Rate</strong></td>
+<td>95%</td>
+<td>&gt; 95%</td>
+<td>Actions success percentage</td>
+</tr>
+<tr>
+<td><strong>Developer Setup Time</strong></td>
+<td>~15 min</td>
+<td>&lt; 20 min</td>
+<td>Time to consume package</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-criterios-de-aceptación">✅ <strong>Criterios de Aceptación</strong></h3>
+<ul>
+<li>[ ] <strong>Pipeline ejecuta exitosamente</strong> en develop, main y release</li>
+<li>[ ] <strong>Package es público</strong> y consumible sin authentication especial</li>
+<li>[ ] <strong>Documentation es clara</strong> y permite setup sin ambigüedades</li>
+<li>[ ] <strong>Performance no degradada</strong> significativamente</li>
+<li>[ ] <strong>Security scanning</strong> pasa sin high/critical issues</li>
+<li>[ ] <strong>Al menos un consumer interno</strong> migrado exitosamente</li>
+<li>[ ] <strong>Rollback strategy</strong> documentada y tested</li>
+</ul>
+<hr>
+<h2 id="-entregables-de-la-fase-3">📚 Entregables de la Fase 3</h2>
+<h3 id="-artefactos-técnicos">🔧 <strong>Artefactos Técnicos</strong></h3>
+<ol>
+<li><strong><code>.github/workflows/ci-cd.yml</code></strong> actualizado</li>
+<li><strong><code>GitHub-Setup-Guide.md</code></strong> renovado</li>
+<li><strong><code>docs/Migration-Guide.md</code></strong> nuevo (para consumers)</li>
+<li><strong>Test automation</strong> para GitHub Packages workflow</li>
+</ol>
+<h3 id="-documentación">📖 <strong>Documentación</strong></h3>
+<ol>
+<li><strong>Implementation Plan</strong> actualizado con progreso</li>
+<li><strong>Architectural Decision Record</strong> para GitHub Packages migration</li>
+<li><strong>Consumer Migration Guide</strong> para aplicaciones dependientes</li>
+<li><strong>Rollback Procedures</strong> documentadas</li>
+</ol>
+<h3 id="-validación">🧪 <strong>Validación</strong></h3>
+<ol>
+<li><strong>End-to-end pipeline test</strong> results</li>
+<li><strong>Performance benchmarks</strong> comparativo</li>
+<li><strong>Security scan reports</strong> para packages públicos</li>
+<li><strong>Consumer migration test</strong> con al menos una aplicación</li>
+</ol>
+<hr>
+<h2 id="-estrategia-de-rollback">🔄 Estrategia de Rollback</h2>
+<p>En caso de problemas críticos durante la implementación:</p>
+<h3 id="quick-rollback--1-hora"><strong>Quick Rollback (&lt; 1 hora)</strong></h3>
+<ol>
+<li>Revert branch <code>feature/github-packages-migration</code></li>
+<li>Restore previous workflow from tag <code>v1.0-nuget-org-config</code></li>
+<li>Re-enable NuGet.org deployment si necessary</li>
+</ol>
+<h3 id="gradual-rollback-planned"><strong>Gradual Rollback (Planned)</strong></h3>
+<ol>
+<li>Maintain dual publishing durante período de transición</li>
+<li>Gradual migration de consumers</li>
+<li>Deprecation schedule para old packages</li>
+</ol>
+<hr>
+<h2 id="-stakeholders-y-responsabilidades">👥 Stakeholders y Responsabilidades</h2>
+<table>
+<thead>
+<tr>
+<th>Stakeholder</th>
+<th>Responsabilidad</th>
+<th>Entregable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DevOps Lead</strong></td>
+<td>Pipeline implementation</td>
+<td>Updated CI/CD workflows</td>
+</tr>
+<tr>
+<td><strong>Tech Lead</strong></td>
+<td>Architecture validation</td>
+<td>ADR documentation</td>
+</tr>
+<tr>
+<td><strong>Developer</strong></td>
+<td>Consumer testing</td>
+<td>Migration validation</td>
+</tr>
+<tr>
+<td><strong>Documentation</strong></td>
+<td>Guide updates</td>
+<td>Updated GitHub-Setup-Guide.md</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>🎯 Resultado Esperado:</strong> Al finalizar la Fase 3 (Semana 7), AppCore tendrá un pipeline CI/CD completamente alineado con GitHub Packages como repositorio NuGet público, documentation actualizada, y strategy de migration clara para consumers.</p>
+<hr>
+<p><em>Documento creado: Enero 24, 2026</em><br>
+<em>Última actualización: Fase 3 - Semana 5 planning</em></p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/GitHub-Packages-Migration-Plan.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

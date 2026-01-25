@@ -1,0 +1,1103 @@
+{
+  "source_base_path": "/home/runner/work/AppCore/AppCore/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "API-Surface.md",
+      "output": {
+        ".html": {
+          "relative_path": "API-Surface.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Breaking-Changes-Analysis.md",
+      "output": {
+        ".html": {
+          "relative_path": "Breaking-Changes-Analysis.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Compatibility-Matrix.md",
+      "output": {
+        ".html": {
+          "relative_path": "Compatibility-Matrix.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Dependency-Analysis.md",
+      "output": {
+        ".html": {
+          "relative_path": "Dependency-Analysis.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "GitHub-Packages-Migration-Plan.md",
+      "output": {
+        ".html": {
+          "relative_path": "GitHub-Packages-Migration-Plan.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "GitHub-Setup-Guide.md",
+      "output": {
+        ".html": {
+          "relative_path": "GitHub-Setup-Guide.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Implementation-Plan.md",
+      "output": {
+        ".html": {
+          "relative_path": "Implementation-Plan.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Integration-Plan.md",
+      "output": {
+        ".html": {
+          "relative_path": "Integration-Plan.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "NativeAOT-Compatibility-Report.md",
+      "output": {
+        ".html": {
+          "relative_path": "NativeAOT-Compatibility-Report.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Public-API-Identification.md",
+      "output": {
+        ".html": {
+          "relative_path": "Public-API-Identification.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Rol-y-checklist-senior-spec-driven.md",
+      "output": {
+        ".html": {
+          "relative_path": "Rol-y-checklist-senior-spec-driven.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.DTOs.AttachmentFile.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.DTOs.AttachmentFile.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.DTOs.AttachmentFile",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.DTOs.EmailRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.DTOs.EmailRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.DTOs.EmailRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.DTOs.LoginRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.DTOs.LoginRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.DTOs.LoginRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.DTOs.LoginResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.DTOs.LoginResponse.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.DTOs.LoginResponse",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.DTOs.MetaInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.DTOs.MetaInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.DTOs.MetaInfo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.DTOs.PaginationDto-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.DTOs.PaginationDto-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.DTOs.PaginationDto<E>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.DTOs.PaginationResponse-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.DTOs.PaginationResponse-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.DTOs.PaginationResponse<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.DTOs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.DTOs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.DTOs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Exceptions.AuthenticationException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Exceptions.AuthenticationException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Exceptions.AuthenticationException",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Exceptions.BadRequestException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Exceptions.BadRequestException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Exceptions.BadRequestException",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Exceptions.BadRequestException.yml\" sourcestartlinenumber=\"1\">Exception that represents a bad request error (HTTP 400).\nTypically thrown when the client sends invalid data or parameters.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Exceptions.CustomException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Exceptions.CustomException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Exceptions.CustomException",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Exceptions.CustomException.yml\" sourcestartlinenumber=\"1\">Base class for custom application exceptions that provides enhanced error tracking and logging capabilities.\nCaptures caller information automatically for better diagnostics.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Exceptions.DictionaryError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Exceptions.DictionaryError.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Exceptions.DictionaryError",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Exceptions.DictionaryError.yml\" sourcestartlinenumber=\"1\">Represents a structured error with code, message, and optional additional information.\nConverted to record for immutability and with-expressions support.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Exceptions.ForbiddenAccessException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Exceptions.ForbiddenAccessException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Exceptions.ForbiddenAccessException",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Exceptions.NotFoundException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Exceptions.NotFoundException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Exceptions.NotFoundException",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Exceptions.NotFoundException.yml\" sourcestartlinenumber=\"1\">Exception that represents a resource not found error (HTTP 404).\nTypically thrown when a requested resource cannot be located.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Exceptions.OperationException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Exceptions.OperationException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Exceptions.OperationException",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Exceptions.ValidationException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Exceptions.ValidationException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Exceptions.ValidationException",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Exceptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Exceptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Exceptions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Extensions.AppExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Extensions.AppExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Extensions.AppExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Extensions.JsonConverters.DateYearMonthDayJsonConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Extensions.JsonConverters.DateYearMonthDayJsonConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Extensions.JsonConverters.DateYearMonthDayJsonConverter",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Extensions.JsonConverters.DateYearMonthDayJsonConverter.yml\" sourcestartlinenumber=\"1\">Converters específicos usando el converter genérico</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Extensions.JsonConverters.DateYearMonthDayNoSeparatorJsonConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Extensions.JsonConverters.DateYearMonthDayNoSeparatorJsonConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Extensions.JsonConverters.DateYearMonthDayNoSeparatorJsonConverter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Extensions.JsonConverters.GenericDateJsonConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Extensions.JsonConverters.GenericDateJsonConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Extensions.JsonConverters.GenericDateJsonConverter",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Extensions.JsonConverters.GenericDateJsonConverter.yml\" sourcestartlinenumber=\"1\">JsonConverter genérico para fechas con formato personalizable</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Extensions.JsonConverters.GenericNullableDateJsonConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Extensions.JsonConverters.GenericNullableDateJsonConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Extensions.JsonConverters.GenericNullableDateJsonConverter",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Extensions.JsonConverters.GenericNullableDateJsonConverter.yml\" sourcestartlinenumber=\"1\">JsonConverter genérico para fechas nullable con formato personalizable</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Extensions.JsonConverters.NullableDateYearMonthDayJsonConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Extensions.JsonConverters.NullableDateYearMonthDayJsonConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Extensions.JsonConverters.NullableDateYearMonthDayJsonConverter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Extensions.JsonConverters.NullableDateYearMonthDayNoSeparatorJsonConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Extensions.JsonConverters.NullableDateYearMonthDayNoSeparatorJsonConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Extensions.JsonConverters.NullableDateYearMonthDayNoSeparatorJsonConverter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Extensions.JsonConverters.StringToLongConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Extensions.JsonConverters.StringToLongConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Extensions.JsonConverters.StringToLongConverter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Extensions.JsonConverters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Extensions.JsonConverters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Extensions.JsonConverters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Extensions.JsonExtend.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Extensions.JsonExtend.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Extensions.JsonExtend",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Extensions.JsonExtend.yml\" sourcestartlinenumber=\"1\">AOT-compatible JSON serialization extensions using source-generated serialization context.\nProvides efficient JSON operations without runtime reflection.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Extensions.ServiceExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Extensions.ServiceExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Extensions.ServiceExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Extensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Extensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Interfaces.ICurrentUserService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Interfaces.ICurrentUserService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Interfaces.ICurrentUserService",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Interfaces.ICurrentUserService.yml\" sourcestartlinenumber=\"1\">Provides access to current authenticated user information.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Interfaces.IDateTimeService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Interfaces.IDateTimeService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Interfaces.IDateTimeService",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Interfaces.IDateTimeService.yml\" sourcestartlinenumber=\"1\">Provides abstraction for date and time operations to support testability.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Interfaces.IEndpointGroupBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Interfaces.IEndpointGroupBase.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Interfaces.IEndpointGroupBase",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Interfaces.IMappingService-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Interfaces.IMappingService-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Interfaces.IMappingService<TSource, TDestination>",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Interfaces.IMappingService-2.yml\" sourcestartlinenumber=\"1\">Provides AOT-compatible mapping services for converting between different object types.\nThis interface replaces AutoMapper for Native AOT compatibility.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Interfaces.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Interfaces.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Interfaces",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Serialization.AppCoreJsonContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Serialization.AppCoreJsonContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Serialization.AppCoreJsonContext",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Serialization.AppCoreJsonContext.yml\" sourcestartlinenumber=\"1\">AOT-compatible JSON serialization context for AppCore types.\nThis provides compile-time source generation for JSON serialization,\neliminating the need for runtime reflection in Native AOT scenarios.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Serialization.JsonTestModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Serialization.JsonTestModel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Serialization.JsonTestModel",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Serialization.JsonTestModel.yml\" sourcestartlinenumber=\"1\">Test model for JSON serialization unit tests.\nPublic type required for AOT source generation compatibility.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Serialization.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Serialization.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Serialization",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Settings.JWTSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Settings.JWTSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Settings.JWTSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Settings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Settings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Settings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Utils.Configuration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Utils.Configuration.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Utils.Configuration",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Utils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Utils.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Utils",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Wrappers.CustomErrorResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Wrappers.CustomErrorResponse.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Wrappers.CustomErrorResponse",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Wrappers.CustomErrorResponse.yml\" sourcestartlinenumber=\"1\">Custom error response wrapper. Used for AOT-compatible serialization.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Wrappers.ErrorResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Wrappers.ErrorResponse.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Wrappers.ErrorResponse",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Wrappers.ErrorResponse.yml\" sourcestartlinenumber=\"1\">Simple error response for API exceptions. Used for AOT-compatible serialization.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Wrappers.HttpResponse-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Wrappers.HttpResponse-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Wrappers.HttpResponse<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Wrappers.MappingErrorResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Wrappers.MappingErrorResponse.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Wrappers.MappingErrorResponse",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Wrappers.MappingErrorResponse.yml\" sourcestartlinenumber=\"1\">Mapping error response with errors list. Used for AOT-compatible serialization.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Wrappers.MessageLog.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Wrappers.MessageLog.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Wrappers.MessageLog",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Wrappers.MessageLog.yml\" sourcestartlinenumber=\"1\">Represents a structured log message for AOT-compatible logging.\nUses object instead of dynamic for Native AOT compatibility.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Wrappers.PageResult-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Wrappers.PageResult-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Wrappers.PageResult<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Wrappers.Response-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Wrappers.Response-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Wrappers.Response<T>",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Wrappers.Response-1.yml\" sourcestartlinenumber=\"1\">Standard response wrapper for API operations providing consistent structure for success and error responses.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Wrappers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Wrappers.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Wrappers",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.DependencyInjection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.DependencyInjection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.DependencyInjection",
+      "Summary": "<p sourcefile=\"api/AppCore.DependencyInjection.yml\" sourcestartlinenumber=\"1\">Provides extension methods for configuring AppCore services in the dependency injection container.\nAOT-compatible implementation avoiding reflection-based registrations.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Domain.Common.AuditableEntity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Domain.Common.AuditableEntity.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Domain.Common.AuditableEntity",
+      "Summary": "<p sourcefile=\"api/AppCore.Domain.Common.AuditableEntity.yml\" sourcestartlinenumber=\"1\">Abstract base class that provides audit trail properties for entities.\nTracks creation and modification information including user and timestamp.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Domain.Common.BaseEntity-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Domain.Common.BaseEntity-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Domain.Common.BaseEntity<T>",
+      "Summary": "<p sourcefile=\"api/AppCore.Domain.Common.BaseEntity-1.yml\" sourcestartlinenumber=\"1\">Base class for domain entities providing common properties and behavior.\nInherits auditing capabilities and provides identity management.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Domain.Common.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Domain.Common.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Domain.Common",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Domain.Entities.Integrators.HttpAuditEntity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Domain.Entities.Integrators.HttpAuditEntity.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Domain.Entities.Integrators.HttpAuditEntity",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Domain.Entities.Integrators.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Domain.Entities.Integrators.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Domain.Entities.Integrators",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Domain.Enums.PakageLeadType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Domain.Enums.PakageLeadType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Domain.Enums.PakageLeadType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Domain.Enums.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Domain.Enums.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Domain.Enums",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Domain.Interfaces.IGenericRepository-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Domain.Interfaces.IGenericRepository-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Domain.Interfaces.IGenericRepository<E, I>",
+      "Summary": "<p sourcefile=\"api/AppCore.Domain.Interfaces.IGenericRepository-2.yml\" sourcestartlinenumber=\"1\">Interfaz de repositorio genérico para realizar operaciones CRUD en entidades.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Domain.Interfaces.IHttpRequestRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Domain.Interfaces.IHttpRequestRepository.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Domain.Interfaces.IHttpRequestRepository",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Domain.Interfaces.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Domain.Interfaces.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Domain.Interfaces",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Infrastructure.Data.DAOs.Enum.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Infrastructure.Data.DAOs.Enum.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Infrastructure.Data.DAOs.Enum",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Infrastructure.Data.Interceptors.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Infrastructure.Data.Interceptors.Extensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Infrastructure.Data.Interceptors.Extensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Infrastructure.Data.Interceptors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Infrastructure.Data.Interceptors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Infrastructure.Data.Interceptors",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
