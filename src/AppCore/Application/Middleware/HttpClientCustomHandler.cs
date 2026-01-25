@@ -33,96 +33,70 @@ internal class HttpClientCustomHandler(RequestDelegate next) {
     }
 
     public static async Task HandleExceptionAsync(HttpContext httpContext, Exception exception) {
-        string message;
-        switch (exception) {
-            case ApiDBException _:
-                message = JsonExtend.Serialize(new ValidationProblemDetails {
-                    Title = exception.Message
-                });
-                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-                break;
+        string message = exception switch {
+            ApiDBException ex => JsonExtend.Serialize(new ValidationProblemDetails {
+                Title = ex.Message
+            }),
 
-            case ValidationException validationException:
-                message = JsonExtend.Serialize(new ValidationProblemDetails(validationException.Errors) {
-                    Title = $"One or more validation errors have occurred."
-                });
-                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-                break;
+            ValidationException validationException => JsonExtend.Serialize(new ValidationProblemDetails(validationException.Errors) {
+                Title = $"One or more validation errors have occurred."
+            }),
 
-            case NotFoundException notFoundException:
-                message = JsonExtend.Serialize(new {
-                    message = notFoundException.Message,
-                });
-                httpContext.Response.StatusCode = 404;
-                break;
+            NotFoundException notFoundException => JsonExtend.Serialize(new {
+                message = notFoundException.Message,
+            }),
 
-            case BadRequestException badRequestException:
-                message = JsonExtend.Serialize(new {
-                    message = badRequestException.Message,
-                });
-                httpContext.Response.StatusCode = 400;
-                break;
+            BadRequestException badRequestException => JsonExtend.Serialize(new {
+                message = badRequestException.Message,
+            }),
 
-            case AuthenticationException auth:
-                message = JsonExtend.Serialize(new ProblemDetails {
-                    Title = "Unauthorized",
-                    Detail = auth.Message
-                });
-                httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                break;
+            AuthenticationException auth => JsonExtend.Serialize(new ProblemDetails {
+                Title = "Unauthorized",
+                Detail = auth.Message
+            }),
 
-            case ForbiddenAccessException _:
-                message = JsonExtend.Serialize(new ProblemDetails {
-                    Title = "Forbidden",
-                    Detail = exception.Message
-                });
-                httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
-                break;
+            ForbiddenAccessException ex => JsonExtend.Serialize(new ProblemDetails {
+                Title = "Forbidden",
+                Detail = ex.Message
+            }),
 
-            case SerializerException serializerException:
-                message = JsonExtend.Serialize(new ProblemDetails {
-                    Title = serializerException.Message
-                });
-                httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                break;
+            SerializerException serializerException => JsonExtend.Serialize(new ProblemDetails {
+                Title = serializerException.Message
+            }),
 
-            case MappingException mappingException:
-                message = JsonExtend.Serialize(new {
-                    Title = mappingException.Message,
-                    mappingException.Errors
-                });
-                httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                break;
+            MappingException mappingException => JsonExtend.Serialize(new {
+                Title = mappingException.Message,
+                mappingException.Errors
+            }),
 
-            case ApiHttpException apiHttpException:
-                message = JsonExtend.Serialize(new ProblemDetails {
-                    Title = apiHttpException.Message,
-                    Detail = apiHttpException.MessageLog.Message?.ToString()
-                });
-                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-                break;
+            ApiHttpException apiHttpException => JsonExtend.Serialize(new ProblemDetails {
+                Title = apiHttpException.Message,
+                Detail = apiHttpException.MessageLog.Message?.ToString()
+            }),
 
-            case CustomException customException:
-                if (customException.MessageLog.Message is DictionaryError error) {
-                    error.ProviderMessage = null;
-                    message = JsonExtend.Serialize(new {
-                        error
-                    });
-                } else {
-                    message = JsonExtend.Serialize(new {
-                        Error = customException.MessageLog.Message
-                    });
-                }
-                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-                break;
+            CustomException customException when customException.MessageLog.Message is DictionaryError error 
+                => JsonExtend.Serialize(new {
+                    error = error with { ProviderMessage = null }
+                }),
 
-            default:
-                message = JsonExtend.Serialize(new ProblemDetails {
-                    Title = "An error occurred while processing your request."
-                });
-                httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                break;
-        }
+            CustomException customException => JsonExtend.Serialize(new {
+                Error = customException.MessageLog.Message
+            }),
+
+            _ => JsonExtend.Serialize(new ProblemDetails {
+                Title = "An error occurred while processing your request."
+            })
+        };
+
+        httpContext.Response.StatusCode = exception switch {
+            NotFoundException => StatusCodes.Status404NotFound,
+            BadRequestException => StatusCodes.Status400BadRequest,
+            AuthenticationException => StatusCodes.Status401Unauthorized,
+            ForbiddenAccessException => StatusCodes.Status403Forbidden,
+            ValidationException or ApiDBException or ApiHttpException or CustomException => StatusCodes.Status400BadRequest,
+            _ => StatusCodes.Status500InternalServerError
+        };
+
         httpContext.Response.ContentType = "application/json";
         await httpContext.Response.WriteAsync(message);
     }
