@@ -1,0 +1,73 @@
+<linker>
+  <!-- 
+    Runtime Directives for AppCore Native AOT Compilation
+    This file ensures that types needed at runtime are preserved during trimming.
+  -->
+  
+  <!-- Application Level Directives -->
+  <application>
+    <!-- Preserve all AppCore types that might be used via reflection -->
+    <assembly Name="AppCore" Feature="all" />
+    
+    <!-- Core AppCore Namespaces -->
+    <namespace Name="AppCore.Application.Wrappers" Dynamic="Required All" />
+    <namespace Name="AppCore.Application.DTOs" Dynamic="Required All" />
+    <namespace Name="AppCore.Application.Exceptions" Dynamic="Required All" />
+    <namespace Name="AppCore.Domain.Common" Dynamic="Required All" />
+    
+    <!-- JSON Serialization Types -->
+    <type Name="AppCore.Application.Serialization.AppCoreJsonContext" Dynamic="Required All" />
+    <type Name="AppCore.Application.Wrappers.Response`1" Dynamic="Required All" />
+    <type Name="AppCore.Application.Wrappers.HttpResponse`1" Dynamic="Required All" />
+    <type Name="AppCore.Application.Wrappers.MessageLog" Dynamic="Required All" />
+    <type Name="AppCore.Application.DTOs.PaginationResponse`1" Dynamic="Required All" />
+    <type Name="AppCore.Application.Exceptions.DictionaryError" Dynamic="Required All" />
+    
+    <!-- Entity Types that might be serialized -->
+    <type Name="AppCore.Domain.Common.BaseEntity`1" Dynamic="Required All" />
+    <type Name="AppCore.Domain.Common.AuditableEntity" Dynamic="Required All" />
+    <type Name="AppCore.Domain.Entities.Integrators.HttpAuditEntity" Dynamic="Required All" />
+    
+    <!-- MediatR Types -->
+    <type Name="MediatR.IRequest`1" Dynamic="Required All" />
+    <type Name="MediatR.IPipelineBehavior`2" Dynamic="Required All" />
+    
+    <!-- FluentValidation Types -->
+    <type Name="FluentValidation.IValidator`1" Dynamic="Required All" />
+    <type Name="FluentValidation.ValidationResult" Dynamic="Required All" />
+    <type Name="FluentValidation.Validators.IPropertyValidator" Dynamic="Required All" />
+    
+    <!-- Entity Framework Types -->
+    <type Name="Microsoft.EntityFrameworkCore.DbContext" Dynamic="Required All" />
+    <type Name="Microsoft.EntityFrameworkCore.DbSet`1" Dynamic="Required All" />
+    
+    <!-- System Types commonly used in serialization -->
+    <type Name="System.DateTime" Dynamic="Required All" />
+    <type Name="System.DateOnly" Dynamic="Required All" />
+    <type Name="System.TimeOnly" Dynamic="Required All" />
+    <type Name="System.Guid" Dynamic="Required All" />
+    <type Name="System.Collections.Generic.Dictionary`2[System.String,System.Object]" Dynamic="Required All" />
+    <type Name="System.Collections.Generic.List`1" Dynamic="Required All" />
+    
+    <!-- HTTP and Web Types -->
+    <type Name="System.Net.HttpStatusCode" Dynamic="Required All" />
+    <type Name="System.Net.Http.HttpMethod" Dynamic="Required All" />
+    <type Name="Microsoft.AspNetCore.Mvc.ProblemDetails" Dynamic="Required All" />
+    
+    <!-- JSON Types -->
+    <type Name="System.Text.Json.JsonDocument" Dynamic="Required All" />
+    <type Name="System.Text.Json.JsonElement" Dynamic="Required All" />
+    <type Name="System.Text.Json.Serialization.JsonSerializerContext" Dynamic="Required All" />
+    
+    <!-- Logging Types -->
+    <type Name="Microsoft.Extensions.Logging.ILogger`1" Dynamic="Required All" />
+    <type Name="Microsoft.Extensions.Logging.LogLevel" Dynamic="Required All" />
+  </application>
+  
+  <!-- Library Level Directives -->
+  <library name="AppCore">
+    <!-- Preserve all public APIs -->
+    <type Name="*" Dynamic="Required Public" />
+  </library>
+  
+</linker>
