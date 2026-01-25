@@ -11,7 +11,7 @@ public class PageResultTests {
         var pageResult = new PageResult<string>();
 
         // Assert
-        pageResult.Items.Should().BeNull();
+        pageResult.Items.Should().NotBeNull().And.BeEmpty();
         pageResult.TotalPages.Should().Be(0);
         pageResult.CurrentPage.Should().Be(0);
         pageResult.Count.Should().Be(0);
