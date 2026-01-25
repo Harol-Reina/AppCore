@@ -1,14 +1,15 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
 
-public class AuthenticationException : Exception {
+public class AuthenticationException : CustomException {
     readonly MessageLog mensaje;
     public AuthenticationException(string message,
                                    [CallerMemberName] string memberName = "",
                                    [CallerFilePath] string sourceFilePath = "",
-                                   [CallerLineNumber] int sourceLineNumber = 0) : base(message) {
+                                   [CallerLineNumber] int sourceLineNumber = 0) 
+        : base(new DictionaryError("AUTH-001", message), memberName, sourceFilePath, sourceLineNumber) {
         mensaje = new MessageLog {
             Tipo = base.GetType().Name,
             Source = base.Source,
