@@ -1,4 +1,4 @@
-using AppCore.Application.Exceptions;
+﻿using AppCore.Application.Exceptions;
 using AppCore.Application.Middleware;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
