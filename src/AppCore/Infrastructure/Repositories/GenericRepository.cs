@@ -18,20 +18,21 @@ namespace AppCore.Infrastructure.Repositories;
 /// <typeparam name="E">The entity type</typeparam>
 /// <typeparam name="I">The ID type</typeparam>
 /// <typeparam name="D">The DAO type</typeparam>
-internal abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.PublicProperties)] D>(
-    DbContext dbContext, 
+[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "D type parameter is annotated with DynamicallyAccessedMembers to preserve properties.")]
+internal abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] D>(
+    DbContext dbContext,
     IMappingService<E, D> entityToDao,
     IMappingService<D, E> daoToEntity) : IGenericRepository<E, I>
     where E : BaseEntity<I>
     where D : BaseDao<I> {
-    
+
     private readonly DbContext _dbContext = dbContext;
     private readonly IMappingService<E, D> _entityToDao = entityToDao;
     private readonly IMappingService<D, E> _daoToEntity = daoToEntity;
     protected DbSet<D> DbSet => _dbContext.Set<D>();
 
     public async Task<List<E>?> GetAllAsync(params IEnumerable<Expression<Func<E, object>>>? includes) {
-        IQueryable<D> query = DbSet.AsNoTracking();;
+        IQueryable<D> query = DbSet.AsNoTracking(); ;
         try {
             if (includes is not null) {
                 foreach (var include in includes) {
@@ -83,11 +84,11 @@ internal abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(Dyna
     public async Task<E> UpdateAsync(E entity) {
         if (entity.IsNew)
             throw new BadRequestException("Cannot update an entity that hasn't been persisted. Use AddAsync instead.");
-        
+
         try {
             var dao = ToDao(entity);
             dao.UpdatedAt = DateTime.Now;
-            var trackedEntity = DbSet.Local.FirstOrDefault(e => 
+            var trackedEntity = DbSet.Local.FirstOrDefault(e =>
                 e.Id != null && EqualityComparer<I>.Default.Equals(e.Id, dao.Id));
             if (trackedEntity != null)
                 _dbContext.Entry(trackedEntity).State = EntityState.Detached;
@@ -104,7 +105,7 @@ internal abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(Dyna
     public async Task<bool> DelAsync(I id) {
         if (id is null)
             throw new ArgumentNullException(nameof(id), "Cannot delete an entity with null ID.");
-        
+
         try {
             var dao = await DbSet.FindAsync(id);
             if (dao == null)
@@ -150,7 +151,7 @@ internal abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(Dyna
     /// <returns>The corresponding DAO object</returns>
     protected virtual D ToDao(E entity)
         => _entityToDao.Map(entity);
-        
+
     /// <summary>
     /// Converts a DAO to its corresponding entity using the configured mapping service.
     /// </summary>

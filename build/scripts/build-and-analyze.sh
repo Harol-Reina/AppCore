@@ -79,6 +79,7 @@ if dotnet test tests/AppCore.UnitTests \
     --logger "trx;LogFileName=unit-tests.trx" \
     --collect:"XPlat Code Coverage" \
     --results-directory ./TestResults \
+    --settings "./build/coverage/coverage.runsettings" \
     --verbosity minimal; then
     print_success "Unit tests passed"
 else
@@ -93,6 +94,8 @@ if dotnet test tests/AppCore.SpecFlow \
     --no-build \
     --logger "trx;LogFileName=specflow-tests.trx" \
     --results-directory ./TestResults \
+    --collect:"XPlat Code Coverage" \
+    --settings "./build/coverage/coverage.runsettings" \
     --verbosity minimal; then
     print_success "SpecFlow tests passed"
 else
@@ -107,6 +110,8 @@ if command -v reportgenerator &> /dev/null; then
         "-reports:./TestResults/**/coverage.cobertura.xml" \
         "-targetdir:./TestResults/Coverage" \
         "-reporttypes:Html;Cobertura;TextSummary" \
+        "-filefilters:-*.g.cs;-**/obj/**;-**/bin/**" \
+        "-classfilters:-System.Text.Json.SourceGeneration.*" \
         -verbosity:Warning
     
     if [ -f "./TestResults/Coverage/Summary.txt" ]; then
