@@ -90,8 +90,10 @@ reportgenerator \
     "-reports:$COVERAGE_REPORTS" \
     "-targetdir:$COVERAGE_DIR" \
     "-reporttypes:Html;Cobertura;JsonSummary;Badges;TextSummary" \
-    "-verbosity:Warning" \
+    "-verbosity:Error" \
     "-title:AppCore Coverage Report" \
+    "-filefilters:-*.g.cs;-**/obj/**;-**/bin/**" \
+    "-classfilters:-System.Text.Json.SourceGeneration.*" \
     "-tag:$(git rev-parse --short HEAD 2>/dev/null || echo 'local')" || {
     print_error "Failed to generate coverage report"
     exit 1
