@@ -1,0 +1,273 @@
+﻿using AppCore.Application.Serialization;
+using AppCore.Application.Wrappers;
+using AppCore.Application.DTOs;
+using System.Text.Json;
+
+namespace AotTestApp.Tests;
+
+/// <summary>
+/// Tests JSON serialization with AppCoreJsonContext (Source Generator) for NativeAOT.
+/// Validates that serialization works without reflection.
+/// </summary>
+public static class JsonSerializationTests
+{
+    public static void RunAll()
+    {
+        Console.WriteLine("═══════════════════════════════════════════════════════════");
+        Console.WriteLine("  JSON Serialization AOT Tests");
+        Console.WriteLine("═══════════════════════════════════════════════════════════");
+
+        TestResponseSerialization();
+        TestPaginationSerialization();
+        TestNestedObjectSerialization();
+        TestGenericResponseSerialization();
+        TestCollectionSerialization();
+        TestRoundTripSerialization();
+
+        Console.WriteLine("✅ All JSON serialization tests passed\n");
+    }
+
+    private static void TestResponseSerialization()
+    {
+        Console.Write("  • Serializing Response<T> with AppCoreJsonContext... ");
+
+        try
+        {
+            var successResponse = Response<string>.Success("Operation successful", "Test data");
+            var failureResponse = Response<int>.Failure("Operation failed");
+
+            // Serialize using AppCoreJsonContext (AOT-compatible)
+            var options = new JsonSerializerOptions
+            {
+                TypeInfoResolver = AppCoreJsonContext.Default
+            };
+
+            var successJson = JsonSerializer.Serialize(successResponse, options);
+            var failureJson = JsonSerializer.Serialize(failureResponse, options);
+
+            if (string.IsNullOrEmpty(successJson) || string.IsNullOrEmpty(failureJson))
+            {
+                throw new Exception("Serialization produced empty JSON");
+            }
+
+            // Verify JSON contains expected data
+            if (!successJson.Contains("Test data") || !successJson.Contains("Operation successful"))
+            {
+                throw new Exception("Success response JSON missing expected data");
+            }
+
+            if (!failureJson.Contains("Operation failed"))
+            {
+                throw new Exception("Failure response JSON missing expected message");
+            }
+
+            Console.WriteLine("✓");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"✗ FAILED: {ex.Message}");
+            throw;
+        }
+    }
+
+    private static void TestPaginationSerialization()
+    {
+        Console.Write("  • Serializing PaginationDto<T>... ");
+
+        try
+        {
+            var pagination = new PaginationDto<string>
+            {
+                Count = 3,
+                Pages = 1,
+                Results = ["Item1", "Item2", "Item3"]
+            };
+
+            var options = new JsonSerializerOptions
+            {
+                TypeInfoResolver = AppCoreJsonContext.Default
+            };
+
+            var json = JsonSerializer.Serialize(pagination, options);
+
+            if (string.IsNullOrEmpty(json))
+            {
+                throw new Exception("Pagination serialization produced empty JSON");
+            }
+
+            // Verify collection expression data is serialized
+            if (!json.Contains("Item1") || !json.Contains("Item2") || !json.Contains("Item3"))
+            {
+                throw new Exception("Pagination JSON missing collection items");
+            }
+
+            Console.WriteLine("✓");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"✗ FAILED: {ex.Message}");
+            throw;
+        }
+    }
+
+    private static void TestNestedObjectSerialization()
+    {
+        Console.Write("  • Serializing nested Response<PaginationDto<T>>... ");
+
+        try
+        {
+            var pagination = new PaginationDto<int>
+            {
+                Count = 5,
+                Pages = 2,
+                Results = [1, 2, 3, 4, 5]
+            };
+
+            var response = Response<PaginationDto<int>>.Success(
+                "Pagination retrieved successfully",
+                pagination
+            );
+
+            var options = new JsonSerializerOptions
+            {
+                TypeInfoResolver = AppCoreJsonContext.Default
+            };
+
+            var json = JsonSerializer.Serialize(response, options);
+
+            if (string.IsNullOrEmpty(json))
+            {
+                throw new Exception("Nested serialization produced empty JSON");
+            }
+
+            if (!json.Contains("Pagination retrieved successfully"))
+            {
+                throw new Exception("Nested JSON missing response message");
+            }
+
+            Console.WriteLine("✓");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"✗ FAILED: {ex.Message}");
+            throw;
+        }
+    }
+
+    private static void TestGenericResponseSerialization()
+    {
+        Console.Write("  • Testing multiple generic types... ");
+
+        try
+        {
+            var stringResponse = Response<string>.Success("OK", "String data");
+            var intResponse = Response<int>.Success("OK", 42);
+            var boolResponse = Response<bool>.Success("OK", true);
+            var guidResponse = Response<Guid>.Success("OK", Guid.NewGuid());
+
+            var options = new JsonSerializerOptions
+            {
+                TypeInfoResolver = AppCoreJsonContext.Default
+            };
+
+            var stringJson = JsonSerializer.Serialize(stringResponse, options);
+            var intJson = JsonSerializer.Serialize(intResponse, options);
+            var boolJson = JsonSerializer.Serialize(boolResponse, options);
+            var guidJson = JsonSerializer.Serialize(guidResponse, options);
+
+            if (string.IsNullOrEmpty(stringJson) ||
+                string.IsNullOrEmpty(intJson) ||
+                string.IsNullOrEmpty(boolJson) ||
+                string.IsNullOrEmpty(guidJson))
+            {
+                throw new Exception("Generic serialization failed for some types");
+            }
+
+            Console.WriteLine("✓");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"✗ FAILED: {ex.Message}");
+            throw;
+        }
+    }
+
+    private static void TestCollectionSerialization()
+    {
+        Console.Write("  • Testing collection expression serialization... ");
+
+        try
+        {
+            // Test that C# 14 collection expressions serialize correctly
+            var dto = new PaginationDto<string>
+            {
+                Count = 5,
+                Pages = 1,
+                Results = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon"]
+            };
+
+            var options = new JsonSerializerOptions
+            {
+                TypeInfoResolver = AppCoreJsonContext.Default
+            };
+
+            var json = JsonSerializer.Serialize(dto, options);
+
+            // Verify all items from collection expression are present
+            if (!json.Contains("Alpha") || !json.Contains("Epsilon"))
+            {
+                throw new Exception("Collection expression items not serialized");
+            }
+
+            Console.WriteLine("✓");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"✗ FAILED: {ex.Message}");
+            throw;
+        }
+    }
+
+    private static void TestRoundTripSerialization()
+    {
+        Console.Write("  • Testing round-trip serialization (serialize + deserialize)... ");
+
+        try
+        {
+            var original = Response<string>.Success("Test message", "Original data");
+
+            var options = new JsonSerializerOptions
+            {
+                TypeInfoResolver = AppCoreJsonContext.Default
+            };
+
+            // Serialize
+            var json = JsonSerializer.Serialize(original, options);
+
+            // Deserialize
+            var deserialized = JsonSerializer.Deserialize<Response<string>>(json, options);
+
+            if (deserialized == null)
+            {
+                throw new Exception("Deserialization returned null");
+            }
+
+            if (deserialized.Message != original.Message)
+            {
+                throw new Exception($"Message mismatch: '{deserialized.Message}' != '{original.Message}'");
+            }
+
+            if (deserialized.Data != original.Data)
+            {
+                throw new Exception($"Data mismatch: '{deserialized.Data}' != '{original.Data}'");
+            }
+
+            Console.WriteLine("✓");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"✗ FAILED: {ex.Message}");
+            throw;
+        }
+    }
+}
