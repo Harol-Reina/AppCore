@@ -9,13 +9,13 @@ using SaveChangesInterceptor = AppCore.Infrastructure.Data.Interceptors.SaveChan
 
 namespace AppCore.UnitTests.Infrastructure.Data.Interceptors;
 
-public class TestEntityDao : AuditableBaseDao
+internal class TestEntityDao : AuditableBaseDao
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
 }
 
-public class TestDbContext : DbContext
+internal class TestDbContext : DbContext
 {
     public TestDbContext(DbContextOptions<TestDbContext> options) : base(options) { }
     public DbSet<TestEntityDao> TestEntities { get; set; } = null!;

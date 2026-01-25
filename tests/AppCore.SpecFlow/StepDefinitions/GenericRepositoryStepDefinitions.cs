@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using TechTalk.SpecFlow;
 using AppCore.Infrastructure.Data.DAOs.Common;
-using AutoMapper;
 
 namespace AppCore.SpecFlow.StepDefinitions;
 
@@ -212,15 +211,9 @@ public class GenericRepositoryStepDefinitions
         services.AddDbContext<TestDbContext>(options =>
             options.UseInMemoryDatabase($"TestDb_{Guid.NewGuid()}"));
 
-        // Register AutoMapper
-        services.AddSingleton<IMapper>(provider =>
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<TestEntity, TestEntityDao>().ReverseMap();
-            });
-            return config.CreateMapper();
-        });
+        // Register mapping service
+        services.AddScoped<IMappingService<TestEntity, TestEntityDao>, TestEntityMappingService>();
+        services.AddScoped<IMappingService<TestEntityDao, TestEntity>, TestEntityReverseMappingService>();
 
         // Register AppCore services
         services.AddScoped<IGenericRepository<TestEntity, int>, TestEntityRepository>();
@@ -237,27 +230,65 @@ public class GenericRepositoryStepDefinitions
 }
 
 // Test classes
-public class TestEntity : BaseEntity<int>
+internal class TestEntity : BaseEntity<int>
 {
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
 }
 
-public class TestEntityDao : BaseDao<int>
+internal class TestEntityDao : BaseDao<int>
 {
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
 }
 
-public class TestEntityRepository : GenericRepository<TestEntity, int, TestEntityDao>
+internal class TestEntityRepository : GenericRepository<TestEntity, int, TestEntityDao>
 {
-    public TestEntityRepository(TestDbContext context, IMapper mapper) 
-        : base(context, mapper) { }
+    public TestEntityRepository(TestDbContext context, 
+        IMappingService<TestEntity, TestEntityDao> entityToDao,
+        IMappingService<TestEntityDao, TestEntity> daoToEntity) 
+        : base(context, entityToDao, daoToEntity) { }
 }
 
-public class TestDbContext : DbContext
+internal class TestDbContext : DbContext
 {
     public TestDbContext(DbContextOptions<TestDbContext> options) : base(options) { }
     
     public DbSet<TestEntityDao> TestEntities { get; set; } = null!;
+}
+
+internal class TestEntityMappingService : IMappingService<TestEntity, TestEntityDao>
+{
+    public TestEntityDao Map(TestEntity source)
+    {
+        return new TestEntityDao
+        {
+            Id = source.Id,
+            Name = source.Name,
+            Description = source.Description
+        };
+    }
+
+    public IEnumerable<TestEntityDao> Map(IEnumerable<TestEntity> sources)
+    {
+        return sources.Select(Map);
+    }
+}
+
+internal class TestEntityReverseMappingService : IMappingService<TestEntityDao, TestEntity>
+{
+    public TestEntity Map(TestEntityDao source)
+    {
+        return new TestEntity
+        {
+            Id = source.Id,
+            Name = source.Name,
+            Description = source.Description
+        };
+    }
+
+    public IEnumerable<TestEntity> Map(IEnumerable<TestEntityDao> sources)
+    {
+        return sources.Select(Map);
+    }
 }

@@ -138,7 +138,7 @@ public class UnhandledExceptionBehaviourTests
             nameof(BadRequestException) => new BadRequestException("Test message"),
             nameof(ForbiddenAccessException) => new ForbiddenAccessException("Test message"),
             nameof(AuthenticationException) => new AuthenticationException("Test message"),
-            nameof(MappingException) => new MappingException(new AutoMapper.AutoMapperMappingException("Test mapping")),
+            nameof(MappingException) => new MappingException("Test mapping exception", (Exception?)null),
             nameof(SerializerException) => new SerializerException(new System.Text.Json.JsonException("Test serialization")),
             nameof(CustomException) => new CustomException(new DictionaryError("TEST-001", "Test custom exception")),
             _ => throw new ArgumentException($"Unknown exception type: {exceptionType.Name}")

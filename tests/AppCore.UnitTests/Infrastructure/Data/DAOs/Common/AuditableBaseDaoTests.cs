@@ -4,7 +4,7 @@ using Xunit;
 
 namespace AppCore.UnitTests.Infrastructure.Data.DAOs.Common;
 
-public class TestAuditableDao : AuditableBaseDao
+internal class TestAuditableDao : AuditableBaseDao
 {
     public string Name { get; set; } = string.Empty;
 }

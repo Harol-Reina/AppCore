@@ -1,10 +1,10 @@
 ﻿using System.Linq.Expressions;
 using AppCore.Application.DTOs;
 using AppCore.Application.Exceptions;
+using AppCore.Application.Interfaces;
 using AppCore.Domain.Common;
 using AppCore.Infrastructure.Data.DAOs.Common;
 using AppCore.Infrastructure.Repositories;
-using AutoMapper;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -15,7 +15,8 @@ namespace AppCore.UnitTests.Infrastructure.Repositories;
 public class GenericRepositoryTests : IDisposable
 {
     private readonly DbContext _dbContext;
-    private readonly Mock<IMapper> _mapperMock;
+    private readonly Mock<IMappingService<TestEntity, TestDao>> _entityToDaoMock;
+    private readonly Mock<IMappingService<TestDao, TestEntity>> _daoToEntityMock;
     private readonly TestRepository _repository;
 
     public GenericRepositoryTests()
@@ -25,8 +26,9 @@ public class GenericRepositoryTests : IDisposable
             .Options;
 
         _dbContext = new TestDbContext(options);
-        _mapperMock = new Mock<IMapper>();
-        _repository = new TestRepository(_dbContext, _mapperMock.Object);
+        _entityToDaoMock = new Mock<IMappingService<TestEntity, TestDao>>();
+        _daoToEntityMock = new Mock<IMappingService<TestDao, TestEntity>>();
+        _repository = new TestRepository(_dbContext, _entityToDaoMock.Object, _daoToEntityMock.Object);
     }
 
     [Fact]
@@ -42,8 +44,8 @@ public class GenericRepositoryTests : IDisposable
         await _dbContext.Set<TestDao>().AddRangeAsync(dao1, dao2);
         await _dbContext.SaveChangesAsync();
 
-        _mapperMock.Setup(m => m.Map<TestEntity>(dao1)).Returns(entity1);
-        _mapperMock.Setup(m => m.Map<TestEntity>(dao2)).Returns(entity2);
+        _daoToEntityMock.Setup(m => m.Map(dao1)).Returns(entity1);
+        _daoToEntityMock.Setup(m => m.Map(dao2)).Returns(entity2);
 
         // Act
         var result = await _repository.GetAllAsync();
@@ -67,7 +69,7 @@ public class GenericRepositoryTests : IDisposable
         await _dbContext.Set<TestDao>().AddAsync(dao);
         await _dbContext.SaveChangesAsync();
 
-        _mapperMock.Setup(m => m.Map<TestEntity>(dao)).Returns(entity);
+        _daoToEntityMock.Setup(m => m.Map(dao)).Returns(entity);
 
         // Act
         var result = await _repository.GetByIdAsync(1);
@@ -107,8 +109,8 @@ public class GenericRepositoryTests : IDisposable
         var entity = new TestEntity { Name = "New Test" };
         var dao = new TestDao { Id = 1, Name = "New Test" };
 
-        _mapperMock.Setup(m => m.Map<TestDao>(entity)).Returns(dao);
-        _mapperMock.Setup(m => m.Map<TestEntity>(dao)).Returns(entity);
+        _entityToDaoMock.Setup(m => m.Map(entity)).Returns(dao);
+        _daoToEntityMock.Setup(m => m.Map(dao)).Returns(entity);
 
         // Act
         var result = await _repository.AddAsync(entity);
@@ -133,8 +135,8 @@ public class GenericRepositoryTests : IDisposable
         var entity = new TestEntity { Id = 1, Name = "Updated" };
         var updatedDao = new TestDao { Id = 1, Name = "Updated", CreatedAt = dao.CreatedAt };
 
-        _mapperMock.Setup(m => m.Map<TestDao>(entity)).Returns(updatedDao);
-        _mapperMock.Setup(m => m.Map<TestEntity>(updatedDao)).Returns(entity);
+        _entityToDaoMock.Setup(m => m.Map(entity)).Returns(updatedDao);
+        _daoToEntityMock.Setup(m => m.Map(updatedDao)).Returns(entity);
 
         // Act
         var result = await _repository.UpdateAsync(entity);
@@ -216,7 +218,7 @@ public class GenericRepositoryTests : IDisposable
 
         foreach (var (dao, entity) in daos.Zip(entities))
         {
-            _mapperMock.Setup(m => m.Map<TestEntity>(dao)).Returns(entity);
+            _daoToEntityMock.Setup(m => m.Map(dao)).Returns(entity);
         }
 
         // Act
@@ -279,7 +281,10 @@ public class GenericRepositoryTests : IDisposable
 
     private class TestRepository : GenericRepository<TestEntity, int, TestDao>
     {
-        public TestRepository(DbContext dbContext, IMapper mapper) : base(dbContext, mapper) { }
+        public TestRepository(DbContext dbContext, 
+            IMappingService<TestEntity, TestDao> entityToDao,
+            IMappingService<TestDao, TestEntity> daoToEntity) 
+            : base(dbContext, entityToDao, daoToEntity) { }
 
         public Expression<Func<TestDao, object>> TestConvertExpression(Expression<Func<TestEntity, object>> entityExpression)
         {

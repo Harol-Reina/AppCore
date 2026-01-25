@@ -7,19 +7,19 @@ namespace AppCore.UnitTests.Application.Exceptions;
 public class NotFoundExceptionTests
 {
     [Fact]
-    public void Constructor_WithDefaultMessage_ShouldSetDefaultMessageAndStatusCode404()
+    public void Constructor_WithDefaultMessage_ShouldSetDefaultMessage()
     {
         // Act
         var exception = new NotFoundException();
 
         // Assert
         exception.Message.Should().Be("The requested resource could not be found.");
-        exception.StatusCode.Should().Be(404);
         exception.MessageLog.Should().NotBeNull();
+        exception.Should().BeAssignableTo<CustomException>();
     }
 
     [Fact]
-    public void Constructor_WithCustomMessage_ShouldSetCustomMessageAndStatusCode404()
+    public void Constructor_WithCustomMessage_ShouldSetCustomMessage()
     {
         // Arrange
         var customMessage = "User not found";
@@ -29,18 +29,18 @@ public class NotFoundExceptionTests
 
         // Assert
         exception.Message.Should().Be(customMessage);
-        exception.StatusCode.Should().Be(404);
         exception.MessageLog.Should().NotBeNull();
+        exception.Should().BeAssignableTo<CustomException>();
     }
 
     [Fact]
-    public void Exception_ShouldInheritFromHttpBaseException()
+    public void Exception_ShouldInheritFromCustomException()
     {
         // Arrange & Act
         var exception = new NotFoundException();
 
         // Assert
-        exception.Should().BeAssignableTo<HttpBaseException>();
+        exception.Should().BeAssignableTo<CustomException>();
     }
 
     [Fact]

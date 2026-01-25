@@ -7,7 +7,7 @@ namespace AppCore.UnitTests.Application.Exceptions;
 public class BadRequestExceptionTests
 {
     [Fact]
-    public void Constructor_WithMessage_ShouldSetMessageAndStatusCode400()
+    public void Constructor_WithMessage_ShouldSetMessage()
     {
         // Arrange
         var message = "Invalid request data";
@@ -17,17 +17,17 @@ public class BadRequestExceptionTests
 
         // Assert
         exception.Message.Should().Be(message);
-        exception.StatusCode.Should().Be(400);
+        exception.Should().BeAssignableTo<CustomException>();
     }
 
     [Fact]
-    public void Exception_ShouldInheritFromHttpBaseException()
+    public void Exception_ShouldInheritFromCustomException()
     {
         // Arrange & Act
         var exception = new BadRequestException("test");
 
         // Assert
-        exception.Should().BeAssignableTo<HttpBaseException>();
+        exception.Should().BeAssignableTo<CustomException>();
     }
 
     [Theory]
@@ -42,6 +42,6 @@ public class BadRequestExceptionTests
 
         // Assert
         exception.Message.Should().Be(message);
-        exception.StatusCode.Should().Be(400);
+        exception.Should().BeAssignableTo<CustomException>();
     }
 }

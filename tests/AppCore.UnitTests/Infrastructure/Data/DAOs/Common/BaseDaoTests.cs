@@ -4,17 +4,17 @@ using Xunit;
 
 namespace AppCore.UnitTests.Infrastructure.Data.DAOs.Common;
 
-public class TestDao : BaseDao<int>
+internal class TestDao : BaseDao<int>
 {
     public string Name { get; set; } = string.Empty;
 }
 
-public class TestDaoGuid : BaseDao<Guid>
+internal class TestDaoGuid : BaseDao<Guid>
 {
     public string Description { get; set; } = string.Empty;
 }
 
-public class TestDaoString : BaseDao<string>
+internal class TestDaoString : BaseDao<string>
 {
     public int Value { get; set; }
 }
@@ -159,7 +159,7 @@ public class BaseDaoTests
 
 public class BaseDaoIntTests
 {
-    public class TestBaseDaoInt : BaseDaoInt
+    internal class TestBaseDaoInt : BaseDaoInt
     {
         public string Name { get; set; } = string.Empty;
     }
