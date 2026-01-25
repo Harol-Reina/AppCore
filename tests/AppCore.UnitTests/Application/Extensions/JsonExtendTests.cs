@@ -22,10 +22,10 @@ public class JsonExtendTests {
         // Assert
         result.Should().NotBeNull();
         result.RootElement.ValueKind.Should().Be(JsonValueKind.Object);
-        result.RootElement.GetProperty("Id").GetInt32().Should().Be(123);
-        result.RootElement.GetProperty("Name").GetString().Should().Be("Test Name");
-        result.RootElement.GetProperty("Email").GetString().Should().Be("test@example.com");
-        result.RootElement.GetProperty("IsActive").GetBoolean().Should().Be(true);
+        result.RootElement.GetProperty("id").GetInt32().Should().Be(123);
+        result.RootElement.GetProperty("name").GetString().Should().Be("Test Name");
+        result.RootElement.GetProperty("email").GetString().Should().Be("test@example.com");
+        result.RootElement.GetProperty("isActive").GetBoolean().Should().Be(true);
     }
 
     [Fact]
@@ -89,10 +89,10 @@ public class JsonExtendTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"Id\": 123");
-        result.Should().Contain("\"Name\": \"Test Name\"");
-        result.Should().Contain("\"Email\": \"test@example.com\"");
-        result.Should().Contain("\"IsActive\": true");
+        result.Should().Contain("\"id\": 123");
+        result.Should().Contain("\"name\": \"Test Name\"");
+        result.Should().Contain("\"email\": \"test@example.com\"");
+        result.Should().Contain("\"isActive\": true");
     }
 
     [Fact]
@@ -110,10 +110,10 @@ public class JsonExtendTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"Id\": 456");
-        result.Should().NotContain("\"Name\":");
-        result.Should().Contain("\"Email\": \"test@example.com\"");
-        result.Should().Contain("\"IsActive\": false");
+        result.Should().Contain("\"id\": 456");
+        result.Should().NotContain("\"name\":");
+        result.Should().Contain("\"email\": \"test@example.com\"");
+        result.Should().Contain("\"isActive\": false");
     }
 
     [Fact]
@@ -229,14 +229,14 @@ public class JsonExtendTests {
         act.Should().Throw<SerializerException>();
     }
 
-    private class TestModel {
+    public class TestModel {
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Email { get; set; }
         public bool IsActive { get; set; }
     }
 
-    private class CircularTestModel {
+    public class CircularTestModel {
         public string? Name { get; set; }
         public CircularTestModel? Parent { get; set; }
         public CircularTestModel? Child { get; set; }

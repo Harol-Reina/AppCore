@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using AppCore.Application.Exceptions;
 using AppCore.Application.Serialization;
 
@@ -11,6 +12,16 @@ namespace AppCore.Application.Extensions;
 /// Provides efficient JSON operations without runtime reflection.
 /// </summary>
 public static class JsonExtend {
+
+    private static readonly JsonSerializerOptions FallbackOptions = new() {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        WriteIndented = true,
+        PropertyNameCaseInsensitive = true,
+        TypeInfoResolver = JsonTypeInfoResolver.Combine(
+            AppCoreJsonContext.Default,
+            new DefaultJsonTypeInfoResolver())
+    };
 
     /// <summary>
     /// Converts an object to a JsonDocument using AOT-compatible serialization.
@@ -57,7 +68,7 @@ public static class JsonExtend {
     public static T FromJsonDocument<T>(this JsonDocument jsonDocument) {
         try {
             string jsonString = jsonDocument.RootElement.GetRawText();
-            return JsonSerializer.Deserialize<T>(jsonString, AppCoreJsonContext.Default.Options)!;
+            return JsonSerializer.Deserialize<T>(jsonString, FallbackOptions)!;
         } catch (JsonException) {
             throw new ArgumentException("Invalid JSON string.");
         }
@@ -79,8 +90,8 @@ public static class JsonExtend {
                                       [CallerFilePath] string sourceFilePath = "",
                                       [CallerLineNumber] int sourceLineNumber = 0) {
         try {
-            // Use the AOT-compatible JsonSerializerContext for serialization
-            return JsonSerializer.Serialize(value, AppCoreJsonContext.Default.Options);
+            // Use the AOT-compatible JsonSerializerContext with fallback for serialization
+            return JsonSerializer.Serialize(value, FallbackOptions);
         } catch (Exception ex) {
             throw new SerializerException(ex, memberName, sourceFilePath, sourceLineNumber);
         }
@@ -102,8 +113,8 @@ public static class JsonExtend {
                                     [CallerLineNumber] int sourceLineNumber = 0) {
         if (string.IsNullOrWhiteSpace(value)) return default;
         try {
-            // Use the AOT-compatible JsonSerializerContext for deserialization
-            return JsonSerializer.Deserialize<T>(value, AppCoreJsonContext.Default.Options);
+            // Use the AOT-compatible JsonSerializerContext with fallback for deserialization
+            return JsonSerializer.Deserialize<T>(value, FallbackOptions);
         } catch (Exception ex) {
             throw new SerializerException(ex, memberName, sourceFilePath, sourceLineNumber);
         }

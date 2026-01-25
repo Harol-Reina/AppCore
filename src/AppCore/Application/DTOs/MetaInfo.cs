@@ -1,4 +1,4 @@
-namespace AppCore.Application.DTOs;
+﻿namespace AppCore.Application.DTOs;
 
 public class MetaInfo {
     /// <summary>Entorno de ejcución Delevopment|Producction. </summary>

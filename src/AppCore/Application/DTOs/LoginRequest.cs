@@ -1,4 +1,4 @@
-namespace AppCore.Application.DTOs;
+﻿namespace AppCore.Application.DTOs;
 
 public class LoginRequest(string userName, string passWord) {
     /// <summary>Usuario</summary>

@@ -268,18 +268,18 @@ public class GenericRepositoryTests : IDisposable
     }
 
     // Test classes
-    private class TestEntity : BaseEntity<int>
+    internal class TestEntity : BaseEntity<int>
     {
         public string? Name { get; set; }
         public new bool IsNew => Id == 0;
     }
 
-    private class TestDao : BaseDao<int>
+    internal class TestDao : BaseDao<int>
     {
         public string? Name { get; set; }
     }
 
-    private class TestRepository : GenericRepository<TestEntity, int, TestDao>
+    internal class TestRepository : GenericRepository<TestEntity, int, TestDao>
     {
         public TestRepository(DbContext dbContext, 
             IMappingService<TestEntity, TestDao> entityToDao,
@@ -292,7 +292,7 @@ public class GenericRepositoryTests : IDisposable
         }
     }
 
-    private class TestDbContext : DbContext
+    internal class TestDbContext : DbContext
     {
         public TestDbContext(DbContextOptions options) : base(options) { }
 

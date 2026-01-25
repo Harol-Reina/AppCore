@@ -1,4 +1,4 @@
-namespace AppCore.Application.Wrappers;
+﻿namespace AppCore.Application.Wrappers;
 
 public class PageResult<T> where T : class {
     public List<T> Items { get; set; } = [];

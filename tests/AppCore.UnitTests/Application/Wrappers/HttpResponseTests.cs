@@ -77,9 +77,9 @@ public class HttpResponseTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"StatusCode\": 200");
-        result.Should().Contain("\"Time\": 200");
-        result.Should().Contain("\"Data\": \"Test data\"");
+        result.Should().Contain("\"statusCode\": 200");
+        result.Should().Contain("\"time\": 200");
+        result.Should().Contain("\"data\": \"Test data\"");
     }
 
     [Fact]
@@ -94,8 +94,8 @@ public class HttpResponseTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"StatusCode\": 400");
-        result.Should().Contain("\"ErrorMessage\": \"Bad request error\"");
+        result.Should().Contain("\"statusCode\": 400");
+        result.Should().Contain("\"errorMessage\": \"Bad request error\"");
     }
 
     [Fact]
@@ -115,10 +115,10 @@ public class HttpResponseTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"StatusCode\": 201");
-        result.Should().Contain("\"Time\": 250");
-        result.Should().Contain("\"Id\": 123");
-        result.Should().Contain("\"Name\": \"Test User\"");
+        result.Should().Contain("\"statusCode\": 201");
+        result.Should().Contain("\"time\": 250");
+        result.Should().Contain("\"id\": 123");
+        result.Should().Contain("\"name\": \"Test User\"");
     }
 
     [Fact]
@@ -154,8 +154,8 @@ public class HttpResponseTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"StatusCode\": 200");
-        result.Should().Contain("\"Time\": 180");
+        result.Should().Contain("\"statusCode\": 200");
+        result.Should().Contain("\"time\": 180");
         httpResponse.Response.Should().NotBeNull();
     }
 

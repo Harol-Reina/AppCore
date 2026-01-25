@@ -107,11 +107,11 @@ public class MessageLogTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"Tipo\": \"INFO\"");
-        result.Should().Contain("\"Source\": \"TestController\"");
-        result.Should().Contain("\"Message\": \"Operation completed successfully\"");
-        result.Should().Contain("\"Metodo\": \"GetData\"");
-        result.Should().Contain("\"Path\": \"/api/data\"");
+        result.Should().Contain("\"tipo\": \"INFO\"");
+        result.Should().Contain("\"source\": \"TestController\"");
+        result.Should().Contain("\"message\": \"Operation completed successfully\"");
+        result.Should().Contain("\"metodo\": \"GetData\"");
+        result.Should().Contain("\"path\": \"/api/data\"");
     }
 
     [Fact]
@@ -136,12 +136,12 @@ public class MessageLogTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"Tipo\": \"ERROR\"");
-        result.Should().Contain("\"ErrorCode\": \"ERR001\"");
-        result.Should().Contain("\"UserAction\": \"Login\"");
-        result.Should().Contain("\"Metodo\": \"Login\"");
-        result.Should().Contain("\"Path\": \"/auth/login\"");
-        result.Should().Contain("\"StackTrace\": \"Stack trace content\"");
+        result.Should().Contain("\"tipo\": \"ERROR\"");
+        result.Should().Contain("\"errorCode\": \"ERR001\"");
+        result.Should().Contain("\"userAction\": \"Login\"");
+        result.Should().Contain("\"metodo\": \"Login\"");
+        result.Should().Contain("\"path\": \"/auth/login\"");
+        result.Should().Contain("\"stackTrace\": \"Stack trace content\"");
     }
 
     [Fact]
@@ -160,10 +160,10 @@ public class MessageLogTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"Tipo\": \"WARNING\"");
-        result.Should().Contain("\"Message\": \"Warning message\"");
-        result.Should().Contain("\"Metodo\": \"ValidateInput\"");
-        result.Should().Contain("\"Path\": \"/api/validate\"");
+        result.Should().Contain("\"tipo\": \"WARNING\"");
+        result.Should().Contain("\"message\": \"Warning message\"");
+        result.Should().Contain("\"metodo\": \"ValidateInput\"");
+        result.Should().Contain("\"path\": \"/api/validate\"");
     }
 
     [Fact]
@@ -233,7 +233,7 @@ public class MessageLogTests {
 
         // Assert
         ((string)messageLog.Message).Should().Be(stringMessage);
-        messageLog.ToString().Should().Contain($"\"Message\": \"{stringMessage}\"");
+        messageLog.ToString().Should().Contain($"\"message\": \"{stringMessage}\"");
     }
 
     [Fact]
@@ -251,6 +251,6 @@ public class MessageLogTests {
 
         // Assert
         ((int)messageLog.Message).Should().Be(numericMessage);
-        messageLog.ToString().Should().Contain("\"Message\": 42");
+        messageLog.ToString().Should().Contain("\"message\": 42");
     }
 }
