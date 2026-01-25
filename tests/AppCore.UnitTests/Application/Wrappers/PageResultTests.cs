@@ -1,4 +1,5 @@
 ﻿using AppCore.Application.Wrappers;
+using AppCore.Application.Serialization;
 using FluentAssertions;
 using Xunit;
 
@@ -110,13 +111,13 @@ public class PageResultTests {
     [Fact]
     public void PageResult_WithComplexObject_ShouldWorkCorrectly() {
         // Arrange
-        var complexItems = new List<TestModel>
+        var complexItems = new List<JsonTestModel>
         {
             new() { Id = 1, Name = "Test1" },
             new() { Id = 2, Name = "Test2" }
         };
 
-        var pageResult = new PageResult<TestModel> {
+        var pageResult = new PageResult<JsonTestModel> {
             Items = complexItems,
             CurrentPage = 2,
             TotalPages = 3,
@@ -147,9 +148,4 @@ public class PageResultTests {
         pageResult.TotalPages.Should().Be(4);
         pageResult.Count.Should().Be(3);
     }
-}
-
-public class TestModel {
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
 }
