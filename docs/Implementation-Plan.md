@@ -339,6 +339,58 @@
 - Format: 100% compliant con dotnet format
 - Security: 0 critical issues permitidos
 
+**Validación del Pipeline CI (Enero 25, 2026):**
+- **Pipeline Run:** https://github.com/Harol-Reina/AppCore/actions/runs/21334646784
+- **Commit:** 0117ece2b2aeb17d12fb1eb506aa6ef333edd668
+- **Status:** ❌ FAILED (Quality Gate funcionando correctamente)
+
+**Resultados por Job:**
+1. **Build Job:** ✅ SUCCESS
+   - Build time: ~13s
+   - Warnings: 46 (AOT warnings - documentados y esperados)
+   - Compilation: SUCCESS
+
+2. **Unit Tests Job:** ❌ FAILED (Quality Gate ACTIVADO)
+   - Total: 226 tests
+   - Passed: 213 (94.2%)
+   - Failed: 13 (5.8%)
+   - Exit code: 1 (correctamente detectado por quality gate)
+
+3. **Code Quality Job:** ⏸️ SKIPPED (dependency bloqueada por tests fallidos)
+
+4. **Package Job:** ⏸️ SKIPPED (dependency bloqueada por tests fallidos)
+
+**Issues detectados por Quality Gate:**
+
+1. **JsonExtend Tests (10 fallos):**
+   - Error: `JsonTypeInfo metadata for type 'TestModel' was not provided by AppCoreJsonContext`
+   - Causa: Tests usan `TestModel` interno no registrado en Source Generator
+   - Archivos afectados:
+     - `JsonExtendTests.cs`: 10 tests
+     - `HttpResponseTests.cs`: 1 test
+     - `MessageLogTests.cs`: 1 test
+
+2. **GenericRepository Tests (2 fallos):**
+   - `GetPagedAsync_ShouldReturnPaginatedResults`: Expected 3 items, found 0
+   - `GetAllAsync_WithoutIncludes_ShouldReturnAllEntities`: Expected 2 items, found 0
+   - Causa: Posible issue con EF Core in-memory o configuración de test
+
+**Análisis del Quality Gate:**
+✅ **Quality Gate funcionó CORRECTAMENTE:**
+- Detectó 13 tests fallidos
+- Bloqueó pipeline con exit code 1
+- Activó annotation `::error title=Unit Tests Failed`
+- Previno ejecución de jobs downstream
+- Logs estructurados facilitaron diagnóstico
+
+**Acción requerida:**
+🔴 **BLOCKER:** Pipeline requiere corrección de tests antes de continuar con tareas subsecuentes
+
+**Opciones de remediación:**
+1. **Opción A (RECOMENDADA):** Registrar TestModel en AppCoreJsonContext
+2. **Opción B:** Usar tipos reales del proyecto en lugar de TestModel
+3. **Opción C:** Investigar y corregir tests de GenericRepository
+
 **Próximos pasos:**
 - 🎯 Migración completa a GitHub Packages
 - 🎯 Agregar step de compilación NativeAOT en pipeline
