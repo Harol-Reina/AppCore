@@ -2,6 +2,7 @@
 using AppCore.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
 using AppCore.Application.Extensions;
+using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Middleware;
 
@@ -42,13 +43,13 @@ internal class HttpClientCustomHandler(RequestDelegate next) {
                 Title = $"One or more validation errors have occurred."
             }),
 
-            NotFoundException notFoundException => JsonExtend.Serialize(new {
-                message = notFoundException.Message,
-            }),
+            NotFoundException notFoundException => JsonExtend.Serialize(new ErrorResponse(
+                notFoundException.Message
+            )),
 
-            BadRequestException badRequestException => JsonExtend.Serialize(new {
-                message = badRequestException.Message,
-            }),
+            BadRequestException badRequestException => JsonExtend.Serialize(new ErrorResponse(
+                badRequestException.Message
+            )),
 
             AuthenticationException auth => JsonExtend.Serialize(new ProblemDetails {
                 Title = "Unauthorized",
@@ -64,10 +65,10 @@ internal class HttpClientCustomHandler(RequestDelegate next) {
                 Title = serializerException.Message
             }),
 
-            MappingException mappingException => JsonExtend.Serialize(new {
-                Title = mappingException.Message,
+            MappingException mappingException => JsonExtend.Serialize(new MappingErrorResponse(
+                mappingException.Message,
                 mappingException.Errors
-            }),
+            )),
 
             ApiHttpException apiHttpException => JsonExtend.Serialize(new ProblemDetails {
                 Title = apiHttpException.Message,
@@ -75,13 +76,13 @@ internal class HttpClientCustomHandler(RequestDelegate next) {
             }),
 
             CustomException customException when customException.MessageLog.Message is DictionaryError error 
-                => JsonExtend.Serialize(new {
-                    error = error with { ProviderMessage = null }
-                }),
+                => JsonExtend.Serialize(new CustomErrorResponse(
+                    error with { ProviderMessage = null }
+                )),
 
-            CustomException customException => JsonExtend.Serialize(new {
-                Error = customException.MessageLog.Message
-            }),
+            CustomException customException => JsonExtend.Serialize(new CustomErrorResponse(
+                customException.MessageLog.Message!
+            )),
 
             _ => JsonExtend.Serialize(new ProblemDetails {
                 Title = "An error occurred while processing your request."

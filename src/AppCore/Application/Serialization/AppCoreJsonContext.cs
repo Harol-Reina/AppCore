@@ -4,6 +4,7 @@ using AppCore.Application.DTOs;
 using AppCore.Application.Exceptions;
 using AppCore.Domain.Common;
 using AppCore.Domain.Entities.Integrators;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AppCore.Application.Serialization;
 
@@ -34,6 +35,9 @@ public class JsonTestModel
 [JsonSerializable(typeof(Response<PaginationDto<int>>))]
 [JsonSerializable(typeof(HttpResponse<object>))]
 [JsonSerializable(typeof(HttpResponse<string>))]
+[JsonSerializable(typeof(ErrorResponse))]
+[JsonSerializable(typeof(MappingErrorResponse))]
+[JsonSerializable(typeof(CustomErrorResponse))]
 [JsonSerializable(typeof(PaginationResponse<object>))]
 [JsonSerializable(typeof(PaginationDto<object>))]
 [JsonSerializable(typeof(PaginationDto<string>))]
@@ -47,6 +51,8 @@ public class JsonTestModel
 [JsonSerializable(typeof(EmailRequest))]
 [JsonSerializable(typeof(DictionaryError))]
 [JsonSerializable(typeof(MessageLog))]
+[JsonSerializable(typeof(ValidationProblemDetails))]
+[JsonSerializable(typeof(ProblemDetails))]
 [JsonSerializable(typeof(string))]
 [JsonSerializable(typeof(int))]
 [JsonSerializable(typeof(long))]
