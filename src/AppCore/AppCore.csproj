@@ -8,9 +8,10 @@
     
     <!-- NuGet Package Configuration -->
     <PackageId>AppCore</PackageId>
-    <Version>1.0.0</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    
+    <!-- MinVer: Automatic versioning from Git tags -->
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+    <MinVerDefaultPreReleaseIdentifiers>preview</MinVerDefaultPreReleaseIdentifiers>
   </PropertyGroup>
   
   <!-- Allow test projects to access internal members -->
@@ -92,6 +93,9 @@
     
     <!-- Source Link for symbol generation -->
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+    
+    <!-- MinVer for automatic semantic versioning from Git tags -->
+    <PackageReference Include="MinVer" Version="6.0.0" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
