@@ -7,7 +7,8 @@ Esta guía proporciona los pasos detallados para configurar el proyecto AppCore 
 - Cuenta de GitHub
 - Git instalado localmente
 - .NET 10.0.x SDK instalado
-- Acceso a NuGet.org (opcional, para publicación)
+- **✅ GitHub Packages** (repositorio NuGet público oficial)
+- **⚠️ NuGet.org** (Ya NO se utiliza - migrado completamente a GitHub Packages)
 
 ## 🚀 Paso 1: Creación del Repositorio en GitHub
 
@@ -51,27 +52,40 @@ El pipeline CI/CD requiere varios secrets y variables de entorno configurados en
 
 ### 2.2 Configurar Secrets Requeridos
 
-#### Para publicación en NuGet.org (Producción):
-1. Haz clic en **"New repository secret"**
-2. Crear el secret:
-   - **Name:** `NUGET_API_KEY`
-   - **Secret:** Tu API key de NuGet.org
-   - Haz clic en **"Add secret"**
+#### ✅ GitHub Packages (Repositorio Oficial - Automático)
+- `GITHUB_TOKEN` se genera automáticamente por GitHub Actions
+- **No requiere configuración manual**
+- Tiene permisos para publicar en GitHub Packages
+- Es el método **oficial y recomendado** para AppCore
 
-#### Para GitHub Packages (Automático):
-- `GITHUB_TOKEN` se genera automáticamente (no es necesario configurarlo)
+#### ⚠️ NuGet.org (DEPRECADO - Ya NO se utiliza)
+**IMPORTANTE:** AppCore ha migrado completamente a GitHub Packages como repositorio NuGet público. 
+Ya **NO es necesario** configurar `NUGET_API_KEY` ni usar NuGet.org.
 
-### 2.3 Obtener API Key de NuGet.org
+Si tienes configurado `NUGET_API_KEY` de versiones anteriores, puedes eliminarlo de forma segura.
 
-1. Ve a [NuGet.org](https://www.nuget.org)
-2. Inicia sesión con tu cuenta
-3. Ve a tu perfil > **"API Keys"**
-4. Haz clic en **"Create"** para crear una nueva API key:
-   - **Key Name:** `AppCore-GitHub-Actions`
-   - **Package Owner:** Tu usuario
-   - **Scopes:** `Push` y `Push new packages and package versions`
-   - **Packages:** Selecciona el patrón `AppCore*` o déjalo en blanco para todos
-5. Copia la API key generada y úsala en el paso 2.2
+### 2.3 Configurar Permisos de GitHub Packages
+
+Para que el pipeline pueda publicar en GitHub Packages:
+
+1. Ve a tu repositorio en GitHub
+2. **Settings** > **Actions** > **General**
+3. En la sección **"Workflow permissions"**:
+   - ✅ Selecciona **"Read and write permissions"**
+   - ✅ Marca **"Allow GitHub Actions to create and approve pull requests"**
+4. Haz clic en **"Save"**
+
+### 2.4 Configurar Visibilidad del Paquete (Público)
+
+Para que el paquete sea accesible públicamente desde GitHub Packages:
+
+1. Una vez publicado el primer paquete, ve a la página principal de tu repositorio
+2. En la barra lateral derecha, busca la sección **"Packages"**
+3. Haz clic en el paquete **AppCore**
+4. Ve a **"Package settings"**
+5. En la sección **"Danger Zone"** > **"Change package visibility"**:
+   - Selecciona **"Public"**
+   - Confirma el cambio
 
 ## 🔧 Paso 3: Configuración de Environments
 
@@ -243,7 +257,101 @@ git push origin v1.0.0
 # Crear release en GitHub UI
 ```
 
-**Resultado:** Se publica automáticamente en NuGet.org.
+**Resultado:** El paquete se publica automáticamente en GitHub Packages con la versión del tag.
+
+## 📦 Paso 10: Consumir el Paquete desde GitHub Packages
+
+### 10.1 Configurar NuGet Source (Una vez por máquina)
+
+Para consumir paquetes públicos de GitHub Packages, configura el source en tu sistema:
+
+```bash
+# Agregar GitHub Packages como source de NuGet
+dotnet nuget add source https://nuget.pkg.github.com/TU_USUARIO/index.json \
+  --name github \
+  --username TU_USUARIO \
+  --password TU_GITHUB_PAT \
+  --store-password-in-clear-text
+```
+
+**Nota:** Necesitas un Personal Access Token (PAT) de GitHub con scope `read:packages`.
+
+#### Crear Personal Access Token
+
+1. Ve a GitHub > **Settings** > **Developer settings** > **Personal access tokens** > **Tokens (classic)**
+2. Haz clic en **"Generate new token"** > **"Generate new token (classic)"**
+3. Configuración:
+   - **Note:** `AppCore Package Read`
+   - **Expiration:** 90 días (o más)
+   - **Scopes:** ✅ `read:packages`
+4. Copia el token generado
+
+### 10.2 Configurar en Proyecto (nuget.config)
+
+Alternativamente, puedes configurar por proyecto creando un `nuget.config`:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <clear />
+    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />
+    <add key="github" value="https://nuget.pkg.github.com/TU_USUARIO/index.json" />
+  </packageSources>
+  <packageSourceCredentials>
+    <github>
+      <add key="Username" value="TU_USUARIO" />
+      <add key="ClearTextPassword" value="TU_GITHUB_PAT" />
+    </github>
+  </packageSourceCredentials>
+</configuration>
+```
+
+### 10.3 Instalar el Paquete
+
+```bash
+# Instalar AppCore desde GitHub Packages
+dotnet add package AppCore --version 1.0.0 --source github
+
+# O editar manualmente el .csproj
+```
+
+```xml
+<ItemGroup>
+  <PackageReference Include="AppCore" Version="1.0.0" />
+</ItemGroup>
+```
+
+### 10.4 Usar en Docker / CI/CD
+
+Para usar en ambientes de CI/CD o Docker:
+
+```dockerfile
+# Dockerfile
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /app
+
+# Configurar GitHub Packages
+ARG GITHUB_PAT
+RUN dotnet nuget add source https://nuget.pkg.github.com/TU_USUARIO/index.json \
+    --name github \
+    --username TU_USUARIO \
+    --password ${GITHUB_PAT} \
+    --store-password-in-clear-text
+
+# Restaurar y compilar
+COPY . .
+RUN dotnet restore
+RUN dotnet build
+```
+
+```yaml
+# GitHub Actions
+- name: Restore packages
+  run: dotnet restore
+  env:
+    NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
 
 ## 🐛 Solución de Problemas Comunes
 
@@ -258,37 +366,69 @@ git remote add origin https://github.com/TU_USUARIO/AppCore.git
 - Revisa el reporte de cobertura en los artifacts
 - Agrega más pruebas unitarias si es necesario
 
-### Error: "NUGET_API_KEY not found"
-- Verifica que hayas configurado el secret correctamente
-- Asegúrate de que el environment "production" está configurado
+### Error: "Unable to load the service index for source" (GitHub Packages)
+**Causa:** Autenticación incorrecta o token sin permisos.
 
-### Error de permisos en GitHub Packages
+**Solución:**
+1. Verifica que tu PAT tenga el scope `read:packages`
+2. Asegúrate de usar el username correcto de GitHub
+3. Regenera el PAT si es necesario
+
 ```bash
-# Configurar autenticación para GitHub Packages localmente
-dotnet nuget add source --username TU_USUARIO --password TU_PAT --store-password-in-clear-text --name github "https://nuget.pkg.github.com/TU_USUARIO/index.json"
+# Listar sources configurados
+dotnet nuget list source
+
+# Remover y re-agregar el source
+dotnet nuget remove source github
+dotnet nuget add source https://nuget.pkg.github.com/TU_USUARIO/index.json \
+  --name github \
+  --username TU_USUARIO \
+  --password NUEVO_PAT \
+  --store-password-in-clear-text
 ```
+
+### Error: "Package 'AppCore' is not found"
+**Causa:** El paquete no está marcado como público en GitHub Packages.
+
+**Solución:**
+1. Ve a GitHub > tu repositorio > **Packages**
+2. Selecciona el paquete **AppCore**
+3. **Package settings** > **Change package visibility** > **Public**
+4. Confirma el cambio
+
+### Error de permisos en GitHub Actions para publicar
+**Causa:** Workflow permissions no están configurados correctamente.
+
+**Solución:**
+1. Ve a **Settings** > **Actions** > **General**
+2. En **"Workflow permissions"**, selecciona **"Read and write permissions"**
+3. Guarda los cambios y re-ejecuta el workflow
 
 ## 📚 Recursos Adicionales
 
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [NuGet Package Publishing](https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package)
 - [GitHub Packages for .NET](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-nuget-registry)
-- [SonarCloud Integration](https://sonarcloud.io/documentation/)
+- [NuGet Package Publishing](https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package)
+- [Personal Access Tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+- [NativeAOT Compatibility](./NativeAOT-Compatibility-Report.md)
 
 ## 🎯 Checklist Final
 
 Antes de considerar la configuración completa, verifica:
 
 - [ ] Repositorio creado en GitHub
-- [ ] Secrets configurados (`NUGET_API_KEY`)
+- [ ] **Workflow permissions** configurados (Read and write)
 - [ ] Environments configurados (`preview`, `production`)
 - [ ] Branch protection rules activas
 - [ ] URLs actualizadas en `AppCore.csproj`
 - [ ] Primer push exitoso
 - [ ] Pipeline CI/CD ejecutándose correctamente
-- [ ] Artifacts generados correctamente
+- [ ] Paquete publicado en **GitHub Packages**
+- [ ] **Package visibility** configurada como **Public**
 - [ ] Tests pasando (Unit tests y SpecFlow)
+- [ ] NativeAOT compilation exitosa
 - [ ] Cobertura de código >= 80%
+- [ ] Consumers pueden instalar el paquete desde GitHub Packages
 
 ---
 

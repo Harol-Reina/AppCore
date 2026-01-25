@@ -36,12 +36,15 @@
     <Authors>Harol A. Reina</Authors>
     <Company>Harol A. Reina</Company>
     <Product>AppCore</Product>
-    <Description>Clean Architecture foundation library providing common patterns, utilities, and abstractions for .NET applications.</Description>
-    <PackageTags>clean-architecture;dotnet;cqrs;mediatr;repository;specification</PackageTags>
+    <Description>Clean Architecture foundation library providing common patterns, utilities, and abstractions for .NET applications. Fully compatible with NativeAOT and C# 14.</Description>
+    <PackageTags>clean-architecture;dotnet;cqrs;mediatr;repository;specification;nativeaot;aot-compatible;csharp14;source-generators</PackageTags>
     <PackageProjectUrl>https://github.com/Harol-Reina/AppCore</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/Harol-Reina/AppCore.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>See CHANGELOG.md for release notes</PackageReleaseNotes>
     
     <!-- Build Configuration -->
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -50,12 +53,28 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    
+    <!-- NativeAOT Compatibility -->
+    <IsAotCompatible>true</IsAotCompatible>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <EnableSingleFileAnalyzer>true</EnableSingleFileAnalyzer>
+    <EnableAOTAnalyzer>true</EnableAOTAnalyzer>
+    <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
     
     <!-- Warnings -->
     <NoWarn>1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>1591</WarningsNotAsErrors>
+    <WarningsNotAsErrors>1591;IL2026;IL2087;IL3050;IL2091</WarningsNotAsErrors>
   </PropertyGroup>
+  
+  <!-- Include README and LICENSE in package -->
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+    <None Include="rd.xml" Pack="true" PackagePath="build\native\" />
+    <None Include="..\..\build\targets\AppCore.targets" Pack="true" PackagePath="build\" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
@@ -70,6 +89,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.2" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+    
+    <!-- Source Link for symbol generation -->
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>

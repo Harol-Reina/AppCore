@@ -1,0 +1,40 @@
+<Project>
+  
+  <!-- AppCore Custom Build Targets for NuGet Package Consumers -->
+  
+  <PropertyGroup>
+    <AppCoreVersion>1.0.0</AppCoreVersion>
+    <AppCorePath>$(MSBuildThisFileDirectory)../../</AppCorePath>
+  </PropertyGroup>
+  
+  <!-- Ensure rd.xml is included in NativeAOT builds -->
+  <ItemGroup Condition="'$(PublishAot)' == 'true'">
+    <RdXmlFile Include="$(MSBuildThisFileDirectory)../native/rd.xml" />
+  </ItemGroup>
+  
+  <!-- NativeAOT Configuration Warnings -->
+  <Target Name="AppCoreAotWarning" BeforeTargets="BeforeBuild" Condition="'$(PublishAot)' == 'true'">
+    <Message Text="AppCore: NativeAOT compilation enabled. Ensure you're using JSON Source Generators." Importance="high" />
+    <Message Text="AppCore: rd.xml file will be included for reflection metadata." Importance="normal" />
+  </Target>
+  
+  <!-- Validation for required dependencies -->
+  <Target Name="AppCoreValidateDependencies" BeforeTargets="BeforeBuild">
+    <Warning Condition="'$(TargetFramework)' != 'net10.0' AND '$(TargetFramework)' != 'net9.0' AND '$(TargetFramework)' != 'net8.0'" 
+             Text="AppCore is optimized for .NET 8.0 or higher. Current target: $(TargetFramework)" />
+  </Target>
+  
+  <!-- Copy rd.xml to output for NativeAOT apps -->
+  <Target Name="AppCoreCopyAotMetadata" AfterTargets="Build" Condition="'$(PublishAot)' == 'true'">
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)../native/rd.xml" 
+          DestinationFolder="$(OutputPath)" 
+          SkipUnchangedFiles="true" />
+    <Message Text="AppCore: rd.xml copied to $(OutputPath)" Importance="normal" />
+  </Target>
+  
+  <!-- Enable source generators for JSON serialization -->
+  <PropertyGroup Condition="'$(PublishAot)' == 'true'">
+    <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
+  </PropertyGroup>
+  
+</Project>

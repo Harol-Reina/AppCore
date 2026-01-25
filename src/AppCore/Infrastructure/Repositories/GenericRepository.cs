@@ -1,4 +1,5 @@
 ﻿using System.Data.Common;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using AppCore.Application.DTOs;
 using AppCore.Application.Exceptions;
@@ -17,7 +18,7 @@ namespace AppCore.Infrastructure.Repositories;
 /// <typeparam name="E">The entity type</typeparam>
 /// <typeparam name="I">The ID type</typeparam>
 /// <typeparam name="D">The DAO type</typeparam>
-internal abstract class GenericRepository<E, I, D>(
+internal abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.PublicProperties)] D>(
     DbContext dbContext, 
     IMappingService<E, D> entityToDao,
     IMappingService<D, E> daoToEntity) : IGenericRepository<E, I>
@@ -166,6 +167,7 @@ internal abstract class GenericRepository<E, I, D>(
     /// <param name="entityExpression">The entity expression to convert</param>
     /// <returns>The corresponding DAO expression</returns>
     /// <exception cref="ArgumentException">Thrown when the expression is not a member expression</exception>
+    [RequiresUnreferencedCode("Expression tree creation may require unreferenced code for member access.")]
     protected virtual Expression<Func<D, object>> ConvertExpression(Expression<Func<E, object>> entityExpression) {
         // Extract property name from entity expression
         var memberExpression = entityExpression.Body is UnaryExpression unary

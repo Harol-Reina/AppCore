@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using AppCore.Application.Exceptions;
 using Microsoft.Extensions.Configuration;
 
@@ -33,6 +34,8 @@ public static class Configuration {
         return result;
     }
 
+    [RequiresUnreferencedCode("Configuration binding may require types that cannot be statically analyzed.")]
+    [RequiresDynamicCode("Configuration binding may require runtime code generation.")]
     public static string[] StringArray(string key) {
         var value = _configuration.GetSection(key).Get<string[]>() ??
             throw new NotFoundException($"Configuration key '{key}' is not set or is empty.");

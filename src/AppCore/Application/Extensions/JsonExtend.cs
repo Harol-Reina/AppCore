@@ -1,7 +1,7 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.Json.Serialization.Metadata;
 using AppCore.Application.Exceptions;
 using AppCore.Application.Serialization;
 
@@ -13,14 +13,12 @@ namespace AppCore.Application.Extensions;
 /// </summary>
 public static class JsonExtend {
 
-    private static readonly JsonSerializerOptions FallbackOptions = new() {
+    private static readonly JsonSerializerOptions AotOptions = new() {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         WriteIndented = true,
         PropertyNameCaseInsensitive = true,
-        TypeInfoResolver = JsonTypeInfoResolver.Combine(
-            AppCoreJsonContext.Default,
-            new DefaultJsonTypeInfoResolver())
+        TypeInfoResolver = AppCoreJsonContext.Default
     };
 
     /// <summary>
@@ -65,10 +63,12 @@ public static class JsonExtend {
     /// <param name="jsonDocument">The JsonDocument to convert</param>
     /// <returns>The deserialized object</returns>
     /// <exception cref="ArgumentException">Thrown when the JSON is invalid</exception>
+    [RequiresUnreferencedCode("JSON serialization may require types that cannot be statically analyzed.")]
+    [RequiresDynamicCode("JSON serialization may require runtime code generation.")]
     public static T FromJsonDocument<T>(this JsonDocument jsonDocument) {
         try {
             string jsonString = jsonDocument.RootElement.GetRawText();
-            return JsonSerializer.Deserialize<T>(jsonString, FallbackOptions)!;
+            return JsonSerializer.Deserialize<T>(jsonString, AotOptions)!;
         } catch (JsonException) {
             throw new ArgumentException("Invalid JSON string.");
         }
@@ -85,13 +85,15 @@ public static class JsonExtend {
     /// <param name="sourceLineNumber">The source line number (automatically captured)</param>
     /// <returns>A JSON string representation of the object</returns>
     /// <exception cref="SerializerException">Thrown when serialization fails</exception>
+    [RequiresUnreferencedCode("JSON serialization may require types that cannot be statically analyzed.")]
+    [RequiresDynamicCode("JSON serialization may require runtime code generation.")]
     public static string Serialize<T>(T value,
                                       [CallerMemberName] string memberName = "",
                                       [CallerFilePath] string sourceFilePath = "",
                                       [CallerLineNumber] int sourceLineNumber = 0) {
         try {
-            // Use the AOT-compatible JsonSerializerContext with fallback for serialization
-            return JsonSerializer.Serialize(value, FallbackOptions);
+            // Use the AOT-compatible JsonSerializerContext for serialization
+            return JsonSerializer.Serialize(value, AotOptions);
         } catch (Exception ex) {
             throw new SerializerException(ex, memberName, sourceFilePath, sourceLineNumber);
         }
@@ -107,14 +109,16 @@ public static class JsonExtend {
     /// <param name="sourceLineNumber">The source line number (automatically captured)</param>
     /// <returns>The deserialized object</returns>
     /// <exception cref="SerializerException">Thrown when deserialization fails</exception>
+    [RequiresUnreferencedCode("JSON serialization may require types that cannot be statically analyzed.")]
+    [RequiresDynamicCode("JSON serialization may require runtime code generation.")]
     public static T? Deserialize<T>(string value,
                                     [CallerMemberName] string memberName = "",
                                     [CallerFilePath] string sourceFilePath = "",
                                     [CallerLineNumber] int sourceLineNumber = 0) {
         if (string.IsNullOrWhiteSpace(value)) return default;
         try {
-            // Use the AOT-compatible JsonSerializerContext with fallback for deserialization
-            return JsonSerializer.Deserialize<T>(value, FallbackOptions);
+            // Use the AOT-compatible JsonSerializerContext for deserialization
+            return JsonSerializer.Deserialize<T>(value, AotOptions);
         } catch (Exception ex) {
             throw new SerializerException(ex, memberName, sourceFilePath, sourceLineNumber);
         }
