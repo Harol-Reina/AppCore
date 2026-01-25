@@ -343,7 +343,7 @@ jobs:
     
     - name: Generate API documentation
       run: |
-        dotnet tool install --global DocFX.Console
+        dotnet tool install --global docfx
         # Configure and run DocFX if documentation generation is needed
         # docfx docs/docfx.json
     
