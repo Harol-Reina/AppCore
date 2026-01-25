@@ -285,7 +285,7 @@
 ### 📋 Tareas
 
 #### Semana 8: Pipeline GitHub Packages y AOT Integration
-- [ ] Configurar MinVer para versionado automático
+- [x] Configurar MinVer para versionado automático ✅
 - [ ] Implementar quality gates (tests, coverage, analysis)
 - [ ] **🔴 Migración completa a GitHub Packages (eliminar NuGet.org)**
 - [ ] **🔴 Configurar GitHub Packages como repositorio público**
