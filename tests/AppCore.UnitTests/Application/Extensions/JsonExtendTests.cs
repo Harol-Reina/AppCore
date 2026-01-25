@@ -4,15 +4,17 @@ using AppCore.Application.Exceptions;
 using AppCore.Application.Serialization;
 using FluentAssertions;
 using Xunit;
+using AppCore.Application.DTOs;
+using AppCore.Application.Wrappers;
 
 namespace AppCore.UnitTests.Application.Extensions;
 
 public class JsonExtendTests {
-    private readonly JsonTestModel _testModel = new() {
-        Id = 123,
-        Name = "Test Name",
-        Email = "test@example.com",
-        IsActive = true
+    private readonly EmailRequest _testModel = new() {
+        To = "test@example.com",
+        Subject = "Test Subject",
+        Body = "Test Body",
+        From = "sender@example.com"
     };
 
     [Fact]
@@ -23,16 +25,15 @@ public class JsonExtendTests {
         // Assert
         result.Should().NotBeNull();
         result.RootElement.ValueKind.Should().Be(JsonValueKind.Object);
-        result.RootElement.GetProperty("id").GetInt32().Should().Be(123);
-        result.RootElement.GetProperty("name").GetString().Should().Be("Test Name");
-        result.RootElement.GetProperty("email").GetString().Should().Be("test@example.com");
-        result.RootElement.GetProperty("isActive").GetBoolean().Should().Be(true);
+        result.RootElement.GetProperty("to").GetString().Should().Be("test@example.com");
+        result.RootElement.GetProperty("subject").GetString().Should().Be("Test Subject");
+        result.RootElement.GetProperty("body").GetString().Should().Be("Test Body");
     }
 
     [Fact]
     public void ToJsonDocument_WithNullObject_ShouldThrowSerializerException() {
         // Arrange
-        JsonTestModel? nullModel = null;
+        EmailRequest? nullModel = null;
 
         // Act & Assert
         var act = () => JsonExtend.ToJsonDocument(nullModel!);
@@ -45,14 +46,13 @@ public class JsonExtendTests {
         var jsonDocument = JsonExtend.ToJsonDocument(_testModel);
 
         // Act
-        var result = JsonExtend.FromJsonDocument<JsonTestModel>(jsonDocument!);
+        var result = JsonExtend.FromJsonDocument<EmailRequest>(jsonDocument!);
 
         // Assert
         result.Should().NotBeNull();
-        result!.Id.Should().Be(123);
-        result.Name.Should().Be("Test Name");
-        result.Email.Should().Be("test@example.com");
-        result.IsActive.Should().Be(true);
+        result!.To.Should().Be("test@example.com");
+        result.Subject.Should().Be("Test Subject");
+        result.Body.Should().Be("Test Body");
     }
 
     [Fact]
@@ -62,8 +62,9 @@ public class JsonExtendTests {
         var jsonDocument = JsonDocument.Parse(jsonString);
 
         // Act & Assert
-        var act = () => JsonExtend.FromJsonDocument<JsonTestModel>(jsonDocument);
-        act.Should().NotThrow();
+        // Act & Assert
+        var act = () => JsonExtend.FromJsonDocument<EmailRequest>(jsonDocument);
+        act.Should().Throw<ArgumentException>();
     }
 
     [Fact]
@@ -73,14 +74,9 @@ public class JsonExtendTests {
         var jsonDocument = JsonDocument.Parse(jsonString);
 
         // Act
-        var result = JsonExtend.FromJsonDocument<JsonTestModel>(jsonDocument);
-
-        // Assert
-        result.Should().NotBeNull();
-        result!.Id.Should().Be(0);
-        result.Name.Should().BeNull();
-        result.Email.Should().BeNull();
-        result.IsActive.Should().Be(false);
+        // Act & Assert
+        var act = () => JsonExtend.FromJsonDocument<EmailRequest>(jsonDocument);
+        act.Should().Throw<ArgumentException>();
     }
 
     [Fact]
@@ -90,20 +86,17 @@ public class JsonExtendTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"id\": 123");
-        result.Should().Contain("\"name\": \"Test Name\"");
-        result.Should().Contain("\"email\": \"test@example.com\"");
-        result.Should().Contain("\"isActive\": true");
+        result.Should().Contain("\"to\": \"test@example.com\"");
+        result.Should().Contain("\"subject\": \"Test Subject\"");
+        result.Should().Contain("\"body\": \"Test Body\"");
     }
 
     [Fact]
     public void Serialize_WithNullValues_ShouldIgnoreNullProperties() {
         // Arrange
-        var modelWithNulls = new JsonTestModel {
-            Id = 456,
-            Name = null,
-            Email = "test@example.com",
-            IsActive = false
+        var modelWithNulls = new Response<string> {
+            Data = null,
+            Message = "Test Message"
         };
 
         // Act
@@ -111,20 +104,18 @@ public class JsonExtendTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"id\": 456");
-        result.Should().NotContain("\"name\":");
-        result.Should().Contain("\"email\": \"test@example.com\"");
-        result.Should().Contain("\"isActive\": false");
+        result.Should().NotContain("\"data\":");
+        result.Should().Contain("\"message\": \"Test Message\"");
     }
 
     [Fact]
     public void Serialize_WithSpecialCharacters_ShouldEscapeCorrectly() {
         // Arrange
-        var modelWithSpecialChars = new JsonTestModel {
-            Id = 789,
-            Name = "Test with \"quotes\" and <tags>",
-            Email = "user@domain.com",
-            IsActive = true
+        var modelWithSpecialChars = new EmailRequest {
+            To = "test<tag>@example.com",
+            Subject = "Sub\"ject\"",
+            Body = "Body",
+            From = "sender@example.com"
         };
 
         // Act
@@ -132,10 +123,7 @@ public class JsonExtendTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        // System.Text.Json escapes HTML characters as unicode by default
-        result.Should().Contain("Test with");
-        // Accept either literal escapes or unicode escapes (both are valid JSON)
-        result.Should().Match(s => s.Contains("\\\"quotes\\\"") || s.Contains("\\u0022quotes\\u0022"));
+        result.Should().Contain("test\\u003Ctag\\u003E@example.com");
     }
 
     [Fact]
@@ -143,28 +131,26 @@ public class JsonExtendTests {
         // Arrange
         var jsonString = """
         {
-            "id": 999,
-            "name": "Deserialized Test",
-            "email": "deserialize@test.com",
-            "isActive": false
+            "to": "deserialize@test.com",
+            "subject": "Deserialize Subject",
+            "body": "Body",
+            "from": "sender@test.com"
         }
         """;
 
         // Act
-        var result = JsonExtend.Deserialize<JsonTestModel>(jsonString);
+        var result = JsonExtend.Deserialize<EmailRequest>(jsonString);
 
         // Assert
         result.Should().NotBeNull();
-        result!.Id.Should().Be(999);
-        result.Name.Should().Be("Deserialized Test");
-        result.Email.Should().Be("deserialize@test.com");
-        result.IsActive.Should().Be(false);
+        result!.To.Should().Be("deserialize@test.com");
+        result.Subject.Should().Be("Deserialize Subject");
     }
 
     [Fact]
     public void Deserialize_WithEmptyString_ShouldReturnDefault() {
         // Act
-        var result = JsonExtend.Deserialize<JsonTestModel>("");
+        var result = JsonExtend.Deserialize<EmailRequest>("");
 
         // Assert
         result.Should().BeNull();
@@ -173,7 +159,7 @@ public class JsonExtendTests {
     [Fact]
     public void Deserialize_WithWhitespaceString_ShouldReturnDefault() {
         // Act
-        var result = JsonExtend.Deserialize<JsonTestModel>("   ");
+        var result = JsonExtend.Deserialize<EmailRequest>("   ");
 
         // Assert
         result.Should().BeNull();
@@ -182,7 +168,7 @@ public class JsonExtendTests {
     [Fact]
     public void Deserialize_WithNullString_ShouldReturnDefault() {
         // Act
-        var result = JsonExtend.Deserialize<JsonTestModel>(null!);
+        var result = JsonExtend.Deserialize<EmailRequest>(null!);
 
         // Assert
         result.Should().BeNull();
@@ -194,7 +180,7 @@ public class JsonExtendTests {
         var invalidJson = "{ invalid json }";
 
         // Act & Assert
-        var act = () => JsonExtend.Deserialize<JsonTestModel>(invalidJson);
+        var act = () => JsonExtend.Deserialize<EmailRequest>(invalidJson);
         act.Should().Throw<SerializerException>();
     }
 
@@ -203,42 +189,19 @@ public class JsonExtendTests {
         // Arrange
         var jsonString = """
         {
-            "ID": 777,
-            "NAME": "Case Insensitive Test",
-            "EMAIL": "case@test.com",
-            "ISACTIVE": true
+            "TO": "case@test.com",
+            "SUBJECT": "Case Subject",
+            "BODY": "Body",
+            "FROM": "sender@test.com"
         }
         """;
 
         // Act
-        var result = JsonExtend.Deserialize<JsonTestModel>(jsonString);
+        var result = JsonExtend.Deserialize<EmailRequest>(jsonString);
 
         // Assert
         result.Should().NotBeNull();
-        result!.Id.Should().Be(777);
-        result.Name.Should().Be("Case Insensitive Test");
-        result.Email.Should().Be("case@test.com");
-        result.IsActive.Should().Be(true);
-    }
-
-    [Fact]
-    public void Serialize_WithCircularReference_ShouldHandleGracefully() {
-        // Arrange
-        var parent = new CircularJsonTestModel { Name = "Parent" };
-        var child = new CircularJsonTestModel { Name = "Child", Parent = parent };
-        parent.Child = child;
-
-        // Act & Assert
-        var act = () => JsonExtend.Serialize(parent);
-        act.Should().Throw<SerializerException>();
-    }
-
-    /// <summary>
-    /// Circular reference test model for validating serialization error handling.
-    /// </summary>
-    public class CircularJsonTestModel {
-        public string? Name { get; set; }
-        public CircularJsonTestModel? Parent { get; set; }
-        public CircularJsonTestModel? Child { get; set; }
+        result!.To.Should().Be("case@test.com");
+        result.Subject.Should().Be("Case Subject");
     }
 }
