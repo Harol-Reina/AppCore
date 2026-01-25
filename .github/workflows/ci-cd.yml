@@ -52,6 +52,7 @@ jobs:
           --no-build \
           --logger "trx;LogFileName=unit-tests.trx" \
           --collect:"XPlat Code Coverage" \
+          --settings "./build/coverage/coverage.runsettings" \
           --results-directory ./TestResults
         EXIT_CODE=$?
         echo "::endgroup::"
@@ -69,6 +70,8 @@ jobs:
           --configuration ${{ env.BUILD_CONFIGURATION }} \
           --no-build \
           --logger "trx;LogFileName=specflow-tests.trx" \
+          --collect:"XPlat Code Coverage" \
+          --settings "./build/coverage/coverage.runsettings" \
           --results-directory ./TestResults
         EXIT_CODE=$?
         echo "::endgroup::"
