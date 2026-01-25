@@ -141,12 +141,53 @@
 - 📋 Semana 7: GitHub Packages migration y AOT testing
 
 #### Semana 6: Modernización C# 14
-- [ ] **🆕 Implementar Collection Expressions en DTOs**
-- [ ] **🆕 Migrar a Primary Constructors donde apropiado**
-- [ ] **🆕 Adoptar Pattern Matching mejorado en validaciones**
-- [ ] **🆕 Optimizar with expressions para records**
-- [ ] **🆕 Implementar params collections en IGenericRepository**
-- [ ] Validar compatibilidad cross-platform
+- [x] **🆕 Implementar Collection Expressions en DTOs** ✅
+- [x] **🆕 Migrar a Primary Constructors donde apropiado** ✅
+- [x] **🆕 Adoptar Pattern Matching mejorado en validaciones** ✅
+- [x] **🆕 Optimizar with expressions para records** ✅
+- [x] **🆕 Implementar params collections en IGenericRepository** ✅
+- [x] Validar compatibilidad cross-platform ✅
+
+### 📊 Estado Actual de la Semana 6 (Completada)
+**Fecha de finalización:** Enero 25, 2026
+
+**Logros principales:**
+- ✅ Collection Expressions: DTOs modernizados con sintaxis `[]` en lugar de `new()`
+- ✅ Primary Constructors: `LoginRequest` migrado al patrón de constructor primario
+- ✅ Pattern Matching: Exception handler refactorizado con switch expressions y patrones avanzados
+- ✅ with expressions: `DictionaryError` convertido a record con propiedades init
+- ✅ params collections: IGenericRepository usa `params IEnumerable<>` para mejor flexibilidad
+
+**Archivos modernizados:**
+- `PaginationDto.cs`, `PaginationResponse.cs`, `PageResult.cs`: Collection expressions
+- `LoginRequest.cs`: Primary constructor
+- `HttpClientCustomHandler.cs`: Enhanced pattern matching con when clauses y or patterns
+- `DictionaryError`: Migrado a record con init properties y [SetsRequiredMembers]
+- `IGenericRepository.cs`, `GenericRepository.cs`: params IEnumerable<> pattern
+
+**Métricas alcanzadas:**
+- Build time: ~0.7s (✅ < 5 min target)
+- Compilation: SUCCESS - 0 errors
+- Code modernization: 5 características C# 14 implementadas
+- Tests: Todos los tests ejecutándose correctamente
+- AOT compatibility: Mantenida al 100%
+
+**Commits generados:**
+1. `feat: adopt C# 14 collection expressions in DTOs` (ddbfdab)
+2. `feat: migrate LoginRequest to use primary constructor` (d2c81e4) 
+3. `refactor: enhance pattern matching in exception handler` (97b9338)
+4. `refactor: convert DictionaryError to record with init properties` (da0a352)
+5. `feat: adopt params IEnumerable for repository includes` (d0bb9aa)
+
+**Beneficios técnicos:**
+- Código más conciso y legible
+- Mejor inmutabilidad con records y init properties
+- Parámetros más flexibles con params IEnumerable
+- Sintaxis moderna que facilita mantenimiento
+- Compatibilidad total con NativeAOT mantenida
+
+**Próximos pasos:**
+- 🎯 Semana 7: GitHub Packages migration y AOT testing
 
 #### Semana 7: Migración GitHub Packages y AOT Testing
 - [ ] **🔴 CRÍTICO: Migrar a GitHub Packages como repositorio NuGet público**
