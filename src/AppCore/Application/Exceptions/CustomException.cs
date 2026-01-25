@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using AppCore.Application.Extensions;
 using AppCore.Application.Wrappers;
@@ -41,42 +42,43 @@ public class CustomException : Exception {
 
 /// <summary>
 /// Represents a structured error with code, message, and optional additional information.
-/// Converted to use object instead of dynamic for AOT compatibility.
+/// Converted to record for immutability and with-expressions support.
 /// </summary>
-public class DictionaryError {
+public record DictionaryError {
     /// <summary>
-    /// Gets or sets the error code.
+    /// Gets or initializes the error code.
     /// </summary>
-    public string Code { get; set; } = string.Empty;
+    public required string Code { get; init; } = string.Empty;
     
     /// <summary>
-    /// Gets or sets the error message.
+    /// Gets or initializes the error message.
     /// </summary>
-    public string Message { get; set; } = string.Empty;
+    public required string Message { get; init; } = string.Empty;
     
     /// <summary>
-    /// Gets or sets additional provider message information as JSON.
+    /// Gets or initializes additional provider message information as JSON.
     /// </summary>
-    public JsonDocument? ProviderMessage { get; set; }
+    public JsonDocument? ProviderMessage { get; init; }
     
     /// <summary>
-    /// Gets or sets the exception details.
+    /// Gets or initializes the exception details.
     /// Changed from dynamic to object for AOT compatibility.
     /// </summary>
-    public object? Exception { get; set; }
+    public object? Exception { get; init; }
 
     /// <summary>
-    /// Initializes a new instance of the DictionaryError class.
+    /// Initializes a new instance of the DictionaryError record.
     /// </summary>
     public DictionaryError() { }
 
     /// <summary>
-    /// Initializes a new instance of the DictionaryError class with specified values.
+    /// Initializes a new instance of the DictionaryError record with specified values.
     /// </summary>
     /// <param name="code">The error code</param>
     /// <param name="message">The error message</param>
     /// <param name="providerMessage">Optional provider message</param>
     /// <param name="exception">Optional exception details (changed from dynamic to object for AOT)</param>
+    [SetsRequiredMembers]
     public DictionaryError(string code, string message, string? providerMessage = null, object? exception = null) {
         Code = code;
         Message = message;
