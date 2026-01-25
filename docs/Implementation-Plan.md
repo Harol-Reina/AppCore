@@ -449,6 +449,157 @@ public static class PaginationMath<T> where T : INumber<T>
 
 ---
 
+## 📋 Estándares de Desarrollo y Control de Versión
+
+### 🔄 Conventional Commit Requirements
+
+**OBLIGATORIO**: Todos los commits en este proyecto deben seguir las convenciones de [Conventional Commits](https://www.conventionalcommits.org/) sin excepción.
+
+#### Estructura Requerida
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+#### Tipos de Commit Permitidos
+- **feat**: Nueva funcionalidad
+- **fix**: Corrección de bugs
+- **refactor**: Refactorización de código sin cambios funcionales
+- **docs**: Cambios en documentación
+- **test**: Agregar o modificar tests
+- **chore**: Tareas de mantenimiento (deps, build, etc.)
+- **perf**: Mejoras de performance
+- **style**: Cambios de formato (sin cambios funcionales)
+- **ci**: Cambios en CI/CD
+- **build**: Cambios en sistema de build
+
+#### Ejemplos Válidos
+```bash
+# Feature nueva
+feat: add NativeAOT compatibility for HttpService
+
+# Bug fix con scope
+fix(exceptions): resolve CustomException inheritance chain
+
+# Breaking change
+feat: migrate HttpBaseException to CustomException hierarchy
+
+BREAKING CHANGE: HttpBaseException now inherits from CustomException instead of Exception
+
+# Refactoring
+refactor(validation): simplify ValidationException constructors
+
+# Documentation
+docs: update implementation plan with NativeAOT requirements
+
+# Tests
+test: add unit tests for exception hierarchy
+```
+
+#### Commit Validation
+- ✅ Todos los commits deben pasar validación de formato
+- ✅ Scope debe ser relevante al área modificada
+- ✅ Description debe ser clara y concisa (máximo 72 caracteres)
+- ✅ BREAKING CHANGES deben estar claramente marcados
+- ✅ Body debe explicar el "qué" y "por qué", no el "cómo"
+
+### 🔍 Proceso de Validación Post-Integración
+
+#### Scripts de Validación Requeridos
+
+Antes de marcar cualquier fase como completada, se deben ejecutar los siguientes scripts:
+
+```bash
+# 1. Ejecutar análisis de cobertura completo
+cd build/coverage
+./collect-coverage.sh
+
+# 2. Ejecutar build y análisis de calidad
+cd ../scripts  
+./build-and-analyze.sh
+```
+
+#### Criterios de Aceptación Post-Validación
+
+Una fase solo se considera **COMPLETADA** cuando:
+
+✅ **Cobertura de Tests**
+- Coverage de línea: ≥ 80% (objetivo final)
+- Coverage de rama: ≥ 70% (objetivo final)
+- Tests unitarios: 100% passing
+- Tests BDD: ≥ 90% passing
+
+✅ **Quality Gates**
+- SonarQube analysis: 0 blocker issues
+- Build exitoso sin warnings críticos
+- Todos los tests de regresión passing
+
+✅ **Documentación**
+- Plan de implementación actualizado con logros reales
+- Métricas actualizadas con valores reales
+- Issues y blockers documentados
+
+#### Flujo de Actualización del Plan
+
+```mermaid
+flowchart TD
+    A[Desarrollo de Feature] --> B[Commits con Conventional Format]
+    B --> C[Ejecutar collect-coverage.sh]
+    C --> D[Ejecutar build-and-analyze.sh]
+    D --> E{Todos los criterios OK?}
+    E -->|No| F[Fix Issues]
+    F --> C
+    E -->|Sí| G[Actualizar Plan de Implementación]
+    G --> H[Commit: docs: update phase X completion status]
+    H --> I[Marcar Fase como Completada ✅]
+```
+
+#### Template para Actualización de Plan
+
+```markdown
+### 📊 Estado Actual de la Fase X (Completada)
+**Fecha de finalización:** [FECHA]
+
+**Logros principales:**
+- ✅ [Logro 1 con evidencia]
+- ✅ [Logro 2 con evidencia]
+
+**Métricas alcanzadas:**
+- Cobertura de línea: [X]% (✅ > 80% objetivo)
+- Cobertura de rama: [X]% (✅ > 70% objetivo)  
+- Tests unitarios: [X]/[Y] passing ([Z]%)
+- Build time: [X]s (✅ < [target] objetivo)
+- SonarQube issues: [X] (✅ 0 blockers)
+
+**Evidencia de validación:**
+- ✅ collect-coverage.sh ejecutado exitosamente
+- ✅ build-and-analyze.sh sin errores críticos
+- ✅ Todos los tests passing
+- ✅ Quality gates passed
+```
+
+#### Responsabilidades del Equipo
+
+**Desarrolladores**:
+- Usar Conventional Commits en todos los commits
+- Ejecutar scripts de validación antes de push
+- Actualizar métricas reales en documentación
+
+**Tech Lead**:
+- Revisar cumplimiento de estándares de commit
+- Validar criterios de aceptación de fases
+- Aprobar actualizaciones del plan de implementación
+
+**QA**:
+- Validar scripts de cobertura
+- Verificar quality gates
+- Confirmar que métricas reportadas son precisas
+
+---
+
 ## Métricas de Éxito
 
 ### 📊 KPIs por Fase
@@ -481,6 +632,13 @@ public static class PaginationMath<T> where T : INumber<T>
 - **Satisfacción del Desarrollador**: > 8/10 en surveys
 - **Tiempo de Resolución de Issues**: < 24 horas para critical
 
+#### Estándares de Control de Versión
+- **Conventional Commits**: 100% compliance obligatorio
+- **Commit Message Quality**: Automated validation passing
+- **Breaking Changes Documentation**: 100% documented with BREAKING CHANGE footer
+- **Release Notes Quality**: Generados automáticamente desde commits
+- **Git History Clarity**: Linear, clean history mantenido
+
 ### 🎯 Criterios de Aceptación
 
 #### Para cada Feature
@@ -510,6 +668,10 @@ Then debe pasar:
   * 🔴 Performance tests AOT dentro de SLA
   * 🆕 Code style C# 14 compliance
   * Package validation exitosa
+  * 📋 Conventional Commits format validation
+  * 📋 collect-coverage.sh executed successfully
+  * 📋 build-and-analyze.sh passed without critical issues
+  * 📋 Implementation plan updated with real metrics
 ```
 
 ## Riesgos y Mitigaciones
@@ -537,16 +699,9 @@ Then debe pasar:
 6. **🆕 C# 14 Compatibility**: Feature toggles para características nuevas
 7. **Documentation**: Troubleshooting guide exhaustivo
 8. **Monitoring**: Alertas proactivas en métricas clave
-
-## Timeline Visual
-
-```mermaid
-gantt
-    title AppCore Restructuring Timeline (Updated for NativeAOT + C# 14)
-    dateFormat  YYYY-MM-DD
-    section Preparation
-    Analysis & Setup                    :2024-01-01, 14d
-    section Core Implementation
+9. **📋 Commit Standards Enforcement**: Automated hooks para validar conventional commits
+10. **📋 Documentation Sync**: Automated checks que plan está actualizado tras validaciones
+11. **📋 Script Validation**: Backup procedures si collect-coverage.sh o build-and-analyze.sh fallan
     BDD Specifications                  :2024-01-15, 14d
     section Modernization
     API Refactoring + AOT               :2024-01-29, 7d
