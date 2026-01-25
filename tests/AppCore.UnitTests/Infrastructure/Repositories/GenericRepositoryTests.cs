@@ -46,6 +46,8 @@ public class GenericRepositoryTests : IDisposable
 
         _daoToEntityMock.Setup(m => m.Map(dao1)).Returns(entity1);
         _daoToEntityMock.Setup(m => m.Map(dao2)).Returns(entity2);
+        _daoToEntityMock.Setup(m => m.Map(It.IsAny<IEnumerable<TestDao>>()))
+            .Returns<IEnumerable<TestDao>>(daos => daos.Select(d => d.Id == 1 ? entity1 : entity2));
 
         // Act
         var result = await _repository.GetAllAsync();
@@ -53,10 +55,8 @@ public class GenericRepositoryTests : IDisposable
         // Assert
         result.Should().NotBeNull();
         result.Should().HaveCount(2);
-        // Verify entities are mapped correctly
-        var first = result.FirstOrDefault();
-        first.Should().BeNull(); // AutoMapper might return null in test environment
-        first?.Id.Should().BeGreaterThan(0); // Allow null mapping
+        result.First().Id.Should().Be(1);
+        result.Last().Id.Should().Be(2);
     }
 
     [Fact]
@@ -220,6 +220,8 @@ public class GenericRepositoryTests : IDisposable
         {
             _daoToEntityMock.Setup(m => m.Map(dao)).Returns(entity);
         }
+        _daoToEntityMock.Setup(m => m.Map(It.IsAny<IEnumerable<TestDao>>()))
+            .Returns<IEnumerable<TestDao>>(d => d.Select(dao => entities[daos.IndexOf(dao)]));
 
         // Act
         var result = await _repository.GetPagedAsync(page: 2, pageSize: 3);
