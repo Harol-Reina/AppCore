@@ -143,11 +143,11 @@ public class DependencyInjectionStepDefinitions
         // Verificar que los servicios son configurables
         _services!.AddTransient<IDateTimeService, CustomDateTimeService>();
         
-        var serviceDescriptors = _services.ToList();
-        var customServices = serviceDescriptors.Where(s => s.ServiceType == typeof(IDateTimeService));
+        var serviceDescriptors = _services?.ToList();
+        var customServices = serviceDescriptors?.Where(s => s.ServiceType == typeof(IDateTimeService));
         
         // Debe haber múltiples registros (el último prevalece)
-        customServices.Count().Should().BeGreaterThan(0);
+        customServices?.Count().Should().BeGreaterThan(0);
     }
 
     [Then(@"Each service should be independently configurable")]

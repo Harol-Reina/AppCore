@@ -265,7 +265,11 @@ internal class TestEntityMappingService : IMappingService<TestEntity, TestEntity
         {
             Id = source.Id,
             Name = source.Name,
-            Description = source.Description
+            Description = source.Description,
+            CreatedAt = source.CreatedAt ?? DateTime.Now,
+            CreatedBy = source.CreatedBy,
+            UpdatedAt = source.UpdatedAt,
+            UpdatedBy = source.UpdatedBy
         };
     }
 
@@ -283,7 +287,11 @@ internal class TestEntityReverseMappingService : IMappingService<TestEntityDao, 
         {
             Id = source.Id,
             Name = source.Name,
-            Description = source.Description
+            Description = source.Description,
+            CreatedAt = source.CreatedAt,
+            CreatedBy = source.CreatedBy,
+            UpdatedAt = source.UpdatedAt,
+            UpdatedBy = source.UpdatedBy
         };
     }
 

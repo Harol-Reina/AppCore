@@ -1,5 +1,6 @@
 ﻿using AppCore.Infrastructure.Services;
 using AppCore.Application.Exceptions;
+using AppCore.Application.Interfaces;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,7 +15,7 @@ namespace AppCore.SpecFlow.StepDefinitions;
 [Binding]
 public class HttpServiceStepDefinitions
 {
-    private HttpService? _httpService;
+    private TestHttpService? _httpService;
     private string _endpoint = string.Empty;
     private object? _requestData;
     private object? _responseData;
@@ -23,10 +24,13 @@ public class HttpServiceStepDefinitions
     private Mock<HttpMessageHandler>? _httpMessageHandlerMock;
     private HttpClient? _httpClient;
     private readonly Mock<ILogger<HttpService>> _loggerMock;
+    private readonly Mock<ICurrentUserService> _currentUserServiceMock;
 
     public HttpServiceStepDefinitions()
     {
         _loggerMock = new Mock<ILogger<HttpService>>();
+        _currentUserServiceMock = new Mock<ICurrentUserService>();
+        _currentUserServiceMock.Setup(x => x.GetUserName()).Returns("TestUser");
         SetupHttpService();
     }
 
@@ -219,9 +223,7 @@ public class HttpServiceStepDefinitions
     {
         _httpMessageHandlerMock = new Mock<HttpMessageHandler>();
         _httpClient = new HttpClient(_httpMessageHandlerMock.Object);
-        
-        // En implementación real, HttpService usaría el HttpClient
-        // Por ahora, simulamos usando directamente HttpClient
+        _httpService = new TestHttpService(_httpClient, _currentUserServiceMock.Object, _loggerMock.Object);
     }
 
     private void SetupHttpResponseMock(HttpStatusCode statusCode, string content)
@@ -236,5 +238,14 @@ public class HttpServiceStepDefinitions
                 ItExpr.IsAny<HttpRequestMessage>(),
                 ItExpr.IsAny<CancellationToken>())
             .ReturnsAsync(response);
+    }
+}
+
+// Concrete implementation of HttpService for testing
+internal class TestHttpService : HttpService
+{
+    public TestHttpService(HttpClient httpClient, ICurrentUserService currentUserService, ILogger logger)
+        : base(httpClient, currentUserService, logger, null)
+    {
     }
 }
