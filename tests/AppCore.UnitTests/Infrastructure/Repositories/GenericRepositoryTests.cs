@@ -47,7 +47,7 @@ public class GenericRepositoryTests : IDisposable
         _daoToEntityMock.Setup(m => m.Map(dao1)).Returns(entity1);
         _daoToEntityMock.Setup(m => m.Map(dao2)).Returns(entity2);
         _daoToEntityMock.Setup(m => m.Map(It.IsAny<IEnumerable<TestDao>>()))
-            .Returns<IEnumerable<TestDao>>(daos => daos.Select(d => d.Id == 1 ? entity1 : entity2));
+            .Returns((IEnumerable<TestDao> input) => input.Select(d => d.Id == 1 ? entity1 : entity2).ToList());
 
         // Act
         var result = await _repository.GetAllAsync();
@@ -221,7 +221,7 @@ public class GenericRepositoryTests : IDisposable
             _daoToEntityMock.Setup(m => m.Map(dao)).Returns(entity);
         }
         _daoToEntityMock.Setup(m => m.Map(It.IsAny<IEnumerable<TestDao>>()))
-            .Returns<IEnumerable<TestDao>>(d => d.Select(dao => entities[daos.IndexOf(dao)]));
+            .Returns((IEnumerable<TestDao> d) => d.Select(x => entities.First(e => e.Id == x.Id)).ToList());
 
         // Act
         var result = await _repository.GetPagedAsync(page: 2, pageSize: 3);
