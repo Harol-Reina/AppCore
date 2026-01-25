@@ -13,6 +13,7 @@
           <Exclude>[*.SpecFlow]*</Exclude>
           <Exclude>[*]*.Generated.*</Exclude>
           <Exclude>[*]*Migrations*</Exclude>
+          <ExcludeByFile>**/*.g.cs</ExcludeByFile>
           <ExcludeByFile>**/*.generated.cs</ExcludeByFile>
           <ExcludeByFile>**/Migrations/*.cs</ExcludeByFile>
           <ExcludeByFile>**/Program.cs</ExcludeByFile>
