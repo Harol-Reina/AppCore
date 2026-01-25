@@ -1,20 +1,32 @@
-using System.Data.Common;
+﻿using System.Data.Common;
 using System.Linq.Expressions;
 using AppCore.Application.DTOs;
 using AppCore.Application.Exceptions;
+using AppCore.Application.Interfaces;
 using AppCore.Domain.Common;
 using AppCore.Domain.Interfaces;
 using AppCore.Infrastructure.Data.DAOs.Common;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppCore.Infrastructure.Repositories;
 
-public abstract class GenericRepository<E, I, D>(DbContext dbContext, IMapper mapper) : IGenericRepository<E, I>
+/// <summary>
+/// AOT-compatible generic repository base class that provides common CRUD operations.
+/// Uses manual mapping instead of AutoMapper for Native AOT compatibility.
+/// </summary>
+/// <typeparam name="E">The entity type</typeparam>
+/// <typeparam name="I">The ID type</typeparam>
+/// <typeparam name="D">The DAO type</typeparam>
+internal abstract class GenericRepository<E, I, D>(
+    DbContext dbContext, 
+    IMappingService<E, D> entityToDao,
+    IMappingService<D, E> daoToEntity) : IGenericRepository<E, I>
     where E : BaseEntity<I>
     where D : BaseDao<I> {
+    
     private readonly DbContext _dbContext = dbContext;
-    private readonly IMapper _mapper = mapper;
+    private readonly IMappingService<E, D> _entityToDao = entityToDao;
+    private readonly IMappingService<D, E> _daoToEntity = daoToEntity;
     protected DbSet<D> DbSet => _dbContext.Set<D>();
 
     public async Task<List<E>?> GetAllAsync(params Expression<Func<E, object>>[]? includes) {
@@ -28,7 +40,7 @@ public abstract class GenericRepository<E, I, D>(DbContext dbContext, IMapper ma
             }
 
             var daos = await query.ToListAsync();
-            return daos.Select(ToEntity).ToList();
+            return _daoToEntity.Map(daos).ToList();
         } catch (DbException ex) {
             throw new ApiDBException(ex);
         }
@@ -46,7 +58,7 @@ public abstract class GenericRepository<E, I, D>(DbContext dbContext, IMapper ma
             }
             var dao = await query.FirstOrDefaultAsync(
                 x => EqualityComparer<I>.Default.Equals(x.Id, id));
-            return dao != null ? ToEntity(dao) : null;
+            return dao != null ? _daoToEntity.Map(dao) : null;
         } catch (DbException ex) {
             throw new ApiDBException(ex);
         } catch (Exception ex) {
@@ -122,7 +134,7 @@ public abstract class GenericRepository<E, I, D>(DbContext dbContext, IMapper ma
             return new PaginationDto<E> {
                 Count = totalItems,
                 Pages = (int)Math.Ceiling((double)totalItems / pageSize),
-                Results = daos.Select(ToEntity).OrderBy(r => r.Id).ToList()
+                Results = _daoToEntity.Map(daos).OrderBy(r => r.Id).ToList()
             };
 
         } catch (DbException ex) {
@@ -130,17 +142,32 @@ public abstract class GenericRepository<E, I, D>(DbContext dbContext, IMapper ma
         }
     }
 
+    /// <summary>
+    /// Converts an entity to its corresponding DAO using the configured mapping service.
+    /// </summary>
+    /// <param name="entity">The entity to convert</param>
+    /// <returns>The corresponding DAO object</returns>
     protected virtual D ToDao(E entity)
-        => _mapper.Map<D>(entity);
+        => _entityToDao.Map(entity);
+        
+    /// <summary>
+    /// Converts a DAO to its corresponding entity using the configured mapping service.
+    /// </summary>
+    /// <param name="dao">The DAO to convert</param>
+    /// <returns>The corresponding entity object</returns>
     protected virtual E ToEntity(D dao)
-        => _mapper.Map<E>(dao);
+        => _daoToEntity.Map(dao);
 
     /// <summary>
-    /// Convierte una expresión de navegación de la entidad (E) a la entidad DAO (D).
-    /// Utiliza AutoMapper para mapear los nombres de propiedades.
+    /// Converts an expression for the entity type to an expression for the DAO type.
+    /// This is used for Include operations in Entity Framework queries.
+    /// AOT-compatible implementation that doesn't rely on AutoMapper reflection.
     /// </summary>
+    /// <param name="entityExpression">The entity expression to convert</param>
+    /// <returns>The corresponding DAO expression</returns>
+    /// <exception cref="ArgumentException">Thrown when the expression is not a member expression</exception>
     protected virtual Expression<Func<D, object>> ConvertExpression(Expression<Func<E, object>> entityExpression) {
-        // Extraer el nombre de la propiedad de la expresión de la entidad
+        // Extract property name from entity expression
         var memberExpression = entityExpression.Body is UnaryExpression unary
             ? unary.Operand as MemberExpression
             : entityExpression.Body as MemberExpression;
@@ -150,7 +177,8 @@ public abstract class GenericRepository<E, I, D>(DbContext dbContext, IMapper ma
 
         var propertyName = memberExpression.Member.Name;
 
-        // Crear una expresión lambda para el DAO con el mismo nombre de propiedad
+        // Create lambda expression for DAO with the same property name
+        // This assumes Entity and DAO have matching property names (conventional mapping)
         var parameter = Expression.Parameter(typeof(D), "d");
         var property = Expression.Property(parameter, propertyName);
         var conversion = Expression.Convert(property, typeof(object));

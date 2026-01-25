@@ -1,9 +1,9 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppCore.Infrastructure.Data.DAOs.Common;
 
-public abstract class BaseDao<T> : AuditableBaseDao {
+internal abstract class BaseDao<T> : AuditableBaseDao {
 
     [Key]
     public T? Id { get; set; }
@@ -15,7 +15,7 @@ public abstract class BaseDao<T> : AuditableBaseDao {
 
 }
 
-public abstract class BaseDaoInt : BaseDao<int>
+internal abstract class BaseDaoInt : BaseDao<int>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
