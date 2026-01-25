@@ -594,65 +594,6 @@ public static class PaginationMath<T> where T : INumber<T>
 }
 ```
 
----
-
-## 📋 Estándares de Desarrollo y Control de Versión
-
-### 🔄 Conventional Commit Requirements
-
-**OBLIGATORIO**: Todos los commits en este proyecto deben seguir las convenciones de [Conventional Commits](https://www.conventionalcommits.org/) sin excepción.
-
-#### Estructura Requerida
-```
-<type>[optional scope]: <description>
-
-[optional body]
-
-[optional footer(s)]
-```
-
-#### Tipos de Commit Permitidos
-- **feat**: Nueva funcionalidad
-- **fix**: Corrección de bugs
-- **refactor**: Refactorización de código sin cambios funcionales
-- **docs**: Cambios en documentación
-- **test**: Agregar o modificar tests
-- **chore**: Tareas de mantenimiento (deps, build, etc.)
-- **perf**: Mejoras de performance
-- **style**: Cambios de formato (sin cambios funcionales)
-- **ci**: Cambios en CI/CD
-- **build**: Cambios en sistema de build
-
-#### Ejemplos Válidos
-```bash
-# Feature nueva
-feat: add NativeAOT compatibility for HttpService
-
-# Bug fix con scope
-fix(exceptions): resolve CustomException inheritance chain
-
-# Breaking change
-feat: migrate HttpBaseException to CustomException hierarchy
-
-BREAKING CHANGE: HttpBaseException now inherits from CustomException instead of Exception
-
-# Refactoring
-refactor(validation): simplify ValidationException constructors
-
-# Documentation
-docs: update implementation plan with NativeAOT requirements
-
-# Tests
-test: add unit tests for exception hierarchy
-```
-
-#### Commit Validation
-- ✅ Todos los commits deben pasar validación de formato
-- ✅ Scope debe ser relevante al área modificada
-- ✅ Description debe ser clara y concisa (máximo 72 caracteres)
-- ✅ BREAKING CHANGES deben estar claramente marcados
-- ✅ Body debe explicar el "qué" y "por qué", no el "cómo"
-
 ### 🔍 Proceso de Validación Post-Integración
 
 #### Scripts de Validación Requeridos
