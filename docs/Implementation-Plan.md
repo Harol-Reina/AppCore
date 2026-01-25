@@ -286,6 +286,7 @@
 
 #### Semana 8: Pipeline GitHub Packages y AOT Integration
 - [x] Configurar MinVer para versionado automático ✅
+- [x] Integrar versionado automático en pipeline CI ✅
 - [ ] Implementar quality gates (tests, coverage, analysis)
 - [ ] **🔴 Migración completa a GitHub Packages (eliminar NuGet.org)**
 - [ ] **🔴 Configurar GitHub Packages como repositorio público**
@@ -293,6 +294,34 @@
 - [ ] **🔴 Configurar testing matrix (JIT vs AOT)**
 - [ ] Configurar empaquetado multi-target si necesario
 - [ ] **🔴 Validar publicación pública en GitHub Packages**
+
+### 📊 Estado Actual de la Semana 8 (En Progreso)
+**Última actualización:** Enero 25, 2026
+
+**Logros principales:**
+- ✅ **MinVer configurado:** Versionado automático desde Git tags
+- ✅ **Pipeline CI integrado:** Versión consumida automáticamente en build y pack
+- ✅ **Visibilidad mejorada:** GitHub Actions annotations para versión generada
+- ✅ **Validación semántica:** Regex validator para formato SemVer correcto
+- ✅ **Logging estructurado:** Grupos colapsables para mejor debugging
+- ✅ **Job outputs:** Versión expuesta para consumo por jobs downstream
+
+**Archivos modificados:**
+- `.github/workflows/ci-cd.yml`: Enhanced version visibility and validation
+
+**Commits generados:**
+1. `ci(pipeline): enhance version visibility and validation` (dcb09be)
+
+**Beneficios técnicos:**
+- Versión visible en UI de GitHub Actions
+- Detección temprana de versiones inválidas
+- Logs más navegables con grupos colapsables
+- Versión reutilizable entre jobs del pipeline
+- Sin hardcode de versiones en todo el pipeline
+
+**Próximos pasos:**
+- 🎯 Implementar quality gates (tests, coverage, analysis)
+- 🎯 Migración completa a GitHub Packages
 
 #### Semana 9: Publicación GitHub Packages y Validación AOT
 - [ ] Primera publicación preview a GitHub Packages
