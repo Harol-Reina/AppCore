@@ -219,6 +219,122 @@ public class HttpServiceStepDefinitions
         _httpClient.DefaultRequestHeaders.Authorization.Parameter.Should().Be("test-token");
     }
 
+    [Given(@"I have an HTTP endpoint with long response time")]
+    public void GivenIHaveAnHTTPEndpointWithLongResponseTime()
+    {
+        _endpoint = "https://api.example.com/slow";
+        // Configurar mock para simular timeout
+        _httpMessageHandlerMock!.Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync",
+                ItExpr.IsAny<HttpRequestMessage>(),
+                ItExpr.IsAny<CancellationToken>())
+            .ThrowsAsync(new TaskCanceledException("Request timeout"));
+    }
+
+    [When(@"I make a request with a short timeout")]
+    public async Task WhenIMakeARequestWithAShortTimeout()
+    {
+        try
+        {
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(100));
+            _httpResponse = await _httpClient!.GetAsync(_endpoint, cts.Token);
+        }
+        catch (Exception ex)
+        {
+            _thrownException = ex;
+        }
+    }
+
+    [Then(@"I should receive a timeout exception")]
+    public void ThenIShouldReceiveATimeoutException()
+    {
+        _thrownException.Should().NotBeNull();
+        _thrownException.Should().BeOfType<TaskCanceledException>();
+    }
+
+    [Then(@"the request should be cancelled appropriately")]
+    public void ThenTheRequestShouldBeCancelledAppropriately()
+    {
+        _thrownException.Should().NotBeNull();
+        var canceledException = _thrownException as TaskCanceledException;
+        canceledException.Should().NotBeNull();
+    }
+
+    [Given(@"I have an HTTP endpoint that fails intermittently")]
+    public void GivenIHaveAnHTTPEndpointThatFailsIntermittently()
+    {
+        _endpoint = "https://api.example.com/intermittent";
+        var callCount = 0;
+        
+        // Configurar mock para fallar primero y luego tener éxito
+        _httpMessageHandlerMock!.Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync",
+                ItExpr.IsAny<HttpRequestMessage>(),
+                ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync(() =>
+            {
+                callCount++;
+                if (callCount <= 2)
+                {
+                    return new HttpResponseMessage(HttpStatusCode.ServiceUnavailable)
+                    {
+                        Content = new StringContent("Service temporarily unavailable", Encoding.UTF8, "application/json")
+                    };
+                }
+                return new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("{ \"success\": true }", Encoding.UTF8, "application/json")
+                };
+            });
+    }
+
+    [When(@"I make a request with retry configuration")]
+    public async Task WhenIMakeARequestWithRetryConfiguration()
+    {
+        try
+        {
+            // Simular retry logic - intentar hasta 3 veces
+            var maxRetries = 3;
+            var retryCount = 0;
+            
+            while (retryCount < maxRetries)
+            {
+                _httpResponse = await _httpClient!.GetAsync(_endpoint);
+                if (_httpResponse.IsSuccessStatusCode)
+                    break;
+                    
+                retryCount++;
+                await Task.Delay(100); // Pequeño delay entre reintentos
+            }
+            
+            _responseData = await _httpResponse!.Content.ReadAsStringAsync();
+        }
+        catch (Exception ex)
+        {
+            _thrownException = ex;
+        }
+    }
+
+    [Then(@"the request should be retried automatically")]
+    public void ThenTheRequestShouldBeRetriedAutomatically()
+    {
+        _thrownException.Should().BeNull();
+        // Verificar que el mock fue llamado múltiples veces
+        _httpMessageHandlerMock!.Protected()
+            .Verify("SendAsync",
+                Times.AtLeast(2),
+                ItExpr.IsAny<HttpRequestMessage>(),
+                ItExpr.IsAny<CancellationToken>());
+    }
+
+    [Then(@"I should receive a response when the service recovers")]
+    public void ThenIShouldReceiveAResponseWhenTheServiceRecovers()
+    {
+        _httpResponse.Should().NotBeNull();
+        _httpResponse!.IsSuccessStatusCode.Should().BeTrue();
+        _responseData.Should().NotBeNull();
+    }
+
     private void SetupHttpService()
     {
         _httpMessageHandlerMock = new Mock<HttpMessageHandler>();
