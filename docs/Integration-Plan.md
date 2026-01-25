@@ -9,7 +9,104 @@ Este documento especifica el proceso sistemático de integración y validación 
 
 ## 📋 Estándares Obligatorios de Desarrollo
 
-### 🔄 Conventional Commits - OBLIGATORIO
+### 🔄 Política de Commit con Aprobación Explícita
+
+#### Principio Fundamental
+
+> **La IA nunca ejecuta `git commit` automáticamente.**
+
+La IA **solo puede proponer commits**. Un commit se ejecuta **únicamente** tras aprobación explícita del usuario.
+
+#### Flujo Estándar de Trabajo (Commit Approval Flow)
+
+1. **Implementación de Cambios**
+   - La IA realiza los cambios solicitados según la especificación
+   - Los cambios quedan en estado *working tree* o *staged*, pero **sin commit**
+
+2. **Stage & Summary**
+   La IA presenta:
+   - Lista de archivos modificados
+   - Resumen de intención del cambio
+   - Riesgos o impactos relevantes
+
+3. **Propuesta de Commit (Commit Proposal)**
+   Para cada commit propuesto, la IA debe mostrar:
+   - Identificador del commit propuesto (Commit 1, Commit 2, etc.)
+   - Mensaje en formato **Conventional Commits**
+   - Alcance funcional del commit (qué incluye)
+   - Exclusiones explícitas (qué NO incluye)
+
+4. **Punto de Aprobación (Approval Gate)**
+   El flujo **se detiene** hasta recibir una instrucción explícita del usuario.
+   
+   Comandos válidos del usuario:
+   - `APPROVE COMMIT <n>` → Ejecuta solo el commit indicado
+   - `APPROVE ALL` → Ejecuta todos los commits propuestos
+   - `CHANGE: <instrucciones>` → Solicita ajustes antes de aprobar
+   - `CANCEL` → Descarta los cambios propuestos
+
+5. **Ejecución del Commit**
+   - Solo tras aprobación explícita
+   - Se ejecuta el commit localmente
+   - Se reporta el hash generado
+
+6. **Post-Commit**
+   - Actualización de documentación o métricas si aplica
+   - Continuación del siguiente micro-sprint
+
+#### Registro de Commits
+
+**Formato Nuevo (OBLIGATORIO):**
+
+**Commits propuestos (pendientes de aprobación):**
+1. `<mensaje commit>` — `<archivos/área>` — `<objetivo>`
+
+**Commits aprobados (ejecutados):**
+1. `<mensaje commit>` — `<hash>`
+
+#### Política de Tamaño y Frecuencia de Commits
+
+- 1 commit = 1 intención clara
+- Máximo recomendado:
+  - 1–5 archivos por commit
+  - Excepcionalmente más, solo en refactors mecánicos
+- Documentación y código:
+  - Preferir commits separados (`feat/fix` y luego `docs:`)
+
+#### Estrategia de Micro-Sprints
+
+- Reemplazar "1 semana completa" por **micro-sprints de 0.5–1 día**
+- Cada micro-sprint debe producir:
+  - Cambios verificables
+  - Tests pasando
+  - 1–3 commits propuestos (máximo)
+- La semana se considera un **contenedor de micro-sprints**, no una única ejecución
+
+#### Plantilla para Solicitudes a la IA
+
+**Contexto:**
+- Objetivo del cambio
+- Restricciones técnicas
+
+**Especificación:**
+- Criterios de aceptación
+- Archivos/áreas permitidas
+- Archivos/áreas prohibidas
+
+**Plan de commits esperado:**
+- Número máximo de commits
+- Regla: solo proponer, no ejecutar
+
+**Salida requerida:**
+- Lista de archivos modificados
+- Resumen de cambios
+- Propuesta de commits
+
+#### Regla de Oro
+
+> ❝Si el usuario no escribió APPROVE, el commit no existe❞
+
+### 🎯 Conventional Commits - OBLIGATORIO
 
 **TODOS los commits en este proyecto DEBEN seguir las convenciones de Conventional Commits sin excepción.**
 
@@ -39,6 +136,7 @@ Este documento especifica el proceso sistemático de integración y validación 
 - ✅ PR reviews deben verificar compliance
 - ✅ Breaking changes DEBEN incluir `BREAKING CHANGE:` en footer
 - ✅ Scopes deben ser relevantes al área modificada
+- ✅ **Aprobación explícita del usuario requerida antes de ejecutar commit**
 
 ## 🔍 Proceso de Validación Post-Integración
 

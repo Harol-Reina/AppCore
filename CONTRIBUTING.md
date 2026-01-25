@@ -43,6 +43,103 @@ Thank you for your interest in contributing to AppCore! We welcome contributions
 - `docs/description` - Documentation changes
 - `refactor/description` - Code refactoring
 
+### Commit Policy with Explicit Approval
+
+#### Core Principle
+
+> **AI assistants never execute `git commit` automatically.**
+
+AI can only **propose commits**. Commits are executed **only** after explicit user approval.
+
+#### Standard Workflow (Commit Approval Flow)
+
+1. **Implementation of Changes**
+   - AI implements the requested changes according to the specification
+   - Changes remain in *working tree* or *staged* state, but **without commit**
+
+2. **Stage & Summary**
+   AI presents:
+   - List of modified files
+   - Summary of change intention
+   - Relevant risks or impacts
+
+3. **Commit Proposal**
+   For each proposed commit, AI must show:
+   - Proposed commit identifier (Commit 1, Commit 2, etc.)
+   - Message in **Conventional Commits** format
+   - Functional scope of the commit (what it includes)
+   - Explicit exclusions (what it does NOT include)
+
+4. **Approval Gate**
+   The flow **stops** until receiving explicit user instruction.
+   
+   Valid user commands:
+   - `APPROVE COMMIT <n>` → Execute only the indicated commit
+   - `APPROVE ALL` → Execute all proposed commits
+   - `CHANGE: <instructions>` → Request adjustments before approving
+   - `CANCEL` → Discard proposed changes
+
+5. **Commit Execution**
+   - Only after explicit approval
+   - Commit is executed locally
+   - Generated hash is reported
+
+6. **Post-Commit**
+   - Update documentation or metrics if applicable
+   - Continue with next micro-sprint
+
+#### Commit Registry
+
+**New Format (MANDATORY):**
+
+**Proposed commits (pending approval):**
+1. `<commit message>` — `<files/area>` — `<objective>`
+
+**Approved commits (executed):**
+1. `<commit message>` — `<hash>`
+
+#### Commit Size and Frequency Policy
+
+- 1 commit = 1 clear intention
+- Maximum recommended:
+  - 1–5 files per commit
+  - Exceptionally more, only in mechanical refactors
+- Documentation and code:
+  - Prefer separate commits (`feat/fix` and then `docs:`)
+
+#### Micro-Sprint Strategy
+
+- Replace "1 full week" with **0.5–1 day micro-sprints**
+- Each micro-sprint must produce:
+  - Verifiable changes
+  - Passing tests
+  - 1–3 proposed commits (maximum)
+- The week is considered a **container of micro-sprints**, not a single execution
+
+#### Template for AI Requests
+
+**Context:**
+- Change objective
+- Technical constraints
+
+**Specification:**
+- Acceptance criteria
+- Allowed files/areas
+- Forbidden files/areas
+
+**Expected commit plan:**
+- Maximum number of commits
+- Rule: only propose, do not execute
+
+**Required output:**
+- List of modified files
+- Summary of changes
+- Commit proposals
+
+#### Golden Rule
+
+> ❝If the user didn't write APPROVE, the commit doesn't exist❞
+
 ### Commit Messages
 
 Follow [Conventional Commits](https://www.conventionalcommits.org/):
@@ -54,6 +151,11 @@ docs: update API documentation
 test: add unit tests for response wrapper
 refactor: simplify dependency injection setup
 ```
+
+**Commit Size Guidelines:**
+- 1 commit = 1 clear intention
+- Maximum: 1-5 files per commit
+- Separate documentation from code changes
 
 ### Development Process
 
@@ -79,13 +181,21 @@ refactor: simplify dependency injection setup
    dotnet test --collect:"XPlat Code Coverage"
    ```
 
-4. **Commit your changes**
+4. **Stage and review your changes**
    ```bash
-   git add .
-   git commit -m "feat: your descriptive commit message"
+   git add <specific-files>
+   git status
+   git diff --staged
    ```
 
-5. **Push and create PR**
+5. **Commit with approval**
+   - If working with AI: Wait for commit proposal and approve explicitly
+   - If working manually:
+     ```bash
+     git commit -m "feat: your descriptive commit message"
+     ```
+
+6. **Push and create PR**
    ```bash
    git push origin feature/your-feature-name
    ```
