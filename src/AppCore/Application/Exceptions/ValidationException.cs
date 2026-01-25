@@ -1,77 +1,57 @@
-using System.Runtime.CompilerServices;
-using Microsoft.AspNetCore.Mvc;
-using AppCore.Application.Wrappers;
+﻿using System.Runtime.CompilerServices;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AppCore.Application.Exceptions;
 
-public class ValidationException : Exception {
+public class ValidationException : CustomException {
     public IDictionary<string, string[]> Errors { get; init; } = new Dictionary<string, string[]>();
-    private readonly MessageLog _messageLog;
-    private string? _innerMessage;
+
+    public ValidationException() : base(new DictionaryError("VAL-000", "Validation failed")) {
+        Errors = new Dictionary<string, string[]>();
+    }
+
+    public ValidationException(string message) : base(new DictionaryError("VAL-001", message)) {
+        Errors = new Dictionary<string, string[]>();
+    }
 
     public ValidationException(IEnumerable<ValidationFailure> failures,
                                [CallerMemberName] string memberName = "",
                                [CallerFilePath] string sourceFilePath = "",
-                               [CallerLineNumber] int sourceLineNumber = 0) {
+                               [CallerLineNumber] int sourceLineNumber = 0) 
+        : base(new DictionaryError("VAL-002", "One or more validation errors have occurred."), memberName, sourceFilePath, sourceLineNumber) {
         Errors = GroupValidationFailures(failures);
-        _messageLog = CreateMessageLog("One or more validation errors have occurred.", memberName, sourceFilePath, sourceLineNumber);
     }
 
     public ValidationException(string propertyName,
                                string errorMessage,
                                [CallerMemberName] string memberName = "",
                                [CallerFilePath] string sourceFilePath = "",
-                               [CallerLineNumber] int sourceLineNumber = 0) {
-        Errors = GroupValidationFailures([new ValidationFailure(propertyName, errorMessage)]);
-        _messageLog = CreateMessageLog("One or more validation errors have occurred.", memberName, sourceFilePath, sourceLineNumber);
+                               [CallerLineNumber] int sourceLineNumber = 0) 
+        : base(new DictionaryError("VAL-003", errorMessage), memberName, sourceFilePath, sourceLineNumber) {
+        Errors = new Dictionary<string, string[]> {
+            { propertyName, new[] { errorMessage } }
+        };
     }
 
     public ValidationException(Exception ex,
                                [CallerMemberName] string memberName = "",
                                [CallerFilePath] string sourceFilePath = "",
-                               [CallerLineNumber] int sourceLineNumber = 0) {
-        Errors = GroupValidationFailures([new ValidationFailure(ex.Source!, ex.Message)]);
-        if (ex.InnerException != null) {
-            AppendInnerExceptionMessages(ex.InnerException);
-        }
-        _messageLog = CreateMessageLog("One or more validation errors have occurred.", memberName, sourceFilePath, sourceLineNumber, ex.GetType().Name, ex.Source);
+                               [CallerLineNumber] int sourceLineNumber = 0) 
+        : base(new DictionaryError("VAL-004", "One or more validation errors have occurred."), memberName, sourceFilePath, sourceLineNumber) {
+        Errors = GroupValidationFailures([new ValidationFailure(ex.Source ?? "Unknown", ex.Message)]);
     }
 
     public ValidationException(ValidationProblemDetails problemDetails,
                                [CallerMemberName] string memberName = "",
                                [CallerFilePath] string sourceFilePath = "",
-                               [CallerLineNumber] int sourceLineNumber = 0) {
+                               [CallerLineNumber] int sourceLineNumber = 0)
+        : base(new DictionaryError("VAL-005", "One or more validation errors have occurred."), memberName, sourceFilePath, sourceLineNumber) {
         Errors = problemDetails.Errors;
-        _messageLog = CreateMessageLog("One or more validation errors have occurred.", memberName, sourceFilePath, sourceLineNumber);
     }
 
     private static Dictionary<string, string[]> GroupValidationFailures(IEnumerable<ValidationFailure> failures) 
         => failures
             .GroupBy(f => f.PropertyName, f => f.ErrorMessage)
             .ToDictionary(group => group.Key, group => group.ToArray());
-
-    private void AppendInnerExceptionMessages(Exception ex) {
-        _innerMessage += $"{ex.Message}\n\t\t";
-        if (ex.InnerException != null) {
-            AppendInnerExceptionMessages(ex.InnerException);
-        }
-    }
-
-    private MessageLog CreateMessageLog(string validationMessage, string memberName, string sourceFilePath, int sourceLineNumber, string? typeName = null, string? source = null) {
-        return new MessageLog {
-            Tipo = typeName ?? GetType().Name,
-            Source = source ?? base.Source,
-            Message = new {
-                Validation = validationMessage,
-                Errors
-            },
-            Metodo = memberName,
-            Path = $"{sourceFilePath} Line: {sourceLineNumber}",
-            StackTrace = _innerMessage
-        };
-    }
-
-    public override string ToString() 
-        => _messageLog.ToString();
 }
