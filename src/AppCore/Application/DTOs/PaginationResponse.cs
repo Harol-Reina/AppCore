@@ -11,10 +11,10 @@ public class PaginationResponse<T> {
     public int Pages { get; set; }
 
     [JsonPropertyName("results")]
-    public List<T> Results { get; set; } = new();
+    public List<T> Results { get; set; } = [];
 
     public PaginationResponse(List<T>? data = null) {
-        Results = data ?? new List<T>();
+        Results = data ?? [];
         Count = Results.Count;
     }
 

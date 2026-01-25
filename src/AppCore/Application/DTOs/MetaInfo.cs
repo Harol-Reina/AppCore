@@ -17,6 +17,6 @@ public class MetaInfo {
     /// <example>DataBaseName</example>
     public string? TableName { get; set; }
 
-    public List<string>? EndPoinds { get; set; }
+    public List<string>? EndPoinds { get; set; } = [];
 }
  
