@@ -1,4 +1,4 @@
-using AppCore.Infrastructure.Data.DAOs.Enum;
+﻿using AppCore.Infrastructure.Data.DAOs.Enum;
 using FluentAssertions;
 using System.Text.Json;
 using Xunit;

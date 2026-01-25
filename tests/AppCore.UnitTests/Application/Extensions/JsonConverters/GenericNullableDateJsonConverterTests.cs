@@ -1,4 +1,4 @@
-using AppCore.Application.Extensions.JsonConverters;
+﻿using AppCore.Application.Extensions.JsonConverters;
 using FluentAssertions;
 using System.Text.Json;
 using Xunit;
