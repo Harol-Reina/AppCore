@@ -5,21 +5,18 @@ using TechTalk.SpecFlow;
 namespace AppCore.SpecFlow.StepDefinitions;
 
 [Binding]
-public class ExceptionHandlingStepDefinitions
-{
+public class ExceptionHandlingStepDefinitions {
     private Exception? _thrownException;
     private string? _errorMessage;
     private Dictionary<string, string>? _errorDetails;
 
     [Given(@"I am working with the AppCore exception system")]
-    public void GivenIAmWorkingWithTheAppCoreExceptionSystem()
-    {
+    public void GivenIAmWorkingWithTheAppCoreExceptionSystem() {
         // Initialize context for exception testing
     }
 
     [Given(@"I have invalid input data")]
-    public void GivenIHaveInvalidInputData()
-    {
+    public void GivenIHaveInvalidInputData() {
         _errorMessage = "Validation failed for the provided input";
         _errorDetails = new Dictionary<string, string>
         {
@@ -29,125 +26,106 @@ public class ExceptionHandlingStepDefinitions
     }
 
     [Given(@"I am looking for an entity that doesn't exist")]
-    public void GivenIAmLookingForAnEntityThatDoesntExist()
-    {
+    public void GivenIAmLookingForAnEntityThatDoesntExist() {
         _errorMessage = "User with ID 999 was not found";
     }
 
     [Given(@"I receive malformed request data")]
-    public void GivenIReceiveMalformedRequestData()
-    {
+    public void GivenIReceiveMalformedRequestData() {
         _errorMessage = "The request data format is invalid";
     }
 
     [Given(@"I have an authentication failure")]
-    public void GivenIHaveAnAuthenticationFailure()
-    {
+    public void GivenIHaveAnAuthenticationFailure() {
         _errorMessage = "Authentication failed: Invalid credentials";
     }
 
     [Given(@"I have various AppCore exceptions")]
-    public void GivenIHaveVariousAppCoreExceptions()
-    {
+    public void GivenIHaveVariousAppCoreExceptions() {
         // Will be used for hierarchy testing
     }
 
     [When(@"I create a ValidationException with error details")]
-    public void WhenICreateAValidationExceptionWithErrorDetails()
-    {
+    public void WhenICreateAValidationExceptionWithErrorDetails() {
         _thrownException = new ValidationException("ValidationError", _errorMessage!);
     }
 
     [When(@"I create a NotFoundException with entity details")]
-    public void WhenICreateANotFoundExceptionWithEntityDetails()
-    {
+    public void WhenICreateANotFoundExceptionWithEntityDetails() {
         _thrownException = new NotFoundException(_errorMessage!);
     }
 
     [When(@"I create a BadRequestException with error details")]
-    public void WhenICreateABadRequestExceptionWithErrorDetails()
-    {
+    public void WhenICreateABadRequestExceptionWithErrorDetails() {
         _thrownException = new BadRequestException(_errorMessage!);
     }
 
     [When(@"I create an AuthenticationException with details")]
-    public void WhenICreateAnAuthenticationExceptionWithDetails()
-    {
+    public void WhenICreateAnAuthenticationExceptionWithDetails() {
         _thrownException = new AuthenticationException(_errorMessage!);
     }
 
     [When(@"I check their inheritance chain")]
-    public void WhenICheckTheirInheritanceChain()
-    {
+    public void WhenICheckTheirInheritanceChain() {
         // This step is for verification in Then steps
     }
 
     [Then(@"the exception should have the validation message")]
-    public void ThenTheExceptionShouldHaveTheValidationMessage()
-    {
+    public void ThenTheExceptionShouldHaveTheValidationMessage() {
         _thrownException.Should().NotBeNull();
         _thrownException!.Message.Should().Be(_errorMessage);
     }
 
     [Then(@"the exception should be of type ValidationException")]
-    public void ThenTheExceptionShouldBeOfTypeValidationException()
-    {
+    public void ThenTheExceptionShouldBeOfTypeValidationException() {
         _thrownException.Should().NotBeNull();
         _thrownException.Should().BeOfType<ValidationException>();
     }
 
     [Then(@"the exception should inherit from CustomException")]
-    public void ThenTheExceptionShouldInheritFromCustomException()
-    {
+    public void ThenTheExceptionShouldInheritFromCustomException() {
         _thrownException.Should().NotBeNull();
         _thrownException.Should().BeAssignableTo<CustomException>();
     }
 
     [Then(@"the exception should have a descriptive message")]
-    public void ThenTheExceptionShouldHaveADescriptiveMessage()
-    {
+    public void ThenTheExceptionShouldHaveADescriptiveMessage() {
         _thrownException.Should().NotBeNull();
         _thrownException!.Message.Should().Be(_errorMessage);
     }
 
     [Then(@"the exception should be of type NotFoundException")]
-    public void ThenTheExceptionShouldBeOfTypeNotFoundException()
-    {
+    public void ThenTheExceptionShouldBeOfTypeNotFoundException() {
         _thrownException.Should().NotBeNull();
         _thrownException.Should().BeOfType<NotFoundException>();
     }
 
     [Then(@"the exception should have the error message")]
-    public void ThenTheExceptionShouldHaveTheErrorMessage()
-    {
+    public void ThenTheExceptionShouldHaveTheErrorMessage() {
         _thrownException.Should().NotBeNull();
         _thrownException!.Message.Should().Be(_errorMessage);
     }
 
     [Then(@"the exception should be of type BadRequestException")]
-    public void ThenTheExceptionShouldBeOfTypeBadRequestException()
-    {
+    public void ThenTheExceptionShouldBeOfTypeBadRequestException() {
         _thrownException.Should().NotBeNull();
         _thrownException.Should().BeOfType<BadRequestException>();
     }
 
     [Then(@"the exception should have the authentication message")]
-    public void ThenTheExceptionShouldHaveTheAuthenticationMessage()
-    {
+    public void ThenTheExceptionShouldHaveTheAuthenticationMessage() {
         _thrownException.Should().NotBeNull();
         _thrownException!.Message.Should().Be(_errorMessage);
     }
 
     [Then(@"the exception should be of type AuthenticationException")]
-    public void ThenTheExceptionShouldBeOfTypeAuthenticationException()
-    {
+    public void ThenTheExceptionShouldBeOfTypeAuthenticationException() {
         _thrownException.Should().NotBeNull();
         _thrownException.Should().BeOfType<AuthenticationException>();
     }
 
     [Then(@"all public exceptions should inherit from CustomException")]
-    public void ThenAllPublicExceptionsShouldInheritFromCustomException()
-    {
+    public void ThenAllPublicExceptionsShouldInheritFromCustomException() {
         var exceptionTypes = new[]
         {
             typeof(ValidationException),
@@ -157,26 +135,23 @@ public class ExceptionHandlingStepDefinitions
             typeof(ForbiddenAccessException)
         };
 
-        foreach (var exceptionType in exceptionTypes)
-        {
+        foreach (var exceptionType in exceptionTypes) {
             exceptionType.Should().BeAssignableTo<CustomException>($"{exceptionType.Name} should inherit from CustomException");
         }
     }
 
     [Then(@"CustomException should inherit from Exception")]
-    public void ThenCustomExceptionShouldInheritFromException()
-    {
+    public void ThenCustomExceptionShouldInheritFromException() {
         typeof(CustomException).Should().BeAssignableTo<Exception>();
     }
 
     [Then(@"all exceptions should maintain proper inheritance hierarchy")]
-    public void ThenAllExceptionsShouldMaintainProperInheritanceHierarchy()
-    {
+    public void ThenAllExceptionsShouldMaintainProperInheritanceHierarchy() {
         // Verify that the inheritance chain is correct:
         // Exception -> CustomException -> Specific Exceptions
-        
+
         typeof(CustomException).BaseType.Should().Be(typeof(Exception));
-        
+
         var specificExceptions = new[]
         {
             typeof(ValidationException),
@@ -186,8 +161,7 @@ public class ExceptionHandlingStepDefinitions
             typeof(ForbiddenAccessException)
         };
 
-        foreach (var exceptionType in specificExceptions)
-        {
+        foreach (var exceptionType in specificExceptions) {
             exceptionType.BaseType.Should().Be(typeof(CustomException));
         }
     }

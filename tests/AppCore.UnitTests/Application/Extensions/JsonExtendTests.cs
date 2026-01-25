@@ -1,11 +1,11 @@
 ﻿using System.Text.Json;
-using AppCore.Application.Extensions;
+using AppCore.Application.DTOs;
 using AppCore.Application.Exceptions;
+using AppCore.Application.Extensions;
 using AppCore.Application.Serialization;
+using AppCore.Application.Wrappers;
 using FluentAssertions;
 using Xunit;
-using AppCore.Application.DTOs;
-using AppCore.Application.Wrappers;
 
 namespace AppCore.UnitTests.Application.Extensions;
 

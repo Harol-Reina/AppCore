@@ -4,26 +4,21 @@ using Xunit;
 
 namespace AppCore.UnitTests.Infrastructure.Data.DAOs.Common;
 
-internal class TestDao : BaseDao<int>
-{
+internal class TestDao : BaseDao<int> {
     public string Name { get; set; } = string.Empty;
 }
 
-internal class TestDaoGuid : BaseDao<Guid>
-{
+internal class TestDaoGuid : BaseDao<Guid> {
     public string Description { get; set; } = string.Empty;
 }
 
-internal class TestDaoString : BaseDao<string>
-{
+internal class TestDaoString : BaseDao<string> {
     public int Value { get; set; }
 }
 
-public class BaseDaoTests
-{
+public class BaseDaoTests {
     [Fact]
-    public void IsNew_WithNullId_ShouldReturnTrue()
-    {
+    public void IsNew_WithNullId_ShouldReturnTrue() {
         // Arrange
         var dao = new TestDao();
 
@@ -33,8 +28,7 @@ public class BaseDaoTests
     }
 
     [Fact]
-    public void IsNew_WithDefaultIntId_ShouldReturnTrue()
-    {
+    public void IsNew_WithDefaultIntId_ShouldReturnTrue() {
         // Arrange
         var dao = new TestDao { Id = 0 }; // Default int value
 
@@ -43,8 +37,7 @@ public class BaseDaoTests
     }
 
     [Fact]
-    public void IsNew_WithValidIntId_ShouldReturnFalse()
-    {
+    public void IsNew_WithValidIntId_ShouldReturnFalse() {
         // Arrange
         var dao = new TestDao { Id = 123 };
 
@@ -53,8 +46,7 @@ public class BaseDaoTests
     }
 
     [Fact]
-    public void IsNew_WithDefaultGuidId_ShouldReturnTrue()
-    {
+    public void IsNew_WithDefaultGuidId_ShouldReturnTrue() {
         // Arrange
         var dao = new TestDaoGuid { Id = Guid.Empty }; // Default Guid value
 
@@ -63,8 +55,7 @@ public class BaseDaoTests
     }
 
     [Fact]
-    public void IsNew_WithValidGuidId_ShouldReturnFalse()
-    {
+    public void IsNew_WithValidGuidId_ShouldReturnFalse() {
         // Arrange
         var dao = new TestDaoGuid { Id = Guid.NewGuid() };
 
@@ -73,8 +64,7 @@ public class BaseDaoTests
     }
 
     [Fact]
-    public void IsNew_WithNullStringId_ShouldReturnTrue()
-    {
+    public void IsNew_WithNullStringId_ShouldReturnTrue() {
         // Arrange
         var dao = new TestDaoString { Id = null };
 
@@ -83,8 +73,7 @@ public class BaseDaoTests
     }
 
     [Fact]
-    public void IsNew_WithEmptyStringId_ShouldReturnFalse()
-    {
+    public void IsNew_WithEmptyStringId_ShouldReturnFalse() {
         // Arrange
         var dao = new TestDaoString { Id = "" }; // Empty string is not default for string
 
@@ -93,8 +82,7 @@ public class BaseDaoTests
     }
 
     [Fact]
-    public void IsNew_WithValidStringId_ShouldReturnFalse()
-    {
+    public void IsNew_WithValidStringId_ShouldReturnFalse() {
         // Arrange
         var dao = new TestDaoString { Id = "test-id" };
 
@@ -103,8 +91,7 @@ public class BaseDaoTests
     }
 
     [Fact]
-    public void BaseDao_ShouldInheritFromAuditableBaseDao()
-    {
+    public void BaseDao_ShouldInheritFromAuditableBaseDao() {
         // Arrange & Act
         var dao = new TestDao();
 
@@ -113,8 +100,7 @@ public class BaseDaoTests
     }
 
     [Fact]
-    public void BaseDao_PropertiesShouldBeSettable()
-    {
+    public void BaseDao_PropertiesShouldBeSettable() {
         // Arrange
         var dao = new TestDao();
         var now = DateTime.Now;
@@ -134,8 +120,7 @@ public class BaseDaoTests
     }
 
     [Fact]
-    public void IsNew_WithDifferentGenericTypes_ShouldWorkCorrectly()
-    {
+    public void IsNew_WithDifferentGenericTypes_ShouldWorkCorrectly() {
         // Arrange
         var intDao = new TestDao();
         var guidDao = new TestDaoGuid();
@@ -157,16 +142,13 @@ public class BaseDaoTests
     }
 }
 
-public class BaseDaoIntTests
-{
-    internal class TestBaseDaoInt : BaseDaoInt
-    {
+public class BaseDaoIntTests {
+    internal class TestBaseDaoInt : BaseDaoInt {
         public string Name { get; set; } = string.Empty;
     }
 
     [Fact]
-    public void BaseDaoInt_ShouldInheritFromBaseDaoOfInt()
-    {
+    public void BaseDaoInt_ShouldInheritFromBaseDaoOfInt() {
         // Arrange & Act
         var dao = new TestBaseDaoInt();
 
@@ -175,8 +157,7 @@ public class BaseDaoIntTests
     }
 
     [Fact]
-    public void BaseDaoInt_IdShouldBeInt()
-    {
+    public void BaseDaoInt_IdShouldBeInt() {
         // Arrange
         var dao = new TestBaseDaoInt();
 
@@ -189,8 +170,7 @@ public class BaseDaoIntTests
     }
 
     [Fact]
-    public void BaseDaoInt_IsNew_WithDefaultId_ShouldReturnTrue()
-    {
+    public void BaseDaoInt_IsNew_WithDefaultId_ShouldReturnTrue() {
         // Arrange
         var dao = new TestBaseDaoInt(); // Id defaults to 0
 
@@ -200,8 +180,7 @@ public class BaseDaoIntTests
     }
 
     [Fact]
-    public void BaseDaoInt_IsNew_WithNonZeroId_ShouldReturnFalse()
-    {
+    public void BaseDaoInt_IsNew_WithNonZeroId_ShouldReturnFalse() {
         // Arrange
         var dao = new TestBaseDaoInt { Id = 42 };
 

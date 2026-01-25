@@ -6,7 +6,7 @@ public class ForbiddenAccessException : CustomException {
     public ForbiddenAccessException(string message,
                                    [CallerMemberName] string memberName = "",
                                    [CallerFilePath] string sourceFilePath = "",
-                                   [CallerLineNumber] int sourceLineNumber = 0) 
+                                   [CallerLineNumber] int sourceLineNumber = 0)
         : base(new DictionaryError("FORBID-001", message), memberName, sourceFilePath, sourceLineNumber) {
     }
 }

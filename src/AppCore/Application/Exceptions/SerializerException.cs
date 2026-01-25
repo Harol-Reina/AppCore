@@ -28,7 +28,7 @@ internal class SerializerException : Exception {
                           [CallerFilePath] string sourceFilePath = "",
                           [CallerLineNumber] int sourceLineNumber = 0)
                           : base("An error occurred while serializing or deserializing an object.") {
-        
+
         MessageLog = new MessageLog {
             Tipo = base.GetType().Name,
             Source = base.Source,

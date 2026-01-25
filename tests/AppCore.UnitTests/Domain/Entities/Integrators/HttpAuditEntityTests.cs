@@ -1,15 +1,13 @@
-﻿using AppCore.Domain.Entities.Integrators;
+﻿using System.Net;
+using AppCore.Domain.Entities.Integrators;
 using FluentAssertions;
-using System.Net;
 using Xunit;
 
 namespace AppCore.UnitTests.Domain.Entities.Integrators;
 
-public class HttpAuditEntityTests
-{
+public class HttpAuditEntityTests {
     [Fact]
-    public void Constructor_WithRequiredParameters_ShouldSetProperties()
-    {
+    public void Constructor_WithRequiredParameters_ShouldSetProperties() {
         // Arrange
         var traceId = Guid.NewGuid();
         var url = "https://api.example.com/test";
@@ -26,8 +24,7 @@ public class HttpAuditEntityTests
     }
 
     [Fact]
-    public void Constructor_WithAllParameters_ShouldSetProperties()
-    {
+    public void Constructor_WithAllParameters_ShouldSetProperties() {
         // Arrange
         var traceId = Guid.NewGuid();
         var url = "https://api.example.com/test";
@@ -51,8 +48,7 @@ public class HttpAuditEntityTests
     }
 
     [Fact]
-    public void StatusCode_ShouldBeSettable()
-    {
+    public void StatusCode_ShouldBeSettable() {
         // Arrange
         var entity = new HttpAuditEntity(Guid.NewGuid(), "https://api.example.com/test");
 
@@ -64,8 +60,7 @@ public class HttpAuditEntityTests
     }
 
     [Fact]
-    public void ElapsedMilliseconds_ShouldBeSettable()
-    {
+    public void ElapsedMilliseconds_ShouldBeSettable() {
         // Arrange
         var entity = new HttpAuditEntity(Guid.NewGuid(), "https://api.example.com/test");
 
@@ -77,8 +72,7 @@ public class HttpAuditEntityTests
     }
 
     [Fact]
-    public void Response_ShouldBeSettable()
-    {
+    public void Response_ShouldBeSettable() {
         // Arrange
         var entity = new HttpAuditEntity(Guid.NewGuid(), "https://api.example.com/test");
         var jsonDoc = System.Text.Json.JsonDocument.Parse("""{"Success": true}""");
@@ -91,8 +85,7 @@ public class HttpAuditEntityTests
     }
 
     [Fact]
-    public void InternalError_ShouldBeSettable()
-    {
+    public void InternalError_ShouldBeSettable() {
         // Arrange
         var entity = new HttpAuditEntity(Guid.NewGuid(), "https://api.example.com/test");
 
@@ -104,8 +97,7 @@ public class HttpAuditEntityTests
     }
 
     [Fact]
-    public void Constructor_WithNullBody_ShouldSetBodyToNull()
-    {
+    public void Constructor_WithNullBody_ShouldSetBodyToNull() {
         // Arrange & Act
         var entity = new HttpAuditEntity(Guid.NewGuid(), "https://api.example.com/test", body: null);
 
@@ -114,8 +106,7 @@ public class HttpAuditEntityTests
     }
 
     [Fact]
-    public void Constructor_WithNullHeaders_ShouldSetHeadersToNull()
-    {
+    public void Constructor_WithNullHeaders_ShouldSetHeadersToNull() {
         // Arrange & Act
         var entity = new HttpAuditEntity(Guid.NewGuid(), "https://api.example.com/test", headers: null);
 

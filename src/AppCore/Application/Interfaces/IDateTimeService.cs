@@ -9,7 +9,7 @@ public interface IDateTimeService {
     /// </summary>
     /// <value>The current date and time in UTC.</value>
     DateTime NowUtc { get; }
-    
+
     /// <summary>
     /// Gets the current local date and time.
     /// </summary>

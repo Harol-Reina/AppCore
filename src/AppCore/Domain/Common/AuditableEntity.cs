@@ -6,8 +6,7 @@ namespace AppCore.Domain.Common;
 /// Abstract base class that provides audit trail properties for entities.
 /// Tracks creation and modification information including user and timestamp.
 /// </summary>
-public abstract class AuditableEntity
-{
+public abstract class AuditableEntity {
     /// <summary>
     /// Gets or sets the identifier of the user who created this entity.
     /// </summary>

@@ -5,32 +5,27 @@ using Xunit;
 namespace AppCore.UnitTests.Domain.Common;
 
 // Test implementations of BaseEntity for testing purposes
-public class TestStringEntity : BaseEntity<string>
-{
+public class TestStringEntity : BaseEntity<string> {
     public TestStringEntity() : base() { }
     public TestStringEntity(string id) : base(id) { }
     public string? Name { get; set; }
 }
 
-public class TestIntEntity : BaseEntity<int>
-{
+public class TestIntEntity : BaseEntity<int> {
     public TestIntEntity() : base() { }
     public TestIntEntity(int id) : base(id) { }
     public string? Name { get; set; }
 }
 
-public class TestGuidEntity : BaseEntity<Guid>
-{
+public class TestGuidEntity : BaseEntity<Guid> {
     public TestGuidEntity() : base() { }
     public TestGuidEntity(Guid id) : base(id) { }
     public string? Name { get; set; }
 }
 
-public class BaseEntityTests
-{
+public class BaseEntityTests {
     [Fact]
-    public void Constructor_WithoutId_ShouldCreateEntityWithNullId()
-    {
+    public void Constructor_WithoutId_ShouldCreateEntityWithNullId() {
         // Act
         var entity = new TestStringEntity();
 
@@ -41,8 +36,7 @@ public class BaseEntityTests
     }
 
     [Fact]
-    public void Constructor_WithId_ShouldCreateEntityWithId()
-    {
+    public void Constructor_WithId_ShouldCreateEntityWithId() {
         // Arrange
         var id = "test-id-123";
 
@@ -56,8 +50,7 @@ public class BaseEntityTests
     }
 
     [Fact]
-    public void IsNew_WithNullId_ShouldReturnTrue()
-    {
+    public void IsNew_WithNullId_ShouldReturnTrue() {
         // Arrange
         var entity = new TestStringEntity();
 
@@ -67,8 +60,7 @@ public class BaseEntityTests
     }
 
     [Fact]
-    public void IsNew_WithValidId_ShouldReturnFalse()
-    {
+    public void IsNew_WithValidId_ShouldReturnFalse() {
         // Arrange
         var entity = new TestStringEntity("valid-id");
 
@@ -78,8 +70,7 @@ public class BaseEntityTests
     }
 
     [Fact]
-    public void IsNew_WithDefaultIntId_ShouldReturnTrue()
-    {
+    public void IsNew_WithDefaultIntId_ShouldReturnTrue() {
         // Arrange
         var entity = new TestIntEntity();
         entity.Id = 0; // Default int value
@@ -90,8 +81,7 @@ public class BaseEntityTests
     }
 
     [Fact]
-    public void IsNew_WithNonDefaultIntId_ShouldReturnFalse()
-    {
+    public void IsNew_WithNonDefaultIntId_ShouldReturnFalse() {
         // Arrange
         var entity = new TestIntEntity(42);
 
@@ -101,8 +91,7 @@ public class BaseEntityTests
     }
 
     [Fact]
-    public void IsNew_WithDefaultGuidId_ShouldReturnTrue()
-    {
+    public void IsNew_WithDefaultGuidId_ShouldReturnTrue() {
         // Arrange
         var entity = new TestGuidEntity();
         entity.Id = Guid.Empty; // Default Guid value
@@ -113,8 +102,7 @@ public class BaseEntityTests
     }
 
     [Fact]
-    public void IsNew_WithValidGuidId_ShouldReturnFalse()
-    {
+    public void IsNew_WithValidGuidId_ShouldReturnFalse() {
         // Arrange
         var validGuid = Guid.NewGuid();
         var entity = new TestGuidEntity(validGuid);
@@ -125,8 +113,7 @@ public class BaseEntityTests
     }
 
     [Fact]
-    public void IsPersisted_ShouldBeOppositeOfIsNew()
-    {
+    public void IsPersisted_ShouldBeOppositeOfIsNew() {
         // Arrange
         var newEntity = new TestStringEntity();
         var persistedEntity = new TestStringEntity("existing-id");
@@ -134,14 +121,13 @@ public class BaseEntityTests
         // Act & Assert
         newEntity.IsNew.Should().BeTrue();
         newEntity.IsPersisted.Should().BeFalse();
-        
+
         persistedEntity.IsNew.Should().BeFalse();
         persistedEntity.IsPersisted.Should().BeTrue();
     }
 
     [Fact]
-    public void Id_ShouldBeSettable()
-    {
+    public void Id_ShouldBeSettable() {
         // Arrange
         var entity = new TestStringEntity();
         var newId = "new-id";
@@ -156,8 +142,7 @@ public class BaseEntityTests
     }
 
     [Fact]
-    public void Entity_ShouldInheritFromAuditableEntity()
-    {
+    public void Entity_ShouldInheritFromAuditableEntity() {
         // Arrange & Act
         var entity = new TestStringEntity();
 
@@ -167,8 +152,7 @@ public class BaseEntityTests
 
     [Theory]
     [InlineData("")]   // Empty string is not null, so should be considered not new
-    public void IsNew_WithEmptyStringId_ShouldReturnFalse(string emptyId)
-    {
+    public void IsNew_WithEmptyStringId_ShouldReturnFalse(string emptyId) {
         // Arrange
         var entity = new TestStringEntity(emptyId);
 

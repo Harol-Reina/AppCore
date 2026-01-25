@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
@@ -9,7 +9,7 @@ public class OperationException : Exception {
                               [CallerMemberName] string memberName = "",
                               [CallerFilePath] string sourceFilePath = "",
                               [CallerLineNumber] int sourceLineNumber = 0) : base(message) {
-         mensaje = new MessageLog{
+        mensaje = new MessageLog {
             Tipo = base.GetType().Name,
             Source = base.Source,
             Message = message,

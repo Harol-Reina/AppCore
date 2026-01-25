@@ -6,11 +6,9 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.Exceptions;
 
-public class ValidationExceptionTests
-{
+public class ValidationExceptionTests {
     [Fact]
-    public void Constructor_Default_ShouldSetErrorCode()
-    {
+    public void Constructor_Default_ShouldSetErrorCode() {
         // Act
         var exception = new ValidationException();
 
@@ -22,8 +20,7 @@ public class ValidationExceptionTests
     }
 
     [Fact]
-    public void Constructor_WithMessage_ShouldSetMessage()
-    {
+    public void Constructor_WithMessage_ShouldSetMessage() {
         // Act
         var exception = new ValidationException("Custom validation error");
 
@@ -35,8 +32,7 @@ public class ValidationExceptionTests
     }
 
     [Fact]
-    public void Constructor_WithValidationFailures_ShouldGroupErrors()
-    {
+    public void Constructor_WithValidationFailures_ShouldGroupErrors() {
         // Arrange
         var failures = new List<ValidationFailure>
         {
@@ -57,8 +53,7 @@ public class ValidationExceptionTests
     }
 
     [Fact]
-    public void Constructor_WithPropertyAndMessage_ShouldCreateSingleError()
-    {
+    public void Constructor_WithPropertyAndMessage_ShouldCreateSingleError() {
         // Act
         var exception = new ValidationException("Username", "Username is already taken");
 
@@ -70,8 +65,7 @@ public class ValidationExceptionTests
     }
 
     [Fact]
-    public void Constructor_WithInnerException_ShouldWrapException()
-    {
+    public void Constructor_WithInnerException_ShouldWrapException() {
         // Arrange
         var innerException = new InvalidOperationException("Inner error");
 
@@ -85,11 +79,9 @@ public class ValidationExceptionTests
     }
 
     [Fact]
-    public void Constructor_WithValidationProblemDetails_ShouldCopyErrors()
-    {
+    public void Constructor_WithValidationProblemDetails_ShouldCopyErrors() {
         // Arrange
-        var problemDetails = new ValidationProblemDetails
-        {
+        var problemDetails = new ValidationProblemDetails {
             Errors =
             {
                 { "Field1", new[] { "Error 1", "Error 2" } },
@@ -109,8 +101,7 @@ public class ValidationExceptionTests
     }
 
     [Fact]
-    public void Constructor_WithEmptyFailures_ShouldHaveEmptyErrors()
-    {
+    public void Constructor_WithEmptyFailures_ShouldHaveEmptyErrors() {
         // Arrange
         var failures = new List<ValidationFailure>();
 

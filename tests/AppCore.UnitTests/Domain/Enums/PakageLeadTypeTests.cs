@@ -1,15 +1,13 @@
-﻿using AppCore.Domain.Enums;
+﻿using System.Text.Json;
+using AppCore.Domain.Enums;
 using FluentAssertions;
-using System.Text.Json;
 using Xunit;
 
 namespace AppCore.UnitTests.Domain.Enums;
 
-public class PakageLeadTypeTests
-{
+public class PakageLeadTypeTests {
     [Fact]
-    public void PakageLeadType_File_ShouldHaveCorrectValue()
-    {
+    public void PakageLeadType_File_ShouldHaveCorrectValue() {
         // Act
         var value = PakageLeadType.File;
 
@@ -19,8 +17,7 @@ public class PakageLeadTypeTests
     }
 
     [Fact]
-    public void PakageLeadType_Json_ShouldHaveCorrectValue()
-    {
+    public void PakageLeadType_Json_ShouldHaveCorrectValue() {
         // Act
         var value = PakageLeadType.Json;
 
@@ -30,8 +27,7 @@ public class PakageLeadTypeTests
     }
 
     [Fact]
-    public void PakageLeadType_ShouldSerializeAsString()
-    {
+    public void PakageLeadType_ShouldSerializeAsString() {
         // Arrange
         var leadType = PakageLeadType.File;
 
@@ -43,8 +39,7 @@ public class PakageLeadTypeTests
     }
 
     [Fact]
-    public void PakageLeadType_ShouldDeserializeFromString()
-    {
+    public void PakageLeadType_ShouldDeserializeFromString() {
         // Arrange
         var json = "\"Json\"";
 

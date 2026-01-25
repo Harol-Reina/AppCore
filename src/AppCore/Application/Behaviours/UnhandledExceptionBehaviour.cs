@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
-using AppCore.Application.Exceptions;
+﻿using AppCore.Application.Exceptions;
 using AppCore.Application.Wrappers;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace AppCore.Application.Behaviours;
 

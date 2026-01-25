@@ -16,7 +16,7 @@ public class CustomException : Exception {
     /// </summary>
     /// <value>A MessageLog instance with error details and caller context.</value>
     public MessageLog MessageLog { get; }
-    
+
     /// <summary>
     /// Initializes a new instance of the CustomException class with a dictionary error.
     /// </summary>
@@ -49,17 +49,17 @@ public record DictionaryError {
     /// Gets or initializes the error code.
     /// </summary>
     public required string Code { get; init; } = string.Empty;
-    
+
     /// <summary>
     /// Gets or initializes the error message.
     /// </summary>
     public required string Message { get; init; } = string.Empty;
-    
+
     /// <summary>
     /// Gets or initializes additional provider message information as JSON.
     /// </summary>
     public JsonDocument? ProviderMessage { get; init; }
-    
+
     /// <summary>
     /// Gets or initializes the exception details.
     /// Changed from dynamic to object for AOT compatibility.

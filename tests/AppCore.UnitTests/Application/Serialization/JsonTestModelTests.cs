@@ -1,18 +1,15 @@
-﻿using AppCore.Application.Serialization;
+﻿using System.Text.Json;
+using AppCore.Application.Serialization;
 using FluentAssertions;
-using System.Text.Json;
 using Xunit;
 
 namespace AppCore.UnitTests.Application.Serialization;
 
-public class JsonTestModelTests
-{
+public class JsonTestModelTests {
     [Fact]
-    public void JsonTestModel_Properties_ShouldBeSettable()
-    {
+    public void JsonTestModel_Properties_ShouldBeSettable() {
         // Arrange & Act
-        var model = new JsonTestModel
-        {
+        var model = new JsonTestModel {
             Id = 123,
             Name = "Test Name",
             Email = "test@example.com",
@@ -27,11 +24,9 @@ public class JsonTestModelTests
     }
 
     [Fact]
-    public void JsonTestModel_ShouldSerializeToJson()
-    {
+    public void JsonTestModel_ShouldSerializeToJson() {
         // Arrange
-        var model = new JsonTestModel
-        {
+        var model = new JsonTestModel {
             Id = 456,
             Name = "Serialization Test",
             Email = "serialize@test.com",
@@ -49,8 +44,7 @@ public class JsonTestModelTests
     }
 
     [Fact]
-    public void JsonTestModel_ShouldDeserializeFromJson()
-    {
+    public void JsonTestModel_ShouldDeserializeFromJson() {
         // Arrange
         var json = """
         {
@@ -73,11 +67,9 @@ public class JsonTestModelTests
     }
 
     [Fact]
-    public void JsonTestModel_WithNullValues_ShouldSerializeWithoutNulls()
-    {
+    public void JsonTestModel_WithNullValues_ShouldSerializeWithoutNulls() {
         // Arrange
-        var model = new JsonTestModel
-        {
+        var model = new JsonTestModel {
             Id = 100,
             Name = null,
             Email = null,
@@ -94,11 +86,9 @@ public class JsonTestModelTests
     }
 
     [Fact]
-    public void JsonTestModel_RoundTrip_ShouldPreserveValues()
-    {
+    public void JsonTestModel_RoundTrip_ShouldPreserveValues() {
         // Arrange
-        var original = new JsonTestModel
-        {
+        var original = new JsonTestModel {
             Id = 999,
             Name = "Round Trip",
             Email = "roundtrip@test.com",

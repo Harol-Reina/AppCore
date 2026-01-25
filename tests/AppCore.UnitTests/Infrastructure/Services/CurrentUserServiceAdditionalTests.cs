@@ -1,24 +1,22 @@
-﻿using AppCore.Application.Interfaces;
+﻿using System.Security.Claims;
+using AppCore.Application.Interfaces;
 using AppCore.Infrastructure.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using System.Security.Claims;
 using Xunit;
 
 namespace AppCore.UnitTests.Infrastructure.Services;
 
-public class CurrentUserServiceAdditionalTests
-{
+public class CurrentUserServiceAdditionalTests {
     [Fact]
-    public void GetUserName_WithForwardedHeader_ShouldReturnForwardedIp()
-    {
+    public void GetUserName_WithForwardedHeader_ShouldReturnForwardedIp() {
         // Arrange
         var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
         var httpContext = new DefaultHttpContext();
         httpContext.Request.Headers["X-Forwarded-For"] = "192.168.1.100, 10.0.0.1";
         httpContextAccessorMock.Setup(x => x.HttpContext).Returns(httpContext);
-        
+
         var service = new CurrentUserService(httpContextAccessorMock.Object);
 
         // Act
@@ -29,14 +27,13 @@ public class CurrentUserServiceAdditionalTests
     }
 
     [Fact]
-    public void GetUserId_WithHostHeader_ShouldReturnHostname()
-    {
+    public void GetUserId_WithHostHeader_ShouldReturnHostname() {
         // Arrange
         var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
         var httpContext = new DefaultHttpContext();
         httpContext.Request.Headers["Host"] = "example.com:8080";
         httpContextAccessorMock.Setup(x => x.HttpContext).Returns(httpContext);
-        
+
         var service = new CurrentUserService(httpContextAccessorMock.Object);
 
         // Act
@@ -47,14 +44,13 @@ public class CurrentUserServiceAdditionalTests
     }
 
     [Fact]
-    public void GetXtraceId_WithEmptyHeader_ShouldReturnGuid()
-    {
+    public void GetXtraceId_WithEmptyHeader_ShouldReturnGuid() {
         // Arrange
         var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
         var httpContext = new DefaultHttpContext();
         httpContext.Request.Headers["X-Trace-ID"] = "   ";
         httpContextAccessorMock.Setup(x => x.HttpContext).Returns(httpContext);
-        
+
         var service = new CurrentUserService(httpContextAccessorMock.Object);
 
         // Act

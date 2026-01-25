@@ -1,23 +1,21 @@
-﻿using AppCore.Application.Utils;
-using AppCore.Application.Exceptions;
+﻿using AppCore.Application.Exceptions;
+using AppCore.Application.Utils;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Xunit;
 
 namespace AppCore.UnitTests.Application.Utils;
 
-public class ConfigurationTests
-{
-    private IConfiguration CreateConfiguration(Dictionary<string, string?> data)
-    {
+[Collection("ConfigurationTests")]
+public class ConfigurationTests {
+    private static IConfiguration CreateConfiguration(Dictionary<string, string?> data) {
         return new ConfigurationBuilder()
             .AddInMemoryCollection(data)
             .Build();
     }
 
     [Fact]
-    public void Initialize_WithValidConfiguration_ShouldSetConfiguration()
-    {
+    public void Initialize_WithValidConfiguration_ShouldSetConfiguration() {
         // Arrange
         var config = CreateConfiguration(new Dictionary<string, string?>());
 
@@ -29,8 +27,7 @@ public class ConfigurationTests
     }
 
     [Fact]
-    public void GetConfig_WithExistingKey_ShouldReturnValue()
-    {
+    public void GetConfig_WithExistingKey_ShouldReturnValue() {
         // Arrange
         var data = new Dictionary<string, string?>
         {
@@ -47,8 +44,7 @@ public class ConfigurationTests
     }
 
     [Fact]
-    public void GetConfig_WithNonExistingKey_ShouldReturnNull()
-    {
+    public void GetConfig_WithNonExistingKey_ShouldReturnNull() {
         // Arrange
         var config = CreateConfiguration(new Dictionary<string, string?>());
         Configuration.Initialize(config);
@@ -61,8 +57,7 @@ public class ConfigurationTests
     }
 
     [Fact]
-    public void RequiredConfig_WithExistingKey_ShouldReturnValue()
-    {
+    public void RequiredConfig_WithExistingKey_ShouldReturnValue() {
         // Arrange
         var data = new Dictionary<string, string?>
         {
@@ -79,8 +74,7 @@ public class ConfigurationTests
     }
 
     [Fact]
-    public void RequiredConfig_WithNonExistingKey_ShouldThrowNotFoundException()
-    {
+    public void RequiredConfig_WithNonExistingKey_ShouldThrowNotFoundException() {
         // Arrange
         var config = CreateConfiguration(new Dictionary<string, string?>());
         Configuration.Initialize(config);
@@ -94,8 +88,7 @@ public class ConfigurationTests
     }
 
     [Fact]
-    public void IntConfig_WithValidInteger_ShouldReturnParsedValue()
-    {
+    public void IntConfig_WithValidInteger_ShouldReturnParsedValue() {
         // Arrange
         var data = new Dictionary<string, string?>
         {
@@ -112,8 +105,7 @@ public class ConfigurationTests
     }
 
     [Fact]
-    public void IntConfig_WithInvalidInteger_ShouldThrowOperationException()
-    {
+    public void IntConfig_WithInvalidInteger_ShouldThrowOperationException() {
         // Arrange
         var data = new Dictionary<string, string?>
         {
@@ -131,8 +123,7 @@ public class ConfigurationTests
     }
 
     [Fact]
-    public void IntConfig_WithMissingKey_ShouldThrowNotFoundException()
-    {
+    public void IntConfig_WithMissingKey_ShouldThrowNotFoundException() {
         // Arrange
         var config = CreateConfiguration(new Dictionary<string, string?>());
         Configuration.Initialize(config);
@@ -145,8 +136,7 @@ public class ConfigurationTests
     }
 
     [Fact]
-    public void StringArray_WithValidArray_ShouldReturnArray()
-    {
+    public void StringArray_WithValidArray_ShouldReturnArray() {
         // Arrange
         var data = new Dictionary<string, string?>
         {
@@ -167,8 +157,7 @@ public class ConfigurationTests
     }
 
     [Fact]
-    public void StringArray_WithNonExisting_ShouldThrowNotFoundException()
-    {
+    public void StringArray_WithNonExisting_ShouldThrowNotFoundException() {
         // Arrange
         var config = CreateConfiguration(new Dictionary<string, string?>());
         Configuration.Initialize(config);

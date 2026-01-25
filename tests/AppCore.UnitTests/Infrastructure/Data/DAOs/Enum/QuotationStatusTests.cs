@@ -1,15 +1,13 @@
-﻿using AppCore.Infrastructure.Data.DAOs.Enum;
+﻿using System.Text.Json;
+using AppCore.Infrastructure.Data.DAOs.Enum;
 using FluentAssertions;
-using System.Text.Json;
 using Xunit;
 
 namespace AppCore.UnitTests.Infrastructure.Data.DAOs.Enum;
 
-public class QuotationStatusTests
-{
+public class QuotationStatusTests {
     [Fact]
-    public void QuotationStatus_Started_ShouldHaveCorrectValue()
-    {
+    public void QuotationStatus_Started_ShouldHaveCorrectValue() {
         // Act
         var value = QuotationStatus.Started;
 
@@ -19,8 +17,7 @@ public class QuotationStatusTests
     }
 
     [Fact]
-    public void QuotationStatus_Updated_ShouldHaveCorrectValue()
-    {
+    public void QuotationStatus_Updated_ShouldHaveCorrectValue() {
         // Act
         var value = QuotationStatus.Updated;
 
@@ -30,8 +27,7 @@ public class QuotationStatusTests
     }
 
     [Fact]
-    public void QuotationStatus_Finished_ShouldHaveCorrectValue()
-    {
+    public void QuotationStatus_Finished_ShouldHaveCorrectValue() {
         // Act
         var value = QuotationStatus.Finished;
 
@@ -41,8 +37,7 @@ public class QuotationStatusTests
     }
 
     [Fact]
-    public void QuotationStatus_CoverageNote_ShouldHaveCorrectValue()
-    {
+    public void QuotationStatus_CoverageNote_ShouldHaveCorrectValue() {
         // Act
         var value = QuotationStatus.CoverageNote;
 
@@ -52,8 +47,7 @@ public class QuotationStatusTests
     }
 
     [Fact]
-    public void QuotationStatus_ShouldSerializeAsString()
-    {
+    public void QuotationStatus_ShouldSerializeAsString() {
         // Arrange
         var status = QuotationStatus.Started;
 
@@ -65,8 +59,7 @@ public class QuotationStatusTests
     }
 
     [Fact]
-    public void QuotationStatus_ShouldDeserializeFromString()
-    {
+    public void QuotationStatus_ShouldDeserializeFromString() {
         // Arrange
         var json = "\"Finished\"";
 
@@ -78,8 +71,7 @@ public class QuotationStatusTests
     }
 
     [Fact]
-    public void QuotationStatus_AllValues_ShouldBeDistinct()
-    {
+    public void QuotationStatus_AllValues_ShouldBeDistinct() {
         // Arrange
         var allValues = System.Enum.GetValues<QuotationStatus>();
 

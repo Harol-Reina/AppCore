@@ -5,19 +5,16 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.Extensions.JsonConverters;
 
-public class DateYearMonthDayNoSeparatorJsonConverterTests
-{
+public class DateYearMonthDayNoSeparatorJsonConverterTests {
     private readonly JsonSerializerOptions _options;
 
-    public DateYearMonthDayNoSeparatorJsonConverterTests()
-    {
+    public DateYearMonthDayNoSeparatorJsonConverterTests() {
         _options = new JsonSerializerOptions();
         _options.Converters.Add(new DateYearMonthDayNoSeparatorJsonConverter());
     }
 
     [Fact]
-    public void Read_ValidDateString_ShouldDeserializeCorrectly()
-    {
+    public void Read_ValidDateString_ShouldDeserializeCorrectly() {
         // Arrange
         var json = "\"20240315\"";
 
@@ -31,10 +28,9 @@ public class DateYearMonthDayNoSeparatorJsonConverterTests
     }
 
     [Fact]
-    public void Write_ValidDateTime_ShouldSerializeCorrectly()
-    {
+    public void Write_ValidDateTime_ShouldSerializeCorrectly() {
         // Arrange
-        var date = new DateTime(2024, 3, 15, 10, 30, 45);
+        var date = new DateTime(2024, 3, 15, 10, 30, 45, DateTimeKind.Utc);
 
         // Act
         var json = JsonSerializer.Serialize(date, _options);
@@ -47,8 +43,7 @@ public class DateYearMonthDayNoSeparatorJsonConverterTests
     [InlineData("\"2024-03-15\"")]
     [InlineData("\"2024/03/15\"")]
     [InlineData("\"202403\"")]
-    public void Read_InvalidFormat_ShouldThrowJsonException(string json)
-    {
+    public void Read_InvalidFormat_ShouldThrowJsonException(string json) {
         // Act
         var act = () => JsonSerializer.Deserialize<DateTime>(json, _options);
 

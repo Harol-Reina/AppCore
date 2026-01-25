@@ -1,7 +1,7 @@
-namespace AppCore.Application.DTOs;
+﻿namespace AppCore.Application.DTOs;
 
 public class EmailRequest {
-    public required string To { get; set; } 
+    public required string To { get; set; }
     public required string Subject { get; set; }
     public required string Body { get; set; }
     public required string From { get; set; }
@@ -13,4 +13,3 @@ public class AttachmentFile {
     public required string FileName { get; set; }
     public required string ContentType { get; set; }
 }
- 

@@ -4,14 +4,11 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.DTOs;
 
-public class EmailRequestTests
-{
+public class EmailRequestTests {
     [Fact]
-    public void Properties_ShouldSetAndGetCorrectly()
-    {
+    public void Properties_ShouldSetAndGetCorrectly() {
         // Arrange & Act
-        var emailRequest = new EmailRequest
-        {
+        var emailRequest = new EmailRequest {
             To = "recipient@example.com",
             Subject = "Test Subject",
             Body = "Test body content",
@@ -28,25 +25,21 @@ public class EmailRequestTests
     }
 
     [Fact]
-    public void AttachmentFiles_ShouldSupportMultipleFiles()
-    {
+    public void AttachmentFiles_ShouldSupportMultipleFiles() {
         // Arrange
-        var attachment1 = new AttachmentFile
-        {
+        var attachment1 = new AttachmentFile {
             FileBase64 = "base64content1",
             FileName = "file1.pdf",
             ContentType = "application/pdf"
         };
-        var attachment2 = new AttachmentFile
-        {
+        var attachment2 = new AttachmentFile {
             FileBase64 = "base64content2",
             FileName = "file2.txt",
             ContentType = "text/plain"
         };
 
         // Act
-        var emailRequest = new EmailRequest
-        {
+        var emailRequest = new EmailRequest {
             To = "test@example.com",
             Subject = "Test",
             Body = "Body",

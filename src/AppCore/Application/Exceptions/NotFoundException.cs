@@ -17,7 +17,7 @@ public class NotFoundException : CustomException {
     public NotFoundException(string message = "The requested resource could not be found.",
                              [CallerMemberName] string memberName = "",
                              [CallerFilePath] string sourceFilePath = "",
-                             [CallerLineNumber] int sourceLineNumber = 0) 
+                             [CallerLineNumber] int sourceLineNumber = 0)
         : base(new DictionaryError("NOT-FOUND-001", message), memberName, sourceFilePath, sourceLineNumber) {
     }
 }

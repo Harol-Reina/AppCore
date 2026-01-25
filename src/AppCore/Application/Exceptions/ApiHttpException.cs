@@ -2,6 +2,7 @@
 using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
+
 internal class ApiHttpException : Exception {
     public MessageLog MessageLog { get; }
 
@@ -14,7 +15,7 @@ internal class ApiHttpException : Exception {
             Source = base.Source,
             Message = $"{ex.Message} :: {memberName}",
             Metodo = memberName,
-            Path = $"{sourceFilePath}{ex.ToString()[ex.ToString().IndexOf(":line")..]}",
+            Path = sourceFilePath + (ex.ToString().Contains(":line") ? ex.ToString()[ex.ToString().IndexOf(":line")..] : ""),
         };
     }
 

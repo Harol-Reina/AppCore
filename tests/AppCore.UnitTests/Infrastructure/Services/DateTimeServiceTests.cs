@@ -1,23 +1,20 @@
-﻿using AppCore.Infrastructure.Services;
+﻿using System;
 using AppCore.Application.Interfaces;
+using AppCore.Infrastructure.Services;
 using FluentAssertions;
 using Xunit;
-using System;
 
 namespace AppCore.UnitTests.Infrastructure.Services;
 
-public class DateTimeServiceTests
-{
+public class DateTimeServiceTests {
     private readonly IDateTimeService _dateTimeService;
 
-    public DateTimeServiceTests()
-    {
+    public DateTimeServiceTests() {
         _dateTimeService = new DateTimeService();
     }
 
     [Fact]
-    public void NowUtc_ShouldReturnUtcDateTime()
-    {
+    public void NowUtc_ShouldReturnUtcDateTime() {
         // Act
         var result = _dateTimeService.NowUtc;
         var actualUtcNow = DateTime.UtcNow;
@@ -29,8 +26,7 @@ public class DateTimeServiceTests
     }
 
     [Fact]
-    public void Now_ShouldReturnLocalDateTime()
-    {
+    public void Now_ShouldReturnLocalDateTime() {
         // Act
         var result = _dateTimeService.Now;
         var actualNow = DateTime.Now;
@@ -42,8 +38,7 @@ public class DateTimeServiceTests
     }
 
     [Fact]
-    public void NowUtc_MultipleCallsInQuickSuccession_ShouldReturnSimilarTimes()
-    {
+    public void NowUtc_MultipleCallsInQuickSuccession_ShouldReturnSimilarTimes() {
         // Act
         var time1 = _dateTimeService.NowUtc;
         var time2 = _dateTimeService.NowUtc;
@@ -53,8 +48,7 @@ public class DateTimeServiceTests
     }
 
     [Fact]
-    public void Now_MultipleCallsInQuickSuccession_ShouldReturnSimilarTimes()
-    {
+    public void Now_MultipleCallsInQuickSuccession_ShouldReturnSimilarTimes() {
         // Act
         var time1 = _dateTimeService.Now;
         var time2 = _dateTimeService.Now;
@@ -64,8 +58,7 @@ public class DateTimeServiceTests
     }
 
     [Fact]
-    public void Service_ShouldImplementIDateTimeService()
-    {
+    public void Service_ShouldImplementIDateTimeService() {
         // Assert
         _dateTimeService.Should().BeAssignableTo<IDateTimeService>();
     }

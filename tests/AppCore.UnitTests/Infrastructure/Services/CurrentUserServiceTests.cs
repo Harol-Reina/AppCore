@@ -1,45 +1,41 @@
-﻿using AppCore.Infrastructure.Services;
-using AppCore.Application.Interfaces;
+﻿using System.Security.Claims;
 using AppCore.Application.Exceptions;
-using Microsoft.AspNetCore.Http;
+using AppCore.Application.Interfaces;
+using AppCore.Infrastructure.Services;
 using FluentAssertions;
-using Xunit;
-using Moq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
-using System.Security.Claims;
+using Moq;
+using Xunit;
 
 namespace AppCore.UnitTests.Infrastructure.Services;
 
-public class CurrentUserServiceTests
-{
+public class CurrentUserServiceTests {
     private readonly Mock<IHttpContextAccessor> _httpContextAccessorMock;
     private readonly Mock<HttpContext> _httpContextMock;
     private readonly Mock<HttpRequest> _httpRequestMock;
     private readonly CurrentUserService _currentUserService;
 
-    public CurrentUserServiceTests()
-    {
+    public CurrentUserServiceTests() {
         _httpContextAccessorMock = new Mock<IHttpContextAccessor>();
         _httpContextMock = new Mock<HttpContext>();
         _httpRequestMock = new Mock<HttpRequest>();
-        
+
         _httpContextMock.Setup(x => x.Request).Returns(_httpRequestMock.Object);
         _httpContextAccessorMock.Setup(x => x.HttpContext).Returns(_httpContextMock.Object);
-        
+
         _currentUserService = new CurrentUserService(_httpContextAccessorMock.Object);
     }
 
     [Fact]
-    public void Constructor_WithNullHttpContextAccessor_ShouldThrowArgumentNullException()
-    {
+    public void Constructor_WithNullHttpContextAccessor_ShouldThrowArgumentNullException() {
         // Act & Assert
         var exception = Assert.Throws<ArgumentNullException>(() => new CurrentUserService(null!));
         exception.ParamName.Should().Be("httpContextAccessor");
     }
 
     [Fact]
-    public void GetXtraceId_WithXTraceIDHeader_ShouldReturnHeaderValue()
-    {
+    public void GetXtraceId_WithXTraceIDHeader_ShouldReturnHeaderValue() {
         // Arrange
         var expectedXtraceId = "trace-123456";
         var headers = new HeaderDictionary
@@ -56,8 +52,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetXtraceId_WithoutXTraceIDHeader_ShouldReturnGeneratedGuid()
-    {
+    public void GetXtraceId_WithoutXTraceIDHeader_ShouldReturnGeneratedGuid() {
         // Arrange
         var headers = new HeaderDictionary();
         _httpRequestMock.Setup(x => x.Headers).Returns(headers);
@@ -70,8 +65,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetXtraceId_WithEmptyXTraceIDHeader_ShouldReturnGeneratedGuid()
-    {
+    public void GetXtraceId_WithEmptyXTraceIDHeader_ShouldReturnGeneratedGuid() {
         // Arrange
         var headers = new HeaderDictionary
         {
@@ -87,8 +81,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetXtraceId_WithWhitespaceXTraceIDHeader_ShouldReturnTrimmedValue()
-    {
+    public void GetXtraceId_WithWhitespaceXTraceIDHeader_ShouldReturnTrimmedValue() {
         // Arrange
         var headers = new HeaderDictionary
         {
@@ -104,15 +97,13 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void Service_ShouldImplementICurrentUserService()
-    {
+    public void Service_ShouldImplementICurrentUserService() {
         // Assert
         _currentUserService.Should().BeAssignableTo<ICurrentUserService>();
     }
 
     [Fact]
-    public void GetXtraceId_WithNullHttpContext_ShouldThrowAuthenticationException()
-    {
+    public void GetXtraceId_WithNullHttpContext_ShouldThrowAuthenticationException() {
         // Arrange
         _httpContextAccessorMock.Setup(x => x.HttpContext).Returns((HttpContext?)null);
         var service = new CurrentUserService(_httpContextAccessorMock.Object);
@@ -122,8 +113,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetXtraceId_WithMultipleHeaderValues_ShouldReturnFirst()
-    {
+    public void GetXtraceId_WithMultipleHeaderValues_ShouldReturnFirst() {
         // Arrange
         var headers = new HeaderDictionary
         {
@@ -139,8 +129,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetToken_WithValidBearerToken_ShouldReturnToken()
-    {
+    public void GetToken_WithValidBearerToken_ShouldReturnToken() {
         // Arrange
         var expectedToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.test";
         var headers = new HeaderDictionary
@@ -157,8 +146,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetToken_WithoutAuthorizationHeader_ShouldThrowAuthenticationException()
-    {
+    public void GetToken_WithoutAuthorizationHeader_ShouldThrowAuthenticationException() {
         // Arrange
         var headers = new HeaderDictionary();
         _httpRequestMock.Setup(x => x.Headers).Returns(headers);
@@ -168,8 +156,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetToken_WithNonBearerToken_ShouldThrowCustomException()
-    {
+    public void GetToken_WithNonBearerToken_ShouldThrowCustomException() {
         // Arrange
         var headers = new HeaderDictionary
         {
@@ -182,8 +169,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetToken_WithBearerTokenWithWhitespace_ShouldReturnTrimmedToken()
-    {
+    public void GetToken_WithBearerTokenWithWhitespace_ShouldReturnTrimmedToken() {
         // Arrange
         var expectedToken = "token123";
         var headers = new HeaderDictionary
@@ -200,8 +186,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetJwtToken_WithValidToken_ShouldReturnParsedToken()
-    {
+    public void GetJwtToken_WithValidToken_ShouldReturnParsedToken() {
         // Arrange
         var validJwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U";
         var headers = new HeaderDictionary
@@ -219,8 +204,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetJwtToken_WithInvalidToken_ShouldThrowCustomException()
-    {
+    public void GetJwtToken_WithInvalidToken_ShouldThrowCustomException() {
         // Arrange
         var headers = new HeaderDictionary
         {
@@ -233,8 +217,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetUserId_WithValidToken_ShouldReturnSubClaim()
-    {
+    public void GetUserId_WithValidToken_ShouldReturnSubClaim() {
         // Arrange
         var validJwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U";
         var headers = new HeaderDictionary
@@ -251,8 +234,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetUserId_WithoutToken_ShouldReturnHostName()
-    {
+    public void GetUserId_WithoutToken_ShouldReturnHostName() {
         // Arrange
         var headers = new HeaderDictionary
         {
@@ -268,8 +250,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetUserName_WithValidToken_ShouldReturnEmailClaim()
-    {
+    public void GetUserName_WithValidToken_ShouldReturnEmailClaim() {
         // Arrange
         var validJwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U";
         var headers = new HeaderDictionary
@@ -286,8 +267,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetUserName_WithoutToken_ShouldReturnClientIP()
-    {
+    public void GetUserName_WithoutToken_ShouldReturnClientIP() {
         // Arrange
         var headers = new HeaderDictionary();
         _httpRequestMock.Setup(x => x.Headers).Returns(headers);
@@ -303,8 +283,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetUserName_WithXForwardedFor_ShouldReturnFirstIP()
-    {
+    public void GetUserName_WithXForwardedFor_ShouldReturnFirstIP() {
         // Arrange
         var headers = new HeaderDictionary
         {
@@ -320,8 +299,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetUserId_WithoutTokenAndHostHeader_ShouldReturnMachineName()
-    {
+    public void GetUserId_WithoutTokenAndHostHeader_ShouldReturnMachineName() {
         // Arrange
         var headers = new HeaderDictionary();
         _httpRequestMock.Setup(x => x.Headers).Returns(headers);
@@ -334,8 +312,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetUserName_WithNullHttpContext_ShouldReturnUnknown()
-    {
+    public void GetUserName_WithNullHttpContext_ShouldReturnUnknown() {
         // Arrange
         _httpContextAccessorMock.Setup(x => x.HttpContext).Returns((HttpContext?)null);
         var service = new CurrentUserService(_httpContextAccessorMock.Object);
@@ -348,8 +325,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetUserId_WithNullHttpContext_ShouldReturnUnknown()
-    {
+    public void GetUserId_WithNullHttpContext_ShouldReturnUnknown() {
         // Arrange
         _httpContextAccessorMock.Setup(x => x.HttpContext).Returns((HttpContext?)null);
         var service = new CurrentUserService(_httpContextAccessorMock.Object);
@@ -362,8 +338,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetUserName_WithIPv6Localhost_ShouldReturnIPv4Localhost()
-    {
+    public void GetUserName_WithIPv6Localhost_ShouldReturnIPv4Localhost() {
         // Arrange
         var headers = new HeaderDictionary();
         _httpRequestMock.Setup(x => x.Headers).Returns(headers);
@@ -379,8 +354,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetUserId_WithTokenMissingSubClaim_ShouldThrowCustomException()
-    {
+    public void GetUserId_WithTokenMissingSubClaim_ShouldThrowCustomException() {
         // Arrange - Token without 'sub' claim
         var jwtWithoutSub = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UifQ.xuEv8qrfXu424LZk8bVgr9MQJUIrp1rHcPyZw_KSsds";
         var headers = new HeaderDictionary
@@ -394,8 +368,7 @@ public class CurrentUserServiceTests
     }
 
     [Fact]
-    public void GetUserName_WithTokenMissingEmailClaim_ShouldThrowCustomException()
-    {
+    public void GetUserName_WithTokenMissingEmailClaim_ShouldThrowCustomException() {
         // Arrange - Token without 'email' claim
         var jwtWithoutEmail = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U";
         var headers = new HeaderDictionary

@@ -11,11 +11,9 @@ using Xunit;
 
 namespace AppCore.UnitTests;
 
-public class DependencyInjectionTests
-{
+public class DependencyInjectionTests {
     [Fact]
-    public void AddCoreApplication_ShouldRegisterMediatRBehaviors()
-    {
+    public void AddCoreApplication_ShouldRegisterMediatRBehaviors() {
         // Arrange
         var services = new ServiceCollection();
 
@@ -23,18 +21,17 @@ public class DependencyInjectionTests
         services.AddCoreApplication();
 
         // Assert
-        var behaviorRegistrations = services.Where(sd => 
-            sd.ServiceType.IsGenericType && 
+        var behaviorRegistrations = services.Where(sd =>
+            sd.ServiceType.IsGenericType &&
             sd.ServiceType.GetGenericTypeDefinition() == typeof(IPipelineBehavior<,>));
-        
+
         behaviorRegistrations.Should().HaveCount(2);
         behaviorRegistrations.Should().Contain(sd => sd.ImplementationType == typeof(UnhandledExceptionBehaviour<,>));
         behaviorRegistrations.Should().Contain(sd => sd.ImplementationType == typeof(ValidationBehaviour<,>));
     }
 
     [Fact]
-    public void AddCoreApplication_ShouldRegisterSaveChangesInterceptor()
-    {
+    public void AddCoreApplication_ShouldRegisterSaveChangesInterceptor() {
         // Arrange
         var services = new ServiceCollection();
         services.AddHttpContextAccessor();
@@ -49,8 +46,7 @@ public class DependencyInjectionTests
     }
 
     [Fact]
-    public void AddCoreApplication_ShouldRegisterDateTimeService()
-    {
+    public void AddCoreApplication_ShouldRegisterDateTimeService() {
         // Arrange
         var services = new ServiceCollection();
 
@@ -65,8 +61,7 @@ public class DependencyInjectionTests
     }
 
     [Fact]
-    public void AddCoreApplication_ShouldRegisterHttpContextAccessor()
-    {
+    public void AddCoreApplication_ShouldRegisterHttpContextAccessor() {
         // Arrange
         var services = new ServiceCollection();
 
@@ -80,8 +75,7 @@ public class DependencyInjectionTests
     }
 
     [Fact]
-    public void AddCoreApplication_ShouldRegisterCurrentUserService()
-    {
+    public void AddCoreApplication_ShouldRegisterCurrentUserService() {
         // Arrange
         var services = new ServiceCollection();
 
@@ -96,8 +90,7 @@ public class DependencyInjectionTests
     }
 
     [Fact]
-    public void AddCoreApplication_ShouldReturnServiceCollection()
-    {
+    public void AddCoreApplication_ShouldReturnServiceCollection() {
         // Arrange
         var services = new ServiceCollection();
 
@@ -109,8 +102,7 @@ public class DependencyInjectionTests
     }
 
     [Fact]
-    public void AddCoreApplication_CurrentUserService_ShouldBeScoped()
-    {
+    public void AddCoreApplication_CurrentUserService_ShouldBeScoped() {
         // Arrange
         var services = new ServiceCollection();
         services.AddCoreApplication();
@@ -122,8 +114,7 @@ public class DependencyInjectionTests
     }
 
     [Fact]
-    public void AddCoreApplication_DateTimeService_ShouldBeTransient()
-    {
+    public void AddCoreApplication_DateTimeService_ShouldBeTransient() {
         // Arrange
         var services = new ServiceCollection();
         services.AddCoreApplication();
@@ -135,8 +126,7 @@ public class DependencyInjectionTests
     }
 
     [Fact]
-    public void AddCoreApplication_SaveChangesInterceptor_ShouldBeScoped()
-    {
+    public void AddCoreApplication_SaveChangesInterceptor_ShouldBeScoped() {
         // Arrange
         var services = new ServiceCollection();
         services.AddCoreApplication();

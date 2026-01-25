@@ -4,11 +4,9 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.DTOs;
 
-public class LoginRequestTests
-{
+public class LoginRequestTests {
     [Fact]
-    public void Constructor_WithValidParameters_ShouldSetProperties()
-    {
+    public void Constructor_WithValidParameters_ShouldSetProperties() {
         // Arrange & Act
         var loginRequest = new LoginRequest("testuser", "testpass123");
 
@@ -18,8 +16,7 @@ public class LoginRequestTests
     }
 
     [Fact]
-    public void Properties_ShouldBeSettable()
-    {
+    public void Properties_ShouldBeSettable() {
         // Arrange
         var loginRequest = new LoginRequest("olduser", "oldpass");
 

@@ -4,11 +4,9 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.Exceptions;
 
-public class BadRequestExceptionTests
-{
+public class BadRequestExceptionTests {
     [Fact]
-    public void Constructor_WithMessage_ShouldSetMessage()
-    {
+    public void Constructor_WithMessage_ShouldSetMessage() {
         // Arrange & Act
         var exception = new BadRequestException("Invalid input data");
 
@@ -17,8 +15,7 @@ public class BadRequestExceptionTests
     }
 
     [Fact]
-    public void Constructor_ShouldSetErrorCode()
-    {
+    public void Constructor_ShouldSetErrorCode() {
         // Arrange & Act
         var exception = new BadRequestException("Bad request");
 
@@ -30,8 +27,7 @@ public class BadRequestExceptionTests
     }
 
     [Fact]
-    public void ToString_ShouldReturnFormattedMessage()
-    {
+    public void ToString_ShouldReturnFormattedMessage() {
         // Arrange
         var exception = new BadRequestException("Invalid parameter format");
 
@@ -44,8 +40,7 @@ public class BadRequestExceptionTests
     }
 
     [Fact]
-    public void Constructor_WithEmptyMessage_ShouldStillWork()
-    {
+    public void Constructor_WithEmptyMessage_ShouldStillWork() {
         // Arrange & Act
         var exception = new BadRequestException(string.Empty);
 

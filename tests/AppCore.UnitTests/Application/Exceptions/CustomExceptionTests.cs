@@ -4,11 +4,9 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.Exceptions;
 
-public class CustomExceptionTests
-{
+public class CustomExceptionTests {
     [Fact]
-    public void Constructor_WithDictionaryError_ShouldSetMessageLog()
-    {
+    public void Constructor_WithDictionaryError_ShouldSetMessageLog() {
         // Arrange
         var error = new DictionaryError("TEST-001", "Test error message");
 
@@ -22,8 +20,7 @@ public class CustomExceptionTests
     }
 
     [Fact]
-    public void Constructor_ShouldCaptureCallerInformation()
-    {
+    public void Constructor_ShouldCaptureCallerInformation() {
         // Arrange
         var error = new DictionaryError("TEST-002", "Another test");
 
@@ -38,8 +35,7 @@ public class CustomExceptionTests
     }
 
     [Fact]
-    public void ToString_ShouldReturnMessageLogString()
-    {
+    public void ToString_ShouldReturnMessageLogString() {
         // Arrange
         var error = new DictionaryError("TEST-003", "Third test error");
         var exception = new CustomException(error);
@@ -53,11 +49,10 @@ public class CustomExceptionTests
     }
 
     [Fact]
-    public void MessageLog_ShouldContainExceptionType()
-    {
+    public void MessageLog_ShouldContainExceptionType() {
         // Arrange
         var error = new DictionaryError("TEST-004", "Type test");
-        
+
         // Act
         var exception = new CustomException(error);
 
@@ -66,8 +61,7 @@ public class CustomExceptionTests
     }
 
     [Fact]
-    public void Constructor_WithComplexError_ShouldPreserveAllData()
-    {
+    public void Constructor_WithComplexError_ShouldPreserveAllData() {
         // Arrange
         var innerException = new InvalidOperationException("Inner");
         var error = new DictionaryError("TEST-005", "Complex error", """{"key":"value"}""", innerException);

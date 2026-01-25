@@ -4,11 +4,9 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.Exceptions;
 
-public class AuthenticationExceptionTests
-{
+public class AuthenticationExceptionTests {
     [Fact]
-    public void Constructor_WithMessage_ShouldSetMessage()
-    {
+    public void Constructor_WithMessage_ShouldSetMessage() {
         // Arrange & Act
         var exception = new AuthenticationException("Invalid credentials");
 
@@ -17,8 +15,7 @@ public class AuthenticationExceptionTests
     }
 
     [Fact]
-    public void Constructor_ShouldSetErrorCode()
-    {
+    public void Constructor_ShouldSetErrorCode() {
         // Arrange & Act
         var exception = new AuthenticationException("Authentication failed");
 
@@ -31,8 +28,7 @@ public class AuthenticationExceptionTests
     }
 
     [Fact]
-    public void ToString_ShouldReturnMessageLogJson()
-    {
+    public void ToString_ShouldReturnMessageLogJson() {
         // Arrange
         var exception = new AuthenticationException("Token expired");
 
@@ -45,8 +41,7 @@ public class AuthenticationExceptionTests
     }
 
     [Fact]
-    public void Constructor_ShouldCaptureCallerInformation()
-    {
+    public void Constructor_ShouldCaptureCallerInformation() {
         // Arrange & Act
         var exception = new AuthenticationException("Auth test");
         var stringRepresentation = exception.ToString();

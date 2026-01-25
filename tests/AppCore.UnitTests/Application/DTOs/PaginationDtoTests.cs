@@ -4,17 +4,14 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.DTOs;
 
-public class PaginationDtoTests
-{
+public class PaginationDtoTests {
     [Fact]
-    public void Properties_ShouldSetAndGetCorrectly()
-    {
+    public void Properties_ShouldSetAndGetCorrectly() {
         // Arrange
         var data = new List<string> { "Item1", "Item2", "Item3" };
 
         // Act
-        var dto = new PaginationDto<string>
-        {
+        var dto = new PaginationDto<string> {
             Count = 3,
             Pages = 1,
             Results = data
@@ -28,8 +25,7 @@ public class PaginationDtoTests
     }
 
     [Fact]
-    public void Results_DefaultValue_ShouldBeEmptyList()
-    {
+    public void Results_DefaultValue_ShouldBeEmptyList() {
         // Act
         var dto = new PaginationDto<int>();
 
@@ -39,8 +35,7 @@ public class PaginationDtoTests
     }
 
     [Fact]
-    public void WithComplexType_ShouldWork()
-    {
+    public void WithComplexType_ShouldWork() {
         // Arrange
         var items = new List<LoginRequest>
         {
@@ -49,8 +44,7 @@ public class PaginationDtoTests
         };
 
         // Act
-        var dto = new PaginationDto<LoginRequest>
-        {
+        var dto = new PaginationDto<LoginRequest> {
             Count = 2,
             Pages = 1,
             Results = items
@@ -59,15 +53,13 @@ public class PaginationDtoTests
         // Assert
         dto.Count.Should().Be(2);
         dto.Results.Should().HaveCount(2);
-        dto.Results!.First().UserName.Should().Be("user1");
+        dto.Results![0].UserName.Should().Be("user1");
     }
 
     [Fact]
-    public void Results_CanBeNull()
-    {
+    public void Results_CanBeNull() {
         // Act
-        var dto = new PaginationDto<string>
-        {
+        var dto = new PaginationDto<string> {
             Count = 0,
             Pages = 0,
             Results = null

@@ -4,11 +4,9 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.Exceptions;
 
-public class NotFoundExceptionTests
-{
+public class NotFoundExceptionTests {
     [Fact]
-    public void Constructor_WithDefaultMessage_ShouldUseDefaultMessage()
-    {
+    public void Constructor_WithDefaultMessage_ShouldUseDefaultMessage() {
         // Arrange & Act
         var exception = new NotFoundException();
 
@@ -17,8 +15,7 @@ public class NotFoundExceptionTests
     }
 
     [Fact]
-    public void Constructor_WithCustomMessage_ShouldSetMessage()
-    {
+    public void Constructor_WithCustomMessage_ShouldSetMessage() {
         // Arrange & Act
         var exception = new NotFoundException("User not found");
 
@@ -27,8 +24,7 @@ public class NotFoundExceptionTests
     }
 
     [Fact]
-    public void Constructor_ShouldSetErrorCode()
-    {
+    public void Constructor_ShouldSetErrorCode() {
         // Arrange & Act
         var exception = new NotFoundException("Product with ID 123 not found");
 
@@ -40,8 +36,7 @@ public class NotFoundExceptionTests
     }
 
     [Fact]
-    public void ToString_ShouldReturnFormattedMessage()
-    {
+    public void ToString_ShouldReturnFormattedMessage() {
         // Arrange
         var exception = new NotFoundException("Resource missing");
 
@@ -54,8 +49,7 @@ public class NotFoundExceptionTests
     }
 
     [Fact]
-    public void Constructor_ShouldCaptureCallerInformation()
-    {
+    public void Constructor_ShouldCaptureCallerInformation() {
         // Arrange & Act
         var exception = new NotFoundException("Item not found");
         var stringRepresentation = exception.ToString();

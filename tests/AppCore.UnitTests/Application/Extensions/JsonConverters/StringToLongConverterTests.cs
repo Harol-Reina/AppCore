@@ -5,19 +5,16 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.Extensions.JsonConverters;
 
-public class StringToLongConverterTests
-{
+public class StringToLongConverterTests {
     private readonly JsonSerializerOptions _options;
 
-    public StringToLongConverterTests()
-    {
+    public StringToLongConverterTests() {
         _options = new JsonSerializerOptions();
         _options.Converters.Add(new StringToLongConverter());
     }
 
     [Fact]
-    public void Read_NumericString_ShouldConvertToLong()
-    {
+    public void Read_NumericString_ShouldConvertToLong() {
         // Arrange
         var json = "\"123456789\"";
 
@@ -29,8 +26,7 @@ public class StringToLongConverterTests
     }
 
     [Fact]
-    public void Read_NumericValue_ShouldReturnLong()
-    {
+    public void Read_NumericValue_ShouldReturnLong() {
         // Arrange
         var json = "987654321";
 
@@ -42,8 +38,7 @@ public class StringToLongConverterTests
     }
 
     [Fact]
-    public void Write_LongValue_ShouldSerializeAsString()
-    {
+    public void Write_LongValue_ShouldSerializeAsString() {
         // Arrange
         var value = 123456789L;
 
@@ -55,8 +50,7 @@ public class StringToLongConverterTests
     }
 
     [Fact]
-    public void Read_InvalidString_ShouldThrowJsonException()
-    {
+    public void Read_InvalidString_ShouldThrowJsonException() {
         // Arrange
         var json = "\"not-a-number\"";
 

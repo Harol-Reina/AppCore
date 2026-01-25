@@ -20,7 +20,7 @@ public static class ServiceExtensions {
                     Url = new Uri(Utils.Configuration.RequiredConfig("OpenApiInfo:Contact:Url"))
                 }
             });
-            
+
         });
     }
 

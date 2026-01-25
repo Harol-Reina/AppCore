@@ -60,7 +60,7 @@ internal class CurrentUserService(IHttpContextAccessor httpContextAccessor) : IC
             // Si no hay token, retornar el hostname
             return GetHostName();
         }
-        
+
         // Si hay token, obtener el claim (si no existe el claim, lanzará excepción)
         return GetRequiredClaimValue(GetJwtToken(), "sub", memberName, sourceFilePath, sourceLineNumber);
     }
@@ -73,7 +73,7 @@ internal class CurrentUserService(IHttpContextAccessor httpContextAccessor) : IC
             // Si no hay token, retornar la IP del cliente
             return GetClientIpAddress();
         }
-        
+
         // Si hay token, obtener el claim (si no existe el claim, lanzará excepción)
         return GetRequiredClaimValue(GetJwtToken(), "email", memberName, sourceFilePath, sourceLineNumber);
     }

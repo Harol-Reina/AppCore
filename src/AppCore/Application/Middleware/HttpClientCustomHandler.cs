@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using AppCore.Application.Exceptions;
-using Microsoft.AspNetCore.Http;
+﻿using AppCore.Application.Exceptions;
 using AppCore.Application.Extensions;
 using AppCore.Application.Wrappers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AppCore.Application.Middleware;
 
@@ -14,7 +14,7 @@ internal class HttpClientCustomHandler(RequestDelegate next) {
         const string TraceIdHeader = "X-Trace-ID";
         // Obtener o generar TraceId con formato consistente
         var traceId = GetOrGenerateTraceId(context, TraceIdHeader);
-        
+
 
         using (Serilog.Context.LogContext.PushProperty("XTraceID", traceId)) {
             try {
@@ -75,7 +75,7 @@ internal class HttpClientCustomHandler(RequestDelegate next) {
                 Detail = apiHttpException.MessageLog.Message?.ToString()
             }),
 
-            CustomException customException when customException.MessageLog.Message is DictionaryError error 
+            CustomException customException when customException.MessageLog.Message is DictionaryError error
                 => JsonExtend.Serialize(new CustomErrorResponse(
                     error with { ProviderMessage = null }
                 )),

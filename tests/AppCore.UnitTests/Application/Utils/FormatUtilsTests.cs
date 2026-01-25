@@ -1,5 +1,5 @@
-﻿using AppCore.Application.Utils;
-using AppCore.Application.Exceptions;
+﻿using AppCore.Application.Exceptions;
+using AppCore.Application.Utils;
 using FluentAssertions;
 using Xunit;
 

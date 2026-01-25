@@ -4,11 +4,9 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.Exceptions;
 
-public class ForbiddenAccessExceptionTests
-{
+public class ForbiddenAccessExceptionTests {
     [Fact]
-    public void Constructor_WithMessage_ShouldSetMessage()
-    {
+    public void Constructor_WithMessage_ShouldSetMessage() {
         // Arrange & Act
         var exception = new ForbiddenAccessException("Access denied");
 
@@ -17,8 +15,7 @@ public class ForbiddenAccessExceptionTests
     }
 
     [Fact]
-    public void Constructor_ShouldSetErrorCode()
-    {
+    public void Constructor_ShouldSetErrorCode() {
         // Arrange & Act
         var exception = new ForbiddenAccessException("Forbidden resource");
 
@@ -31,8 +28,7 @@ public class ForbiddenAccessExceptionTests
     }
 
     [Fact]
-    public void ToString_ShouldReturnFormattedMessage()
-    {
+    public void ToString_ShouldReturnFormattedMessage() {
         // Arrange
         var exception = new ForbiddenAccessException("No access");
 

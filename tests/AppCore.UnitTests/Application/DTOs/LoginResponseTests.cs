@@ -4,14 +4,11 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.DTOs;
 
-public class LoginResponseTests
-{
+public class LoginResponseTests {
     [Fact]
-    public void Properties_ShouldSetAndGetCorrectly()
-    {
+    public void Properties_ShouldSetAndGetCorrectly() {
         // Arrange & Act
-        var response = new LoginResponse
-        {
+        var response = new LoginResponse {
             UserName = "testuser",
             FullName = "Test User",
             Roles = new List<string> { "Admin", "User" },
@@ -31,11 +28,9 @@ public class LoginResponseTests
     }
 
     [Fact]
-    public void ReinsuredCompanyId_ShouldBeNullable()
-    {
+    public void ReinsuredCompanyId_ShouldBeNullable() {
         // Arrange & Act
-        var response = new LoginResponse
-        {
+        var response = new LoginResponse {
             UserName = "test",
             FullName = "Test",
             Roles = new List<string>(),

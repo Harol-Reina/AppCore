@@ -5,16 +5,13 @@ using Xunit;
 namespace AppCore.UnitTests.Domain.Common;
 
 // Test implementation of AuditableEntity for testing purposes
-public class TestAuditableEntity : AuditableEntity
-{
+public class TestAuditableEntity : AuditableEntity {
     public string? Name { get; set; }
 }
 
-public class AuditableEntityTests
-{
+public class AuditableEntityTests {
     [Fact]
-    public void CreatedBy_ShouldBeSettable()
-    {
+    public void CreatedBy_ShouldBeSettable() {
         // Arrange
         var entity = new TestAuditableEntity();
         var createdBy = "user123";
@@ -27,8 +24,7 @@ public class AuditableEntityTests
     }
 
     [Fact]
-    public void CreatedAt_ShouldBeSettable()
-    {
+    public void CreatedAt_ShouldBeSettable() {
         // Arrange
         var entity = new TestAuditableEntity();
         var createdAt = DateTime.UtcNow;
@@ -41,8 +37,7 @@ public class AuditableEntityTests
     }
 
     [Fact]
-    public void UpdatedBy_ShouldBeSettable()
-    {
+    public void UpdatedBy_ShouldBeSettable() {
         // Arrange
         var entity = new TestAuditableEntity();
         var updatedBy = "user456";
@@ -55,8 +50,7 @@ public class AuditableEntityTests
     }
 
     [Fact]
-    public void UpdatedAt_ShouldBeSettable()
-    {
+    public void UpdatedAt_ShouldBeSettable() {
         // Arrange
         var entity = new TestAuditableEntity();
         var updatedAt = DateTime.UtcNow;
@@ -69,8 +63,7 @@ public class AuditableEntityTests
     }
 
     [Fact]
-    public void DefaultValues_ShouldBeNull()
-    {
+    public void DefaultValues_ShouldBeNull() {
         // Arrange & Act
         var entity = new TestAuditableEntity();
 
@@ -82,11 +75,9 @@ public class AuditableEntityTests
     }
 
     [Fact]
-    public void AllProperties_CanBeSetToNull()
-    {
+    public void AllProperties_CanBeSetToNull() {
         // Arrange
-        var entity = new TestAuditableEntity
-        {
+        var entity = new TestAuditableEntity {
             CreatedBy = "user1",
             CreatedAt = DateTime.UtcNow,
             UpdatedBy = "user2",

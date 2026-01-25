@@ -1,8 +1,8 @@
-using AppCore.Application.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using AppCore.Application.Interfaces;
 using AppCore.Infrastructure.Data.DAOs.Common;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace AppCore.Infrastructure.Data.Interceptors;
 

@@ -9,28 +9,24 @@ using SaveChangesInterceptor = AppCore.Infrastructure.Data.Interceptors.SaveChan
 
 namespace AppCore.UnitTests.Infrastructure.Data.Interceptors;
 
-internal class TestEntityDao : AuditableBaseDao
-{
+internal class TestEntityDao : AuditableBaseDao {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
 }
 
-internal class TestDbContext : DbContext
-{
+internal class TestDbContext : DbContext {
     public TestDbContext(DbContextOptions<TestDbContext> options) : base(options) { }
     public DbSet<TestEntityDao> TestEntities { get; set; } = null!;
 }
 
-public class SaveChangesInterceptorTests : IDisposable
-{
+public sealed class SaveChangesInterceptorTests : IDisposable {
     private readonly Mock<ICurrentUserService> _currentUserServiceMock;
     private readonly Mock<IDateTimeService> _dateTimeServiceMock;
     private readonly SaveChangesInterceptor _interceptor;
     private readonly TestDbContext _context;
-    private readonly DateTime _fixedDateTime = new(2024, 1, 15, 10, 30, 0);
+    private readonly DateTime _fixedDateTime = new(2024, 1, 15, 10, 30, 0, DateTimeKind.Utc);
 
-    public SaveChangesInterceptorTests()
-    {
+    public SaveChangesInterceptorTests() {
         _currentUserServiceMock = new Mock<ICurrentUserService>();
         _dateTimeServiceMock = new Mock<IDateTimeService>();
         _interceptor = new SaveChangesInterceptor(_currentUserServiceMock.Object, _dateTimeServiceMock.Object);
@@ -41,23 +37,21 @@ public class SaveChangesInterceptorTests : IDisposable
             .Options;
 
         _context = new TestDbContext(options);
-        
+
         // Setup mocks
         _currentUserServiceMock.Setup(x => x.GetUserName()).Returns("TestUser");
         _dateTimeServiceMock.Setup(x => x.Now).Returns(_fixedDateTime);
     }
 
     [Fact]
-    public void UpdateEntities_WithNullContext_ShouldNotThrow()
-    {
+    public void UpdateEntities_WithNullContext_ShouldNotThrow() {
         // Act & Assert
         var action = () => _interceptor.UpdateEntities(null);
         action.Should().NotThrow();
     }
 
     [Fact]
-    public void UpdateEntities_WithAddedEntity_ShouldSetCreatedFields()
-    {
+    public void UpdateEntities_WithAddedEntity_ShouldSetCreatedFields() {
         // Arrange
         var entity = new TestEntityDao { Name = "Test Entity" };
 
@@ -73,29 +67,26 @@ public class SaveChangesInterceptorTests : IDisposable
     }
 
     [Fact]
-    public void UpdateEntities_WithModifiedEntity_ShouldSetUpdatedFields()
-    {
+    public void UpdateEntities_WithModifiedEntity_ShouldSetUpdatedFields() {
         // Arrange
-        var entity = new TestEntityDao 
-        { 
+        var entity = new TestEntityDao {
             Name = "Original Name",
             CreatedBy = "OriginalUser",
             CreatedAt = _fixedDateTime.AddDays(-1)
         };
-        
+
         _context.TestEntities.Add(entity);
         _context.SaveChanges();
         _context.Entry(entity).State = EntityState.Detached;
 
         // Simulate modification
-        var modifiedEntity = new TestEntityDao 
-        { 
+        var modifiedEntity = new TestEntityDao {
             Id = entity.Id,
             Name = "Modified Name",
             CreatedBy = entity.CreatedBy,
             CreatedAt = entity.CreatedAt
         };
-        
+
         _context.TestEntities.Attach(modifiedEntity);
         _context.Entry(modifiedEntity).State = EntityState.Modified;
 
@@ -111,16 +102,14 @@ public class SaveChangesInterceptorTests : IDisposable
     }
 
     [Fact]
-    public void UpdateEntities_WithUnchangedEntity_ShouldNotSetAnyFields()
-    {
+    public void UpdateEntities_WithUnchangedEntity_ShouldNotSetAnyFields() {
         // Arrange
-        var entity = new TestEntityDao 
-        { 
+        var entity = new TestEntityDao {
             Name = "Test Entity",
             CreatedBy = "OriginalUser",
             CreatedAt = _fixedDateTime.AddDays(-1)
         };
-        
+
         _context.TestEntities.Add(entity);
         _context.SaveChanges();
 
@@ -138,8 +127,7 @@ public class SaveChangesInterceptorTests : IDisposable
     }
 
     [Fact]
-    public void UpdateEntities_WhenUserServiceReturnsNull_ShouldUseSystemAsDefault()
-    {
+    public void UpdateEntities_WhenUserServiceReturnsNull_ShouldUseSystemAsDefault() {
         // Arrange
         _currentUserServiceMock.Setup(x => x.GetUserName()).Returns(default(string)!);
         var entity = new TestEntityDao { Name = "Test Entity" };
@@ -153,8 +141,7 @@ public class SaveChangesInterceptorTests : IDisposable
     }
 
     [Fact]
-    public async Task SavingChangesAsync_ShouldCallUpdateEntities()
-    {
+    public async Task SavingChangesAsync_ShouldCallUpdateEntities() {
         // Arrange
         var entity = new TestEntityDao { Name = "Async Test Entity" };
         _context.TestEntities.Add(entity);
@@ -168,8 +155,7 @@ public class SaveChangesInterceptorTests : IDisposable
     }
 
     [Fact]
-    public void SavingChanges_ShouldCallUpdateEntities()
-    {
+    public void SavingChanges_ShouldCallUpdateEntities() {
         // Arrange
         var entity = new TestEntityDao { Name = "Sync Test Entity" };
         _context.TestEntities.Add(entity);
@@ -183,8 +169,7 @@ public class SaveChangesInterceptorTests : IDisposable
     }
 
     [Fact]
-    public void UpdateEntities_WithMultipleEntities_ShouldUpdateAll()
-    {
+    public void UpdateEntities_WithMultipleEntities_ShouldUpdateAll() {
         // Arrange
         var entity1 = new TestEntityDao { Name = "Entity 1" };
         var entity2 = new TestEntityDao { Name = "Entity 2" };
@@ -201,8 +186,7 @@ public class SaveChangesInterceptorTests : IDisposable
     }
 
     [Fact]
-    public void Constructor_ShouldAcceptRequiredServices()
-    {
+    public void Constructor_ShouldAcceptRequiredServices() {
         // Arrange & Act
         var interceptor = new SaveChangesInterceptor(_currentUserServiceMock.Object, _dateTimeServiceMock.Object);
 
@@ -211,20 +195,17 @@ public class SaveChangesInterceptorTests : IDisposable
         interceptor.Should().BeAssignableTo<Microsoft.EntityFrameworkCore.Diagnostics.SaveChangesInterceptor>();
     }
 
-    public void Dispose()
-    {
+    public void Dispose() {
         _context?.Dispose();
     }
 }
 
-public class ExtensionsTests
-{
+public class ExtensionsTests {
     [Fact]
-    public void HasChangedOwnedEntities_ShouldBeAccessible()
-    {
+    public void HasChangedOwnedEntities_ShouldBeAccessible() {
         // This test verifies that the extension method exists and is accessible
         // The actual functionality would require a more complex EF Core setup with owned entities
-        
+
         // Arrange
         var options = new DbContextOptionsBuilder<TestDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -233,7 +214,7 @@ public class ExtensionsTests
         using var context = new TestDbContext(options);
         var entity = new TestEntityDao { Name = "Test" };
         context.TestEntities.Add(entity);
-        
+
         var entry = context.Entry(entity);
 
         // Act & Assert

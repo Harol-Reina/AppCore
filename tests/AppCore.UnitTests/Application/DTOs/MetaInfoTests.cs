@@ -4,17 +4,14 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.DTOs;
 
-public class MetaInfoTests
-{
+public class MetaInfoTests {
     [Fact]
-    public void Properties_ShouldSetAndGetCorrectly()
-    {
+    public void Properties_ShouldSetAndGetCorrectly() {
         // Arrange
-        var dateCompile = new DateTime(2024, 1, 15);
+        var dateCompile = new DateTime(2024, 1, 15, 0, 0, 0, DateTimeKind.Utc);
 
         // Act
-        var metaInfo = new MetaInfo
-        {
+        var metaInfo = new MetaInfo {
             Environment = "Production",
             Version = "1.0.0",
             DateCompile = dateCompile,
@@ -32,11 +29,9 @@ public class MetaInfoTests
     }
 
     [Fact]
-    public void OptionalProperties_ShouldAcceptNull()
-    {
+    public void OptionalProperties_ShouldAcceptNull() {
         // Act
-        var metaInfo = new MetaInfo
-        {
+        var metaInfo = new MetaInfo {
             Environment = null,
             Version = null,
             DateCompile = DateTime.UtcNow,

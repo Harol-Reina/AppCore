@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
-using AppCore.Application.Wrappers;
 using AppCore.Application.Serialization;
+using AppCore.Application.Wrappers;
 using FluentAssertions;
 using Xunit;
 

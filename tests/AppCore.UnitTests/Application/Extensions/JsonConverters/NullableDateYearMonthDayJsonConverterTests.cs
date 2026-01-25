@@ -5,19 +5,16 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.Extensions.JsonConverters;
 
-public class NullableDateYearMonthDayJsonConverterTests
-{
+public class NullableDateYearMonthDayJsonConverterTests {
     private readonly JsonSerializerOptions _options;
 
-    public NullableDateYearMonthDayJsonConverterTests()
-    {
+    public NullableDateYearMonthDayJsonConverterTests() {
         _options = new JsonSerializerOptions();
         _options.Converters.Add(new NullableDateYearMonthDayJsonConverter());
     }
 
     [Fact]
-    public void Read_ValidDateString_ShouldDeserializeCorrectly()
-    {
+    public void Read_ValidDateString_ShouldDeserializeCorrectly() {
         // Arrange
         var json = "\"2024-03-15\"";
 
@@ -32,8 +29,7 @@ public class NullableDateYearMonthDayJsonConverterTests
     }
 
     [Fact]
-    public void Read_NullValue_ShouldDeserializeAsNull()
-    {
+    public void Read_NullValue_ShouldDeserializeAsNull() {
         // Arrange
         var json = "null";
 
@@ -45,10 +41,9 @@ public class NullableDateYearMonthDayJsonConverterTests
     }
 
     [Fact]
-    public void Write_ValidDateTime_ShouldSerializeCorrectly()
-    {
+    public void Write_ValidDateTime_ShouldSerializeCorrectly() {
         // Arrange
-        DateTime? date = new DateTime(2024, 3, 15, 10, 30, 45);
+        DateTime? date = new DateTime(2024, 3, 15, 10, 30, 45, DateTimeKind.Utc);
 
         // Act
         var json = JsonSerializer.Serialize(date, _options);
@@ -58,8 +53,7 @@ public class NullableDateYearMonthDayJsonConverterTests
     }
 
     [Fact]
-    public void Write_NullValue_ShouldSerializeAsNull()
-    {
+    public void Write_NullValue_ShouldSerializeAsNull() {
         // Arrange
         DateTime? date = null;
 

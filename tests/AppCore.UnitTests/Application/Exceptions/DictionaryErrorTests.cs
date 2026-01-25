@@ -4,11 +4,9 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.Exceptions;
 
-public class DictionaryErrorTests
-{
+public class DictionaryErrorTests {
     [Fact]
-    public void Constructor_WithCodeAndMessage_ShouldSetProperties()
-    {
+    public void Constructor_WithCodeAndMessage_ShouldSetProperties() {
         // Arrange & Act
         var error = new DictionaryError("ERR-001", "Error message");
 
@@ -20,8 +18,7 @@ public class DictionaryErrorTests
     }
 
     [Fact]
-    public void Constructor_WithProviderMessage_ShouldParseJson()
-    {
+    public void Constructor_WithProviderMessage_ShouldParseJson() {
         // Arrange & Act
         var error = new DictionaryError("ERR-002", "Error with provider", """{"detail":"Additional info"}""");
 
@@ -32,8 +29,7 @@ public class DictionaryErrorTests
     }
 
     [Fact]
-    public void Constructor_WithException_ShouldSetException()
-    {
+    public void Constructor_WithException_ShouldSetException() {
         // Arrange
         var innerException = new InvalidOperationException("Inner error");
 
@@ -47,8 +43,7 @@ public class DictionaryErrorTests
     }
 
     [Fact]
-    public void Constructor_WithNullProviderMessage_ShouldNotSetProviderMessage()
-    {
+    public void Constructor_WithNullProviderMessage_ShouldNotSetProviderMessage() {
         // Arrange & Act
         var error = new DictionaryError("ERR-004", "Error message", null);
 
@@ -57,8 +52,7 @@ public class DictionaryErrorTests
     }
 
     [Fact]
-    public void Constructor_WithEmptyProviderMessage_ShouldNotSetProviderMessage()
-    {
+    public void Constructor_WithEmptyProviderMessage_ShouldNotSetProviderMessage() {
         // Arrange & Act
         var error = new DictionaryError("ERR-005", "Error message", "");
 
@@ -67,8 +61,7 @@ public class DictionaryErrorTests
     }
 
     [Fact]
-    public void Record_ShouldSupportWithExpressions()
-    {
+    public void Record_ShouldSupportWithExpressions() {
         // Arrange
         var original = new DictionaryError("ERR-006", "Original message");
 
@@ -82,8 +75,7 @@ public class DictionaryErrorTests
     }
 
     [Fact]
-    public void Record_ShouldSupportEqualityComparison()
-    {
+    public void Record_ShouldSupportEqualityComparison() {
         // Arrange
         var error1 = new DictionaryError("ERR-007", "Same error");
         var error2 = new DictionaryError("ERR-007", "Same error");
@@ -95,8 +87,7 @@ public class DictionaryErrorTests
     }
 
     [Fact]
-    public void DefaultConstructor_ShouldCreateEmptyInstance()
-    {
+    public void DefaultConstructor_ShouldCreateEmptyInstance() {
         // Arrange & Act
         var error = new DictionaryError { Code = "TEST", Message = "Test message" };
 

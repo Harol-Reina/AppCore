@@ -19,7 +19,7 @@ public class ValidationException : CustomException {
     public ValidationException(IEnumerable<ValidationFailure> failures,
                                [CallerMemberName] string memberName = "",
                                [CallerFilePath] string sourceFilePath = "",
-                               [CallerLineNumber] int sourceLineNumber = 0) 
+                               [CallerLineNumber] int sourceLineNumber = 0)
         : base(new DictionaryError("VAL-002", "One or more validation errors have occurred."), memberName, sourceFilePath, sourceLineNumber) {
         Errors = GroupValidationFailures(failures);
     }
@@ -28,7 +28,7 @@ public class ValidationException : CustomException {
                                string errorMessage,
                                [CallerMemberName] string memberName = "",
                                [CallerFilePath] string sourceFilePath = "",
-                               [CallerLineNumber] int sourceLineNumber = 0) 
+                               [CallerLineNumber] int sourceLineNumber = 0)
         : base(new DictionaryError("VAL-003", errorMessage), memberName, sourceFilePath, sourceLineNumber) {
         Errors = new Dictionary<string, string[]> {
             { propertyName, [errorMessage] }
@@ -38,7 +38,7 @@ public class ValidationException : CustomException {
     public ValidationException(Exception ex,
                                [CallerMemberName] string memberName = "",
                                [CallerFilePath] string sourceFilePath = "",
-                               [CallerLineNumber] int sourceLineNumber = 0) 
+                               [CallerLineNumber] int sourceLineNumber = 0)
         : base(new DictionaryError("VAL-004", "One or more validation errors have occurred."), memberName, sourceFilePath, sourceLineNumber) {
         Errors = GroupValidationFailures([new ValidationFailure(ex.Source ?? "Unknown", ex.Message)]);
     }
@@ -51,7 +51,7 @@ public class ValidationException : CustomException {
         Errors = problemDetails.Errors;
     }
 
-    private static Dictionary<string, string[]> GroupValidationFailures(IEnumerable<ValidationFailure> failures) 
+    private static Dictionary<string, string[]> GroupValidationFailures(IEnumerable<ValidationFailure> failures)
         => failures
             .GroupBy(f => f.PropertyName, f => f.ErrorMessage)
             .ToDictionary(group => group.Key, group => group.ToArray());

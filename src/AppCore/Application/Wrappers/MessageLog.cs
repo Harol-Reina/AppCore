@@ -12,28 +12,28 @@ public record MessageLog {
     /// Gets or sets the type of the log message.
     /// </summary>
     public required string Tipo { get; init; }
-    
+
     /// <summary>
     /// Gets or sets the source of the log message.
     /// </summary>
     public string? Source { get; init; }
-    
+
     /// <summary>
     /// Gets or sets the message content. 
     /// Changed from dynamic to object for AOT compatibility.
     /// </summary>
     public required object Message { get; init; }
-    
+
     /// <summary>
     /// Gets or sets the method that generated this log.
     /// </summary>
     public required string Metodo { get; init; }
-    
+
     /// <summary>
     /// Gets or sets the path where this log was generated.
     /// </summary>
     public required string Path { get; init; }
-    
+
     /// <summary>
     /// Gets or sets the stack trace information.
     /// </summary>
@@ -43,6 +43,6 @@ public record MessageLog {
     /// Converts the MessageLog to a JSON string representation.
     /// </summary>
     /// <returns>A JSON string representation of the message log</returns>
-    public override string ToString() 
+    public override string ToString()
         => JsonExtend.Serialize(this);
 }

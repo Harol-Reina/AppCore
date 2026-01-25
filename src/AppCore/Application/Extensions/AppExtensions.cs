@@ -1,4 +1,4 @@
-using AppCore.Application.Interfaces;
+﻿using AppCore.Application.Interfaces;
 using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Extensions;

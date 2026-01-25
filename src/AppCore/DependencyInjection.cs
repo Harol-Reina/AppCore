@@ -24,20 +24,20 @@ public static class DependencyInjection {
         // Register MediatR pipeline behaviors
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-        
+
         // Note: For AOT compatibility, validators should be registered explicitly instead of using
         // Assembly scanning. Add validators manually when implementing specific validation rules:
         // services.AddTransient<IValidator<YourRequest>, YourRequestValidator>();
-        
+
         // Register interceptors
         services.AddScoped<SaveChangesInterceptor>();
-        
+
         #region Application Services
         services.AddTransient<IDateTimeService, DateTimeService>();
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         #endregion
-        
+
         return services;
     }
 }

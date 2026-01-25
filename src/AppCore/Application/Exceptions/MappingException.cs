@@ -12,7 +12,7 @@ internal class MappingException : Exception {
     /// Gets the mapping error details.
     /// </summary>
     public IDictionary<string, string> Errors { get; init; } = new Dictionary<string, string>();
-    
+
     private readonly MessageLog _message;
 
     /// <summary>
@@ -24,20 +24,17 @@ internal class MappingException : Exception {
     /// <param name="sourceFilePath">The source file path (automatically captured)</param>
     /// <param name="sourceLineNumber">The source line number (automatically captured)</param>
     public MappingException(
-        string message, 
+        string message,
         Exception? innerException = null,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string sourceFilePath = "",
-        [CallerLineNumber] int sourceLineNumber = 0) : base(message, innerException)
-    {
-        if (innerException != null)
-        {
+        [CallerLineNumber] int sourceLineNumber = 0) : base(message, innerException) {
+        if (innerException != null) {
             Errors.Add("InnerExceptionType", innerException.GetType().Name);
             Errors.Add("InnerExceptionMessage", innerException.Message);
         }
 
-        _message = new MessageLog
-        {
+        _message = new MessageLog {
             Tipo = nameof(MappingException),
             Source = sourceFilePath,
             Message = message,
@@ -60,9 +57,8 @@ internal class MappingException : Exception {
         string autoMapperMessage,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string sourceFilePath = "",
-        [CallerLineNumber] int sourceLineNumber = 0) 
-        : this("Object mapping configuration error: " + autoMapperMessage, null, memberName, sourceFilePath, sourceLineNumber)
-    {
+        [CallerLineNumber] int sourceLineNumber = 0)
+        : this("Object mapping configuration error: " + autoMapperMessage, null, memberName, sourceFilePath, sourceLineNumber) {
         Errors.Add("LegacyAutoMapperError", autoMapperMessage);
     }
 

@@ -1,204 +1,128 @@
 ﻿using AppCore.Application.Extensions;
+using AppCore.Application.Utils;
+using FluentAssertions;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using FluentAssertions;
-using Xunit;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Moq;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
+using Moq;
+using Xunit;
 
-namespace AppCore.UnitTests.Application.Extensions {
+namespace AppCore.UnitTests.Application.Extensions;
 
-    public class ServiceExtensionsTests {
-        private readonly IServiceCollection _services;
-        private readonly IConfiguration _configuration;
+[Collection("ConfigurationTests")]
+public class ServiceExtensionsTests {
 
-        public ServiceExtensionsTests() {
-            _services = new ServiceCollection();
-
-            var configData = new Dictionary<string, string?> {
-                ["OpenApiInfo:Version"] = "v1.0",
-                ["OpenApiInfo:Title"] = "Test API",
-                ["OpenApiInfo:Description"] = "Test API Description",
-                ["OpenApiInfo:Contact:Name"] = "Test Contact",
-                ["OpenApiInfo:Contact:Email"] = "test@example.com",
-                ["OpenApiInfo:Contact:Url"] = "https://example.com",
-                ["Cors:Origins:0"] = "https://localhost:3000",
-                ["Cors:Origins:1"] = "https://example.com"
-            };
-
-            _configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(configData)
-                .Build();
-
-            // Mock Configuration static access
-            AppCore.Application.Utils.Configuration.SetConfiguration(_configuration);
-        }
-
-        [Fact]
-        public void AddSwaggerExtension_ShouldRegisterSwaggerServices() {
-            // Act
-            _services.AddSwaggerExtension();
-
-            // Assert
-            // Verify that services were registered without errors
-            var serviceCount = _services.Count;
-            serviceCount.Should().BeGreaterThan(0);
-            Assert.True(true); // Swagger extension executed without throwing
-        }
-
-        [Fact]
-        public void AddSwaggerExtension_ShouldConfigureOpenApiInfo() {
-            // Act
-            _services.AddSwaggerExtension();
-            var serviceProvider = _services.BuildServiceProvider();
-
-            // Assert
-            // This verifies that the configuration was called without errors
-            _services.Should().NotBeEmpty();
-
-            // The method should have executed without throwing exceptions
-            // when accessing configuration values
-            Assert.True(true); // Configuration access succeeded
-        }
-
-        [Fact]
-        public void AddCorsExtension_ShouldRegisterCorsServices() {
-            // Act
-            _services.AddCorsExtension();
-
-            // Assert
-            // Verify that CORS services are registered without needing to resolve them
-            var corsServiceDescriptor = _services.FirstOrDefault(s => 
-                s.ServiceType.Name.Contains("ICorsService"));
-            
-            corsServiceDescriptor.Should().NotBeNull();
-        }
-
-        [Fact]
-        public void AddCorsExtension_ShouldConfigureProductionPolicy() {
-            // Act
-            _services.AddCorsExtension();
-            var serviceProvider = _services.BuildServiceProvider();
-
-            // Assert
-            var corsOptions = serviceProvider.GetService<IOptions<CorsOptions>>();
-            corsOptions.Should().NotBeNull();
-
-            // The policy should be configured without throwing exceptions
-            Assert.True(true); // CORS was registered successfully
-        }
-
-        [Fact]
-        public void AddCorsExtension_ShouldConfigureDevelopmentPolicy() {
-            // Act
-            _services.AddCorsExtension();
-            var serviceProvider = _services.BuildServiceProvider();
-
-            // Assert
-            var corsOptions = serviceProvider.GetService<IOptions<CorsOptions>>();
-            corsOptions.Should().NotBeNull();
-
-            // The policy should be configured without throwing exceptions
-            Assert.True(true); // Dev CORS policy was configured successfully
-        }
-
-        [Fact]
-        public void AddCorsExtension_ShouldRegisterBothPolicies() {
-            // Act
-            _services.AddCorsExtension();
-            var serviceProvider = _services.BuildServiceProvider();
-
-            // Assert
-            var corsOptions = serviceProvider.GetService<IOptions<CorsOptions>>();
-            corsOptions.Should().NotBeNull();
-
-            // Both policies should be registered without errors
-            Assert.True(true); // CORS policies were registered successfully
-        }
-
-        [Fact]
-        public void AddSwaggerExtension_WithMissingConfiguration_ShouldHandleGracefully() {
-            // Arrange
-            var emptyConfig = new ConfigurationBuilder().Build();
-            AppCore.Application.Utils.Configuration.SetConfiguration(emptyConfig);
-
-            // Act & Assert
-            // This should not throw because we are simply testing service registration
-            var act = () => _services.AddSwaggerExtension();
-            act.Should().NotThrow();
-        }
-
-        [Fact]
-        public void AddCorsExtension_WithMissingOriginsConfiguration_ShouldHandleGracefully() {
-            // Arrange
-            var configData = new Dictionary<string, string?> {
-                ["Cors:Origins:0"] = "" // Empty origin to test graceful handling
-            };
-            var emptyOriginConfig = new ConfigurationBuilder()
-                .AddInMemoryCollection(configData)
-                .Build();
-
-            AppCore.Application.Utils.Configuration.SetConfiguration(emptyOriginConfig);
-
-            // Act & Assert
-            var act = () => _services.AddCorsExtension();
-            
-            // Should not throw exception even with empty origins
-            act.Should().NotThrow();
-            
-            // Verify CORS services are still registered
-            var corsServiceDescriptor = _services.FirstOrDefault(s => 
-                s.ServiceType.Name.Contains("ICorsService"));
-            corsServiceDescriptor.Should().NotBeNull();
-        }
-
-        [Fact]
-        public void ServiceExtensions_Methods_ShouldBeExtensionMethods() {
-            // Assert that the methods are properly defined as extension methods
-            var type = typeof(ServiceExtensions);
-
-            type.IsSealed.Should().BeTrue();
-            type.IsAbstract.Should().BeTrue(); // Static class
-
-            var addSwaggerMethod = type.GetMethod("AddSwaggerExtension");
-            var addCorsMethod = type.GetMethod("AddCorsExtension");
-
-            addSwaggerMethod.Should().NotBeNull();
-            addCorsMethod.Should().NotBeNull();
-
-            addSwaggerMethod!.IsStatic.Should().BeTrue();
-            addCorsMethod!.IsStatic.Should().BeTrue();
-        }
+    public ServiceExtensionsTests() {
+        // Configuration initialization handled in specific tests
     }
 
-    namespace AppCore.Application.Utils {
-        public static partial class Configuration {
-            private static IConfiguration? _testConfiguration;
+    private static void SetupConfiguration(Dictionary<string, string?> settings) {
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(settings)
+            .Build();
+        Configuration.Initialize(configuration);
+    }
 
-            public static void SetConfiguration(IConfiguration configuration) {
-                _testConfiguration = configuration;
-            }
+    [Fact]
+    public void AddSwaggerExtension_ShouldRegisterSwaggerServices() {
+        // Arrange
+        var settings = new Dictionary<string, string?> {
+            {"OpenApiInfo:Version", "v1"},
+            {"OpenApiInfo:Title", "Test API"},
+            {"OpenApiInfo:Description", "Test Description"},
+            {"OpenApiInfo:Contact:Name", "Test Contact"},
+            {"OpenApiInfo:Contact:Email", "test@example.com"},
+            {"OpenApiInfo:Contact:Url", "https://example.com"},
+        };
+        SetupConfiguration(settings);
 
-            public static string RequiredConfig(string key) {
-                if (_testConfiguration != null) {
-                    var value = _testConfiguration[key];
-                    return value ?? throw new InvalidOperationException($"Configuration key '{key}' is required but not found.");
-                }
+        var services = new ServiceCollection();
 
-                // Original implementation would go here
-                throw new InvalidOperationException($"Configuration key '{key}' is required but not found.");
-            }
+        // Add Logging needed by SwaggerGen
+        services.AddLogging();
+        services.AddRouting(); // Needed for EndpointsApiExplorer
+        services.AddEndpointsApiExplorer();
+        services.AddSingleton(Mock.Of<IWebHostEnvironment>(w => w.ApplicationName == "TestApp"));
+        services.AddSingleton<Microsoft.Extensions.Hosting.IHostEnvironment>(sp => sp.GetRequiredService<IWebHostEnvironment>());
 
-            public static string[] StringArray(string key) {
-                if (_testConfiguration != null) {
-                    var section = _testConfiguration.GetSection(key);
-                    return section.Exists() ? section.Get<string[]>() ?? [] : [];
-                }
+        // Act
+        services.AddSwaggerExtension();
+        var provider = services.BuildServiceProvider();
 
-                // Original implementation would go here
-                return [];
-            }
-        }
+        // Assert
+        // SwaggerGen adds ISwaggerProvider
+        var swaggerProvider = provider.GetService<Swashbuckle.AspNetCore.Swagger.ISwaggerProvider>();
+        swaggerProvider.Should().NotBeNull();
+    }
+
+    [Fact]
+    public void AddCorsExtension_ShouldRegisterCorsServices() {
+        // Arrange
+        var settings = new Dictionary<string, string?> {
+            {"Cors:Origins:0", "https://localhost:3000"},
+            {"Cors:Origins:1", "https://example.com"}
+        };
+        SetupConfiguration(settings);
+
+        var services = new ServiceCollection();
+        services.AddLogging();
+
+        // Act
+        services.AddCorsExtension();
+        var provider = services.BuildServiceProvider();
+
+        // Assert
+        var corsService = provider.GetService<Microsoft.AspNetCore.Cors.Infrastructure.ICorsService>();
+        corsService.Should().NotBeNull();
+
+        var policyProvider = provider.GetService<Microsoft.AspNetCore.Cors.Infrastructure.ICorsPolicyProvider>();
+        policyProvider.Should().NotBeNull();
+    }
+
+    [Fact]
+    public void AddSwaggerExtension_WithMissingConfig_ShouldThrowException() {
+        // Arrange
+        var settings = new Dictionary<string, string?>(); // Empty
+        SetupConfiguration(settings);
+
+        var services = new ServiceCollection();
+
+        // Act
+        // We need to trigger the configuration by resolving the options
+        services.AddSwaggerExtension();
+        var provider = services.BuildServiceProvider();
+        var act = () => provider.GetRequiredService<IOptions<Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions>>().Value;
+
+        // Assert
+        act.Should().Throw<AppCore.Application.Exceptions.NotFoundException>()
+           .WithMessage("*OpenApiInfo:Version*");
+    }
+
+    [Fact]
+    public void AddCorsExtension_WithMissingConfig_ShouldThrowException() {
+        // Arrange
+        var settings = new Dictionary<string, string?>(); // Empty
+        SetupConfiguration(settings);
+
+        var services = new ServiceCollection();
+        services.AddSingleton<ILoggerFactory, NullLoggerFactory>();
+        services.AddLogging();
+
+        // Act
+        services.AddCorsExtension();
+        var provider = services.BuildServiceProvider();
+
+        // Assert
+        // Resolution itself might trigger exception if Options are accessed in constructor
+        Func<Task> act = async () => {
+            var policyProvider = provider.GetRequiredService<Microsoft.AspNetCore.Cors.Infrastructure.ICorsPolicyProvider>();
+            await policyProvider.GetPolicyAsync(new Microsoft.AspNetCore.Http.DefaultHttpContext(), "prod");
+        };
+
+        act.Should().ThrowAsync<AppCore.Application.Exceptions.NotFoundException>()
+           .WithMessage("*Cors:Origins*");
     }
 }

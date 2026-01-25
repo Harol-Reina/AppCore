@@ -10,8 +10,7 @@ namespace AppCore.Infrastructure.Services;
 /// </summary>
 /// <typeparam name="TSource">The source type to map from</typeparam>
 /// <typeparam name="TDestination">The destination type to map to</typeparam>
-internal abstract class MappingServiceBase<TSource, TDestination> : IMappingService<TSource, TDestination>
-{
+internal abstract class MappingServiceBase<TSource, TDestination> : IMappingService<TSource, TDestination> {
     /// <summary>
     /// Maps a single source object to a destination object.
     /// </summary>
@@ -19,17 +18,13 @@ internal abstract class MappingServiceBase<TSource, TDestination> : IMappingServ
     /// <returns>The mapped destination object</returns>
     /// <exception cref="ArgumentNullException">Thrown when source is null</exception>
     /// <exception cref="MappingException">Thrown when mapping fails</exception>
-    public TDestination Map(TSource source)
-    {
+    public TDestination Map(TSource source) {
         if (source == null)
             throw new ArgumentNullException(nameof(source));
 
-        try
-        {
+        try {
             return MapInternal(source);
-        }
-        catch (Exception ex) when (ex is not ArgumentNullException)
-        {
+        } catch (Exception ex) when (ex is not ArgumentNullException) {
             throw new MappingException(
                 $"Failed to map from {typeof(TSource).Name} to {typeof(TDestination).Name}",
                 ex);
@@ -43,8 +38,7 @@ internal abstract class MappingServiceBase<TSource, TDestination> : IMappingServ
     /// <returns>The collection of mapped destination objects</returns>
     /// <exception cref="ArgumentNullException">Thrown when sources is null</exception>
     /// <exception cref="MappingException">Thrown when mapping fails</exception>
-    public IEnumerable<TDestination> Map(IEnumerable<TSource> sources)
-    {
+    public IEnumerable<TDestination> Map(IEnumerable<TSource> sources) {
         if (sources == null)
             throw new ArgumentNullException(nameof(sources));
 

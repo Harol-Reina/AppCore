@@ -6,8 +6,7 @@
 /// </summary>
 /// <typeparam name="TSource">The source type to map from</typeparam>
 /// <typeparam name="TDestination">The destination type to map to</typeparam>
-public interface IMappingService<TSource, TDestination>
-{
+public interface IMappingService<TSource, TDestination> {
     /// <summary>
     /// Maps a source object to a destination object.
     /// </summary>

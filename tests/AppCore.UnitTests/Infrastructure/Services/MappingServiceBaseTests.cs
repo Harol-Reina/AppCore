@@ -5,43 +5,34 @@ using Xunit;
 
 namespace AppCore.UnitTests.Infrastructure.Services;
 
-public class MappingServiceBaseTests
-{
-    private class SourceModel
-    {
+public class MappingServiceBaseTests {
+    private class SourceModel {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
     }
 
-    private class DestinationModel
-    {
+    private class DestinationModel {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
     }
 
-    private class TestMappingService : MappingServiceBase<SourceModel, DestinationModel>
-    {
-        protected override DestinationModel MapInternal(SourceModel source)
-        {
-            return new DestinationModel
-            {
+    private class TestMappingService : MappingServiceBase<SourceModel, DestinationModel> {
+        protected override DestinationModel MapInternal(SourceModel source) {
+            return new DestinationModel {
                 Id = source.Id,
                 Name = source.Name
             };
         }
     }
 
-    private class ThrowingMappingService : MappingServiceBase<SourceModel, DestinationModel>
-    {
-        protected override DestinationModel MapInternal(SourceModel source)
-        {
+    private class ThrowingMappingService : MappingServiceBase<SourceModel, DestinationModel> {
+        protected override DestinationModel MapInternal(SourceModel source) {
             throw new InvalidOperationException("Mapping failed");
         }
     }
 
     [Fact]
-    public void Map_WithValidSource_ShouldReturnMappedDestination()
-    {
+    public void Map_WithValidSource_ShouldReturnMappedDestination() {
         // Arrange
         var service = new TestMappingService();
         var source = new SourceModel { Id = 1, Name = "Test" };
@@ -56,8 +47,7 @@ public class MappingServiceBaseTests
     }
 
     [Fact]
-    public void Map_WithNullSource_ShouldThrowArgumentNullException()
-    {
+    public void Map_WithNullSource_ShouldThrowArgumentNullException() {
         // Arrange
         var service = new TestMappingService();
 
@@ -69,8 +59,7 @@ public class MappingServiceBaseTests
     }
 
     [Fact]
-    public void Map_WhenMappingFails_ShouldThrowMappingException()
-    {
+    public void Map_WhenMappingFails_ShouldThrowMappingException() {
         // Arrange
         var service = new ThrowingMappingService();
         var source = new SourceModel { Id = 1, Name = "Test" };
@@ -84,8 +73,7 @@ public class MappingServiceBaseTests
     }
 
     [Fact]
-    public void Map_Collection_WithValidSources_ShouldReturnMappedDestinations()
-    {
+    public void Map_Collection_WithValidSources_ShouldReturnMappedDestinations() {
         // Arrange
         var service = new TestMappingService();
         var sources = new List<SourceModel>
@@ -106,8 +94,7 @@ public class MappingServiceBaseTests
     }
 
     [Fact]
-    public void Map_Collection_WithNullCollection_ShouldThrowArgumentNullException()
-    {
+    public void Map_Collection_WithNullCollection_ShouldThrowArgumentNullException() {
         // Arrange
         var service = new TestMappingService();
 
@@ -119,8 +106,7 @@ public class MappingServiceBaseTests
     }
 
     [Fact]
-    public void Map_Collection_WithEmptyCollection_ShouldReturnEmptyCollection()
-    {
+    public void Map_Collection_WithEmptyCollection_ShouldReturnEmptyCollection() {
         // Arrange
         var service = new TestMappingService();
         var sources = new List<SourceModel>();

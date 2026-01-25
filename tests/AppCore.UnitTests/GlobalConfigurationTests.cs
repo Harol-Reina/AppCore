@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AppCore.Application.Interfaces;
 using AppCore.Domain.Interfaces;
-using AppCore.Application.Interfaces;
 using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace AppCore.UnitTests;
@@ -9,11 +9,9 @@ namespace AppCore.UnitTests;
 /// <summary>
 /// Global configuration tests to ensure the AppCore package is properly set up
 /// </summary>
-public class GlobalConfigurationTests
-{
+public class GlobalConfigurationTests {
     [Fact]
-    public void ServiceCollection_ShouldRegisterCoreServices()
-    {
+    public void ServiceCollection_ShouldRegisterCoreServices() {
         // Arrange
         var services = new ServiceCollection();
 
@@ -27,8 +25,7 @@ public class GlobalConfigurationTests
     }
 
     [Fact]
-    public void AssemblyInfo_ShouldHaveCorrectMetadata()
-    {
+    public void AssemblyInfo_ShouldHaveCorrectMetadata() {
         // Arrange & Act
         var assembly = typeof(AppCore.Application.Wrappers.Response<>).Assembly;
 
@@ -38,8 +35,7 @@ public class GlobalConfigurationTests
     }
 
     [Fact]
-    public void Interfaces_ShouldBePublic()
-    {
+    public void Interfaces_ShouldBePublic() {
         // Arrange & Act
         var genericRepositoryType = typeof(IGenericRepository<,>);
         var currentUserServiceType = typeof(ICurrentUserService);
@@ -53,9 +49,8 @@ public class GlobalConfigurationTests
 }
 
 // Dummy implementation for testing DI registration
-internal class DummyRepository<E, I> : IGenericRepository<E, I> 
-    where E : AppCore.Domain.Common.BaseEntity<I>
-{
+internal class DummyRepository<E, I> : IGenericRepository<E, I>
+    where E : AppCore.Domain.Common.BaseEntity<I> {
     public Task<List<E>?> GetAllAsync(params IEnumerable<System.Linq.Expressions.Expression<Func<E, object>>>? includes)
         => Task.FromResult<List<E>?>(new List<E>());
 

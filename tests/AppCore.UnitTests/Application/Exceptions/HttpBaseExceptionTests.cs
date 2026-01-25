@@ -4,11 +4,9 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.Exceptions;
 
-public class HttpBaseExceptionTests
-{
+public class HttpBaseExceptionTests {
     [Fact]
-    public void Constructor_WithStatusCode_ShouldSetStatusCode()
-    {
+    public void Constructor_WithStatusCode_ShouldSetStatusCode() {
         // Arrange & Act
         var exception = new HttpBaseException("Not found", 404);
 
@@ -17,8 +15,7 @@ public class HttpBaseExceptionTests
     }
 
     [Fact]
-    public void Constructor_ShouldInheritFromCustomException()
-    {
+    public void Constructor_ShouldInheritFromCustomException() {
         // Arrange & Act
         var exception = new HttpBaseException("Server error", 500);
 
@@ -27,8 +24,7 @@ public class HttpBaseExceptionTests
     }
 
     [Fact]
-    public void Constructor_ShouldCreateDictionaryErrorWithStatusCode()
-    {
+    public void Constructor_ShouldCreateDictionaryErrorWithStatusCode() {
         // Arrange & Act
         var exception = new HttpBaseException("Unauthorized", 401, "TestMethod", "/path/test.cs", 42);
 
@@ -39,8 +35,7 @@ public class HttpBaseExceptionTests
     }
 
     [Fact]
-    public void Constructor_WithCallerInfo_ShouldPopulateMessageLog()
-    {
+    public void Constructor_WithCallerInfo_ShouldPopulateMessageLog() {
         // Arrange & Act
         var exception = new HttpBaseException("Bad request", 400, "MyMethod", "/src/file.cs", 10);
 
@@ -55,8 +50,7 @@ public class HttpBaseExceptionTests
     [InlineData(200, "HTTP-200")]
     [InlineData(404, "HTTP-404")]
     [InlineData(500, "HTTP-500")]
-    public void Constructor_WithDifferentStatusCodes_ShouldCreateCorrectErrorCode(int statusCode, string expectedCode)
-    {
+    public void Constructor_WithDifferentStatusCodes_ShouldCreateCorrectErrorCode(int statusCode, string expectedCode) {
         // Arrange & Act
         var exception = new HttpBaseException("Test", statusCode);
 

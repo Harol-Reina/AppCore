@@ -4,11 +4,9 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.DTOs;
 
-public class PaginationResponseTests
-{
+public class PaginationResponseTests {
     [Fact]
-    public void Constructor_WithData_ShouldSetPropertiesCorrectly()
-    {
+    public void Constructor_WithData_ShouldSetPropertiesCorrectly() {
         // Arrange
         var data = new List<string> { "item1", "item2", "item3" };
 
@@ -22,8 +20,7 @@ public class PaginationResponseTests
     }
 
     [Fact]
-    public void Constructor_WithNullData_ShouldInitializeEmptyList()
-    {
+    public void Constructor_WithNullData_ShouldInitializeEmptyList() {
         // Act
         var response = new PaginationResponse<string>(null);
 
@@ -33,8 +30,7 @@ public class PaginationResponseTests
     }
 
     [Fact]
-    public void Success_StaticMethod_ShouldReturnPaginationResponse()
-    {
+    public void Success_StaticMethod_ShouldReturnPaginationResponse() {
         // Arrange
         var data = new List<int> { 1, 2, 3, 4, 5 };
 
@@ -48,8 +44,7 @@ public class PaginationResponseTests
     }
 
     [Fact]
-    public void Properties_ShouldBeSettable()
-    {
+    public void Properties_ShouldBeSettable() {
         // Arrange
         var response = new PaginationResponse<string>();
 

@@ -4,16 +4,13 @@ using Xunit;
 
 namespace AppCore.UnitTests.Infrastructure.Data.DAOs.Common;
 
-internal class TestAuditableDao : AuditableBaseDao
-{
+internal class TestAuditableDao : AuditableBaseDao {
     public string Name { get; set; } = string.Empty;
 }
 
-public class AuditableBaseDaoTests
-{
+public class AuditableBaseDaoTests {
     [Fact]
-    public void AuditableBaseDao_CreatedAt_ShouldBeSetToNowByDefault()
-    {
+    public void AuditableBaseDao_CreatedAt_ShouldBeSetToNowByDefault() {
         // Arrange
         var beforeCreation = DateTime.Now.AddSeconds(-1);
 
@@ -27,8 +24,7 @@ public class AuditableBaseDaoTests
     }
 
     [Fact]
-    public void AuditableBaseDao_CreatedBy_ShouldBeNullByDefault()
-    {
+    public void AuditableBaseDao_CreatedBy_ShouldBeNullByDefault() {
         // Arrange & Act
         var dao = new TestAuditableDao();
 
@@ -37,8 +33,7 @@ public class AuditableBaseDaoTests
     }
 
     [Fact]
-    public void AuditableBaseDao_UpdatedAt_ShouldBeNullByDefault()
-    {
+    public void AuditableBaseDao_UpdatedAt_ShouldBeNullByDefault() {
         // Arrange & Act
         var dao = new TestAuditableDao();
 
@@ -47,8 +42,7 @@ public class AuditableBaseDaoTests
     }
 
     [Fact]
-    public void AuditableBaseDao_UpdatedBy_ShouldBeNullByDefault()
-    {
+    public void AuditableBaseDao_UpdatedBy_ShouldBeNullByDefault() {
         // Arrange & Act
         var dao = new TestAuditableDao();
 
@@ -57,8 +51,7 @@ public class AuditableBaseDaoTests
     }
 
     [Fact]
-    public void AuditableBaseDao_PropertiesShouldBeSettable()
-    {
+    public void AuditableBaseDao_PropertiesShouldBeSettable() {
         // Arrange
         var dao = new TestAuditableDao();
         var createdAt = DateTime.Now.AddDays(-1);
@@ -80,11 +73,9 @@ public class AuditableBaseDaoTests
     }
 
     [Fact]
-    public void AuditableBaseDao_CanSetCreatedByToNull()
-    {
+    public void AuditableBaseDao_CanSetCreatedByToNull() {
         // Arrange
-        var dao = new TestAuditableDao
-        {
+        var dao = new TestAuditableDao {
             CreatedBy = "InitialUser"
         };
 
@@ -96,11 +87,9 @@ public class AuditableBaseDaoTests
     }
 
     [Fact]
-    public void AuditableBaseDao_CanSetUpdatedByToNull()
-    {
+    public void AuditableBaseDao_CanSetUpdatedByToNull() {
         // Arrange
-        var dao = new TestAuditableDao
-        {
+        var dao = new TestAuditableDao {
             UpdatedBy = "UpdateUser"
         };
 
@@ -112,11 +101,9 @@ public class AuditableBaseDaoTests
     }
 
     [Fact]
-    public void AuditableBaseDao_UpdatedAt_CanBeSetToNull()
-    {
+    public void AuditableBaseDao_UpdatedAt_CanBeSetToNull() {
         // Arrange
-        var dao = new TestAuditableDao
-        {
+        var dao = new TestAuditableDao {
             UpdatedAt = DateTime.Now
         };
 
@@ -128,11 +115,10 @@ public class AuditableBaseDaoTests
     }
 
     [Fact]
-    public void AuditableBaseDao_WithMultipleInstances_ShouldHaveDifferentCreatedAt()
-    {
+    public async Task AuditableBaseDao_WithMultipleInstances_ShouldHaveDifferentCreatedAt() {
         // Arrange & Act
         var dao1 = new TestAuditableDao();
-        Thread.Sleep(10); // Small delay to ensure different timestamps
+        await Task.Delay(10); // Small delay to ensure different timestamps
         var dao2 = new TestAuditableDao();
 
         // Assert
@@ -140,11 +126,9 @@ public class AuditableBaseDaoTests
     }
 
     [Fact]
-    public void AuditableBaseDao_InheritanceScenario_ShouldWorkCorrectly()
-    {
+    public void AuditableBaseDao_InheritanceScenario_ShouldWorkCorrectly() {
         // Arrange
-        var dao = new TestAuditableDao
-        {
+        var dao = new TestAuditableDao {
             Name = "Test Entity",
             CreatedBy = "System",
             UpdatedBy = "Admin"

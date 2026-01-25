@@ -4,20 +4,14 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.Exceptions;
 
-public class ApiHttpExceptionTests
-{
+public class ApiHttpExceptionTests {
     [Fact]
-    public void Constructor_WithSimpleException_ShouldNotThrow()
-    {
+    public void Constructor_WithSimpleException_ShouldNotThrow() {
         // Arrange & Act
-        var act = () =>
-        {
-            try
-            {
+        var act = () => {
+            try {
                 throw new Exception("Connection failed");
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 return new ApiHttpException(ex);
             }
         };
@@ -27,15 +21,11 @@ public class ApiHttpExceptionTests
     }
 
     [Fact]
-    public void Constructor_ShouldSetCorrectMessage()
-    {
+    public void Constructor_ShouldSetCorrectMessage() {
         // Arrange & Act
-        try
-        {
+        try {
             throw new InvalidOperationException("Test error");
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             var exception = new ApiHttpException(ex);
 
             // Assert
@@ -45,15 +35,11 @@ public class ApiHttpExceptionTests
     }
 
     [Fact]
-    public void ToString_ShouldReturnMessageLogString()
-    {
+    public void ToString_ShouldReturnMessageLogString() {
         // Arrange & Act
-        try
-        {
+        try {
             throw new Exception("Test");
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             var exception = new ApiHttpException(ex);
             var result = exception.ToString();
 
@@ -63,15 +49,11 @@ public class ApiHttpExceptionTests
     }
 
     [Fact]
-    public void MessageLog_ShouldContainExceptionType()
-    {
+    public void MessageLog_ShouldContainExceptionType() {
         // Arrange & Act
-        try
-        {
-            throw new ArgumentNullException("param", "Parameter cannot be null");
-        }
-        catch (Exception ex)
-        {
+        try {
+            throw new InvalidOperationException("Test exception");
+        } catch (Exception ex) {
             var exception = new ApiHttpException(ex, "MyMethod");
 
             // Assert

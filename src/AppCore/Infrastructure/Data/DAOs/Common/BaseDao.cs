@@ -15,8 +15,7 @@ internal abstract class BaseDao<T> : AuditableBaseDao {
 
 }
 
-internal abstract class BaseDaoInt : BaseDao<int>
-{
+internal abstract class BaseDaoInt : BaseDao<int> {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public new int Id { get; set; }

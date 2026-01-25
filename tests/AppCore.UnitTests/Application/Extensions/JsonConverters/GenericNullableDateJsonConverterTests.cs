@@ -1,18 +1,16 @@
-﻿using AppCore.Application.Extensions.JsonConverters;
+﻿using System.Text.Json;
+using AppCore.Application.Extensions.JsonConverters;
 using FluentAssertions;
-using System.Text.Json;
 using Xunit;
 
 namespace AppCore.UnitTests.Application.Extensions.JsonConverters;
 
-public class GenericNullableDateJsonConverterTests
-{
+public class GenericNullableDateJsonConverterTests {
     [Fact]
-    public void GenericNullableDateJsonConverter_WithCustomFormat_ShouldSerializeCorrectly()
-    {
+    public void GenericNullableDateJsonConverter_WithCustomFormat_ShouldSerializeCorrectly() {
         // Arrange
         var converter = new GenericNullableDateJsonConverter("dd/MM/yyyy");
-        DateTime? date = new DateTime(2024, 12, 25);
+        DateTime? date = new DateTime(2024, 12, 25, 0, 0, 0, DateTimeKind.Utc);
         var options = new JsonSerializerOptions();
         options.Converters.Add(converter);
 
@@ -24,8 +22,7 @@ public class GenericNullableDateJsonConverterTests
     }
 
     [Fact]
-    public void GenericNullableDateJsonConverter_WithNull_ShouldSerializeAsNull()
-    {
+    public void GenericNullableDateJsonConverter_WithNull_ShouldSerializeAsNull() {
         // Arrange
         var converter = new GenericNullableDateJsonConverter("dd/MM/yyyy");
         DateTime? date = null;
@@ -40,8 +37,7 @@ public class GenericNullableDateJsonConverterTests
     }
 
     [Fact]
-    public void GenericNullableDateJsonConverter_WithCustomFormat_ShouldDeserializeCorrectly()
-    {
+    public void GenericNullableDateJsonConverter_WithCustomFormat_ShouldDeserializeCorrectly() {
         // Arrange
         var converter = new GenericNullableDateJsonConverter("dd/MM/yyyy");
         var json = "\"25/12/2024\"";
@@ -59,8 +55,7 @@ public class GenericNullableDateJsonConverterTests
     }
 
     [Fact]
-    public void GenericNullableDateJsonConverter_WithNullJson_ShouldReturnNull()
-    {
+    public void GenericNullableDateJsonConverter_WithNullJson_ShouldReturnNull() {
         // Arrange
         var converter = new GenericNullableDateJsonConverter("dd/MM/yyyy");
         var json = "null";
@@ -75,8 +70,7 @@ public class GenericNullableDateJsonConverterTests
     }
 
     [Fact]
-    public void GenericNullableDateJsonConverter_WithEmptyString_ShouldReturnNull()
-    {
+    public void GenericNullableDateJsonConverter_WithEmptyString_ShouldReturnNull() {
         // Arrange
         var converter = new GenericNullableDateJsonConverter("dd/MM/yyyy");
         var json = "\"\"";
@@ -91,8 +85,7 @@ public class GenericNullableDateJsonConverterTests
     }
 
     [Fact]
-    public void GenericNullableDateJsonConverter_WithInvalidFormat_ShouldReturnNull()
-    {
+    public void GenericNullableDateJsonConverter_WithInvalidFormat_ShouldReturnNull() {
         // Arrange
         var converter = new GenericNullableDateJsonConverter("yyyy-MM-dd");
         var json = "\"invalid-date\"";
@@ -107,11 +100,10 @@ public class GenericNullableDateJsonConverterTests
     }
 
     [Fact]
-    public void GenericNullableDateJsonConverter_RoundTrip_ShouldPreserveValue()
-    {
+    public void GenericNullableDateJsonConverter_RoundTrip_ShouldPreserveValue() {
         // Arrange
         var converter = new GenericNullableDateJsonConverter("yyyy-MM-dd HH:mm:ss");
-        DateTime? original = new DateTime(2024, 6, 15, 14, 30, 45);
+        DateTime? original = new DateTime(2024, 6, 15, 14, 30, 45, DateTimeKind.Utc);
         var options = new JsonSerializerOptions();
         options.Converters.Add(converter);
 

@@ -1,24 +1,17 @@
-﻿using AppCore.Application.Extensions.JsonConverters;
+﻿using System.Text.Json;
+using AppCore.Application.Extensions.JsonConverters;
 using FluentAssertions;
-using System.Text.Json;
 using Xunit;
 
 namespace AppCore.UnitTests.Application.Extensions.JsonConverters;
 
-public class GenericDateJsonConverterTests
-{
-    private class TestModel
-    {
-        [System.Text.Json.Serialization.JsonConverter(typeof(GenericDateJsonConverter))]
-        public DateTime CustomDate { get; set; }
-    }
+public class GenericDateJsonConverterTests {
 
     [Fact]
-    public void GenericDateJsonConverter_WithCustomFormat_ShouldSerializeCorrectly()
-    {
+    public void GenericDateJsonConverter_WithCustomFormat_ShouldSerializeCorrectly() {
         // Arrange
         var converter = new GenericDateJsonConverter("dd/MM/yyyy");
-        var date = new DateTime(2024, 12, 25);
+        var date = new DateTime(2024, 12, 25, 0, 0, 0, DateTimeKind.Utc);
         var options = new JsonSerializerOptions();
         options.Converters.Add(converter);
 
@@ -30,8 +23,7 @@ public class GenericDateJsonConverterTests
     }
 
     [Fact]
-    public void GenericDateJsonConverter_WithCustomFormat_ShouldDeserializeCorrectly()
-    {
+    public void GenericDateJsonConverter_WithCustomFormat_ShouldDeserializeCorrectly() {
         // Arrange
         var converter = new GenericDateJsonConverter("dd/MM/yyyy");
         var json = "\"25/12/2024\"";
@@ -48,8 +40,7 @@ public class GenericDateJsonConverterTests
     }
 
     [Fact]
-    public void GenericDateJsonConverter_WithInvalidFormat_ShouldThrowJsonException()
-    {
+    public void GenericDateJsonConverter_WithInvalidFormat_ShouldThrowJsonException() {
         // Arrange
         var converter = new GenericDateJsonConverter("yyyy-MM-dd");
         var json = "\"invalid-date\"";
@@ -65,8 +56,7 @@ public class GenericDateJsonConverterTests
     }
 
     [Fact]
-    public void GenericDateJsonConverter_WithEmptyString_ShouldThrowJsonException()
-    {
+    public void GenericDateJsonConverter_WithEmptyString_ShouldThrowJsonException() {
         // Arrange
         var converter = new GenericDateJsonConverter("yyyy-MM-dd");
         var json = "\"\"";
@@ -81,11 +71,10 @@ public class GenericDateJsonConverterTests
     }
 
     [Fact]
-    public void GenericDateJsonConverter_WithMilitaryTimeFormat_ShouldWork()
-    {
+    public void GenericDateJsonConverter_WithMilitaryTimeFormat_ShouldWork() {
         // Arrange
         var converter = new GenericDateJsonConverter("yyyy-MM-dd HH:mm:ss");
-        var dateTime = new DateTime(2024, 6, 15, 14, 30, 45);
+        var dateTime = new DateTime(2024, 6, 15, 14, 30, 45, DateTimeKind.Utc);
         var options = new JsonSerializerOptions();
         options.Converters.Add(converter);
 

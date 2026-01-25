@@ -1,4 +1,4 @@
-namespace AppCore.Application.DTOs;
+﻿namespace AppCore.Application.DTOs;
 
 public class LoginResponse {
     /// <summary>Usuario logueado.</summary>

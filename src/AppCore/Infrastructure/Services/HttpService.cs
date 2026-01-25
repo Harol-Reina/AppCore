@@ -240,10 +240,10 @@ internal abstract class HttpService(HttpClient httpClient,
 
     private static void AddHeaders(HttpRequestMessage httpRequestMessage, Dictionary<string, string>? headers) {
         if (headers == null) return;
-        
+
         var requestHeaders = headers.Where(h => httpRequestMessage.Headers.TryAddWithoutValidation(h.Key, h.Value));
         var contentHeaders = headers.Except(requestHeaders);
-        
+
         foreach (var header in contentHeaders) {
             httpRequestMessage.Content ??= new StringContent(string.Empty);
             httpRequestMessage.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);
@@ -298,10 +298,10 @@ internal abstract class HttpService(HttpClient httpClient,
                                                         [CallerMemberName] string memberName = "",
                                                         [CallerFilePath] string sourceFilePath = "",
                                                         [CallerLineNumber] int sourceLineNumber = 0) {
-        var errorContext = new {
-            TraceId = traceId,
-            Endpoint = endpoint,
-            HttpResponse = httpResponse
+        var errorContext = new Dictionary<string, object> {
+            { "TraceId", traceId },
+            { "Endpoint", endpoint },
+            { "HttpResponse", httpResponse }
         };
 
         var errorMessage = JsonExtend.Serialize(errorContext);

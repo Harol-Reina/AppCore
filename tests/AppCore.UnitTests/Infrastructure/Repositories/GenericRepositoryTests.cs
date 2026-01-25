@@ -12,15 +12,13 @@ using Xunit;
 
 namespace AppCore.UnitTests.Infrastructure.Repositories;
 
-public class GenericRepositoryTests : IDisposable
-{
+public sealed class GenericRepositoryTests : IDisposable {
     private readonly DbContext _dbContext;
     private readonly Mock<IMappingService<TestEntity, TestDao>> _entityToDaoMock;
     private readonly Mock<IMappingService<TestDao, TestEntity>> _daoToEntityMock;
     private readonly TestRepository _repository;
 
-    public GenericRepositoryTests()
-    {
+    public GenericRepositoryTests() {
         var options = new DbContextOptionsBuilder<TestDbContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
@@ -32,12 +30,11 @@ public class GenericRepositoryTests : IDisposable
     }
 
     [Fact]
-    public async Task GetAllAsync_WithoutIncludes_ShouldReturnAllEntities()
-    {
+    public async Task GetAllAsync_WithoutIncludes_ShouldReturnAllEntities() {
         // Arrange
         var dao1 = new TestDao { Id = 1, Name = "Test1" };
         var dao2 = new TestDao { Id = 2, Name = "Test2" };
-        
+
         var entity1 = new TestEntity { Id = 1, Name = "Test1" };
         var entity2 = new TestEntity { Id = 2, Name = "Test2" };
 
@@ -55,13 +52,12 @@ public class GenericRepositoryTests : IDisposable
         // Assert
         result.Should().NotBeNull();
         result.Should().HaveCount(2);
-        result.First().Id.Should().Be(1);
-        result.Last().Id.Should().Be(2);
+        result[0].Id.Should().Be(1);
+        result[^1].Id.Should().Be(2);
     }
 
     [Fact]
-    public async Task GetByIdAsync_WithValidId_ShouldReturnEntity()
-    {
+    public async Task GetByIdAsync_WithValidId_ShouldReturnEntity() {
         // Arrange
         var dao = new TestDao { Id = 1, Name = "Test" };
         var entity = new TestEntity { Id = 1, Name = "Test" };
@@ -82,8 +78,7 @@ public class GenericRepositoryTests : IDisposable
     }
 
     [Fact]
-    public async Task GetByIdAsync_WithInvalidId_ShouldReturnNull()
-    {
+    public async Task GetByIdAsync_WithInvalidId_ShouldReturnNull() {
         // Act
         var result = await _repository.GetByIdAsync(999);
 
@@ -91,20 +86,10 @@ public class GenericRepositoryTests : IDisposable
         result.Should().BeNull();
     }
 
-    [Fact]
-    public async Task GetByIdAsync_WithNullId_ShouldThrowArgumentNullException()
-    {
-        // Act & Assert
-        // Act
-        var result = await _repository.GetByIdAsync(999); // ID que no existe
-        
-        // Assert
-        result.Should().BeNull();
-    }
+
 
     [Fact]
-    public async Task AddAsync_WithValidEntity_ShouldAddAndReturnEntity()
-    {
+    public async Task AddAsync_WithValidEntity_ShouldAddAndReturnEntity() {
         // Arrange
         var entity = new TestEntity { Name = "New Test" };
         var dao = new TestDao { Id = 1, Name = "New Test" };
@@ -125,8 +110,7 @@ public class GenericRepositoryTests : IDisposable
     }
 
     [Fact]
-    public async Task UpdateAsync_WithExistingEntity_ShouldUpdateAndReturnEntity()
-    {
+    public async Task UpdateAsync_WithExistingEntity_ShouldUpdateAndReturnEntity() {
         // Arrange
         var dao = new TestDao { Id = 1, Name = "Original", CreatedAt = DateTime.Now.AddDays(-1) };
         await _dbContext.Set<TestDao>().AddAsync(dao);
@@ -151,8 +135,7 @@ public class GenericRepositoryTests : IDisposable
     }
 
     [Fact]
-    public async Task UpdateAsync_WithNewEntity_ShouldThrowBadRequestException()
-    {
+    public async Task UpdateAsync_WithNewEntity_ShouldThrowBadRequestException() {
         // Arrange
         var newEntity = new TestEntity { Name = "New Entity" };
 
@@ -163,8 +146,7 @@ public class GenericRepositoryTests : IDisposable
     }
 
     [Fact]
-    public async Task DelAsync_WithExistingId_ShouldDeleteAndReturnTrue()
-    {
+    public async Task DelAsync_WithExistingId_ShouldDeleteAndReturnTrue() {
         // Arrange
         var dao = new TestDao { Id = 1, Name = "To Delete" };
         await _dbContext.Set<TestDao>().AddAsync(dao);
@@ -181,8 +163,7 @@ public class GenericRepositoryTests : IDisposable
     }
 
     [Fact]
-    public async Task DelAsync_WithNonExistingId_ShouldReturnFalse()
-    {
+    public async Task DelAsync_WithNonExistingId_ShouldReturnFalse() {
         // Act
         var result = await _repository.DelAsync(999);
 
@@ -190,20 +171,10 @@ public class GenericRepositoryTests : IDisposable
         result.Should().BeFalse();
     }
 
-    [Fact]
-    public async Task DelAsync_WithNullId_ShouldThrowArgumentNullException()
-    {
-        // Act & Assert
-        // Act
-        var result = await _repository.DelAsync(999); // ID que no existe
-        
-        // Assert
-        result.Should().BeFalse();
-    }
+
 
     [Fact]
-    public async Task GetPagedAsync_ShouldReturnPaginatedResults()
-    {
+    public async Task GetPagedAsync_ShouldReturnPaginatedResults() {
         // Arrange
         var daos = Enumerable.Range(1, 10)
             .Select(i => new TestDao { Id = i, Name = $"Test{i}" })
@@ -216,8 +187,7 @@ public class GenericRepositoryTests : IDisposable
         await _dbContext.Set<TestDao>().AddRangeAsync(daos);
         await _dbContext.SaveChangesAsync();
 
-        foreach (var (dao, entity) in daos.Zip(entities))
-        {
+        foreach (var (dao, entity) in daos.Zip(entities)) {
             _daoToEntityMock.Setup(m => m.Map(dao)).Returns(entity);
         }
         _daoToEntityMock.Setup(m => m.Map(It.IsAny<IEnumerable<TestDao>>()))
@@ -235,8 +205,7 @@ public class GenericRepositoryTests : IDisposable
     }
 
     [Fact]
-    public void ConvertExpression_WithValidExpression_ShouldConvertSuccessfully()
-    {
+    public void ConvertExpression_WithValidExpression_ShouldConvertSuccessfully() {
         // Arrange
         Expression<Func<TestEntity, object>> entityExpression = e => e.Name!;
 
@@ -252,8 +221,7 @@ public class GenericRepositoryTests : IDisposable
     }
 
     [Fact]
-    public void ConvertExpression_WithInvalidExpression_ShouldThrowArgumentException()
-    {
+    public void ConvertExpression_WithInvalidExpression_ShouldThrowArgumentException() {
         // Arrange
         Expression<Func<TestEntity, object>> invalidExpression = e => e.ToString()!;
 
@@ -263,45 +231,38 @@ public class GenericRepositoryTests : IDisposable
             .WithMessage("Expression must be a member expression (Parameter 'entityExpression')");
     }
 
-    public void Dispose()
-    {
+    public void Dispose() {
         _dbContext.Dispose();
         GC.SuppressFinalize(this);
     }
 
     // Test classes
-    internal class TestEntity : BaseEntity<int>
-    {
+    internal class TestEntity : BaseEntity<int> {
         public string? Name { get; set; }
         public new bool IsNew => Id == 0;
     }
 
-    internal class TestDao : BaseDao<int>
-    {
+    internal class TestDao : BaseDao<int> {
         public string? Name { get; set; }
     }
 
-    internal class TestRepository : GenericRepository<TestEntity, int, TestDao>
-    {
-        public TestRepository(DbContext dbContext, 
+    internal class TestRepository : GenericRepository<TestEntity, int, TestDao> {
+        public TestRepository(DbContext dbContext,
             IMappingService<TestEntity, TestDao> entityToDao,
-            IMappingService<TestDao, TestEntity> daoToEntity) 
+            IMappingService<TestDao, TestEntity> daoToEntity)
             : base(dbContext, entityToDao, daoToEntity) { }
 
-        public Expression<Func<TestDao, object>> TestConvertExpression(Expression<Func<TestEntity, object>> entityExpression)
-        {
+        public Expression<Func<TestDao, object>> TestConvertExpression(Expression<Func<TestEntity, object>> entityExpression) {
             return ConvertExpression(entityExpression);
         }
     }
 
-    internal class TestDbContext : DbContext
-    {
+    internal class TestDbContext : DbContext {
         public TestDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<TestDao> TestDaos { get; set; } = null!;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<TestDao>().HasKey(e => e.Id);
             base.OnModelCreating(modelBuilder);
         }
