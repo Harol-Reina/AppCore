@@ -12,7 +12,7 @@ using App.Infrastructure;
 using App.ApiRest.Extensions;
 using App.ApiRest;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateSlimBuilder(args);
 Configuration.Initialize(builder.Configuration);
 
 builder.Host.UseSerilog(
