@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using App.Application;
 using App.Infrastructure;
+using App.Infrastructure.Data;
 using App.ApiRest.Extensions;
 using App.ApiRest;
 
@@ -60,6 +61,9 @@ builder.Services.ConfigureHttpJsonOptions(options => {
     jsonOptions.TypeInfoResolverChain.Add(AppCore.Application.Serialization.AppCoreJsonContext.Default);
 });
 
+// CreateSlimBuilder does not register regex constraint by default. We need it for Swagger or specific routes.
+builder.Services.Configure<RouteOptions>(options => options.SetParameterPolicy<Microsoft.AspNetCore.Routing.Constraints.RegexInlineRouteConstraint>("regex"));
+
 builder.Services.AddCorsExtension();
 builder.Services.AddHealthChecks();
 
@@ -79,6 +83,11 @@ app.MapHealthChecks("/health", new HealthCheckOptions {
 app.UseHttpsRedirection();
 app.UseSerilogRequestLogging();
 AppConstants.Init();
+
+using (var scope = app.Services.CreateScope()) {
+    var initializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
+    await initializer.InitAsync();
+}
 
 app.MapEndpoints();
 app.Run();
