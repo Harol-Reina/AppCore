@@ -195,14 +195,60 @@ jobs:
     #   uses: actions/upload-artifact@v4
     #   if: always()
     #   with:
-    #     name: security-report
-    #     path: security-report.json
 
-  # Job 3: Package Creation
+  # Job 3: NativeAOT Quality Gate
+  native-aot-gate:
+    name: NativeAOT Quality Gate
+    runs-on: ubuntu-latest
+    needs: [build-and-test]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        source-url: https://nuget.pkg.github.com/Harol-Reina/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Install AOT prerequisites
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y clang zlib1g-dev
+        
+    - name: NativeAOT Compilation (Dry Run)
+      run: |
+        echo "::group::NativeAOT Compilation"
+        dotnet publish src/AppCore/AppCore.csproj \
+          --configuration Release \
+          --runtime linux-x64 \
+          -p:PublishAot=true \
+          -p:InvariantGlobalization=true \
+          --self-contained \
+          -o ./aot-output
+        EXIT_CODE=$?
+        echo "::endgroup::"
+        
+        if [ $EXIT_CODE -ne 0 ]; then
+          echo "::error title=NativeAOT Failed::NativeAOT compilation failed with exit code $EXIT_CODE"
+          exit $EXIT_CODE
+        fi
+        
+        # Cleanup
+        rm -rf ./aot-output
+        echo "::notice title=NativeAOT Passed::NativeAOT compilation successful"
+
+
+  # Job 4: Package Creation
   package:
     name: Create Package
     runs-on: ubuntu-latest
-    needs: [build-and-test, code-quality]
+    needs: [build-and-test, code-quality, native-aot-gate]
     if: github.event_name == 'push' || github.event_name == 'release'
     
     steps:
