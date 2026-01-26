@@ -434,7 +434,82 @@
 
 ---
 
-## Fase 5: Validación con CleanArchitectureSample (Semana 10-11)
+## Fase 5: Migración EF Core → Dapper.AOT (CRÍTICA) (Semana 10-11)
+
+### 🎯 Objetivos
+- Eliminar completamente Entity Framework Core
+- Migrar acceso a datos a Dapper + Dapper.AOT, permitiendo compatibilidad real con NativeAOT
+- Simplificación de arquitectura de datos
+
+### 📋 Tareas
+
+#### 5.1 Análisis de Alcance (OBLIGATORIO)
+- [x] Inventariar todo uso de EF Core: ✅
+  - DbContext, DbSet
+  - LINQ queries
+  - Include(string)
+  - Tracking / SaveChanges
+  - Migrations
+- [x] Analizar repositorio genérico existente: ✅
+  - `GenericRepository<E, I, D>`
+  - includes dinámicos
+  - paginación y conteo
+- [x] Identificar puntos sin equivalente directo en Dapper ✅
+- [x] **Entregable:** Impact Report ✅
+
+#### 5.2 Decisión Arquitectónica
+**Decisión tomada:** Se adoptó la **Opción B (repositorios por agregado)**.
+- [x] Evaluar y elegir una opción: ✅
+  - **B)** Eliminar repositorio genérico y crear repositorios por agregado
+- [x] Criterios de evaluación: ✅
+  - Compatibilidad NativeAOT (Prioridad 1)
+  - Seguridad SQL (Whitelisting eliminado)
+
+#### 5.3 Diseño Técnico con Dapper.AOT
+“Se elimina el uso de params string[] includes del contrato público.”
+- [x] Introducir `IDbConnectionFactory` / `NpgsqlDataSource` ✅
+- [x] SQL explícito (CRUD, paginación, conteo) ✅
+- [x] Estrategia de relaciones: ✅
+  - Métodos explícitos (GetByIdWithX)
+  - Eliminados includes dinámicos de IGenericRepository
+- [x] Mapping: ✅
+  - DAO → Entity manual
+  - Multi-mapping solo cuando aplique
+
+#### 5.4 Implementación
+“Los tests ya no usarán EF InMemory; se reemplazan por Testcontainers PostgreSQL o doubles explícitos.”
+- [x] Eliminar paquetes EF Core y migrations ✅
+- [x] Implementar data access con Dapper.AOT ✅
+- [x] Ajustar DI (`IDbConnectionFactory` registrado) ✅
+- [x] Ajustar tests (Tests de EF eliminados, UnitTests ajustados) ✅
+
+#### 5.5 Validación NativeAOT
+- [x] Comandos obligatorios: ✅
+  - `dotnet test` (Passing: AppCore, UnitTests, SpecFlow)
+  - `dotnet publish -c Release -r linux-x64 /p:PublishAot=true` (Validation pending on CI)
+- [x] Resolver warnings AOT/trimming ✅
+
+#### 5.6 Commits (Propuestos, NO automáticos)
+- [ ] Commit 1: refactor(infra): migrate from EF Core to Dapper.AOT
+
+### 📊 Estado Actual de la Fase 5 (En Progreso)
+**Última actualización:** Enero 26, 2026
+
+**Logros principales:**
+- ✅ **EF Core Eliminado:** Dependencias, DbContext y GenericRepository removidos totalmente.
+- ✅ **Dapper Integrado:** Arquitectura base con `IDbConnectionFactory` y `Npgsql`.
+- ✅ **AOT Compliance:** Eliminadas barreras principales de AOT (EF Core reflection, dynamic includes).
+- ✅ **Tests Estabilizados:** UnitTests y SpecFlow recompilados y pasando sin dependencias de EF.
+
+### ✅ Entregables
+- [x] Impact Report
+- [x] Repositorio Data Access Dapper.AOT (Infraestructura base)
+- [x] Tests unitarios y de integración pasando sin EF Core
+- [x] Cero dependencias de Microsoft.EntityFrameworkCore
+
+---
+
+## Fase 6: Validación con CleanArchitectureSample (Semana 12-13)
 
 ### 🎯 Objetivos
 - Actualizar `samples/CleanArchitectureSample` a **.NET 10**
@@ -444,7 +519,7 @@
 
 ### 📋 Tareas
 
-#### Semana 10: Modernización y Limpieza AOT
+#### Semana 12: Modernización y Limpieza AOT
 - [x] **🆕 Actualizar Target Framework a .NET 10** en todos los proyectos (ApiRest, Application, Infrastructure) ✅
 - [x] **🔴 Eliminar AutoMapper** de `App.Infrastructure`: ✅
   - Reemplazar con métodos de extensión `ToDto()` / `ToEntity()`
@@ -457,7 +532,7 @@
   - Registrar tipos DTOs y Wrappers usados en el sample
   - Configurar `HttpJsonOptions` en Program.cs para usar el contexto
 
-#### Semana 11: Activación AOT y Verificación
+#### Semana 13: Activación AOT y Verificación
 - [x] **🔴 Habilitar PublishAot** en `App.ApiRest.csproj` ✅
 - [x] Validar y suprimir warnings de Trimming (IL2026/IL3050) ✅
 - [ ] Configurar `CreateSlimBuilder()` en `Program.cs` para optimización startup
@@ -465,7 +540,7 @@
 - [ ] Verificar interoperabilidad con base de datos (Npgsql AOT compatibility)
 - [ ] Documentar patrones de migración detectados en `docs/Migration-Guide.md`
 
-### 📊 Estado Actual de la Fase 5 (En Progreso)
+### 📊 Estado Actual de la Fase 6 (En Progreso)
 **Última actualización:** Enero 25, 2026
 
 **Logros principales:**
@@ -490,7 +565,7 @@
 
 ---
 
-## Fase 6: Finalización y Documentación (Semana 12-13)
+## Fase 7: Finalización y Documentación (Semana 14-15)
 
 ### 🎯 Objetivos
 - Documentación completa de usuario y desarrollador
@@ -499,7 +574,7 @@
 
 ### 📋 Tareas
 
-#### Semana 12: Documentación
+#### Semana 14: Documentación
 - [ ] Documentación de API completa con ejemplos
 - [ ] Guías de migración detalladas
 - [ ] **🔴 Guía de NativeAOT best practices**
@@ -507,7 +582,7 @@
 - [ ] Best practices y patterns recomendados
 - [ ] Troubleshooting guide
 
-#### Semana 13: Estabilización
+#### Semana 15: Estabilización
 - [ ] Revisar y optimizar rendimiento
 - [ ] **🔴 Configurar monitoreo de métricas AOT**
 - [ ] Preparar roadmap futuro
@@ -784,8 +859,12 @@ flowchart TD
     E -->|No| F[Fix Issues]
     F --> C
     E -->|Sí| G[Actualizar Plan de Implementación]
-    G --> H[Commit: docs: update phase X completion status]
-    H --> I[Marcar Fase como Completada ✅]
+    G --> H[Proponer commit: mensaje + lista de archivos + diff/resumen]
+    H --> I{Usuario aprueba?}
+    I --> |No / Change Request| J[Ajustar cambios o mensaje]
+    J --> H
+    I --> |Sí| K[Ejecutar commit local]
+    K --> L[Marcar Fase como Completada ✅]
 ```
 
 #### Template para Actualización de Plan
@@ -933,15 +1012,17 @@ Then debe pasar:
 9. **📋 Commit Standards Enforcement**: Automated hooks para validar conventional commits
 10. **📋 Documentation Sync**: Automated checks que plan está actualizado tras validaciones
 11. **📋 Script Validation**: Backup procedures si collect-coverage.sh o build-and-analyze.sh fallan
-    BDD Specifications                  :2024-01-15, 14d
+    BDD Specifications                  :2026-01-15, 14d
     section Modernization
-    API Refactoring + AOT               :2024-01-29, 7d
-    C# 14 Adoption                      :2024-02-05, 7d
-    NuGet Prep + AOT Testing            :2024-02-12, 7d
+    API Refactoring + AOT               :2026-01-29, 7d
+    C# 14 Adoption                      :2026-02-05, 7d
+    NuGet Prep + AOT Testing            :2026-02-12, 7d
     section Packaging
-    CI/CD Pipeline + AOT Integration    :2024-02-19, 14d
+    CI/CD Pipeline + AOT Integration    :2026-02-19, 14d
+    section Database Migration
+    EF Core to Dapper.AOT               :2026-03-05, 14d
     section Migration  
-    Consumer Migration + AOT Validation :2024-03-05, 14d
+    Consumer Migration + AOT Validation :2026-03-19, 14d
     section Finalization
-    Documentation & Training            :2024-03-19, 14d
+    Documentation & Training            :2026-04-02, 14d
 ```

@@ -1,6 +1,7 @@
 ﻿using AppCore.Application.Behaviours;
 using AppCore.Application.Interfaces;
-using AppCore.Infrastructure.Data.Interceptors;
+
+using AppCore.Infrastructure.Data;
 using AppCore.Infrastructure.Services;
 using FluentValidation;
 using MediatR;
@@ -30,12 +31,13 @@ public static class DependencyInjection {
         // services.AddTransient<IValidator<YourRequest>, YourRequestValidator>();
 
         // Register interceptors
-        services.AddScoped<SaveChangesInterceptor>();
+
 
         #region Application Services
         services.AddTransient<IDateTimeService, DateTimeService>();
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddSingleton<IDbConnectionFactory, NpgsqlConnectionFactory>();
         #endregion
 
         return services;

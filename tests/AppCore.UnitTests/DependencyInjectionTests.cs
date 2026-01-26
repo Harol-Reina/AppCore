@@ -1,7 +1,7 @@
 ﻿using AppCore;
 using AppCore.Application.Behaviours;
 using AppCore.Application.Interfaces;
-using AppCore.Infrastructure.Data.Interceptors;
+
 using AppCore.Infrastructure.Services;
 using FluentAssertions;
 using MediatR;
@@ -30,20 +30,7 @@ public class DependencyInjectionTests {
         behaviorRegistrations.Should().Contain(sd => sd.ImplementationType == typeof(ValidationBehaviour<,>));
     }
 
-    [Fact]
-    public void AddCoreApplication_ShouldRegisterSaveChangesInterceptor() {
-        // Arrange
-        var services = new ServiceCollection();
-        services.AddHttpContextAccessor();
 
-        // Act
-        services.AddCoreApplication();
-
-        // Assert
-        var serviceProvider = services.BuildServiceProvider();
-        var interceptor = serviceProvider.GetService<SaveChangesInterceptor>();
-        interceptor.Should().NotBeNull();
-    }
 
     [Fact]
     public void AddCoreApplication_ShouldRegisterDateTimeService() {
@@ -125,15 +112,5 @@ public class DependencyInjectionTests {
         descriptor!.Lifetime.Should().Be(ServiceLifetime.Transient);
     }
 
-    [Fact]
-    public void AddCoreApplication_SaveChangesInterceptor_ShouldBeScoped() {
-        // Arrange
-        var services = new ServiceCollection();
-        services.AddCoreApplication();
 
-        // Assert
-        var descriptor = services.FirstOrDefault(d => d.ServiceType == typeof(SaveChangesInterceptor));
-        descriptor.Should().NotBeNull();
-        descriptor!.Lifetime.Should().Be(ServiceLifetime.Scoped);
-    }
 }
