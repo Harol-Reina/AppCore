@@ -79,7 +79,8 @@
 <li>Git instalado localmente</li>
 <li>.NET 10.0.x SDK instalado</li>
 <li><strong>✅ GitHub Packages</strong> (repositorio NuGet público oficial)</li>
-<li><strong>⚠️ NuGet.org</strong> (Ya NO se utiliza - migrado completamente a GitHub Packages)</li>
+<li><strong>✅ GitHub Packages</strong> (repositorio para publicación)</li>
+<li><strong>✅ NuGet.org</strong> (fuente para dependencias públicas)</li>
 </ul>
 <h2 id="-paso-1-creación-del-repositorio-en-github">🚀 Paso 1: Creación del Repositorio en GitHub</h2>
 <h3 id="11-crear-el-repositorio">1.1 Crear el Repositorio</h3>
@@ -128,10 +129,9 @@ git remote -v
 <li>Tiene permisos para publicar en GitHub Packages</li>
 <li>Es el método <strong>oficial y recomendado</strong> para AppCore</li>
 </ul>
-<h4 id="-nugetorg-deprecado---ya-no-se-utiliza">⚠️ NuGet.org (DEPRECADO - Ya NO se utiliza)</h4>
-<p><strong>IMPORTANTE:</strong> AppCore ha migrado completamente a GitHub Packages como repositorio NuGet público.
-Ya <strong>NO es necesario</strong> configurar <code>NUGET_API_KEY</code> ni usar NuGet.org.</p>
-<p>Si tienes configurado <code>NUGET_API_KEY</code> de versiones anteriores, puedes eliminarlo de forma segura.</p>
+<h4 id="-nugetorg-fuente-de-dependencias-públicas">✅ NuGet.org (Fuente de Dependencias Públicas)</h4>
+<p><strong>IMPORTANTE:</strong> Aunque AppCore se publica en GitHub Packages, <strong>NuGet.org sigue siendo necesario</strong> para descargar dependencias públicas (como <code>System.Text.Json</code>, <code>MediatR</code>, etc.), a menos que tengas configurado un proxy en tu feed privado.</p>
+<p>Configura <code>nuget.config</code> para incluir ambas fuentes. No se requiere API Key de NuGet.org para el pipeline actual (ya que no publicamos allí).</p>
 <h3 id="23-configurar-permisos-de-github-packages">2.3 Configurar Permisos de GitHub Packages</h3>
 <p>Para que el pipeline pueda publicar en GitHub Packages:</p>
 <ol>
