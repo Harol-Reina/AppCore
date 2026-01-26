@@ -1,6 +1,7 @@
 using App.Application.Domain.Entities;
 using AppCore.Application.Interfaces;
 using AppCore.Application.Wrappers;
+using AppCore.Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +14,7 @@ public class EmployesEndpoint : IEndpointGroupBase {
     public void MapEndpoints(RouteGroupBuilder group, string groupName) {
 
         group.MapGet("", GetAllEmploye)
-            .Produces<Response<List<EmployeEntity>>>();
+            .Produces<Response<PaginationDto<EmployeEntity>>>();
 
         group.MapGet("/{EmployeId}", GetEmployeById)
             .Produces<Response<EmployeEntity>>();
@@ -29,8 +30,18 @@ public class EmployesEndpoint : IEndpointGroupBase {
     }
 
 
-    private static async Task<IResult> GetAllEmploye([FromServices] IMediator mediator) {
-        return Results.Ok(await mediator.Send(new GetAllEmployeQuery()));
+    private static async Task<IResult> GetAllEmploye(
+        [FromServices] IMediator mediator,
+        [FromQuery] int page = 1, 
+        [FromQuery] int pageSize = 10,
+        [FromQuery] string sort = "Id",
+        [FromQuery] bool asc = true) {
+        return Results.Ok(await mediator.Send(new GetAllEmployeQuery { 
+            Page = page, 
+            PageSize = pageSize, 
+            Sort = sort, 
+            Asc = asc 
+        }));
     }
 
     private static async Task<IResult> GetEmployeById([FromServices] IMediator mediator, int employeId) {
