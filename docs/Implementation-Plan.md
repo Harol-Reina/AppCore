@@ -294,7 +294,7 @@
 - [x] **🔴 Agregar step de compilación NativeAOT en pipeline**
 - [x] **🔴 Configurar testing matrix (JIT vs AOT)**
 - [ ] Configurar empaquetado multi-target si necesario
-- [ ] **🔴 Validar publicación pública en GitHub Packages**
+- [x] **🔴 Validar publicación pública en GitHub Packages**
 
 ### 📊 Estado Actual de la Semana 8 (En Progreso)
 **Última actualización:** Enero 25, 2026
