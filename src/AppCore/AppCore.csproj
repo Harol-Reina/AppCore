@@ -76,7 +76,7 @@
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
     <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
     <None Include="rd.xml" Pack="true" PackagePath="build\native\" />
-    <None Include="..\..\build\targets\AppCore.targets" Pack="true" PackagePath="build\" />
+    <None Include="..\..\build\targets\AppCore.targets" Pack="true" PackagePath="build\OrionSoft.AppCore.targets" />
   </ItemGroup>
 
   <ItemGroup>
