@@ -8,7 +8,8 @@ Esta guía proporciona los pasos detallados para configurar el proyecto AppCore 
 - Git instalado localmente
 - .NET 10.0.x SDK instalado
 - **✅ GitHub Packages** (repositorio NuGet público oficial)
-- **⚠️ NuGet.org** (Ya NO se utiliza - migrado completamente a GitHub Packages)
+- **✅ GitHub Packages** (repositorio para publicación)
+- **✅ NuGet.org** (fuente para dependencias públicas)
 
 ## 🚀 Paso 1: Creación del Repositorio en GitHub
 
@@ -58,11 +59,10 @@ El pipeline CI/CD requiere varios secrets y variables de entorno configurados en
 - Tiene permisos para publicar en GitHub Packages
 - Es el método **oficial y recomendado** para AppCore
 
-#### ⚠️ NuGet.org (DEPRECADO - Ya NO se utiliza)
-**IMPORTANTE:** AppCore ha migrado completamente a GitHub Packages como repositorio NuGet público. 
-Ya **NO es necesario** configurar `NUGET_API_KEY` ni usar NuGet.org.
+#### ✅ NuGet.org (Fuente de Dependencias Públicas)
+**IMPORTANTE:** Aunque AppCore se publica en GitHub Packages, **NuGet.org sigue siendo necesario** para descargar dependencias públicas (como `System.Text.Json`, `MediatR`, etc.), a menos que tengas configurado un proxy en tu feed privado.
 
-Si tienes configurado `NUGET_API_KEY` de versiones anteriores, puedes eliminarlo de forma segura.
+Configura `nuget.config` para incluir ambas fuentes. No se requiere API Key de NuGet.org para el pipeline actual (ya que no publicamos allí).
 
 ### 2.3 Configurar Permisos de GitHub Packages
 

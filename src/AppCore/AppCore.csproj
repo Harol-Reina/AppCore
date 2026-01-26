@@ -7,7 +7,9 @@
     <Nullable>enable</Nullable>
     
     <!-- NuGet Package Configuration -->
-    <PackageId>AppCore</PackageId>
+    <PackageId>OrionSoft.AppCore</PackageId>
+    <Product>OrionSoft.AppCore</Product>
+    <AssemblyName>OrionSoft.AppCore</AssemblyName>
     
     <!-- MinVer: Automatic versioning from Git tags -->
     <MinVerTagPrefix>v</MinVerTagPrefix>
