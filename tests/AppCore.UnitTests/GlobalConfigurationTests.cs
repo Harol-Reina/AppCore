@@ -31,7 +31,7 @@ public class GlobalConfigurationTests {
 
         // Assert
         assembly.Should().NotBeNull();
-        assembly.GetName().Name.Should().Be("AppCore");
+        assembly.GetName().Name.Should().Be("OrionSoft.AppCore");
     }
 
     [Fact]
