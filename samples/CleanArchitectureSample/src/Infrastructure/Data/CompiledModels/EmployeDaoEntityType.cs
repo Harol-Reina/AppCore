@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 #pragma warning disable 219, 612, 618
 #nullable disable
 
-namespace App.Infrastructure.Data.CompiledModels
+namespace App.Infrastructure.Data.CompiledModels.AppDbContextModel
 {
     [EntityFrameworkInternal]
     public partial class EmployeDaoEntityType

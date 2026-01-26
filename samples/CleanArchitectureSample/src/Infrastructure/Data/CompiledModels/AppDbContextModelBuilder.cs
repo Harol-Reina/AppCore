@@ -7,12 +7,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 #pragma warning disable 219, 612, 618
 #nullable disable
 
-namespace App.Infrastructure.Data.CompiledModels
+namespace App.Infrastructure.Data.CompiledModels.AppDbContextModel
 {
     public partial class AppDbContextModel
     {
         private AppDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("14a1acfe-8fd5-474c-af3c-2015773c38bb"), entityTypeCount: 1)
+            : base(skipDetectChanges: false, modelId: new Guid("94fb5a56-c17d-40ee-a83b-71a82eec7bee"), entityTypeCount: 1)
         {
         }
 

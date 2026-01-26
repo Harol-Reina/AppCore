@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 #pragma warning disable 219, 612, 618
 #nullable disable
 
-namespace App.Infrastructure.Data.CompiledModels
+namespace App.Infrastructure.Data.CompiledModels.AppDbContextModel
 {
     [DbContext(typeof(AppDbContext))]
     public partial class AppDbContextModel : RuntimeModel
