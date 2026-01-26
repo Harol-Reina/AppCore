@@ -204,32 +204,7 @@ public sealed class GenericRepositoryTests : IDisposable {
         result.Results.Select(r => r.Id).Should().BeEquivalentTo(new[] { 4, 5, 6 });
     }
 
-    [Fact]
-    public void ConvertExpression_WithValidExpression_ShouldConvertSuccessfully() {
-        // Arrange
-        Expression<Func<TestEntity, object>> entityExpression = e => e.Name!;
 
-        // Act
-        var result = _repository.TestConvertExpression(entityExpression);
-
-        // Assert
-        result.Should().NotBeNull();
-        var compiled = result!.Compile();
-        var testDao = new TestDao { Name = "TestName" };
-        var expressionResult = compiled(testDao);
-        expressionResult.Should().Be("TestName");
-    }
-
-    [Fact]
-    public void ConvertExpression_WithInvalidExpression_ShouldThrowArgumentException() {
-        // Arrange
-        Expression<Func<TestEntity, object>> invalidExpression = e => e.ToString()!;
-
-        // Act & Assert
-        var act = () => _repository.TestConvertExpression(invalidExpression);
-        act.Should().Throw<ArgumentException>()
-            .WithMessage("Expression must be a member expression (Parameter 'entityExpression')");
-    }
 
     public void Dispose() {
         _dbContext.Dispose();
@@ -252,9 +227,7 @@ public sealed class GenericRepositoryTests : IDisposable {
             IMappingService<TestDao, TestEntity> daoToEntity)
             : base(dbContext, entityToDao, daoToEntity) { }
 
-        public Expression<Func<TestDao, object>> TestConvertExpression(Expression<Func<TestEntity, object>> entityExpression) {
-            return ConvertExpression(entityExpression);
-        }
+
     }
 
     internal class TestDbContext : DbContext {

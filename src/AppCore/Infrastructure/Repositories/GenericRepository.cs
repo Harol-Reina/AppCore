@@ -31,13 +31,14 @@ public abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(Dynami
     private readonly IMappingService<D, E> _daoToEntity = daoToEntity;
     protected DbSet<D> DbSet => _dbContext.Set<D>();
 
-    public async Task<List<E>?> GetAllAsync(params IEnumerable<Expression<Func<E, object>>>? includes) {
+    public virtual async Task<List<E>?> GetAllAsync(params string[]? includes) {
         IQueryable<D> query = DbSet.AsNoTracking(); ;
         try {
             if (includes is not null) {
                 foreach (var include in includes) {
-                    var daoExpression = ConvertExpression(include);
-                    query = query.Include(daoExpression);
+                    if (!string.IsNullOrWhiteSpace(include)) {
+                        query = query.Include(include);
+                    }
                 }
             }
 
@@ -48,14 +49,15 @@ public abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(Dynami
         }
     }
 
-    public async Task<E?> GetByIdAsync(I id, params IEnumerable<Expression<Func<E, object>>>? includes) {
+    public virtual async Task<E?> GetByIdAsync(I id, params string[]? includes) {
         if (id is null) throw new ArgumentNullException(nameof(id));
         try {
             IQueryable<D> query = DbSet.AsNoTracking();
             if (includes is not null) {
                 foreach (var include in includes) {
-                    var daoExpression = ConvertExpression(include);
-                    query = query.Include(daoExpression);
+                    if (!string.IsNullOrWhiteSpace(include)) {
+                        query = query.Include(include);
+                    }
                 }
             }
             var dao = await query.FirstOrDefaultAsync(
@@ -68,7 +70,7 @@ public abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(Dynami
         }
     }
 
-    public async Task<E> AddAsync(E entity) {
+    public virtual async Task<E> AddAsync(E entity) {
         try {
             var dao = ToDao(entity);
             await DbSet.AddAsync(dao);
@@ -81,7 +83,7 @@ public abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(Dynami
         }
     }
 
-    public async Task<E> UpdateAsync(E entity) {
+    public virtual async Task<E> UpdateAsync(E entity) {
         if (entity.IsNew)
             throw new BadRequestException("Cannot update an entity that hasn't been persisted. Use AddAsync instead.");
 
@@ -102,7 +104,7 @@ public abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(Dynami
         }
     }
 
-    public async Task<bool> DelAsync(I id) {
+    public virtual async Task<bool> DelAsync(I id) {
         if (id is null)
             throw new ArgumentNullException(nameof(id), "Cannot delete an entity with null ID.");
 
@@ -118,15 +120,16 @@ public abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(Dynami
         }
     }
 
-    public async Task<PaginationDto<E>> GetPagedAsync(int page, int pageSize, params IEnumerable<Expression<Func<E, object>>>? includes) {
+    public virtual async Task<PaginationDto<E>> GetPagedAsync(int page, int pageSize, params string[]? includes) {
         try {
             var skip = (page - 1) * pageSize;
             var query = DbSet.AsQueryable();
 
             if (includes is not null) {
                 foreach (var include in includes) {
-                    var daoExpression = ConvertExpression(include);
-                    query = query.Include(daoExpression);
+                    if (!string.IsNullOrWhiteSpace(include)) {
+                        query = query.Include(include);
+                    }
                 }
             }
 
@@ -160,32 +163,6 @@ public abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(Dynami
     protected virtual E ToEntity(D dao)
         => _daoToEntity.Map(dao);
 
-    /// <summary>
-    /// Converts an expression for the entity type to an expression for the DAO type.
-    /// This is used for Include operations in Entity Framework queries.
-    /// AOT-compatible implementation that doesn't rely on AutoMapper reflection.
-    /// </summary>
-    /// <param name="entityExpression">The entity expression to convert</param>
-    /// <returns>The corresponding DAO expression</returns>
-    /// <exception cref="ArgumentException">Thrown when the expression is not a member expression</exception>
-    [RequiresUnreferencedCode("Expression tree creation may require unreferenced code for member access.")]
-    protected virtual Expression<Func<D, object>> ConvertExpression(Expression<Func<E, object>> entityExpression) {
-        // Extract property name from entity expression
-        var memberExpression = entityExpression.Body is UnaryExpression unary
-            ? unary.Operand as MemberExpression
-            : entityExpression.Body as MemberExpression;
 
-        if (memberExpression == null)
-            throw new ArgumentException("Expression must be a member expression", nameof(entityExpression));
-
-        var propertyName = memberExpression.Member.Name;
-
-        // Create lambda expression for DAO with the same property name
-        // This assumes Entity and DAO have matching property names (conventional mapping)
-        var parameter = Expression.Parameter(typeof(D), "d");
-        var property = Expression.Property(parameter, propertyName);
-        var conversion = Expression.Convert(property, typeof(object));
-        return Expression.Lambda<Func<D, object>>(conversion, parameter);
-    }
 }
 

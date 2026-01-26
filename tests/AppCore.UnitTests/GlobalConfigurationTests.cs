@@ -51,13 +51,13 @@ public class GlobalConfigurationTests {
 // Dummy implementation for testing DI registration
 internal class DummyRepository<E, I> : IGenericRepository<E, I>
     where E : AppCore.Domain.Common.BaseEntity<I> {
-    public Task<List<E>?> GetAllAsync(params IEnumerable<System.Linq.Expressions.Expression<Func<E, object>>>? includes)
+    public Task<List<E>?> GetAllAsync(params string[]? includes)
         => Task.FromResult<List<E>?>(new List<E>());
 
-    public Task<AppCore.Application.DTOs.PaginationDto<E>> GetPagedAsync(int page, int pageSize, params IEnumerable<System.Linq.Expressions.Expression<Func<E, object>>>? includes)
+    public Task<AppCore.Application.DTOs.PaginationDto<E>> GetPagedAsync(int page, int pageSize, params string[]? includes)
         => Task.FromResult(new AppCore.Application.DTOs.PaginationDto<E> { Results = [], Count = 0, Pages = 1 });
 
-    public Task<E?> GetByIdAsync(I id, params IEnumerable<System.Linq.Expressions.Expression<Func<E, object>>>? includes)
+    public Task<E?> GetByIdAsync(I id, params string[]? includes)
         => Task.FromResult<E?>(default);
 
     public Task<E> AddAsync(E entity)
