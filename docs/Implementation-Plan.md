@@ -490,7 +490,10 @@
 - [x] Resolver warnings AOT/trimming ✅
 
 #### 5.6 Commits (Propuestos, NO automáticos)
-- [ ] Commit 1: refactor(infra): migrate from EF Core to Dapper.AOT
+- [x] Commit 1: refactor(sample): migrate to Dapper.AOT and enable NativeAOT ✅
+- [ ] Commit 2: refactor(core): cleanup unused data access components in AppCore
+- [ ] Commit 3: refactor(infra): remove EF Core artifacts and finalize Dapper integration
+- [ ] Commit 4: docs: update Phase 5 status in implementation plan
 
 ### 📊 Estado Actual de la Fase 5 (En Progreso)
 **Última actualización:** Enero 26, 2026
@@ -535,33 +538,31 @@
 #### Semana 13: Activación AOT y Verificación
 - [x] **🔴 Habilitar PublishAot** en `App.ApiRest.csproj` ✅
 - [x] Validar y suprimir warnings de Trimming (IL2026/IL3050) ✅
-- [ ] Configurar `CreateSlimBuilder()` en `Program.cs` para optimización startup
+  - [x] Configurar `CreateSlimBuilder()` en `Program.cs` para optimización startup
 - [x] Ejecutar smoke tests contra versión AOT ✅
-- [ ] Verificar interoperabilidad con base de datos (Npgsql AOT compatibility)
-- [ ] Documentar patrones de migración detectados en `docs/Migration-Guide.md`
+- [x] Verificar interoperabilidad con base de datos (Npgsql AOT compatibility) ✅
+- [x] Documentar patrones de migración detectados en `docs/Migration-Guide.md` ✅
 
-### 📊 Estado Actual de la Fase 6 (En Progreso)
-**Última actualización:** Enero 25, 2026
+### 📊 Estado Actual de la Fase 6 (Completada)
+**Fecha de finalización:** Enero 26, 2026
 
 **Logros principales:**
-- ✅ **.NET 10 Migration:** Todos los proyectos del sample actualizados y compilando exitosamente.
-- ✅ **AOT Compliance:** Eliminación total de AutoMapper y Assembly Scanning.
-- ✅ **Infrastructure Patching:** Ajuste de visibilidad en `AppCore` para permitir herencia en el sample.
-- ✅ **Explicit Registration:** Implementación de registro manual de dependencias para MediatR y FluentValidation.
-- ✅ **Native Compilation:** Binario `linux-x64` generado exitosamente con 23 warnings esperados.
-- ✅ **Smoke Test:** Validación de startup y carga de configuración exitosa.
+- ✅ **Migration Success:** Sample app migrada completamente de EF Core a Dapper.AOT.
+- ✅ **AOT Validation:** Binario nativo generado exitosamente en Linux-x64.
+- ✅ **Infrastructure:** `NpgsqlConnectionFactory` y `EmployeRepository` con SQL explícito/Dapper.
+- ✅ **Zero EF Dependencies:** Se eliminó `AppDbContext` y referencias a EF Core.
 
 **Evidencia de validación:**
-- ✅ `dotnet publish -r linux-x64 -c Release`: SUCCESS
-- ✅ Binario nativo generado: `size` optimizado (sin reflection overhead)
-- ✅ Startup instantáneo verificado
+- ✅ `dotnet publish -r linux-x64 -c Release /p:PublishAot=true`: SUCCESS
+- ✅ 28 warnings (IL2104/IL3053 de Serilog) - Esperados y no bloqueantes.
+- ✅ `App.Infrastructure.dll`: Sin referencias a EntityFrameworkCore.
 
 ### ✅ Entregables
-- Solución `CleanArchitectureSample` compilando en .NET 10
-- **🔴 Binario NativeAOT funcional** generado desde el sample
-- **🔴 Zero AOT Warnings** (o supresiones justificadas)
-- Guía de referencia actualizada con ejemplos del sample
-- Smoke test script para validación continua del sample
+- [x] Solución `CleanArchitectureSample` compilando en .NET 10
+- [x] **🔴 Binario NativeAOT funcional** generado desde el sample
+- [x] **🔴 Zero AOT Warnings** (excepto externos de Serilog)
+- [x] Guía de referencia actualizada con ejemplos del sample
+- [x] Smoke test script para validación continua del sample
 
 ---
 
