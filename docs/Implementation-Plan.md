@@ -292,7 +292,7 @@
 - [x] **🔴 Migración completa a GitHub Packages (Configuración Híbrida)** ✅
 - [x] **🔴 Configurar GitHub Packages como repositorio público (Docs updated)** ✅
 - [x] **🔴 Agregar step de compilación NativeAOT en pipeline**
-- [ ] **🔴 Configurar testing matrix (JIT vs AOT)**
+- [x] **🔴 Configurar testing matrix (JIT vs AOT)**
 - [ ] Configurar empaquetado multi-target si necesario
 - [ ] **🔴 Validar publicación pública en GitHub Packages**
 
