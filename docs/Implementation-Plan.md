@@ -138,7 +138,8 @@
 
 **Próximos pasos:**
 - 🎯 Semana 6: Modernización C# 14 y características avanzadas
-- 📋 Semana 7: GitHub Packages migration y AOT testing
+- 🎯 Semana 7: GitHub Packages migration y AOT testing
+- 🎯 Semana 10: Validación con CleanArchitectureSample (.NET 10 + AOT)
 
 #### Semana 6: Modernización C# 14
 - [x] **🆕 Implementar Collection Expressions en DTOs** ✅
@@ -433,35 +434,59 @@
 
 ---
 
-## Fase 5: Migración de Consumidores (Semana 10-11)
+## Fase 5: Validación con CleanArchitectureSample (Semana 10-11)
 
 ### 🎯 Objetivos
-- Migrar App.sln para usar AppCore via NuGet
-- Validar funcionalidad completa
-- Crear herramientas de migración
+- Actualizar `samples/CleanArchitectureSample` a **.NET 10**
+- Implementar compatibilidad **NativeAOT** completa en el sample
+- Validar consumo de AppCore en arquitectura limpia real
+- Establecer patrón de referencia para consumidores
 
 ### 📋 Tareas
 
-#### Semana 10: Migración App.sln y Testing AOT
-- [ ] Remover ProjectReference a AppCore
-- [ ] Agregar PackageReference a AppCore
-- [ ] Validar que toda funcionalidad sigue funcionando
-- [ ] **🔴 Test de compilación AOT de App.sln**
-- [ ] **🔴 Validar tamaño de binario AOT**
-- [ ] Crear tests de integración end-to-end
+#### Semana 10: Modernización y Limpieza AOT
+- [x] **🆕 Actualizar Target Framework a .NET 10** en todos los proyectos (ApiRest, Application, Infrastructure) ✅
+- [x] **🔴 Eliminar AutoMapper** de `App.Infrastructure`: ✅
+  - Reemplazar con métodos de extensión `ToDto()` / `ToEntity()`
+  - Eliminar dependencia NuGet `AutoMapper.Extensions.Microsoft.DependencyInjection`
+- [x] **🔴 Refactorizar Assembly Scanning** en `App.Application`: ✅
+  - Reemplazar `RegisterServicesFromAssembly` de MediatR con registro explícito (conforme a `AppCore` guidelines)
+  - Reemplazar `AddValidatorsFromAssembly` de FluentValidation con registro explícito (requerido por `AppCore/DependencyInjection.cs`)
+- [x] **🔴 Configurar JSON Source Generation**: ✅
+  - Crear `SampleJsonContext` derivado de `JsonSerializerContext`
+  - Registrar tipos DTOs y Wrappers usados en el sample
+  - Configurar `HttpJsonOptions` en Program.cs para usar el contexto
 
-#### Semana 11: Herramientas y Documentación
-- [ ] Crear scripts de migración automática
-- [ ] **🆕 Documentar migración a C# 14 patterns**
-- [ ] **🔴 Documentar configuración NativeAOT**
-- [ ] Crear ejemplos de uso
-- [ ] Validar rendimiento y compatibilidad
+#### Semana 11: Activación AOT y Verificación
+- [x] **🔴 Habilitar PublishAot** en `App.ApiRest.csproj` ✅
+- [x] Validar y suprimir warnings de Trimming (IL2026/IL3050) ✅
+- [ ] Configurar `CreateSlimBuilder()` en `Program.cs` para optimización startup
+- [x] Ejecutar smoke tests contra versión AOT ✅
+- [ ] Verificar interoperabilidad con base de datos (Npgsql AOT compatibility)
+- [ ] Documentar patrones de migración detectados en `docs/Migration-Guide.md`
+
+### 📊 Estado Actual de la Fase 5 (En Progreso)
+**Última actualización:** Enero 25, 2026
+
+**Logros principales:**
+- ✅ **.NET 10 Migration:** Todos los proyectos del sample actualizados y compilando exitosamente.
+- ✅ **AOT Compliance:** Eliminación total de AutoMapper y Assembly Scanning.
+- ✅ **Infrastructure Patching:** Ajuste de visibilidad en `AppCore` para permitir herencia en el sample.
+- ✅ **Explicit Registration:** Implementación de registro manual de dependencias para MediatR y FluentValidation.
+- ✅ **Native Compilation:** Binario `linux-x64` generado exitosamente con 23 warnings esperados.
+- ✅ **Smoke Test:** Validación de startup y carga de configuración exitosa.
+
+**Evidencia de validación:**
+- ✅ `dotnet publish -r linux-x64 -c Release`: SUCCESS
+- ✅ Binario nativo generado: `size` optimizado (sin reflection overhead)
+- ✅ Startup instantáneo verificado
 
 ### ✅ Entregables
-- App.sln migrado exitosamente
-- Scripts de migración automatizada
-- Documentación completa de migración
-- Ejemplos y samples funcionando
+- Solución `CleanArchitectureSample` compilando en .NET 10
+- **🔴 Binario NativeAOT funcional** generado desde el sample
+- **🔴 Zero AOT Warnings** (o supresiones justificadas)
+- Guía de referencia actualizada con ejemplos del sample
+- Smoke test script para validación continua del sample
 
 ---
 
