@@ -301,7 +301,10 @@ public abstract class HttpService(HttpClient httpClient,
         var errorContext = new Dictionary<string, object> {
             { "TraceId", traceId },
             { "Endpoint", endpoint },
-            { "HttpResponse", httpResponse }
+            { "StatusCode", httpResponse.StatusCode },
+            { "ElapsedMilliseconds", httpResponse.Time },
+            { "ErrorMessage", httpResponse.ErrorMessage ?? "None" },
+            { "Response", httpResponse.Response ?? JsonDocument.Parse("{}") }
         };
 
         var errorMessage = JsonExtend.Serialize(errorContext);

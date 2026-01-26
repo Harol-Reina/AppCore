@@ -14,13 +14,25 @@ namespace AppCore.Application.Extensions;
 
 public static class JsonExtend {
 
-    private static readonly AppCoreJsonContext _jsonContext = new(new JsonSerializerOptions {
+    /// <summary>
+    /// Global JsonSerializerOptions used by JsonExtend.
+    /// Configure this at application startup to add custom TypeInfoResolvers (JsonSerializerContexts).
+    /// </summary>
+    public static JsonSerializerOptions Options { get; set; } = new(new JsonSerializerOptions {
         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         WriteIndented = true,
         PropertyNameCaseInsensitive = true
     });
+
+    // Static constructor to ensure default context is registered if needed
+    static JsonExtend() {
+        // Ensure the internal AppCore context is added by default if not already present in the chain
+        // Note: When creating new options above, since it's "new", it doesn't have the context.
+        // We must add AppCoreJsonContext to it.
+        Options.TypeInfoResolverChain.Add(AppCoreJsonContext.Default);
+    }
 
     /// <summary>
     /// Converts an object to a JsonDocument using AOT-compatible serialization.
@@ -34,7 +46,7 @@ public static class JsonExtend {
             return value switch {
                 JsonDocument doc => doc,
                 string str => ParseFromStringOrWrap(str),
-                _ => JsonDocument.Parse(JsonSerializer.Serialize(value, value.GetType(), _jsonContext))
+                _ => JsonDocument.Parse(JsonSerializer.Serialize(value, value.GetType(), Options))
             };
         } catch (Exception ex) {
             throw new SerializerException(ex);
@@ -54,7 +66,7 @@ public static class JsonExtend {
         // Esto es útil si el input es un valor simple o una cadena que no es un JSON válido.
         // Por ejemplo, si input es "Hello World", lo convertirá a {"value": "Hello World"}
         var wrapper = new Dictionary<string, object> { { "value", input } };
-        string wrapped = JsonSerializer.Serialize(wrapper, typeof(Dictionary<string, object>), _jsonContext);
+        string wrapped = JsonSerializer.Serialize(wrapper, typeof(Dictionary<string, object>), Options);
         return JsonDocument.Parse(wrapped);
     }
 
@@ -68,7 +80,7 @@ public static class JsonExtend {
     public static T FromJsonDocument<T>(this JsonDocument jsonDocument) {
         try {
             string jsonString = jsonDocument.RootElement.GetRawText();
-            return (T)JsonSerializer.Deserialize(jsonString, typeof(T), _jsonContext)!;
+            return (T)JsonSerializer.Deserialize(jsonString, typeof(T), Options)!;
         } catch (JsonException) {
             throw new ArgumentException("Invalid JSON string.");
         }
@@ -91,7 +103,7 @@ public static class JsonExtend {
                                       [CallerLineNumber] int sourceLineNumber = 0) {
         try {
             // Use the AOT-compatible JsonSerializerContext for serialization
-            return JsonSerializer.Serialize(value, typeof(T), _jsonContext);
+            return JsonSerializer.Serialize(value, typeof(T), Options);
         } catch (Exception ex) {
             throw new SerializerException(ex, memberName, sourceFilePath, sourceLineNumber);
         }
@@ -114,7 +126,7 @@ public static class JsonExtend {
         if (string.IsNullOrWhiteSpace(value)) return default;
         try {
             // Use the AOT-compatible JsonSerializerContext for deserialization
-            return (T?)JsonSerializer.Deserialize(value, typeof(T), _jsonContext);
+            return (T?)JsonSerializer.Deserialize(value, typeof(T), Options);
         } catch (Exception ex) {
             throw new SerializerException(ex, memberName, sourceFilePath, sourceLineNumber);
         }

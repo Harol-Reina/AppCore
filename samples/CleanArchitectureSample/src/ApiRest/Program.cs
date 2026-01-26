@@ -28,11 +28,24 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<JsonSerializerOptions>(provider => {
     var options = new JsonSerializerOptions(JsonSerializerDefaults.Web) {
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault | JsonIgnoreCondition.WhenWritingNull,
+        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        PropertyNameCaseInsensitive = true
     };
     options.TypeInfoResolverChain.Insert(0, SampleJsonContext.Default);
     options.TypeInfoResolverChain.Add(AppCore.Application.Serialization.AppCoreJsonContext.Default);
+    
     return options;
 });
+
+// Configure AppCore to use the same options globally
+var globalOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web) {
+    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault | JsonIgnoreCondition.WhenWritingNull,
+    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+    PropertyNameCaseInsensitive = true
+};
+globalOptions.TypeInfoResolverChain.Insert(0, SampleJsonContext.Default);
+globalOptions.TypeInfoResolverChain.Add(AppCore.Application.Serialization.AppCoreJsonContext.Default);
+JsonExtend.Options = globalOptions;
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
