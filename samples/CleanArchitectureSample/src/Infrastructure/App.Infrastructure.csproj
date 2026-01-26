@@ -8,7 +8,7 @@
     <Authors>Harol A. Reina</Authors>
     <Company>Seguros TúPrimero Ltda</Company>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>1591</NoWarn>
+    <NoWarn>1591;CS9270</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
