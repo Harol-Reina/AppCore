@@ -13,7 +13,11 @@ public class EmployeMappingService : IMappingService<EmployeEntity, EmployeDao>,
             Id = source.Id, 
             Name = source.Name,
             Email = source.Email,
-            Phone = source.Phone
+            Phone = source.Phone,
+            CreatedAt = source.CreatedAt ?? DateTime.Now,
+            CreatedBy = source.CreatedBy,
+            UpdatedAt = source.UpdatedAt,
+            UpdatedBy = source.UpdatedBy
         };
     }
 
@@ -24,7 +28,11 @@ public class EmployeMappingService : IMappingService<EmployeEntity, EmployeDao>,
             Id = source.Id,
             Name = source.Name,
             Email = source.Email,
-            Phone = source.Phone
+            Phone = source.Phone,
+            CreatedAt = source.CreatedAt,
+            CreatedBy = source.CreatedBy,
+            UpdatedAt = source.UpdatedAt,
+            UpdatedBy = source.UpdatedBy
         };
     }
 
