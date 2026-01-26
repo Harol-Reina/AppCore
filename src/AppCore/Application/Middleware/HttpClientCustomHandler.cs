@@ -3,10 +3,11 @@ using AppCore.Application.Extensions;
 using AppCore.Application.Wrappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging; // Added this using statement for ILogger
 
 namespace AppCore.Application.Middleware;
 
-internal class HttpClientCustomHandler(RequestDelegate next) {
+public class HttpClientCustomHandler(RequestDelegate next) {
 
     private readonly RequestDelegate _next = next;
 

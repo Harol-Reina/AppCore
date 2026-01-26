@@ -19,7 +19,7 @@ namespace AppCore.Infrastructure.Repositories;
 /// <typeparam name="I">The ID type</typeparam>
 /// <typeparam name="D">The DAO type</typeparam>
 [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "D type parameter is annotated with DynamicallyAccessedMembers to preserve properties.")]
-internal abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] D>(
+public abstract class GenericRepository<E, I, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] D>(
     DbContext dbContext,
     IMappingService<E, D> entityToDao,
     IMappingService<D, E> daoToEntity) : IGenericRepository<E, I>

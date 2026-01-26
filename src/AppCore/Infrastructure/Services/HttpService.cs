@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AppCore.Infrastructure.Services;
 
-internal abstract class HttpService(HttpClient httpClient,
+public abstract class HttpService(HttpClient httpClient,
                                   ICurrentUserService currentUserService,
                                   ILogger logger,
                                   IHttpRequestRepository? httpRequestRepository = null) {

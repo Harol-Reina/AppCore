@@ -2,7 +2,7 @@
 
 namespace AppCore.Infrastructure.Data.DAOs.Common;
 
-internal abstract class AuditableBaseDao {
+public abstract class AuditableBaseDao {
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime CreatedAt { get; set; } = DateTime.Now;
