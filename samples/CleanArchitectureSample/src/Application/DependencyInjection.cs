@@ -17,24 +17,12 @@ public static class DependencyInjection {
     public static void AddApplication(this IServiceCollection services) {
         services.AddCoreApplication();
         
+        // MediatR
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
+        
         // Validators
         services.AddTransient<IValidator<EmployeRequestDto>, EmployeRequestDtoValidator>();
         services.AddTransient<IValidator<EditEmployeCommand>, EditEmployeCommandValidator>();
         services.AddTransient<IValidator<AddEmployeCommand>, AddEmployeServiceValidator>();
-
-        // Manual MediatR Registration (AOT-Compatible)
-
-        services.AddTransient<IMediator, Mediator>();
-        services.AddTransient<ISender>(sp => sp.GetRequiredService<IMediator>());
-        services.AddTransient<IPublisher>(sp => sp.GetRequiredService<IMediator>());
-
-        // Handlers were explicitly registered below
-        
-        services.AddTransient<IRequestHandler<AddEmployeCommand, Response<EmployeResponseDto>>, AddEmployeCommandHandler>();
-        services.AddTransient<IRequestHandler<EditEmployeCommand, Response<EmployeEntity>>, EditEmployeCommandHandler>();
-        services.AddTransient<IRequestHandler<DeleteEmployeCommand, Response<bool>>, DeleteEmployeCommandHandler>();
-        services.AddTransient<IRequestHandler<GetAllEmployeQuery, Response<List<EmployeResponseDto>>>, GetAllEmployeQueryHandler>();
-        services.AddTransient<IRequestHandler<GetByIdEmployeQuery, Response<EmployeResponseDto>>, GetByIdEmployeQueryHandler>();
-        services.AddTransient<IRequestHandler<GetAllPokemonQuery, Response<List<PokemonEntity>>>, GetAllPokemonQueryHandler>();
     }
 }

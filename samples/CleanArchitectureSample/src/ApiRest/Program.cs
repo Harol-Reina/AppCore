@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using App.Application.Common;
 using AppCore.Application.Utils;
 using AppCore.Application.Extensions;
@@ -22,6 +23,17 @@ builder.Host.UseSerilog(
     );
 
 builder.Services.AddHttpContextAccessor();
+
+// Configurar JsonSerializerOptions como singleton para que AppCore lo use
+builder.Services.AddSingleton<JsonSerializerOptions>(provider => {
+    var options = new JsonSerializerOptions(JsonSerializerDefaults.Web) {
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault | JsonIgnoreCondition.WhenWritingNull,
+    };
+    options.TypeInfoResolverChain.Insert(0, SampleJsonContext.Default);
+    options.TypeInfoResolverChain.Add(AppCore.Application.Serialization.AppCoreJsonContext.Default);
+    return options;
+});
+
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 
@@ -29,10 +41,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerExtension();
 
 builder.Services.ConfigureHttpJsonOptions(options => {
-    options.SerializerOptions.DefaultIgnoreCondition
-        = JsonIgnoreCondition.WhenWritingDefault | JsonIgnoreCondition.WhenWritingNull;
-    options.SerializerOptions.TypeInfoResolverChain.Insert(0, SampleJsonContext.Default);
+    var jsonOptions = options.SerializerOptions;
+    jsonOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault | JsonIgnoreCondition.WhenWritingNull;
+    jsonOptions.TypeInfoResolverChain.Insert(0, SampleJsonContext.Default);
+    jsonOptions.TypeInfoResolverChain.Add(AppCore.Application.Serialization.AppCoreJsonContext.Default);
 });
+
 builder.Services.AddCorsExtension();
 builder.Services.AddHealthChecks();
 

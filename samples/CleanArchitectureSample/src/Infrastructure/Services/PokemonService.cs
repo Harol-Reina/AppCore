@@ -24,7 +24,7 @@ public class PokemonService : HttpService, IPokeService {
         };
 
         var result = await ExecuteGetAsync<PokemonResponse>(
-            $"api/v2/pokemon/",
+            $"pokemon/",
             headers);
         return result.Results;
     }

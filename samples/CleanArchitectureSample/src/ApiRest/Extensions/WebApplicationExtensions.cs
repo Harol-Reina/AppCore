@@ -1,25 +1,22 @@
-using System.Reflection;
+using App.ApiRest.EndPoinds;
 using AppCore.Application.Interfaces;
 
 namespace App.ApiRest.Extensions;
 
 public static class WebApplicationExtensions {
     public static void MapEndpoints(this WebApplication app) {
-        var interfaceType = typeof(IEndpointGroupBase);
-        var endpointGroupTypes = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(t => interfaceType.IsAssignableFrom(t) && t.IsClass && !t.IsAbstract);
-
-        foreach (var type in endpointGroupTypes) {
-            if (Activator.CreateInstance(type) is IEndpointGroupBase instance) {
-                var groupName = GetGroupName(type.Name);
-                var routeGroup = app.MapGroup($"/api/v1/{groupName.ToLower()}");
-                instance.MapEndpoints(routeGroup, groupName);
-            }
-        }
+        // Explicit registration is required for AOT compatibility
+        app.MapGroupInner<EmployesEndpoint>();
+        app.MapGroupInner<PokemonsEndpoint>();
     }
 
-    private static string GetGroupName(string typeName) {
+    private static void MapGroupInner<T>(this WebApplication app) where T : IEndpointGroupBase, new() {
+        var instance = new T();
+        var typeName = typeof(T).Name;
         var groupName = typeName.Replace("Endpoint", "");
-        return groupName;
+        var routeGroup = app.MapGroup($"/api/v1/{groupName.ToLower()}");
+        instance.MapEndpoints(routeGroup, groupName);
     }
+
+
 }

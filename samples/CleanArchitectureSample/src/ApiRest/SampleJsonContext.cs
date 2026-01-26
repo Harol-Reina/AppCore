@@ -1,9 +1,10 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using App.Application.DTOs.Request;
 using App.Application.DTOs.Response;
 using App.Application.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using AppCore.Application.Wrappers;
+using App.Application.Features.Employes.Command;
 
 namespace App.ApiRest;
 
@@ -13,6 +14,8 @@ namespace App.ApiRest;
 [JsonSerializable(typeof(Response<List<EmployeEntity>>))]
 [JsonSerializable(typeof(Response<bool>))]
 [JsonSerializable(typeof(Response<List<PokemonEntity>>))]
+[JsonSerializable(typeof(HttpResponse<PokemonResponse>))]
+[JsonSerializable(typeof(PokemonResponse))]
 [JsonSerializable(typeof(EmployeRequestDto))]
 [JsonSerializable(typeof(EmployeResponseDto))]
 [JsonSerializable(typeof(EmployeEntity))]
@@ -22,6 +25,8 @@ namespace App.ApiRest;
 [JsonSerializable(typeof(ErrorResponse))]
 [JsonSerializable(typeof(CustomErrorResponse))]
 [JsonSerializable(typeof(MappingErrorResponse))]
+[JsonSerializable(typeof(AddEmployeCommand))]
+[JsonSerializable(typeof(EditEmployeCommand))]
 public partial class SampleJsonContext : JsonSerializerContext
 {
 }

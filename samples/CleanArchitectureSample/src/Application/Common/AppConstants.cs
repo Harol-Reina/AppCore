@@ -26,7 +26,7 @@ public static class AppConstants {
 
     public static void Init() {
         if (envErrors.Count > 0)
-            throw new OperationException($"Missing required environment variables: <<{string.Join(", ", envErrors)}>>");
+            throw new OperationException($"Missing required environment variables: {string.Join(", ", envErrors)}");
     }
 
 }
