@@ -491,11 +491,11 @@
 
 #### 5.6 Commits (Propuestos, NO automáticos)
 - [x] Commit 1: refactor(sample): migrate to Dapper.AOT and enable NativeAOT ✅
-- [ ] Commit 2: refactor(core): cleanup unused data access components in AppCore
-- [ ] Commit 3: refactor(infra): remove EF Core artifacts and finalize Dapper integration
-- [ ] Commit 4: docs: update Phase 5 status in implementation plan
+- [x] Commit 2: refactor(core): cleanup unused data access components in AppCore ✅
+- [x] Commit 3: refactor(infra): remove EF Core artifacts and finalize Dapper integration ✅
+- [x] Commit 4: docs: update Phase 5 status in implementation plan ✅
 
-### 📊 Estado Actual de la Fase 5 (En Progreso)
+### 📊 Estado Actual de la Fase 5 (Completada)
 **Última actualización:** Enero 26, 2026
 
 **Logros principales:**
@@ -503,6 +503,7 @@
 - ✅ **Dapper Integrado:** Arquitectura base con `IDbConnectionFactory` y `Npgsql`.
 - ✅ **AOT Compliance:** Eliminadas barreras principales de AOT (EF Core reflection, dynamic includes).
 - ✅ **Tests Estabilizados:** UnitTests y SpecFlow recompilados y pasando sin dependencias de EF.
+- ✅ **AuditableExtensions:** Movido a AppCore para reutilización.
 
 ### ✅ Entregables
 - [x] Impact Report
