@@ -17,8 +17,10 @@ namespace App.Infrastructure;
 public static class DependencyInjection {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services) {
         services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(AppConstants.DefaultConnection, builder =>
-                builder.MigrationsHistoryTable("__EFMigrationsHistory", AppConstants.SchemaDB)));
+            options
+                .UseModel(App.Infrastructure.Data.CompiledModels.AppDbContextModel.Instance)
+                .UseNpgsql(AppConstants.DefaultConnection, builder =>
+                    builder.MigrationsHistoryTable("__EFMigrationsHistory", AppConstants.SchemaDB)));
 
 
         services.AddSingleton<EmployeMappingService>();

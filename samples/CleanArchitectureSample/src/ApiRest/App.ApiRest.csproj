@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <PublishAot>true</PublishAot>
+    <!-- <PublishAot>true</PublishAot> -->
     <Version>1.0.0</Version>
     <Authors>Harol A. Reina</Authors>
     <Company>Seguros TúPrimero Ltda</Company>
