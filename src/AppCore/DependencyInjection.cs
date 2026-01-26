@@ -1,7 +1,6 @@
 ﻿using AppCore.Application.Behaviours;
 using AppCore.Application.Interfaces;
 
-using AppCore.Infrastructure.Data;
 using AppCore.Infrastructure.Services;
 using FluentValidation;
 using MediatR;
@@ -37,7 +36,6 @@ public static class DependencyInjection {
         services.AddTransient<IDateTimeService, DateTimeService>();
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
-        services.AddSingleton<IDbConnectionFactory, NpgsqlConnectionFactory>();
         #endregion
 
         return services;
