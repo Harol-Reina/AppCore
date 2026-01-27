@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using App.Application.Domain.Entities;
 using App.Application.Common;
 using App.Application.Interfaces;
@@ -69,7 +69,7 @@ public class EmployeRepository(IDbConnectionFactory connectionFactory,
         var sql = $@"
             UPDATE {TableName} 
             SET Name = @Name, Email = @Email, Phone = @Phone, UpdatedAt = @UpdatedAt, UpdatedBy = @UpdatedBy
-            WHERE Id = @Id";
+            WHERE id = @Id";
             
         await db.ExecuteAsync(sql, dao);
         return _toEntity.Map(dao);

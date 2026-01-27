@@ -3,7 +3,8 @@ using AppCore.Infrastructure.Data.DAOs.Common;
 
 namespace App.Infrastructure.Data.DAOs;
 
-public class HttpAuditDao : BaseDao<int>, IAuditableBaseDao {
+public class HttpAuditDao : IBaseDao<int> {
+    public int Id { get; set; }
     public Guid TraceId { get; set; }
     public string Endpoint { get; set; } = null!;
     public JsonDocument? Headers { get; set; }
