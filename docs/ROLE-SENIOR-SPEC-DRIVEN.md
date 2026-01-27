@@ -107,7 +107,8 @@ Durante la Fase 5, aplican **reglas adicionales**:
 - **Entidades y DAOs**:
   - ✅ POCOs puros (Plain Old CLR Objects).
   - ❌ PROHIBIDO usar DataAnnotations (`[Key]`, `[Required]`, `[Table]`) para mapeo o validación.
-  - ✅ El mapeo se basa en coincidencia de nombres de columnas SQL.
+  - ❌ PROHIBIDO heredar de clases base (BaseDao, etc.). Usar Interfaces (`IBaseDao`, `IAuditableBaseDao`).
+  - ✅ El mapeo se basa en coincidencia de nombres de columnas SQL (Case Sensitive).
 - **Validación**:
   - ✅ Usar **FluentValidation** para todas las reglas de negocio y validación de entrada.
   - ❌ Nunca validar en el nivel de DAO/Entidad.
