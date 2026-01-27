@@ -103,6 +103,19 @@ Durante la Fase 5, aplican **reglas adicionales**:
 - ✅ ORDER BY y filtros con whitelist
 - ✅ Diseño compatible con NativeAOT
 
+#### Reglas para Acceso a Datos (Dapper + AOT)
+- **Entidades y DAOs**:
+  - ✅ POCOs puros (Plain Old CLR Objects).
+  - ❌ PROHIBIDO usar DataAnnotations (`[Key]`, `[Required]`, `[Table]`) para mapeo o validación.
+  - ✅ El mapeo se basa en coincidencia de nombres de columnas SQL.
+- **Validación**:
+  - ✅ Usar **FluentValidation** para todas las reglas de negocio y validación de entrada.
+  - ❌ Nunca validar en el nivel de DAO/Entidad.
+- **Repositorios**:
+  - ✅ Usar `IDbConnectionFactory` para la gestión de conexiones.
+  - ✅ Usar atributos `[DapperAot]` en métodos que ejecuten queries.
+  - ✅ Mapeo manual o vía `IMappingService`, evitando automappers basados en reflexión.
+
 #### Arquitectura
 - Clean Architecture estricta:
   - Application no depende de Infrastructure
