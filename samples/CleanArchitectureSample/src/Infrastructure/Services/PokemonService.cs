@@ -5,6 +5,7 @@ using App.Application.DTOs.Response;
 using App.Application.Interfaces.Services;
 using AppCore.Application.Extensions;
 using AppCore.Application.Interfaces;
+using AppCore.Domain.Interfaces;
 using AppCore.Infrastructure.Services;
 using Microsoft.Extensions.Logging;
 
@@ -13,7 +14,8 @@ namespace App.Infrastructure.Services;
 public class PokemonService : HttpService, IPokeService {
     public PokemonService(HttpClient httpClient,
                           ICurrentUserService currentUserService,
-                          ILogger<PokemonService> logger) : base(httpClient, currentUserService, logger) {
+                          IHttpRequestRepository httpRequestRepository,
+                          ILogger<PokemonService> logger) : base(httpClient, currentUserService, logger, httpRequestRepository) {
         httpClient.BaseAddress = new Uri(AppConstants.PokemonHost);
     }
 

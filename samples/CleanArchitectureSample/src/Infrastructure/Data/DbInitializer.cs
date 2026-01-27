@@ -29,6 +29,23 @@ public class DbInitializer(IDbConnectionFactory connectionFactory, ILogger<DbIni
                     UpdatedAt TIMESTAMP,
                     UpdatedBy TEXT
                 );
+
+                CREATE TABLE IF NOT EXISTS {schema}.HttpAudit (
+                    Id SERIAL PRIMARY KEY,
+                    TraceId UUID NOT NULL,
+                    Endpoint TEXT NOT NULL,
+                    Headers JSONB,
+                    Method TEXT NOT NULL,
+                    StatusCode INTEGER,
+                    ElapsedMilliseconds BIGINT NOT NULL,
+                    Body JSONB,
+                    Response JSONB,
+                    InternalError TEXT,
+                    CreatedAt TIMESTAMP NOT NULL,
+                    CreatedBy TEXT,
+                    UpdatedAt TIMESTAMP,
+                    UpdatedBy TEXT
+                );
             ";
 
             await connection.ExecuteAsync(sql);

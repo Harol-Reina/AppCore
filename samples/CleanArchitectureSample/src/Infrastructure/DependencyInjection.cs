@@ -9,6 +9,8 @@ using App.Infrastructure.Mappings;
 using App.Application.Domain.Entities;
 using App.Infrastructure.Data.DAOs;
 using AppCore.Application.Interfaces;
+using AppCore.Domain.Entities.Integrators;
+using AppCore.Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace App.Infrastructure;
@@ -19,11 +21,18 @@ public static class DependencyInjection {
 
 
         services.AddSingleton<EmployeMappingService>();
+        services.AddSingleton<HttpAuditMappingService>();
+        
         services.AddSingleton<IDbConnectionFactory, NpgsqlConnectionFactory>();
+        
         services.AddSingleton<IMappingService<EmployeEntity, EmployeDao>>(sp => sp.GetRequiredService<EmployeMappingService>());
         services.AddSingleton<IMappingService<EmployeDao, EmployeEntity>>(sp => sp.GetRequiredService<EmployeMappingService>());
+        
+        services.AddSingleton<IMappingService<HttpAuditEntity, HttpAuditDao>>(sp => sp.GetRequiredService<HttpAuditMappingService>());
+        services.AddSingleton<IMappingService<HttpAuditDao, HttpAuditEntity>>(sp => sp.GetRequiredService<HttpAuditMappingService>());
 
         services.AddScoped<IEmployeRepository, EmployeRepository>();
+        services.AddScoped<IHttpRequestRepository, HttpRequestRepository>();
         services.AddTransient<DbInitializer>();
 
         services.AddHttpClient<PokemonService>();
