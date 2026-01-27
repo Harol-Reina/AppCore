@@ -115,13 +115,14 @@ public class MessageLogTests {
         result.Should().Contain("\"path\": \"/api/data\"");
     }
 
-    [Fact(Skip = "Anonymous types not supported in AOT source generation. Requires concrete type registration.")]
+    [Fact]
     public void MessageLog_ToString_WithComplexMessage_ShouldSerializeCorrectly() {
         // Arrange
-        var messageData = new {
-            ErrorCode = "ERR001",
-            UserAction = "Login",
-            RequestId = Guid.NewGuid()
+        var requestId = Guid.NewGuid();
+        var messageData = new Dictionary<string, object> {
+            { "errorCode", "ERR001" },
+            { "userAction", "Login" },
+            { "requestId", requestId }
         };
 
         var messageLog = new MessageLog {

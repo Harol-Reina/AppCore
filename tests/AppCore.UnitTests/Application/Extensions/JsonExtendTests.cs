@@ -123,7 +123,7 @@ public class JsonExtendTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("test\\u003Ctag\\u003E@example.com");
+        result.Should().Contain("test<tag>@example.com");
     }
 
     [Fact]

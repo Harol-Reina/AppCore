@@ -2,7 +2,7 @@
 using AppCore.Application.Interfaces;
 using AppCore.Domain.Common;
 using AppCore.Domain.Interfaces;
-using AppCore.Infrastructure.Repositories;
+
 using AppCore.Infrastructure.Services;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -286,11 +286,11 @@ public class DependencyInjectionStepDefinitions {
         public Task<TEntity> AddAsync(TEntity entity) => Task.FromResult(entity);
         public Task<TEntity> UpdateAsync(TEntity entity) => Task.FromResult(entity);
         public Task<bool> DelAsync(TId id) => Task.FromResult(true);
-        public Task<TEntity?> GetByIdAsync(TId id, params IEnumerable<System.Linq.Expressions.Expression<Func<TEntity, object>>>? includes)
+        public Task<TEntity?> GetByIdAsync(TId id)
             => Task.FromResult<TEntity?>(null);
-        public Task<List<TEntity>?> GetAllAsync(params IEnumerable<System.Linq.Expressions.Expression<Func<TEntity, object>>>? includes)
+        public Task<List<TEntity>?> GetAllAsync()
             => Task.FromResult<List<TEntity>?>(new List<TEntity>());
-        public Task<AppCore.Application.DTOs.PaginationDto<TEntity>> GetPagedAsync(int page, int pageSize, params IEnumerable<System.Linq.Expressions.Expression<Func<TEntity, object>>>? includes)
+        public Task<AppCore.Application.DTOs.PaginationDto<TEntity>> GetPagedAsync(int page, int pageSize)
             => Task.FromResult(new AppCore.Application.DTOs.PaginationDto<TEntity>());
     }
 }

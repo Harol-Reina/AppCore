@@ -99,13 +99,13 @@ public class HttpResponseTests {
         result.Should().Contain("\"errorMessage\": \"Bad request error\"");
     }
 
-    [Fact(Skip = "Anonymous types not supported in AOT source generation. Requires concrete type registration.")]
+    [Fact]
     public void HttpResponse_WithComplexData_ShouldSerializeCorrectly() {
         // Arrange
-        var complexData = new {
-            Id = 123,
-            Name = "Test User",
-            Items = new[] { "Item1", "Item2" }
+        var complexData = new Dictionary<string, object> {
+            { "id", 123 },
+            { "name", "Test User" },
+            { "items", new[] { "Item1", "Item2" } }
         };
         var httpResponse = new HttpResponse<object>(HttpStatusCode.Created, 250L) {
             Data = complexData

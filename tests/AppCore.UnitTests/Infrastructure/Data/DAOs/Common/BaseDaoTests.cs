@@ -4,33 +4,38 @@ using Xunit;
 
 namespace AppCore.UnitTests.Infrastructure.Data.DAOs.Common;
 
-internal class TestDao : BaseDao<int> {
+internal class TestDao : IBaseDao<int> {
+    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
+    public string? CreatedBy { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public string? UpdatedBy { get; set; }
 }
 
-internal class TestDaoGuid : BaseDao<Guid> {
+internal class TestDaoGuid : IBaseDao<Guid> {
+    public Guid Id { get; set; }
     public string Description { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
+    public string? CreatedBy { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public string? UpdatedBy { get; set; }
 }
 
-internal class TestDaoString : BaseDao<string> {
+internal class TestDaoString : IBaseDao<string> {
+    public string? Id { get; set; }
     public int Value { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public string? CreatedBy { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public string? UpdatedBy { get; set; }
 }
 
 public class BaseDaoTests {
     [Fact]
-    public void IsNew_WithNullId_ShouldReturnTrue() {
-        // Arrange
-        var dao = new TestDao();
-
-        // Act & Assert
-        dao.IsNew.Should().BeTrue();
-        dao.Id.Should().Be(0); // For int, default is 0, not null
-    }
-
-    [Fact]
     public void IsNew_WithDefaultIntId_ShouldReturnTrue() {
         // Arrange
-        var dao = new TestDao { Id = 0 }; // Default int value
+        IBaseDao<int> dao = new TestDao { Id = 0 }; // Default int value is 0
 
         // Act & Assert
         dao.IsNew.Should().BeTrue();
@@ -39,7 +44,7 @@ public class BaseDaoTests {
     [Fact]
     public void IsNew_WithValidIntId_ShouldReturnFalse() {
         // Arrange
-        var dao = new TestDao { Id = 123 };
+        IBaseDao<int> dao = new TestDao { Id = 123 };
 
         // Act & Assert
         dao.IsNew.Should().BeFalse();
@@ -48,7 +53,7 @@ public class BaseDaoTests {
     [Fact]
     public void IsNew_WithDefaultGuidId_ShouldReturnTrue() {
         // Arrange
-        var dao = new TestDaoGuid { Id = Guid.Empty }; // Default Guid value
+        IBaseDao<Guid> dao = new TestDaoGuid { Id = Guid.Empty }; // Default Guid value
 
         // Act & Assert
         dao.IsNew.Should().BeTrue();
@@ -57,7 +62,7 @@ public class BaseDaoTests {
     [Fact]
     public void IsNew_WithValidGuidId_ShouldReturnFalse() {
         // Arrange
-        var dao = new TestDaoGuid { Id = Guid.NewGuid() };
+        IBaseDao<Guid> dao = new TestDaoGuid { Id = Guid.NewGuid() };
 
         // Act & Assert
         dao.IsNew.Should().BeFalse();
@@ -66,7 +71,7 @@ public class BaseDaoTests {
     [Fact]
     public void IsNew_WithNullStringId_ShouldReturnTrue() {
         // Arrange
-        var dao = new TestDaoString { Id = null };
+        IBaseDao<string> dao = new TestDaoString { Id = null };
 
         // Act & Assert
         dao.IsNew.Should().BeTrue();
@@ -75,7 +80,7 @@ public class BaseDaoTests {
     [Fact]
     public void IsNew_WithEmptyStringId_ShouldReturnFalse() {
         // Arrange
-        var dao = new TestDaoString { Id = "" }; // Empty string is not default for string
+        IBaseDao<string> dao = new TestDaoString { Id = "" }; // Empty string is not default for string type (if nullable)
 
         // Act & Assert
         dao.IsNew.Should().BeFalse();
@@ -84,23 +89,24 @@ public class BaseDaoTests {
     [Fact]
     public void IsNew_WithValidStringId_ShouldReturnFalse() {
         // Arrange
-        var dao = new TestDaoString { Id = "test-id" };
+        IBaseDao<string> dao = new TestDaoString { Id = "test-id" };
 
         // Act & Assert
         dao.IsNew.Should().BeFalse();
     }
 
     [Fact]
-    public void BaseDao_ShouldInheritFromAuditableBaseDao() {
+    public void TestDao_ShouldImplementIBaseDao() {
         // Arrange & Act
         var dao = new TestDao();
 
         // Assert
-        dao.Should().BeAssignableTo<AuditableBaseDao>();
+        dao.Should().BeAssignableTo<IBaseDao<int>>();
+        dao.Should().BeAssignableTo<IAuditableBaseDao>();
     }
 
     [Fact]
-    public void BaseDao_PropertiesShouldBeSettable() {
+    public void Properties_ShouldBeSettable() {
         // Arrange
         var dao = new TestDao();
         var now = DateTime.Now;
@@ -116,75 +122,8 @@ public class BaseDaoTests {
         dao.Name.Should().Be("Test Name");
         dao.CreatedAt.Should().Be(now);
         dao.CreatedBy.Should().Be("TestUser");
-        dao.IsNew.Should().BeFalse();
-    }
-
-    [Fact]
-    public void IsNew_WithDifferentGenericTypes_ShouldWorkCorrectly() {
-        // Arrange
-        var intDao = new TestDao();
-        var guidDao = new TestDaoGuid();
-        var stringDao = new TestDaoString();
-
-        // Act & Assert
-        intDao.IsNew.Should().BeTrue();
-        guidDao.IsNew.Should().BeTrue();
-        stringDao.IsNew.Should().BeTrue();
-
-        // Set non-default values
-        intDao.Id = 1;
-        guidDao.Id = Guid.NewGuid();
-        stringDao.Id = "test";
-
-        intDao.IsNew.Should().BeFalse();
-        guidDao.IsNew.Should().BeFalse();
-        stringDao.IsNew.Should().BeFalse();
-    }
-}
-
-public class BaseDaoIntTests {
-    internal class TestBaseDaoInt : BaseDaoInt {
-        public string Name { get; set; } = string.Empty;
-    }
-
-    [Fact]
-    public void BaseDaoInt_ShouldInheritFromBaseDaoOfInt() {
-        // Arrange & Act
-        var dao = new TestBaseDaoInt();
-
-        // Assert
-        dao.Should().BeAssignableTo<BaseDao<int>>();
-    }
-
-    [Fact]
-    public void BaseDaoInt_IdShouldBeInt() {
-        // Arrange
-        var dao = new TestBaseDaoInt();
-
-        // Act
-        dao.Id = 123;
-
-        // Assert
-        dao.Id.Should().Be(123);
-        dao.Id.Should().BeOfType(typeof(int));
-    }
-
-    [Fact]
-    public void BaseDaoInt_IsNew_WithDefaultId_ShouldReturnTrue() {
-        // Arrange
-        var dao = new TestBaseDaoInt(); // Id defaults to 0
-
-        // Act & Assert
-        dao.IsNew.Should().BeTrue();
-        dao.Id.Should().Be(0);
-    }
-
-    [Fact]
-    public void BaseDaoInt_IsNew_WithNonZeroId_ShouldReturnFalse() {
-        // Arrange
-        var dao = new TestBaseDaoInt { Id = 42 };
-
-        // Act & Assert
-        dao.IsNew.Should().BeTrue(); // Para int, el comportamiento puede ser diferente según implementación
+        
+        // IsNew check via interface
+        ((IBaseDao<int>)dao).IsNew.Should().BeFalse();
     }
 }

@@ -37,9 +37,7 @@
     <type Name="FluentValidation.ValidationResult" Dynamic="Required All" />
     <type Name="FluentValidation.Validators.IPropertyValidator" Dynamic="Required All" />
     
-    <!-- Entity Framework Types -->
-    <type Name="Microsoft.EntityFrameworkCore.DbContext" Dynamic="Required All" />
-    <type Name="Microsoft.EntityFrameworkCore.DbSet`1" Dynamic="Required All" />
+
     
     <!-- System Types commonly used in serialization -->
     <type Name="System.DateTime" Dynamic="Required All" />

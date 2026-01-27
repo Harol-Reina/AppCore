@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <PublishAot Condition="'$(Configuration)' == 'Release'">true</PublishAot>
+    <Version>1.0.0</Version>
+    <Authors>Harol A. Reina</Authors>
+    <Company>Seguros TúPrimero Ltda</Company>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1591;IL2104;IL3053;IL3000;IL3002</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <RdXmlFile Include="rd.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\App.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
