@@ -21,7 +21,7 @@ public class HttpRequestRepository(IDbConnectionFactory connectionFactory,
     private readonly IMappingService<HttpAuditDao, HttpAuditEntity> _toEntity = toEntity;
     private readonly ICurrentUserService _currentUserService = currentUserService;
 
-    private static readonly string TableName = $"{AppConstants.SchemaDB}.\"HttpAudit\"";
+    private static readonly string TableName = $"{AppConstants.SchemaDB}.HttpAudit";
 
     [DapperAot]
     public async Task<List<HttpAuditEntity>?> GetAllAsync() {
@@ -34,7 +34,7 @@ public class HttpRequestRepository(IDbConnectionFactory connectionFactory,
     [DapperAot]
     public async Task<HttpAuditEntity?> GetByIdAsync(int id) {
         using var db = await _connectionFactory.CreateConnectionAsync();
-        var sql = $"SELECT * FROM {TableName} WHERE \"Id\" = @Id";
+        var sql = $"SELECT * FROM {TableName} WHERE Id = @Id";
         var dao = await db.QueryFirstOrDefaultAsync<HttpAuditDao>(sql, new { Id = id });
         return dao != null ? _toEntity.Map(dao) : null;
     }
@@ -48,12 +48,12 @@ public class HttpRequestRepository(IDbConnectionFactory connectionFactory,
 
         var sql = $@"
             INSERT INTO {TableName} 
-            (""TraceId"", ""Endpoint"", ""Headers"", ""Method"", ""StatusCode"", ""ElapsedMilliseconds"", ""Body"", ""Response"", ""InternalError"", ""CreatedAt"", ""CreatedBy"", ""UpdatedAt"", ""UpdatedBy"") 
+            (traceid, endpoint, headers, method, statuscode, elapsedmilliseconds, body, response, internalerror, createdat, createdby, updatedat, updatedby) 
             VALUES 
             (@TraceId, @Endpoint, @Headers::jsonb, @Method, @StatusCode, @ElapsedMilliseconds, @Body::jsonb, @Response::jsonb, @InternalError, @CreatedAt, @CreatedBy, @UpdatedAt, @UpdatedBy)
-            RETURNING ""Id""";
+            RETURNING id";
 
-        var id = await db.ExecuteScalarAsync<int>(sql, dao);
+        var id = await db.QuerySingleAsync<int>(sql, dao);
         dao.Id = id;
 
         return _toEntity.Map(dao);
@@ -68,13 +68,13 @@ public class HttpRequestRepository(IDbConnectionFactory connectionFactory,
 
         var sql = $@"
             UPDATE {TableName} 
-            SET ""StatusCode"" = @StatusCode, 
-                ""ElapsedMilliseconds"" = @ElapsedMilliseconds, 
-                ""Response"" = @Response::jsonb, 
-                ""InternalError"" = @InternalError, 
-                ""UpdatedAt"" = @UpdatedAt, 
-                ""UpdatedBy"" = @UpdatedBy
-            WHERE ""Id"" = @Id";
+            SET statuscode = @StatusCode, 
+                elapsedmilliseconds = @ElapsedMilliseconds, 
+                response = @Response::jsonb, 
+                internalerror = @InternalError, 
+                updatedat = @UpdatedAt, 
+                updatedby = @UpdatedBy
+            WHERE id = @Id";
             // Note: TraceId, Endpoint, Headers, Method, Body usually don't change in an update for audit, 
             // but we update the response/status fields.
 
@@ -85,7 +85,7 @@ public class HttpRequestRepository(IDbConnectionFactory connectionFactory,
     [DapperAot]
     public async Task<bool> DelAsync(int id) {
         using var db = await _connectionFactory.CreateConnectionAsync();
-        var sql = $"DELETE FROM {TableName} WHERE \"Id\" = @Id";
+        var sql = $"DELETE FROM {TableName} WHERE Id = @Id";
         var affected = await db.ExecuteAsync(sql, new { Id = id });
         return affected > 0;
     }
@@ -100,12 +100,12 @@ public class HttpRequestRepository(IDbConnectionFactory connectionFactory,
         var offset = (page - 1) * pageSize;
 
         var allowedSortColumns = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {
-            { "Id", "\"Id\"" },
-            { "CreatedAt", "\"CreatedAt\"" },
-            { "ElapsedMilliseconds", "\"ElapsedMilliseconds\"" }
+            { "Id", "Id" },
+            { "CreatedAt", "CreatedAt" },
+            { "ElapsedMilliseconds", "ElapsedMilliseconds" }
         };
 
-        var sortColumn = allowedSortColumns.GetValueOrDefault(sort, "\"Id\"");
+        var sortColumn = allowedSortColumns.GetValueOrDefault(sort, "Id");
         var direction = asc ? "ASC" : "DESC";
 
         var sql = $@"
