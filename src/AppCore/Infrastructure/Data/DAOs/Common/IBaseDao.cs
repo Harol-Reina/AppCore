@@ -1,6 +1,6 @@
 ﻿namespace AppCore.Infrastructure.Data.DAOs.Common;
 
-public abstract class BaseDao<T>  {
+public interface IBaseDao<T> : IAuditableBaseDao  {
 
     public T? Id { get; set; }
 
