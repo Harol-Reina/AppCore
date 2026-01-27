@@ -26,4 +26,7 @@ Documentos técnicos inmutables y análisis de implementación.
 
 ## 📦 Configuración
 
-*   [GitHub Setup Guide](GitHub-Setup-Guide.md) (Configuración de Paquetes)
+## 📦 Configuración
+
+*   [Maintainer Setup Guide](guides/Maintainer-Setup.md) (Configuración de Paquetes y CI/CD)
+*   [Release Process](guides/Release-Process.md) (Proceso de Publicación)
