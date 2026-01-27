@@ -2,7 +2,7 @@
 
 namespace AppCore.Domain.Enums;
 
-[JsonConverter(typeof(JsonStringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter<PakageLeadType>))]
 public enum PakageLeadType {
     File, Json
 }
