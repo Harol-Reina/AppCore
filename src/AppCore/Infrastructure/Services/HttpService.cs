@@ -261,10 +261,7 @@ public abstract class HttpService(HttpClient httpClient,
             $"{baseUrl}{endpoint}",
             method,
             body,
-            headers) {
-            CreatedAt = DateTime.Now,
-            CreatedBy = _currentUserService.GetUserName()
-        };
+            headers) { };
         await _httpRequestRepository!.AddAsync(auditEntity);
         return auditEntity;
     }
