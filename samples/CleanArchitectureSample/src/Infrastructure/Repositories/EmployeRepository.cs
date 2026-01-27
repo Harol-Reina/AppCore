@@ -24,7 +24,7 @@ public class EmployeRepository(IDbConnectionFactory connectionFactory,
     private readonly ICurrentUserService _currentUserService = currentUserService;
     
     // Use AppConstants.SchemaDB to determine the schema
-    private static readonly string TableName = $"{AppConstants.SchemaDB}.Employes";
+    private static readonly string TableName = $"{AppConstants.SchemaDB}.\"Employes\"";
 
     [DapperAot]
     public async Task<List<EmployeEntity>?> GetAllAsync() {
@@ -37,7 +37,7 @@ public class EmployeRepository(IDbConnectionFactory connectionFactory,
     [DapperAot]
     public async Task<EmployeEntity?> GetByIdAsync(int id) {
         using var db = await _connectionFactory.CreateConnectionAsync();
-        var sql = $"SELECT * FROM {TableName} WHERE Id = @Id";
+        var sql = $"SELECT * FROM {TableName} WHERE \"Id\" = @Id";
         var dao = await db.QueryFirstOrDefaultAsync<EmployeDao>(sql, new { Id = id });
         return dao != null ? _toEntity.Map(dao) : null;
     }
@@ -51,9 +51,9 @@ public class EmployeRepository(IDbConnectionFactory connectionFactory,
         
         // Assuming Identity column for Id
         var sql = $@"
-            INSERT INTO {TableName} (Name, Email, Phone, CreatedAt, CreatedBy, UpdatedAt, UpdatedBy) 
+            INSERT INTO {TableName} (""Name"", ""Email"", ""Phone"", ""CreatedAt"", ""CreatedBy"", ""UpdatedAt"", ""UpdatedBy"") 
             VALUES (@Name, @Email, @Phone, @CreatedAt, @CreatedBy, @UpdatedAt, @UpdatedBy)
-            RETURNING Id";
+            RETURNING ""Id""";
             
         var id = await db.ExecuteScalarAsync<int>(sql, dao);
         dao.Id = id;
@@ -70,8 +70,8 @@ public class EmployeRepository(IDbConnectionFactory connectionFactory,
         
         var sql = $@"
             UPDATE {TableName} 
-            SET Name = @Name, Email = @Email, Phone = @Phone, UpdatedAt = @UpdatedAt, UpdatedBy = @UpdatedBy
-            WHERE Id = @Id";
+            SET ""Name"" = @Name, ""Email"" = @Email, ""Phone"" = @Phone, ""UpdatedAt"" = @UpdatedAt, ""UpdatedBy"" = @UpdatedBy
+            WHERE ""Id"" = @Id";
             
         await db.ExecuteAsync(sql, dao);
         return _toEntity.Map(dao);
@@ -80,7 +80,7 @@ public class EmployeRepository(IDbConnectionFactory connectionFactory,
     [DapperAot]
     public async Task<bool> DelAsync(int id) {
         using var db = await _connectionFactory.CreateConnectionAsync();
-        var sql = $"DELETE FROM {TableName} WHERE Id = @Id";
+        var sql = $"DELETE FROM {TableName} WHERE \"Id\" = @Id";
         var affected = await db.ExecuteAsync(sql, new { Id = id });
         return affected > 0;
     }
@@ -96,14 +96,14 @@ public class EmployeRepository(IDbConnectionFactory connectionFactory,
 
         // Whitelist for sorting to prevent SQL Injection
         var allowedSortColumns = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {
-            { "Id", "Id" },
-            { "Name", "Name" },
-            { "Email", "Email" },
-            { "Phone", "Phone" },
-            { "CreatedAt", "CreatedAt" }
+            { "Id", "\"Id\"" },
+            { "Name", "\"Name\"" },
+            { "Email", "\"Email\"" },
+            { "Phone", "\"Phone\"" },
+            { "CreatedAt", "\"CreatedAt\"" }
         };
 
-        var sortColumn = allowedSortColumns.GetValueOrDefault(sort, "Id");
+        var sortColumn = allowedSortColumns.GetValueOrDefault(sort, "\"Id\"");
         var direction = asc ? "ASC" : "DESC";
         
         var sql = $@"
