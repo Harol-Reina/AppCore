@@ -10,7 +10,7 @@
     <Authors>Harol A. Reina</Authors>
     <Company>Seguros TúPrimero Ltda</Company>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>1591</NoWarn>
+    <NoWarn>1591;IL2104;IL3053;IL3000;IL3002</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
