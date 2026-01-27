@@ -6,7 +6,7 @@ namespace AppCore.Infrastructure.Extensions;
 public static class AuditableExtensions {
     public static void SetAuditCreate(this AuditableBaseDao entity, ICurrentUserService userService) {
         entity.CreatedAt = DateTime.UtcNow;
-        entity.CreatedBy = userService.GetUserName(); 
+        entity.CreatedBy = userService.GetUserName();
         entity.UpdatedAt = null;
         entity.UpdatedBy = null;
     }

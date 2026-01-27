@@ -46,7 +46,7 @@ public static class JsonExtend {
             return value switch {
                 JsonDocument doc => doc,
                 string str => ParseFromStringOrWrap(str),
-                _ => JsonDocument.Parse(JsonSerializer.Serialize(value, value.GetType(), Options))
+                _ => JsonDocument.Parse(JsonSerializer.Serialize(value, Options.GetTypeInfo(value.GetType())))
             };
         } catch (Exception ex) {
             throw new SerializerException(ex);
@@ -66,7 +66,7 @@ public static class JsonExtend {
         // Esto es útil si el input es un valor simple o una cadena que no es un JSON válido.
         // Por ejemplo, si input es "Hello World", lo convertirá a {"value": "Hello World"}
         var wrapper = new Dictionary<string, object> { { "value", input } };
-        string wrapped = JsonSerializer.Serialize(wrapper, typeof(Dictionary<string, object>), Options);
+        string wrapped = JsonSerializer.Serialize(wrapper, Options.GetTypeInfo(typeof(Dictionary<string, object>)));
         return JsonDocument.Parse(wrapped);
     }
 
@@ -80,7 +80,7 @@ public static class JsonExtend {
     public static T FromJsonDocument<T>(this JsonDocument jsonDocument) {
         try {
             string jsonString = jsonDocument.RootElement.GetRawText();
-            return (T)JsonSerializer.Deserialize(jsonString, typeof(T), Options)!;
+            return (T)JsonSerializer.Deserialize(jsonString, (System.Text.Json.Serialization.Metadata.JsonTypeInfo<T>)Options.GetTypeInfo(typeof(T)))!;
         } catch (JsonException) {
             throw new ArgumentException("Invalid JSON string.");
         }
@@ -103,7 +103,7 @@ public static class JsonExtend {
                                       [CallerLineNumber] int sourceLineNumber = 0) {
         try {
             // Use the AOT-compatible JsonSerializerContext for serialization
-            return JsonSerializer.Serialize(value, typeof(T), Options);
+            return JsonSerializer.Serialize(value, (System.Text.Json.Serialization.Metadata.JsonTypeInfo<T>)Options.GetTypeInfo(typeof(T)));
         } catch (Exception ex) {
             throw new SerializerException(ex, memberName, sourceFilePath, sourceLineNumber);
         }
@@ -126,7 +126,7 @@ public static class JsonExtend {
         if (string.IsNullOrWhiteSpace(value)) return default;
         try {
             // Use the AOT-compatible JsonSerializerContext for deserialization
-            return (T?)JsonSerializer.Deserialize(value, typeof(T), Options);
+            return JsonSerializer.Deserialize(value, (System.Text.Json.Serialization.Metadata.JsonTypeInfo<T>)Options.GetTypeInfo(typeof(T)));
         } catch (Exception ex) {
             throw new SerializerException(ex, memberName, sourceFilePath, sourceLineNumber);
         }
