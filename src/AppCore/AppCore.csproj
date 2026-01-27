@@ -68,7 +68,7 @@
     <!-- Warnings -->
     <NoWarn>1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>1591;IL2026;IL2087;IL3050;IL2091</WarningsNotAsErrors>
+    <WarningsNotAsErrors>1591</WarningsNotAsErrors>
   </PropertyGroup>
   
   <!-- Include README and LICENSE in package -->
