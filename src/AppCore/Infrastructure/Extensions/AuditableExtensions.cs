@@ -1,4 +1,4 @@
-using AppCore.Application.Interfaces;
+﻿using AppCore.Application.Interfaces;
 using AppCore.Infrastructure.Data.DAOs.Common;
 
 namespace AppCore.Infrastructure.Extensions;
