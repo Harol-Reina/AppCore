@@ -122,7 +122,7 @@ public class BaseDaoTests {
         dao.Name.Should().Be("Test Name");
         dao.CreatedAt.Should().Be(now);
         dao.CreatedBy.Should().Be("TestUser");
-        
+
         // IsNew check via interface
         ((IBaseDao<int>)dao).IsNew.Should().BeFalse();
     }
