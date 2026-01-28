@@ -36,14 +36,9 @@ public static class JsonSerializationTests
             var successResponse = Response<string>.Success("Operation successful", "Test data");
             var failureResponse = Response<int>.Failure("Operation failed");
 
-            // Serialize using AppCoreJsonContext (AOT-compatible)
-            var options = new JsonSerializerOptions
-            {
-                TypeInfoResolver = AppCoreJsonContext.Default
-            };
-
-            var successJson = JsonSerializer.Serialize(successResponse, options);
-            var failureJson = JsonSerializer.Serialize(failureResponse, options);
+            // Serialize using AppCoreJsonContext (AOT-compatible) - Explicit TypeInfo
+            var successJson = JsonSerializer.Serialize(successResponse, AppCoreJsonContext.Default.ResponseString);
+            var failureJson = JsonSerializer.Serialize(failureResponse, AppCoreJsonContext.Default.ResponseInt32);
 
             if (string.IsNullOrEmpty(successJson) || string.IsNullOrEmpty(failureJson))
             {
@@ -83,12 +78,7 @@ public static class JsonSerializationTests
                 Results = ["Item1", "Item2", "Item3"]
             };
 
-            var options = new JsonSerializerOptions
-            {
-                TypeInfoResolver = AppCoreJsonContext.Default
-            };
-
-            var json = JsonSerializer.Serialize(pagination, options);
+            var json = JsonSerializer.Serialize(pagination, AppCoreJsonContext.Default.PaginationDtoString);
 
             if (string.IsNullOrEmpty(json))
             {
@@ -128,12 +118,7 @@ public static class JsonSerializationTests
                 pagination
             );
 
-            var options = new JsonSerializerOptions
-            {
-                TypeInfoResolver = AppCoreJsonContext.Default
-            };
-
-            var json = JsonSerializer.Serialize(response, options);
+            var json = JsonSerializer.Serialize(response, AppCoreJsonContext.Default.ResponsePaginationDtoInt32);
 
             if (string.IsNullOrEmpty(json))
             {
@@ -165,15 +150,10 @@ public static class JsonSerializationTests
             var boolResponse = Response<bool>.Success("OK", true);
             var guidResponse = Response<Guid>.Success("OK", Guid.NewGuid());
 
-            var options = new JsonSerializerOptions
-            {
-                TypeInfoResolver = AppCoreJsonContext.Default
-            };
-
-            var stringJson = JsonSerializer.Serialize(stringResponse, options);
-            var intJson = JsonSerializer.Serialize(intResponse, options);
-            var boolJson = JsonSerializer.Serialize(boolResponse, options);
-            var guidJson = JsonSerializer.Serialize(guidResponse, options);
+            var stringJson = JsonSerializer.Serialize(stringResponse, AppCoreJsonContext.Default.ResponseString);
+            var intJson = JsonSerializer.Serialize(intResponse, AppCoreJsonContext.Default.ResponseInt32);
+            var boolJson = JsonSerializer.Serialize(boolResponse, AppCoreJsonContext.Default.ResponseBoolean);
+            var guidJson = JsonSerializer.Serialize(guidResponse, AppCoreJsonContext.Default.ResponseGuid);
 
             if (string.IsNullOrEmpty(stringJson) ||
                 string.IsNullOrEmpty(intJson) ||
@@ -206,12 +186,7 @@ public static class JsonSerializationTests
                 Results = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon"]
             };
 
-            var options = new JsonSerializerOptions
-            {
-                TypeInfoResolver = AppCoreJsonContext.Default
-            };
-
-            var json = JsonSerializer.Serialize(dto, options);
+            var json = JsonSerializer.Serialize(dto, AppCoreJsonContext.Default.PaginationDtoString);
 
             // Verify all items from collection expression are present
             if (!json.Contains("Alpha") || !json.Contains("Epsilon"))
@@ -236,16 +211,11 @@ public static class JsonSerializationTests
         {
             var original = Response<string>.Success("Test message", "Original data");
 
-            var options = new JsonSerializerOptions
-            {
-                TypeInfoResolver = AppCoreJsonContext.Default
-            };
-
             // Serialize
-            var json = JsonSerializer.Serialize(original, options);
+            var json = JsonSerializer.Serialize(original, AppCoreJsonContext.Default.ResponseString);
 
             // Deserialize
-            var deserialized = JsonSerializer.Deserialize<Response<string>>(json, options);
+            var deserialized = JsonSerializer.Deserialize(json, AppCoreJsonContext.Default.ResponseString);
 
             if (deserialized == null)
             {
