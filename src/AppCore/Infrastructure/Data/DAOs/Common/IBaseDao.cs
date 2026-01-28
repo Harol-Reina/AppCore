@@ -1,6 +1,6 @@
 ﻿namespace AppCore.Infrastructure.Data.DAOs.Common;
 
-public interface IBaseDao<T> : IAuditableBaseDao  {
+public interface IBaseDao<T> : IAuditableBaseDao {
 
     public T? Id { get; set; }
 
