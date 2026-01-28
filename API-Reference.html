@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <title>AppCore Documentation | AppCore Documentation </title>
+      <title>API Reference | AppCore Documentation </title>
       <meta name="viewport" content="width=device-width">
-      <meta name="title" content="AppCore Documentation | AppCore Documentation ">
+      <meta name="title" content="API Reference | AppCore Documentation ">
     
     
       <link rel="shortcut icon" href="favicon.ico">
@@ -70,36 +70,69 @@
         <div class="article row grid">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="appcore-documentation">AppCore Documentation</h1>
+<h1 id="api-reference">API Reference</h1>
 
-<p>Bienvenido a la documentación oficial de AppCore, la librería base para desarrollo de aplicaciones .NET 10 con arquitectura limpia y soporte NativeAOT.</p>
-<h2 id="-guías-de-usuario">📚 Guías de Usuario</h2>
+<p>Referencia oficial de las APIs públicas de AppCore.</p>
+<h2 id="1-interfaces-de-dominio">1. Interfaces de Dominio</h2>
+<h3 id="igenericrepositorye-i"><code>IGenericRepository&lt;E, I&gt;</code></h3>
+<p>Contrato base para repositorios.
+<strong>Uso</strong>: Inyectar para operaciones de lectura/escritura sobre entidades.
+<strong>Métodos Clave</strong>: <code>GetByIdAsync</code>, <code>GetAllAsync</code>, <code>AddAsync</code>, <code>UpdateAsync</code>.
+<strong>Nota AOT</strong>: No soporta <code>Include(string)</code>. Usar sobrecargas con SQL explícito/Dapper si se requiere en implementación.</p>
+<h2 id="2-interfaces-de-aplicación">2. Interfaces de Aplicación</h2>
+<h3 id="icurrentuserservice"><code>ICurrentUserService</code></h3>
+<p>Acceso al usuario actual autenticado.</p>
 <ul>
-<li><strong><a href="guides/Migration-EF-to-Dapper.html">Migración EF Core -&gt; Dapper.AOT</a></strong>: Guía crítica para migrar repositorios.</li>
-<li><strong><a href="guides/NativeAOT-Best-Practices.html">NativeAOT Best Practices</a></strong>: Reglas para asegurar compatibilidad AOT.</li>
-<li><strong><a href="guides/C-Sharp-14-Adoption.html">Adopción C# 14</a></strong>: Nuevas características y estilo de código.</li>
-<li><strong><a href="guides/Troubleshooting.html">Troubleshooting</a></strong>: Solución a errores comunes.</li>
+<li><code>GetUserId()</code>: Retorna el ID del usuario (sub).</li>
+<li><code>GetUserName()</code>: Retorna el nombre de usuario (preferred_username).</li>
 </ul>
-<h2 id="-referencia-api">📖 Referencia API</h2>
+<h3 id="idatetimeservice"><code>IDateTimeService</code></h3>
+<p>Abstracción del tiempo del sistema.</p>
 <ul>
-<li><strong><a href="API-Reference.html">API Reference</a></strong>: Contratos públicos, DTOs y Servicios.</li>
+<li><code>NowUtc</code>: Retorna <code>DateTime.UtcNow</code>.</li>
 </ul>
-<h2 id="-reportes-técnicos">🛠️ Reportes Técnicos</h2>
-<p>Documentos técnicos inmutables y análisis de implementación.</p>
+<h2 id="3-dtos-y-wrappers">3. DTOs y Wrappers</h2>
+<h3 id="responset"><code>Response&lt;T&gt;</code></h3>
+<p>Wrapper estándar para todas las respuestas de API.</p>
+<pre><code class="lang-csharp">public class Response&lt;T&gt; {
+    public bool Succeeded { get; }
+    public string Message { get; }
+    public T Data { get; }
+    public List&lt;string&gt; Errors { get; }
+}
+</code></pre>
+<h3 id="paginationdtot"><code>PaginationDto&lt;T&gt;</code></h3>
+<p>Estructura para datos paginados.</p>
+<pre><code class="lang-csharp">public class PaginationDto&lt;T&gt; {
+    public int PageNumber { get; }
+    public int PageSize { get; }
+    public int TotalRecords { get; }
+    public List&lt;T&gt; Data { get; }
+}
+</code></pre>
+<h2 id="4-excepciones">4. Excepciones</h2>
 <ul>
-<li><a href="technical/Implementation-Plan.html">Implementation Plan</a></li>
-<li><a href="technical/NativeAOT-Compatibility-Report.html">NativeAOT Compatibility Report</a></li>
-<li><a href="technical/Breaking-Changes-Analysis.html">Breaking Changes Analysis</a></li>
-<li><a href="technical/Compatibility-Matrix.html">Compatibility Matrix</a></li>
-<li><a href="technical/Dependency-Analysis.html">Dependency Analysis</a></li>
-<li><a href="technical/Public-API-Identification.html">Public API Identification</a></li>
+<li><code>CustomException</code>: Base para todas las excepciones controladas.</li>
+<li><code>ValidationException</code>: Error de validación de negocio (400).</li>
+<li><code>NotFoundException</code>: Recurso no encontrado (404).</li>
+<li><code>ForbiddenAccessException</code>: Usuario sin permisos (403).</li>
 </ul>
-<h2 id="-configuración">📦 Configuración</h2>
-<h2 id="-configuración-1">📦 Configuración</h2>
-<ul>
-<li><a href="guides/Maintainer-Setup.html">Maintainer Setup Guide</a> (Configuración de Paquetes y CI/CD)</li>
-<li><a href="guides/Release-Process.html">Release Process</a> (Proceso de Publicación)</li>
-</ul>
+<h2 id="5-dao-interfaces-aot">5. DAO Interfaces (AOT)</h2>
+<h3 id="ibasedaot"><code>IBaseDao&lt;T&gt;</code></h3>
+<p>Interfaz obligatoria para todos los Data Access Objects.</p>
+<pre><code class="lang-csharp">public interface IBaseDao&lt;T&gt; : IAuditableBaseDao {
+    public T Id { get; set; }
+}
+</code></pre>
+<h3 id="iauditablebasedao"><code>IAuditableBaseDao</code></h3>
+<p>Contrato para objetos con auditoría.</p>
+<pre><code class="lang-csharp">public interface IAuditableBaseDao {
+    public DateTime CreatedAt { get; set; }
+    public string CreatedBy { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public string UpdatedBy { get; set; }
+}
+</code></pre>
 
 </article>
           </div>
@@ -109,7 +142,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/index.md/#L1" class="contribution-link">Edit this page</a>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/API-Reference.md/#L1" class="contribution-link">Edit this page</a>
                   </li>
                 </ul>
               </div>

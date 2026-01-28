@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>AppCore Transfer &amp; Migration Guide | AppCore Documentation </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="AppCore Transfer &amp; Migration Guide | AppCore Documentation ">
+    
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="appcore-transfer--migration-guide">AppCore Transfer &amp; Migration Guide</h1>
+
+<p>This guide details how to migrate existing applications to use the new AppCore restructuring and GitHub Packages feed.</p>
+<h2 id="1-connecting-to-github-packages">1. Connecting to GitHub Packages</h2>
+<p>AppCore is now hosted exclusively on GitHub Packages. You must configure your environment to access it.</p>
+<h3 id="step-1-generate-a-pat-personal-access-token">Step 1: Generate a PAT (Personal Access Token)</h3>
+<ol>
+<li>Go to GitHub Settings &gt; Developer settings &gt; Personal access tokens &gt; Tokens (classic).</li>
+<li>Generate a new token with <code>read:packages</code> scope.</li>
+<li>Authorize the token for the <code>OrionSoft</code> organization (if applicable) or your user account.</li>
+</ol>
+<h3 id="step-2-configure-nugetconfig">Step 2: Configure <code>nuget.config</code></h3>
+<p>Add a <code>nuget.config</code> file to your solution root:</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;configuration&gt;
+  &lt;packageSources&gt;
+    &lt;clear /&gt;
+    &lt;add key=&quot;nuget.org&quot; value=&quot;https://api.nuget.org/v3/index.json&quot; /&gt;
+    &lt;add key=&quot;github&quot; value=&quot;https://nuget.pkg.github.com/Harol-Reina/index.json&quot; /&gt;
+  &lt;/packageSources&gt;
+  &lt;packageSourceCredentials&gt;
+    &lt;github&gt;
+      &lt;add key=&quot;Username&quot; value=&quot;YOUR_GITHUB_USERNAME&quot; /&gt;
+      &lt;add key=&quot;ClearTextPassword&quot; value=&quot;YOUR_GITHUB_PAT&quot; /&gt;
+    &lt;/github&gt;
+  &lt;/packageSourceCredentials&gt;
+&lt;/configuration&gt;
+</code></pre>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Do not commit your PAT to source control. Use environment variables or global <code>nuget.config</code> (~/.nuget/NuGet/NuGet.Config) for local development, and Secrets for CI/CD.</p>
+</div>
+<h2 id="2-updating-project-references">2. Updating Project References</h2>
+<p>Remove direct project references and replace them with the NuGet package.</p>
+<h3 id="old-csproj">Old (.csproj)</h3>
+<pre><code class="lang-xml">&lt;ItemGroup&gt;
+  &lt;ProjectReference Include=&quot;..\..\src\AppCore\AppCore.csproj&quot; /&gt;
+&lt;/ItemGroup&gt;
+</code></pre>
+<h3 id="new-csproj">New (.csproj)</h3>
+<pre><code class="lang-xml">&lt;ItemGroup&gt;
+  &lt;PackageReference Include=&quot;OrionSoft.AppCore&quot; Version=&quot;1.0.0-preview.1&quot; /&gt;
+&lt;/ItemGroup&gt;
+</code></pre>
+<h2 id="3-adapting-to-nativeaot-changes">3. Adapting to NativeAOT Changes</h2>
+<p>AppCore is now fully compatible with NativeAOT. If you are migrating a standard application, these changes are optional but recommended. If you are building an AOT application, they are <strong>mandatory</strong>.</p>
+<h3 id="json-serialization">JSON Serialization</h3>
+<p><strong>Deprecated (Reflection):</strong></p>
+<pre><code class="lang-csharp">JsonSerializer.Serialize(myObject);
+</code></pre>
+<p><strong>New (Source Generation):</strong>
+Use <code>AppCoreJsonContext</code> for serialization:</p>
+<pre><code class="lang-csharp">var options = new JsonSerializerOptions { 
+    TypeInfoResolver = AppCoreJsonContext.Default 
+};
+JsonSerializer.Serialize(myObject, options);
+</code></pre>
+<h3 id="automapper-replacement">AutoMapper Replacement</h3>
+<p>AutoMapper has been removed due to AOT incompatibility.
+Use <code>IMappingService&lt;TSource, TDestination&gt;</code>:</p>
+<pre><code class="lang-csharp">// Inject
+private readonly IMappingService&lt;User, UserDto&gt; _mapper;
+
+// Use
+var dto = _mapper.Map(user);
+</code></pre>
+<h3 id="exception-handling">Exception Handling</h3>
+<p><code>ValidationBehaviour</code> now uses Source Generated validators. Ensure your validators are registered in the DI container.</p>
+<h2 id="4-modern-c-14-features">4. Modern C# 14 Features</h2>
+<p>The library now exploits C# 14 features.</p>
+<ul>
+<li>Use <strong>Collection Expressions</strong> (<code>[]</code>) instead of <code>new List&lt;T&gt;()</code>.</li>
+<li>Use <strong>Primary Constructors</strong> for DTOs.</li>
+<li>Use <strong>Pattern Matching</strong> for cleaner logic.</li>
+</ul>
+<h2 id="5-troubleshooting">5. Troubleshooting</h2>
+<p><strong>Error: 401 Unauthorized from GitHub Packages</strong></p>
+<ul>
+<li>Verify your PAT has <code>read:packages</code>.</li>
+<li>Ensure you are using the correct username in <code>nuget.config</code>.</li>
+</ul>
+<p><strong>Error: IL2026/IL3050 Warnings</strong></p>
+<ul>
+<li>These are AOT analysis warnings. If you are not building for AOT, you can suppress them or ignore them.</li>
+<li>If building for AOT, ensure you are not using reflection-based APIs.</li>
+</ul>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/technical/Migration-Guide.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>NativeAOT Best Practices | AppCore Documentation </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="NativeAOT Best Practices | AppCore Documentation ">
+    
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="nativeaot-best-practices">NativeAOT Best Practices</h1>
+
+<p>Esta guía establece las mejores prácticas y prohibiciones estrictas para asegurar la compatibilidad con NativeAOT en AppCore y sus consumidores.</p>
+<h2 id="1-principios-fundamentales">1. Principios Fundamentales</h2>
+<p>NativeAOT (Ahead-of-Time compilation) compila el código IL a código máquina nativo antes de la ejecución. Esto implica:</p>
+<ol>
+<li><strong>Sin JIT</strong>: No hay compilación Just-In-Time.</li>
+<li><strong>Sin Generación Dinámica de Código</strong>: No se puede generar IL en runtime (ej. <code>Reflection.Emit</code>).</li>
+<li><strong>Trimming</strong>: El código no usado se elimina agresivamente.</li>
+</ol>
+<h2 id="2-reglas-de-oro-prohibiciones">2. Reglas de Oro (PROHIBICIONES)</h2>
+<h3 id="-reflexión-dinámica">❌ Reflexión Dinámica</h3>
+<p>No usar <code>Type.GetProperties()</code>, <code>Activator.CreateInstance()</code> o similares sin anotaciones apropiadas. El Trimmer no puede rastrear estas referencias.</p>
+<h3 id="-serialización-json-clásica">❌ Serialización JSON Clásica</h3>
+<p>No usar <code>JsonSerializer.Serialize(obj)</code> sin un <code>JsonTypeInfo</code>.
+<strong>Correcto</strong>: Usar Source Generators (<code>AppCoreJsonContext</code>).</p>
+<h3 id="-expresiones-dinámicas-linq">❌ Expresiones Dinámicas (LINQ)</h3>
+<p>No construir <code>Expression&lt;Func&lt;T, bool&gt;&gt;</code> dinámicamente si dependen de tipos no conocidos en tiempo de compilación.</p>
+<h3 id="-atributos-dataannotations-en-daos">❌ Atributos DataAnnotations en DAOs</h3>
+<p>Dapper.AOT no soporta <code>[Key]</code>, <code>[Table]</code>, etc. Usar mapeo manual o SQL explícito.</p>
+<h2 id="3-patrones-recomendados">3. Patrones Recomendados</h2>
+<h3 id="-source-generators">✅ Source Generators</h3>
+<p>Usar Source Generators para todo lo que requiera inspección de tipos:</p>
+<ul>
+<li><strong>JSON</strong>: <code>[JsonSerializable(typeof(MyDto))]</code></li>
+<li><strong>Logging</strong>: <code>[LoggerMessage]</code> (si aplica)</li>
+<li><strong>Regex</strong>: <code>[GeneratedRegex]</code></li>
+</ul>
+<h3 id="-inyección-de-dependencias">✅ Inyección de Dependencias</h3>
+<p>Preferir registro explícito sobre assembly scanning.
+<strong>Evitar</strong>: <code>services.Scan(...)</code>
+<strong>Preferir</strong>: <code>services.AddScoped&lt;IService, Service&gt;()</code></p>
+<h3 id="-annotations">✅ Annotations</h3>
+<p>Si DEBES usar reflexión (solo librerías base), anota el código correctamente:</p>
+<ul>
+<li><code>[RequiresUnreferencedCode]</code></li>
+<li><code>[RequiresDynamicCode]</code></li>
+<li><code>[DynamicallyAccessedMembers]</code></li>
+</ul>
+<h2 id="4-troubleshooting-aot">4. Troubleshooting AOT</h2>
+<h3 id="warning-il2026-requiresunreferencedcode">Warning IL2026 (RequiresUnreferencedCode)</h3>
+<p>Indica que el método marcado puede romperse si el Trimmer elimina código necesario.
+<strong>Solución</strong>: Verificar si existe una alternativa con Source Generators o suprimir si se ha verificado manualmente en <code>rd.xml</code>.</p>
+<h3 id="warning-il3050-requiresdynamiccode">Warning IL3050 (RequiresDynamicCode)</h3>
+<p>Indica que el método requiere generar código nativo, lo cual es imposible en AOT.
+<strong>Solución</strong>: Esta es una limitación dura. Debes refactorizar el código para no depender de JIT.</p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/guides/NativeAOT-Best-Practices.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

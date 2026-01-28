@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <title>Namespace AppCore.Application.Interfaces | AppCore Documentation </title>
+      <title>AppCore Release Process | AppCore Documentation </title>
       <meta name="viewport" content="width=device-width">
-      <meta name="title" content="Namespace AppCore.Application.Interfaces | AppCore Documentation ">
+      <meta name="title" content="AppCore Release Process | AppCore Documentation ">
     
     
       <link rel="shortcut icon" href="../favicon.ico">
@@ -15,7 +15,7 @@
       <link rel="stylesheet" href="../styles/docfx.css">
       <link rel="stylesheet" href="../styles/main.css">
       <meta property="docfx:navrel" content="../toc.html">
-      <meta property="docfx:tocrel" content="toc.html">
+      <meta property="docfx:tocrel" content="../toc.html">
     
     <meta property="docfx:rel" content="../">
     
@@ -67,40 +67,67 @@
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
-
-        <div class="sidenav hide-when-search">
-          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
-          <div class="sidetoggle collapse" id="sidetoggle">
-            <div id="sidetoc"></div>
-          </div>
-        </div>
-        <div class="article row grid-right">
+        <div class="article row grid">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="AppCore.Application.Interfaces">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="appcore-release-process">AppCore Release Process</h1>
 
-  <h1 id="AppCore_Application_Interfaces" data-uid="AppCore.Application.Interfaces" class="text-break">Namespace AppCore.Application.Interfaces</h1>
-  <div class="markdown level0 summary"></div>
-  <div class="markdown level0 conceptual"></div>
-  <div class="markdown level0 remarks"></div>
-    <h3 id="interfaces">
-Interfaces
-</h3>
-      <h4><a class="xref" href="AppCore.Application.Interfaces.ICurrentUserService.html">ICurrentUserService</a></h4>
-      <section><p>Provides access to current authenticated user information.</p>
-</section>
-      <h4><a class="xref" href="AppCore.Application.Interfaces.IDateTimeService.html">IDateTimeService</a></h4>
-      <section><p>Provides abstraction for date and time operations to support testability.</p>
-</section>
-      <h4><a class="xref" href="AppCore.Application.Interfaces.IDbConnectionFactory.html">IDbConnectionFactory</a></h4>
-      <section><p>Factory interface for creating database connections.</p>
-</section>
-      <h4><a class="xref" href="AppCore.Application.Interfaces.IEndpointGroupBase.html">IEndpointGroupBase</a></h4>
-      <section></section>
-      <h4><a class="xref" href="AppCore.Application.Interfaces.IMappingService-2.html">IMappingService&lt;TSource, TDestination&gt;</a></h4>
-      <section><p>Provides AOT-compatible mapping services for converting between different object types.
-This interface replaces AutoMapper for Native AOT compatibility.</p>
-</section>
-
+<p>This document outlines the automated release process for AppCore v2.0+ managed via GitHub Actions.</p>
+<h2 id="overview">Overview</h2>
+<p>The release pipeline is triggered by Git tags. It handles:</p>
+<ol>
+<li>Versioning (MinVer)</li>
+<li>Build &amp; Test (including AOT validation)</li>
+<li>Packing (NuGet &amp; Snupkg)</li>
+<li>Publishing to GitHub Packages</li>
+</ol>
+<h2 id="versioning-strategy">Versioning Strategy</h2>
+<p>We use <a href="https://github.com/adamralph/minver">MinVer</a> for semantic versioning.</p>
+<ul>
+<li><strong>Release:</strong> Tag with <code>v1.0.0</code></li>
+<li><strong>Preview:</strong> Tag with <code>v1.0.0-preview.1</code></li>
+<li><strong>CI/Dev:</strong> Commits without tags generate generic preview versions (e.g., <code>0.0.0-alpha.0.5</code>).</li>
+</ul>
+<h2 id="triggering-a-release">Triggering a Release</h2>
+<h3 id="1-pre-release-validation">1. Pre-Release Validation</h3>
+<p>Ensure the local build passes and verify AOT compatibility:</p>
+<pre><code class="lang-bash">./scripts/build-and-analyze.sh
+dotnet run --project samples/AotTestApp/AotTestApp.csproj -- --all
+</code></pre>
+<h3 id="2-create-tag">2. Create Tag</h3>
+<pre><code class="lang-bash">git tag v1.0.0
+git push origin v1.0.0
+</code></pre>
+<h3 id="3-monitor-pipeline">3. Monitor Pipeline</h3>
+<p>Go to <a href="https://github.com/Harol-Reina/AppCore/actions">GitHub Actions</a> and monitor the &quot;CI/CD Pipeline&quot;.
+The pipeline has the following stages:</p>
+<ul>
+<li><strong>Build</strong>: Compiles code and generates artifacts.</li>
+<li><strong>Test</strong>: Runs Unit Checks and AOT analysis.</li>
+<li><strong>Pack</strong>: Creates <code>.nupkg</code> and <code>.snupkg</code>.</li>
+<li><strong>Publish</strong>: Pushes to GitHub Packages (requires successful tests).</li>
+</ul>
+<h2 id="verification">Verification</h2>
+<p>After success:</p>
+<ol>
+<li>Check the <a href="https://github.com/orgs/OrionSoft/packages">packages page</a> for the new version.</li>
+<li>Verify symbols are available.</li>
+<li>Check release notes in CHANGELOG.md (manual update required before tagging).</li>
+</ol>
+<h2 id="quality-gates">Quality Gates</h2>
+<p>The pipeline enforces:</p>
+<ul>
+<li><strong>Test Coverage:</strong> Must be ≥ 80%.</li>
+<li><strong>Analysis:</strong> No critical security issues.</li>
+<li><strong>AOT Compatibility:</strong> Clean AOT analysis required.</li>
+</ul>
+<h2 id="rollback">Rollback</h2>
+<p>If a release is broken:</p>
+<ul>
+<li>You cannot delete a version from GitHub Packages easily (immutable).</li>
+<li><strong>Fix:</strong> Fix the issue, commit, and tag a new patch version (e.g., <code>v1.0.1</code>).</li>
+<li><strong>Yank:</strong> (Optional) Unlist the bad package version from the UI.</li>
+</ul>
 
 </article>
           </div>
@@ -109,6 +136,9 @@ This interface replaces AutoMapper for Native AOT compatibility.</p>
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/guides/Release-Process.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">

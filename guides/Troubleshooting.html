@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <title>Namespace AppCore.Infrastructure.Data.DAOs.Enum | AppCore Documentation </title>
+      <title>Troubleshooting Guide | AppCore Documentation </title>
       <meta name="viewport" content="width=device-width">
-      <meta name="title" content="Namespace AppCore.Infrastructure.Data.DAOs.Enum | AppCore Documentation ">
+      <meta name="title" content="Troubleshooting Guide | AppCore Documentation ">
     
     
       <link rel="shortcut icon" href="../favicon.ico">
@@ -15,7 +15,7 @@
       <link rel="stylesheet" href="../styles/docfx.css">
       <link rel="stylesheet" href="../styles/main.css">
       <meta property="docfx:navrel" content="../toc.html">
-      <meta property="docfx:tocrel" content="toc.html">
+      <meta property="docfx:tocrel" content="../toc.html">
     
     <meta property="docfx:rel" content="../">
     
@@ -67,29 +67,52 @@
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
-
-        <div class="sidenav hide-when-search">
-          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
-          <div class="sidetoggle collapse" id="sidetoggle">
-            <div id="sidetoc"></div>
-          </div>
-        </div>
-        <div class="article row grid-right">
+        <div class="article row grid">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="AppCore.Infrastructure.Data.DAOs.Enum">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="troubleshooting-guide">Troubleshooting Guide</h1>
 
-  <h1 id="AppCore_Infrastructure_Data_DAOs_Enum" data-uid="AppCore.Infrastructure.Data.DAOs.Enum" class="text-break">Namespace AppCore.Infrastructure.Data.DAOs.Enum</h1>
-  <div class="markdown level0 summary"></div>
-  <div class="markdown level0 conceptual"></div>
-  <div class="markdown level0 remarks"></div>
-    <h3 id="enums">
-Enums
-</h3>
-      <h4><a class="xref" href="AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.html">QuotationStatus</a></h4>
-      <section></section>
-      <h4><a class="xref" href="AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.html">S3ObjectStatus</a></h4>
-      <section></section>
-
+<p>Guía consolidada de resolución de problemas para AppCore y NativeAOT.</p>
+<h2 id="1-errores-de-nativeaot">1. Errores de NativeAOT</h2>
+<h3 id="jsontypeinfo-metadata-for-type-x-was-not-provided">&quot;JsonTypeInfo metadata for type 'X' was not provided&quot;</h3>
+<p><strong>Causa</strong>: Estás intentando serializar un tipo que no está registrado en el <code>JsonSerializerContext</code>. En AOT, <code>System.Text.Json</code> no puede usar reflexión para descubrir propiedades.
+<strong>Solución</strong>:</p>
+<ol>
+<li>Crear un contexto parcial:
+<pre><code class="lang-csharp">[JsonSerializable(typeof(MyType))]
+public partial class MyJsonContext : JsonSerializerContext {}
+</code></pre>
+</li>
+<li>Pasar el contexto a las opciones:
+<pre><code class="lang-csharp">JsonSerializer.Serialize(obj, MyJsonContext.Default.MyType);
+</code></pre>
+</li>
+</ol>
+<h3 id="requires-unreferenced-code">&quot;Requires unreferenced code...&quot;</h3>
+<p><strong>Causa</strong>: Estás llamando a un método que usa reflexión insegura para AOT.
+<strong>Solución</strong>:</p>
+<ul>
+<li>Si es código propio: Refactorizar para evitar reflexión o usar Source Generators.</li>
+<li>Si es librería de terceros: Verificar si tiene versión compatible con AOT o buscar alternativa.</li>
+</ul>
+<h2 id="2-errores-de-github-packages">2. Errores de GitHub Packages</h2>
+<h3 id="401-unauthorized-al-restaurar-paquetes">&quot;401 Unauthorized&quot; al restaurar paquetes</h3>
+<p><strong>Causa</strong>: El PAT (Personal Access Token) ha expirado, no tiene permisos <code>read:packages</code>, o no está configurado en <code>nuget.config</code>.
+<strong>Solución</strong>:</p>
+<ol>
+<li>Verificar que el PAT tenga scope <code>read:packages</code>.</li>
+<li>Regenerar el PAT si es necesario.</li>
+<li>Verificar credenciales en <code>~/.nuget/NuGet/NuGet.Config</code> o variables de entorno.</li>
+</ol>
+<h2 id="3-errores-de-base-de-datos-dapper--npgsql">3. Errores de Base de Datos (Dapper + Npgsql)</h2>
+<h3 id="npgsqlpostgresexception-42703-column-id-does-not-exist">&quot;Npgsql.PostgresException: 42703: column 'id' does not exist&quot;</h3>
+<p><strong>Causa</strong>: PostgreSQL es case-sensitive con identificadores si fueron creados con comillas. Dapper mapea propiedades a columnas por nombre exacto.
+<strong>Solución</strong>: Verificar que el nombre de la propiedad C# coincida exactamente con la columna SQL, o usar alias en la query:</p>
+<pre><code class="lang-sql">SELECT id as Id, name as Name FROM users
+</code></pre>
+<h3 id="invalidcastexception-en-dapper">&quot;InvalidCastException&quot; en Dapper</h3>
+<p><strong>Causa</strong>: El tipo de dato en C# no coincide con el de PG (ej. <code>DateTime</code> vs <code>Timestamp</code>).
+<strong>Solución</strong>: Asegurar que las propiedades del DAO usen tipos compatibles (ej. <code>DateTime</code> para <code>timestamp</code>, <code>string</code> para <code>text</code>).</p>
 
 </article>
           </div>
@@ -98,6 +121,9 @@ Enums
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/guides/Troubleshooting.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">

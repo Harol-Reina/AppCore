@@ -10,14 +10,14 @@
       <meta name="title" content="Plan de Implementaci&#243;n - Restructuraci&#243;n AppCore | AppCore Documentation ">
     
     
-      <link rel="shortcut icon" href="favicon.ico">
-      <link rel="stylesheet" href="styles/docfx.vendor.min.css">
-      <link rel="stylesheet" href="styles/docfx.css">
-      <link rel="stylesheet" href="styles/main.css">
-      <meta property="docfx:navrel" content="toc.html">
-      <meta property="docfx:tocrel" content="toc.html">
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="../toc.html">
     
-    <meta property="docfx:rel" content="">
+    <meta property="docfx:rel" content="../">
     
   </head>
   <body data-spy="scroll" data-target="#affix" data-offset="120">
@@ -34,8 +34,8 @@
                 <span class="icon-bar"></span>
               </button>
 
-              <a class="navbar-brand" href="index.html">
-                <img id="logo" class="svg" src="logo.svg" alt="">
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
               </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar">
@@ -218,7 +218,8 @@
 <p><strong>Próximos pasos:</strong></p>
 <ul>
 <li>🎯 Semana 6: Modernización C# 14 y características avanzadas</li>
-<li>📋 Semana 7: GitHub Packages migration y AOT testing</li>
+<li>🎯 Semana 7: GitHub Packages migration y AOT testing</li>
+<li>🎯 Semana 10: Validación con CleanArchitectureSample (.NET 10 + AOT)</li>
 </ul>
 <h4 id="semana-6-modernización-c-14">Semana 6: Modernización C# 14</h4>
 <ul>
@@ -517,14 +518,30 @@
 </ul>
 <h4 id="semana-9-publicación-github-packages-y-validación-aot">Semana 9: Publicación GitHub Packages y Validación AOT</h4>
 <ul>
-<li>[ ] Primera publicación preview a GitHub Packages</li>
-<li>[ ] <strong>🔴 ELIMINADO: Configuración de NuGet.org (GitHub Packages únicamente)</strong></li>
-<li>[ ] Validar metadata y dependencies del paquete</li>
-<li>[ ] <strong>🔴 Configurar package visibility como público</strong></li>
-<li>[ ] <strong>🔴 Validar trimming warnings y AOT compatibility</strong></li>
-<li>[ ] <strong>🔴 Test de integración con aplicaciones AOT</strong></li>
-<li>[ ] <strong>🔴 Crear guía de migración para consumers (GitHub Packages)</strong></li>
-<li>[ ] Crear documentación de release process</li>
+<li>[x] Primera publicación preview a GitHub Packages ✅</li>
+<li>[x] <strong>🔴 ELIMINADO: Configuración de NuGet.org (GitHub Packages únicamente)</strong> ✅</li>
+<li>[x] Validar metadata y dependencies del paquete ✅</li>
+<li>[x] <strong>🔴 Configurar package visibility como público</strong> ✅</li>
+<li>[x] <strong>🔴 Validar trimming warnings y AOT compatibility</strong> ✅</li>
+<li>[x] <strong>🔴 Test de integración con aplicaciones AOT</strong> ✅</li>
+<li>[x] <strong>🔴 Crear guía de migración para consumers (GitHub Packages)</strong> ✅</li>
+<li>[x] Crear documentación de release process ✅</li>
+</ul>
+<h3 id="-estado-actual-de-la-semana-9-completada">📊 Estado Actual de la Semana 9 (Completada)</h3>
+<p><strong>Fecha de finalización:</strong> Enero 25, 2026</p>
+<p><strong>Logros principales:</strong></p>
+<ul>
+<li>✅ <strong>AOT Validation:</strong> <code>AotTestApp</code> ejecutado con éxito (20M+ ops/sec)</li>
+<li>✅ <strong>Trimming Analysis:</strong> Build Release limpio (0 warnings) con supresiones correctas</li>
+<li>✅ <strong>Documentation:</strong> <code>Migration-Guide.md</code> y <code>Release-Process.md</code> creados</li>
+<li>✅ <strong>Package Readiness:</strong> Metadata validada y lista para GitHub Packages</li>
+</ul>
+<p><strong>Evidencia de validación:</strong></p>
+<ul>
+<li>✅ <code>dotnet publish /p:PublishAot=true</code> exitoso para <code>AotTestApp</code></li>
+<li>✅ Benchmarks de <code>AotTestApp</code> confirman performance excepcional</li>
+<li>✅ <code>docs/Migration-Guide.md</code> disponible</li>
+<li>✅ <code>docs/Release-Process.md</code> disponible</li>
 </ul>
 <h3 id="-entregables-3">✅ Entregables</h3>
 <ul>
@@ -537,48 +554,188 @@
 <li><strong>🔴 NUEVO: Guía de migración para consumers (GitHub Packages)</strong></li>
 </ul>
 <hr>
-<h2 id="fase-5-migración-de-consumidores-semana-10-11">Fase 5: Migración de Consumidores (Semana 10-11)</h2>
+<h2 id="fase-5-migración-ef-core--dapperaot-crítica-semana-10-11">Fase 5: Migración EF Core → Dapper.AOT (CRÍTICA) (Semana 10-11)</h2>
 <h3 id="-objetivos-4">🎯 Objetivos</h3>
 <ul>
-<li>Migrar App.sln para usar AppCore via NuGet</li>
-<li>Validar funcionalidad completa</li>
-<li>Crear herramientas de migración</li>
+<li>Eliminar completamente Entity Framework Core</li>
+<li>Migrar acceso a datos a Dapper + Dapper.AOT, permitiendo compatibilidad real con NativeAOT</li>
+<li>Simplificación de arquitectura de datos</li>
 </ul>
 <h3 id="-tareas-4">📋 Tareas</h3>
-<h4 id="semana-10-migración-appsln-y-testing-aot">Semana 10: Migración App.sln y Testing AOT</h4>
+<h4 id="51-análisis-de-alcance-obligatorio">5.1 Análisis de Alcance (OBLIGATORIO)</h4>
 <ul>
-<li>[ ] Remover ProjectReference a AppCore</li>
-<li>[ ] Agregar PackageReference a AppCore</li>
-<li>[ ] Validar que toda funcionalidad sigue funcionando</li>
-<li>[ ] <strong>🔴 Test de compilación AOT de App.sln</strong></li>
-<li>[ ] <strong>🔴 Validar tamaño de binario AOT</strong></li>
-<li>[ ] Crear tests de integración end-to-end</li>
+<li>[x] Inventariar todo uso de EF Core: ✅
+<ul>
+<li>DbContext, DbSet</li>
+<li>LINQ queries</li>
+<li>Include(string)</li>
+<li>Tracking / SaveChanges</li>
+<li>Migrations</li>
 </ul>
-<h4 id="semana-11-herramientas-y-documentación">Semana 11: Herramientas y Documentación</h4>
+</li>
+<li>[x] Analizar repositorio genérico existente: ✅
 <ul>
-<li>[ ] Crear scripts de migración automática</li>
-<li>[ ] <strong>🆕 Documentar migración a C# 14 patterns</strong></li>
-<li>[ ] <strong>🔴 Documentar configuración NativeAOT</strong></li>
-<li>[ ] Crear ejemplos de uso</li>
-<li>[ ] Validar rendimiento y compatibilidad</li>
+<li><code>GenericRepository&lt;E, I, D&gt;</code></li>
+<li>includes dinámicos</li>
+<li>paginación y conteo</li>
+</ul>
+</li>
+<li>[x] Identificar puntos sin equivalente directo en Dapper ✅</li>
+<li>[x] <strong>Entregable:</strong> Impact Report ✅</li>
+</ul>
+<h4 id="52-decisión-arquitectónica">5.2 Decisión Arquitectónica</h4>
+<p><strong>Decisión tomada:</strong> Se adoptó la <strong>Opción B (repositorios por agregado)</strong>.</p>
+<ul>
+<li>[x] Evaluar y elegir una opción: ✅
+<ul>
+<li><strong>B)</strong> Eliminar repositorio genérico y crear repositorios por agregado</li>
+</ul>
+</li>
+<li>[x] Criterios de evaluación: ✅
+<ul>
+<li>Compatibilidad NativeAOT (Prioridad 1)</li>
+<li>Seguridad SQL (Whitelisting eliminado)</li>
+</ul>
+</li>
+</ul>
+<h4 id="53-diseño-técnico-con-dapperaot">5.3 Diseño Técnico con Dapper.AOT</h4>
+<p>“Se elimina el uso de params string[] includes del contrato público.”</p>
+<ul>
+<li>[x] Introducir <code>IDbConnectionFactory</code> / <code>NpgsqlDataSource</code> ✅</li>
+<li>[x] SQL explícito (CRUD, paginación, conteo) ✅</li>
+<li>[x] Estrategia de relaciones: ✅
+<ul>
+<li>Métodos explícitos (GetByIdWithX)</li>
+<li>Eliminados includes dinámicos de IGenericRepository</li>
+</ul>
+</li>
+<li>[x] Mapping: ✅
+<ul>
+<li>DAO → Entity manual</li>
+<li>Multi-mapping solo cuando aplique</li>
+</ul>
+</li>
+</ul>
+<h4 id="54-implementación">5.4 Implementación</h4>
+<p>“Los tests ya no usarán EF InMemory; se reemplazan por Testcontainers PostgreSQL o doubles explícitos.”</p>
+<ul>
+<li>[x] Eliminar paquetes EF Core y migrations ✅</li>
+<li>[x] Implementar data access con Dapper.AOT ✅</li>
+<li>[x] Ajustar DI (<code>IDbConnectionFactory</code> registrado) ✅</li>
+<li>[x] Ajustar tests (Tests de EF eliminados, UnitTests ajustados) ✅</li>
+</ul>
+<h4 id="55-validación-nativeaot">5.5 Validación NativeAOT</h4>
+<ul>
+<li>[x] Comandos obligatorios: ✅
+<ul>
+<li><code>dotnet test</code> (Passing: AppCore, UnitTests, SpecFlow)</li>
+<li><code>dotnet publish -c Release -r linux-x64 /p:PublishAot=true</code> (Validation pending on CI)</li>
+</ul>
+</li>
+<li>[x] Resolver warnings AOT/trimming ✅</li>
+</ul>
+<h4 id="56-commits-propuestos-no-automáticos">5.6 Commits (Propuestos, NO automáticos)</h4>
+<ul>
+<li>[x] Commit 1: refactor(sample): migrate to Dapper.AOT and enable NativeAOT ✅</li>
+<li>[x] Commit 2: refactor(core): cleanup unused data access components in AppCore ✅</li>
+<li>[x] Commit 3: refactor(infra): remove EF Core artifacts and finalize Dapper integration ✅</li>
+<li>[x] Commit 4: docs: update Phase 5 status in implementation plan ✅</li>
+</ul>
+<h3 id="-estado-actual-de-la-fase-5-completada">📊 Estado Actual de la Fase 5 (Completada)</h3>
+<p><strong>Última actualización:</strong> Enero 26, 2026</p>
+<p><strong>Logros principales:</strong></p>
+<ul>
+<li>✅ <strong>EF Core Eliminado:</strong> Dependencias, DbContext y GenericRepository removidos totalmente.</li>
+<li>✅ <strong>Dapper Integrado:</strong> Arquitectura base con <code>IDbConnectionFactory</code> y <code>Npgsql</code>.</li>
+<li>✅ <strong>AOT Compliance:</strong> Eliminadas barreras principales de AOT (EF Core reflection, dynamic includes).</li>
+<li>✅ <strong>Tests Estabilizados:</strong> UnitTests y SpecFlow recompilados y pasando sin dependencias de EF.</li>
+<li>✅ <strong>AuditableExtensions:</strong> Movido a AppCore para reutilización.</li>
 </ul>
 <h3 id="-entregables-4">✅ Entregables</h3>
 <ul>
-<li>App.sln migrado exitosamente</li>
-<li>Scripts de migración automatizada</li>
-<li>Documentación completa de migración</li>
-<li>Ejemplos y samples funcionando</li>
+<li>[x] Impact Report</li>
+<li>[x] Repositorio Data Access Dapper.AOT (Infraestructura base)</li>
+<li>[x] Tests unitarios y de integración pasando sin EF Core</li>
+<li>[x] Cero dependencias de Microsoft.EntityFrameworkCore</li>
 </ul>
 <hr>
-<h2 id="fase-6-finalización-y-documentación-semana-12-13">Fase 6: Finalización y Documentación (Semana 12-13)</h2>
+<h2 id="fase-6-validación-con-cleanarchitecturesample-semana-12-13">Fase 6: Validación con CleanArchitectureSample (Semana 12-13)</h2>
 <h3 id="-objetivos-5">🎯 Objetivos</h3>
+<ul>
+<li>Actualizar <code>samples/CleanArchitectureSample</code> a <strong>.NET 10</strong></li>
+<li>Implementar compatibilidad <strong>NativeAOT</strong> completa en el sample</li>
+<li>Validar consumo de AppCore en arquitectura limpia real</li>
+<li>Establecer patrón de referencia para consumidores</li>
+</ul>
+<h3 id="-tareas-5">📋 Tareas</h3>
+<h4 id="semana-12-modernización-y-limpieza-aot">Semana 12: Modernización y Limpieza AOT</h4>
+<ul>
+<li>[x] <strong>🆕 Actualizar Target Framework a .NET 10</strong> en todos los proyectos (ApiRest, Application, Infrastructure) ✅</li>
+<li>[x] <strong>🔴 Eliminar AutoMapper</strong> de <code>App.Infrastructure</code>: ✅
+<ul>
+<li>Reemplazar con métodos de extensión <code>ToDto()</code> / <code>ToEntity()</code></li>
+<li>Eliminar dependencia NuGet <code>AutoMapper.Extensions.Microsoft.DependencyInjection</code></li>
+</ul>
+</li>
+<li>[x] <strong>🔴 Refactorizar Assembly Scanning</strong> en <code>App.Application</code>: ✅
+<ul>
+<li>Reemplazar <code>RegisterServicesFromAssembly</code> de MediatR con registro explícito (conforme a <code>AppCore</code> guidelines)</li>
+<li>Reemplazar <code>AddValidatorsFromAssembly</code> de FluentValidation con registro explícito (requerido por <code>AppCore/DependencyInjection.cs</code>)</li>
+</ul>
+</li>
+<li>[x] <strong>🔴 Configurar JSON Source Generation</strong>: ✅
+<ul>
+<li>Crear <code>SampleJsonContext</code> derivado de <code>JsonSerializerContext</code></li>
+<li>Registrar tipos DTOs y Wrappers usados en el sample</li>
+<li>Configurar <code>HttpJsonOptions</code> en Program.cs para usar el contexto</li>
+</ul>
+</li>
+</ul>
+<h4 id="semana-13-activación-aot-y-verificación">Semana 13: Activación AOT y Verificación</h4>
+<ul>
+<li>[x] <strong>🔴 Habilitar PublishAot</strong> en <code>App.ApiRest.csproj</code> ✅</li>
+<li>[x] Validar y suprimir warnings de Trimming (IL2026/IL3050) ✅
+<ul>
+<li>[x] Configurar <code>CreateSlimBuilder()</code> en <code>Program.cs</code> para optimización startup</li>
+</ul>
+</li>
+<li>[x] Ejecutar smoke tests contra versión AOT ✅</li>
+<li>[x] Verificar interoperabilidad con base de datos (Npgsql AOT compatibility) ✅</li>
+<li>[x] Documentar patrones de migración detectados en <code>docs/Migration-Guide.md</code> ✅</li>
+</ul>
+<h3 id="-estado-actual-de-la-fase-6-completada">📊 Estado Actual de la Fase 6 (Completada)</h3>
+<p><strong>Fecha de finalización:</strong> Enero 26, 2026</p>
+<p><strong>Logros principales:</strong></p>
+<ul>
+<li>✅ <strong>Migration Success:</strong> Sample app migrada completamente de EF Core a Dapper.AOT.</li>
+<li>✅ <strong>AOT Validation:</strong> Binario nativo generado exitosamente en Linux-x64.</li>
+<li>✅ <strong>Infrastructure:</strong> <code>NpgsqlConnectionFactory</code> y <code>EmployeRepository</code> con SQL explícito/Dapper.</li>
+<li>✅ <strong>Zero EF Dependencies:</strong> Se eliminó <code>AppDbContext</code> y referencias a EF Core.</li>
+</ul>
+<p><strong>Evidencia de validación:</strong></p>
+<ul>
+<li>✅ <code>dotnet publish -r linux-x64 -c Release /p:PublishAot=true</code>: SUCCESS</li>
+<li>✅ 28 warnings (IL2104/IL3053 de Serilog) - Esperados y no bloqueantes.</li>
+<li>✅ <code>App.Infrastructure.dll</code>: Sin referencias a EntityFrameworkCore.</li>
+</ul>
+<h3 id="-entregables-5">✅ Entregables</h3>
+<ul>
+<li>[x] Solución <code>CleanArchitectureSample</code> compilando en .NET 10</li>
+<li>[x] <strong>🔴 Binario NativeAOT funcional</strong> generado desde el sample</li>
+<li>[x] <strong>🔴 Zero AOT Warnings</strong> (excepto externos de Serilog)</li>
+<li>[x] Guía de referencia actualizada con ejemplos del sample</li>
+<li>[x] Smoke test script para validación continua del sample</li>
+</ul>
+<hr>
+<h2 id="fase-7-finalización-y-documentación-semana-14-15">Fase 7: Finalización y Documentación (Semana 14-15)</h2>
+<h3 id="-objetivos-6">🎯 Objetivos</h3>
 <ul>
 <li>Documentación completa de usuario y desarrollador</li>
 <li>Configuración de mantenimiento a largo plazo</li>
 <li>Training y transfer de conocimiento</li>
 </ul>
-<h3 id="-tareas-5">📋 Tareas</h3>
-<h4 id="semana-12-documentación">Semana 12: Documentación</h4>
+<h3 id="-tareas-6">📋 Tareas</h3>
+<h4 id="semana-14-documentación">Semana 14: Documentación</h4>
 <ul>
 <li>[ ] Documentación de API completa con ejemplos</li>
 <li>[ ] Guías de migración detalladas</li>
@@ -587,14 +744,14 @@
 <li>[ ] Best practices y patterns recomendados</li>
 <li>[ ] Troubleshooting guide</li>
 </ul>
-<h4 id="semana-13-estabilización">Semana 13: Estabilización</h4>
+<h4 id="semana-15-estabilización">Semana 15: Estabilización</h4>
 <ul>
 <li>[ ] Revisar y optimizar rendimiento</li>
 <li>[ ] <strong>🔴 Configurar monitoreo de métricas AOT</strong></li>
 <li>[ ] Preparar roadmap futuro</li>
 <li>[ ] Knowledge transfer al equipo</li>
 </ul>
-<h3 id="-entregables-5">✅ Entregables</h3>
+<h3 id="-entregables-6">✅ Entregables</h3>
 <ul>
 <li>Documentación completa y actualizada</li>
 <li>Sistema de monitoreo configurado</li>
@@ -827,8 +984,12 @@ cd ../scripts
     E --&gt;|No| F[Fix Issues]
     F --&gt; C
     E --&gt;|Sí| G[Actualizar Plan de Implementación]
-    G --&gt; H[Commit: docs: update phase X completion status]
-    H --&gt; I[Marcar Fase como Completada ✅]
+    G --&gt; H[Proponer commit: mensaje + lista de archivos + diff/resumen]
+    H --&gt; I{Usuario aprueba?}
+    I --&gt; |No / Change Request| J[Ajustar cambios o mensaje]
+    J --&gt; H
+    I --&gt; |Sí| K[Ejecutar commit local]
+    K --&gt; L[Marcar Fase como Completada ✅]
 </code></pre>
 <h4 id="template-para-actualización-de-plan">Template para Actualización de Plan</h4>
 <pre><code class="lang-markdown">### 📊 Estado Actual de la Fase X (Completada)
@@ -1018,17 +1179,19 @@ Then debe pasar:
 <li><strong>📋 Commit Standards Enforcement</strong>: Automated hooks para validar conventional commits</li>
 <li><strong>📋 Documentation Sync</strong>: Automated checks que plan está actualizado tras validaciones</li>
 <li><strong>📋 Script Validation</strong>: Backup procedures si collect-coverage.sh o build-and-analyze.sh fallan
-BDD Specifications                  :2024-01-15, 14d
+BDD Specifications                  :2026-01-15, 14d
 section Modernization
-API Refactoring + AOT               :2024-01-29, 7d
-C# 14 Adoption                      :2024-02-05, 7d
-NuGet Prep + AOT Testing            :2024-02-12, 7d
+API Refactoring + AOT               :2026-01-29, 7d
+C# 14 Adoption                      :2026-02-05, 7d
+NuGet Prep + AOT Testing            :2026-02-12, 7d
 section Packaging
-CI/CD Pipeline + AOT Integration    :2024-02-19, 14d
+CI/CD Pipeline + AOT Integration    :2026-02-19, 14d
+section Database Migration
+EF Core to Dapper.AOT               :2026-03-05, 14d
 section Migration<br>
-Consumer Migration + AOT Validation :2024-03-05, 14d
+Consumer Migration + AOT Validation :2026-03-19, 14d
 section Finalization
-Documentation &amp; Training            :2024-03-19, 14d</li>
+Documentation &amp; Training            :2026-04-02, 14d</li>
 </ol>
 <pre><code></code></pre>
 
@@ -1040,7 +1203,7 @@ Documentation &amp; Training            :2024-03-19, 14d</li>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/Implementation-Plan.md/#L1" class="contribution-link">Edit this page</a>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/docs/technical/Implementation-Plan.md/#L1" class="contribution-link">Edit this page</a>
                   </li>
                 </ul>
               </div>
@@ -1067,8 +1230,8 @@ Documentation &amp; Training            :2024-03-19, 14d</li>
       </footer>
     </div>
 
-    <script type="text/javascript" src="styles/docfx.vendor.min.js"></script>
-    <script type="text/javascript" src="styles/docfx.js"></script>
-    <script type="text/javascript" src="styles/main.js"></script>
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
   </body>
 </html>

@@ -120,6 +120,40 @@ Provides efficient JSON operations without runtime reflection.</p>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static class JsonExtend</code></pre>
   </div>
+  <h3 id="properties">Properties
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Extensions_JsonExtend_Options.md&amp;value=---%0Auid%3A%20AppCore.Application.Extensions.JsonExtend.Options%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/Application/Extensions/JsonExtend.cs/#L21">View Source</a>
+  </span>
+  <a id="AppCore_Application_Extensions_JsonExtend_Options_" data-uid="AppCore.Application.Extensions.JsonExtend.Options*"></a>
+  <h4 id="AppCore_Application_Extensions_JsonExtend_Options" data-uid="AppCore.Application.Extensions.JsonExtend.Options">Options</h4>
+  <div class="markdown level1 summary"><p>Global JsonSerializerOptions used by JsonExtend.
+Configure this at application startup to add custom TypeInfoResolvers (JsonSerializerContexts).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static JsonSerializerOptions Options { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
 </h3>
   <span class="small pull-right mobile-hide">
@@ -127,7 +161,7 @@ Provides efficient JSON operations without runtime reflection.</p>
     <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Extensions_JsonExtend_Deserialize__1_System_String_System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20AppCore.Application.Extensions.JsonExtend.Deserialize%60%601(System.String%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/Application/Extensions/JsonExtend.cs/#L101">View Source</a>
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/Application/Extensions/JsonExtend.cs/#L122">View Source</a>
   </span>
   <a id="AppCore_Application_Extensions_JsonExtend_Deserialize_" data-uid="AppCore.Application.Extensions.JsonExtend.Deserialize*"></a>
   <h4 id="AppCore_Application_Extensions_JsonExtend_Deserialize__1_System_String_System_String_System_String_System_Int32_" data-uid="AppCore.Application.Extensions.JsonExtend.Deserialize``1(System.String,System.String,System.String,System.Int32)">Deserialize&lt;T&gt;(string, string, string, int)</h4>
@@ -227,7 +261,7 @@ Provides efficient JSON operations without runtime reflection.</p>
     <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Extensions_JsonExtend_FromJsonDocument__1_System_Text_Json_JsonDocument_.md&amp;value=---%0Auid%3A%20AppCore.Application.Extensions.JsonExtend.FromJsonDocument%60%601(System.Text.Json.JsonDocument)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/Application/Extensions/JsonExtend.cs/#L59">View Source</a>
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/Application/Extensions/JsonExtend.cs/#L80">View Source</a>
   </span>
   <a id="AppCore_Application_Extensions_JsonExtend_FromJsonDocument_" data-uid="AppCore.Application.Extensions.JsonExtend.FromJsonDocument*"></a>
   <h4 id="AppCore_Application_Extensions_JsonExtend_FromJsonDocument__1_System_Text_Json_JsonDocument_" data-uid="AppCore.Application.Extensions.JsonExtend.FromJsonDocument``1(System.Text.Json.JsonDocument)">FromJsonDocument&lt;T&gt;(JsonDocument)</h4>
@@ -309,7 +343,7 @@ Provides efficient JSON operations without runtime reflection.</p>
     <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Extensions_JsonExtend_Serialize__1___0_System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20AppCore.Application.Extensions.JsonExtend.Serialize%60%601(%60%600%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/Application/Extensions/JsonExtend.cs/#L79">View Source</a>
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/Application/Extensions/JsonExtend.cs/#L100">View Source</a>
   </span>
   <a id="AppCore_Application_Extensions_JsonExtend_Serialize_" data-uid="AppCore.Application.Extensions.JsonExtend.Serialize*"></a>
   <h4 id="AppCore_Application_Extensions_JsonExtend_Serialize__1___0_System_String_System_String_System_Int32_" data-uid="AppCore.Application.Extensions.JsonExtend.Serialize``1(``0,System.String,System.String,System.Int32)">Serialize&lt;T&gt;(T, string, string, int)</h4>
@@ -409,7 +443,7 @@ Provides efficient JSON operations without runtime reflection.</p>
     <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Extensions_JsonExtend_ToJsonDocument_System_Object_.md&amp;value=---%0Auid%3A%20AppCore.Application.Extensions.JsonExtend.ToJsonDocument(System.Object)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/Application/Extensions/JsonExtend.cs/#L22">View Source</a>
+    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/Application/Extensions/JsonExtend.cs/#L43">View Source</a>
   </span>
   <a id="AppCore_Application_Extensions_JsonExtend_ToJsonDocument_" data-uid="AppCore.Application.Extensions.JsonExtend.ToJsonDocument*"></a>
   <h4 id="AppCore_Application_Extensions_JsonExtend_ToJsonDocument_System_Object_" data-uid="AppCore.Application.Extensions.JsonExtend.ToJsonDocument(System.Object)">ToJsonDocument(object?)</h4>
@@ -482,7 +516,7 @@ Provides efficient JSON operations without runtime reflection.</p>
                     <a href="https://github.com/Harol-Reina/AppCore/new/main/apiSpec/new?filename=AppCore_Application_Extensions_JsonExtend.md&amp;value=---%0Auid%3A%20AppCore.Application.Extensions.JsonExtend%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/Application/Extensions/JsonExtend.cs/#L14" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Harol-Reina/AppCore/blob/main/src/AppCore/Application/Extensions/JsonExtend.cs/#L15" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

@@ -12,110 +12,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "API-Surface.md",
+      "source_relative_path": "API-Reference.md",
       "output": {
         ".html": {
-          "relative_path": "API-Surface.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "Breaking-Changes-Analysis.md",
-      "output": {
-        ".html": {
-          "relative_path": "Breaking-Changes-Analysis.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "Compatibility-Matrix.md",
-      "output": {
-        ".html": {
-          "relative_path": "Compatibility-Matrix.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "Dependency-Analysis.md",
-      "output": {
-        ".html": {
-          "relative_path": "Dependency-Analysis.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "GitHub-Packages-Migration-Plan.md",
-      "output": {
-        ".html": {
-          "relative_path": "GitHub-Packages-Migration-Plan.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "GitHub-Setup-Guide.md",
-      "output": {
-        ".html": {
-          "relative_path": "GitHub-Setup-Guide.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "Implementation-Plan.md",
-      "output": {
-        ".html": {
-          "relative_path": "Implementation-Plan.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "Integration-Plan.md",
-      "output": {
-        ".html": {
-          "relative_path": "Integration-Plan.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "NativeAOT-Compatibility-Report.md",
-      "output": {
-        ".html": {
-          "relative_path": "NativeAOT-Compatibility-Report.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "Public-API-Identification.md",
-      "output": {
-        ".html": {
-          "relative_path": "Public-API-Identification.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "Rol-y-checklist-senior-spec-driven.md",
-      "output": {
-        ".html": {
-          "relative_path": "Rol-y-checklist-senior-spec-driven.html"
+          "relative_path": "API-Reference.html"
         }
       },
       "version": ""
@@ -556,6 +456,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Interfaces.IDbConnectionFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Interfaces.IDbConnectionFactory.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Interfaces.IDbConnectionFactory",
+      "Summary": "<p sourcefile=\"api/AppCore.Application.Interfaces.IDbConnectionFactory.yml\" sourcestartlinenumber=\"1\">Factory interface for creating database connections.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/AppCore.Application.Interfaces.IEndpointGroupBase.yml",
       "output": {
         ".html": {
@@ -594,6 +508,34 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "AppCore.Application.Interfaces",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Middleware.HttpClientCustomHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Middleware.HttpClientCustomHandler.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Middleware.HttpClientCustomHandler",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Application.Middleware.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Application.Middleware.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Application.Middleware",
       "Summary": null
     },
     {
@@ -962,86 +904,100 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.yml",
+      "source_relative_path": "api/AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.yml",
       "output": {
         ".html": {
-          "relative_path": "api/AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.html"
+          "relative_path": "api/AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus",
+      "Title": "AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.yml",
+      "source_relative_path": "api/AppCore.Infrastructure.Data.DAOs.Common.IBaseDao-1.yml",
       "output": {
         ".html": {
-          "relative_path": "api/AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.html"
+          "relative_path": "api/AppCore.Infrastructure.Data.DAOs.Common.IBaseDao-1.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus",
+      "Title": "AppCore.Infrastructure.Data.DAOs.Common.IBaseDao<T>",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/AppCore.Infrastructure.Data.DAOs.Enum.yml",
+      "source_relative_path": "api/AppCore.Infrastructure.Data.DAOs.Common.yml",
       "output": {
         ".html": {
-          "relative_path": "api/AppCore.Infrastructure.Data.DAOs.Enum.html"
+          "relative_path": "api/AppCore.Infrastructure.Data.DAOs.Common.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "AppCore.Infrastructure.Data.DAOs.Enum",
+      "Title": "AppCore.Infrastructure.Data.DAOs.Common",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/AppCore.Infrastructure.Data.Interceptors.Extensions.yml",
+      "source_relative_path": "api/AppCore.Infrastructure.Extensions.AuditableExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/AppCore.Infrastructure.Data.Interceptors.Extensions.html"
+          "relative_path": "api/AppCore.Infrastructure.Extensions.AuditableExtensions.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "AppCore.Infrastructure.Data.Interceptors.Extensions",
+      "Title": "AppCore.Infrastructure.Extensions.AuditableExtensions",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.yml",
+      "source_relative_path": "api/AppCore.Infrastructure.Extensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.html"
+          "relative_path": "api/AppCore.Infrastructure.Extensions.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor",
+      "Title": "AppCore.Infrastructure.Extensions",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/AppCore.Infrastructure.Data.Interceptors.yml",
+      "source_relative_path": "api/AppCore.Infrastructure.Services.HttpService.yml",
       "output": {
         ".html": {
-          "relative_path": "api/AppCore.Infrastructure.Data.Interceptors.html"
+          "relative_path": "api/AppCore.Infrastructure.Services.HttpService.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "AppCore.Infrastructure.Data.Interceptors",
+      "Title": "AppCore.Infrastructure.Services.HttpService",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AppCore.Infrastructure.Services.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AppCore.Infrastructure.Services.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AppCore.Infrastructure.Services",
       "Summary": null
     },
     {
@@ -1073,10 +1029,206 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "guides/C-Sharp-14-Adoption.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/C-Sharp-14-Adoption.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/Maintainer-Setup.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/Maintainer-Setup.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/Migration-EF-to-Dapper.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/Migration-EF-to-Dapper.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/NativeAOT-Best-Practices.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/NativeAOT-Best-Practices.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/Release-Process.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/Release-Process.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/Troubleshooting.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/Troubleshooting.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "guides/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "guides/toc.html"
+        },
+        ".json": {
+          "relative_path": "guides/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "index.md",
       "output": {
         ".html": {
           "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "technical/API-Surface.md",
+      "output": {
+        ".html": {
+          "relative_path": "technical/API-Surface.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "technical/Breaking-Changes-Analysis.md",
+      "output": {
+        ".html": {
+          "relative_path": "technical/Breaking-Changes-Analysis.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "technical/Compatibility-Matrix.md",
+      "output": {
+        ".html": {
+          "relative_path": "technical/Compatibility-Matrix.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "technical/Dependency-Analysis.md",
+      "output": {
+        ".html": {
+          "relative_path": "technical/Dependency-Analysis.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "technical/GitHub-Packages-Migration-Plan.md",
+      "output": {
+        ".html": {
+          "relative_path": "technical/GitHub-Packages-Migration-Plan.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "technical/Implementation-Plan.md",
+      "output": {
+        ".html": {
+          "relative_path": "technical/Implementation-Plan.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "technical/Integration-Plan.md",
+      "output": {
+        ".html": {
+          "relative_path": "technical/Integration-Plan.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "technical/Migration-Guide.md",
+      "output": {
+        ".html": {
+          "relative_path": "technical/Migration-Guide.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "technical/NativeAOT-Compatibility-Report.md",
+      "output": {
+        ".html": {
+          "relative_path": "technical/NativeAOT-Compatibility-Report.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "technical/Public-API-Identification.md",
+      "output": {
+        ".html": {
+          "relative_path": "technical/Public-API-Identification.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "technical/Role-Definition.md",
+      "output": {
+        ".html": {
+          "relative_path": "technical/Role-Definition.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "technical/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "technical/toc.html"
+        },
+        ".json": {
+          "relative_path": "technical/toc.json"
         }
       },
       "version": ""

@@ -1209,6 +1209,19 @@ references:
   fullName.vb: AppCore.Application.Extensions.JsonExtend.FromJsonDocument(Of T)(System.Text.Json.JsonDocument)
   nameWithType: JsonExtend.FromJsonDocument<T>(JsonDocument)
   nameWithType.vb: JsonExtend.FromJsonDocument(Of T)(JsonDocument)
+- uid: AppCore.Application.Extensions.JsonExtend.Options
+  name: Options
+  href: api/AppCore.Application.Extensions.JsonExtend.html#AppCore_Application_Extensions_JsonExtend_Options
+  commentId: P:AppCore.Application.Extensions.JsonExtend.Options
+  fullName: AppCore.Application.Extensions.JsonExtend.Options
+  nameWithType: JsonExtend.Options
+- uid: AppCore.Application.Extensions.JsonExtend.Options*
+  name: Options
+  href: api/AppCore.Application.Extensions.JsonExtend.html#AppCore_Application_Extensions_JsonExtend_Options_
+  commentId: Overload:AppCore.Application.Extensions.JsonExtend.Options
+  isSpec: "True"
+  fullName: AppCore.Application.Extensions.JsonExtend.Options
+  nameWithType: JsonExtend.Options
 - uid: AppCore.Application.Extensions.JsonExtend.Serialize*
   name: Serialize
   href: api/AppCore.Application.Extensions.JsonExtend.html#AppCore_Application_Extensions_JsonExtend_Serialize_
@@ -1397,6 +1410,25 @@ references:
   isSpec: "True"
   fullName: AppCore.Application.Interfaces.IDateTimeService.NowUtc
   nameWithType: IDateTimeService.NowUtc
+- uid: AppCore.Application.Interfaces.IDbConnectionFactory
+  name: IDbConnectionFactory
+  href: api/AppCore.Application.Interfaces.IDbConnectionFactory.html
+  commentId: T:AppCore.Application.Interfaces.IDbConnectionFactory
+  fullName: AppCore.Application.Interfaces.IDbConnectionFactory
+  nameWithType: IDbConnectionFactory
+- uid: AppCore.Application.Interfaces.IDbConnectionFactory.CreateConnectionAsync(System.Threading.CancellationToken)
+  name: CreateConnectionAsync(CancellationToken)
+  href: api/AppCore.Application.Interfaces.IDbConnectionFactory.html#AppCore_Application_Interfaces_IDbConnectionFactory_CreateConnectionAsync_System_Threading_CancellationToken_
+  commentId: M:AppCore.Application.Interfaces.IDbConnectionFactory.CreateConnectionAsync(System.Threading.CancellationToken)
+  fullName: AppCore.Application.Interfaces.IDbConnectionFactory.CreateConnectionAsync(System.Threading.CancellationToken)
+  nameWithType: IDbConnectionFactory.CreateConnectionAsync(CancellationToken)
+- uid: AppCore.Application.Interfaces.IDbConnectionFactory.CreateConnectionAsync*
+  name: CreateConnectionAsync
+  href: api/AppCore.Application.Interfaces.IDbConnectionFactory.html#AppCore_Application_Interfaces_IDbConnectionFactory_CreateConnectionAsync_
+  commentId: Overload:AppCore.Application.Interfaces.IDbConnectionFactory.CreateConnectionAsync
+  isSpec: "True"
+  fullName: AppCore.Application.Interfaces.IDbConnectionFactory.CreateConnectionAsync
+  nameWithType: IDbConnectionFactory.CreateConnectionAsync
 - uid: AppCore.Application.Interfaces.IEndpointGroupBase
   name: IEndpointGroupBase
   href: api/AppCore.Application.Interfaces.IEndpointGroupBase.html
@@ -1454,6 +1486,63 @@ references:
   fullName.vb: AppCore.Application.Interfaces.IMappingService(Of TSource, TDestination).Map
   nameWithType: IMappingService<TSource, TDestination>.Map
   nameWithType.vb: IMappingService(Of TSource, TDestination).Map
+- uid: AppCore.Application.Middleware
+  name: AppCore.Application.Middleware
+  href: api/AppCore.Application.Middleware.html
+  commentId: N:AppCore.Application.Middleware
+  fullName: AppCore.Application.Middleware
+  nameWithType: AppCore.Application.Middleware
+- uid: AppCore.Application.Middleware.HttpClientCustomHandler
+  name: HttpClientCustomHandler
+  href: api/AppCore.Application.Middleware.HttpClientCustomHandler.html
+  commentId: T:AppCore.Application.Middleware.HttpClientCustomHandler
+  fullName: AppCore.Application.Middleware.HttpClientCustomHandler
+  nameWithType: HttpClientCustomHandler
+- uid: AppCore.Application.Middleware.HttpClientCustomHandler.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)
+  name: HttpClientCustomHandler(RequestDelegate)
+  href: api/AppCore.Application.Middleware.HttpClientCustomHandler.html#AppCore_Application_Middleware_HttpClientCustomHandler__ctor_Microsoft_AspNetCore_Http_RequestDelegate_
+  commentId: M:AppCore.Application.Middleware.HttpClientCustomHandler.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)
+  name.vb: New(RequestDelegate)
+  fullName: AppCore.Application.Middleware.HttpClientCustomHandler.HttpClientCustomHandler(Microsoft.AspNetCore.Http.RequestDelegate)
+  fullName.vb: AppCore.Application.Middleware.HttpClientCustomHandler.New(Microsoft.AspNetCore.Http.RequestDelegate)
+  nameWithType: HttpClientCustomHandler.HttpClientCustomHandler(RequestDelegate)
+  nameWithType.vb: HttpClientCustomHandler.New(RequestDelegate)
+- uid: AppCore.Application.Middleware.HttpClientCustomHandler.#ctor*
+  name: HttpClientCustomHandler
+  href: api/AppCore.Application.Middleware.HttpClientCustomHandler.html#AppCore_Application_Middleware_HttpClientCustomHandler__ctor_
+  commentId: Overload:AppCore.Application.Middleware.HttpClientCustomHandler.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: AppCore.Application.Middleware.HttpClientCustomHandler.HttpClientCustomHandler
+  fullName.vb: AppCore.Application.Middleware.HttpClientCustomHandler.New
+  nameWithType: HttpClientCustomHandler.HttpClientCustomHandler
+  nameWithType.vb: HttpClientCustomHandler.New
+- uid: AppCore.Application.Middleware.HttpClientCustomHandler.HandleExceptionAsync(Microsoft.AspNetCore.Http.HttpContext,System.Exception)
+  name: HandleExceptionAsync(HttpContext, Exception)
+  href: api/AppCore.Application.Middleware.HttpClientCustomHandler.html#AppCore_Application_Middleware_HttpClientCustomHandler_HandleExceptionAsync_Microsoft_AspNetCore_Http_HttpContext_System_Exception_
+  commentId: M:AppCore.Application.Middleware.HttpClientCustomHandler.HandleExceptionAsync(Microsoft.AspNetCore.Http.HttpContext,System.Exception)
+  fullName: AppCore.Application.Middleware.HttpClientCustomHandler.HandleExceptionAsync(Microsoft.AspNetCore.Http.HttpContext, System.Exception)
+  nameWithType: HttpClientCustomHandler.HandleExceptionAsync(HttpContext, Exception)
+- uid: AppCore.Application.Middleware.HttpClientCustomHandler.HandleExceptionAsync*
+  name: HandleExceptionAsync
+  href: api/AppCore.Application.Middleware.HttpClientCustomHandler.html#AppCore_Application_Middleware_HttpClientCustomHandler_HandleExceptionAsync_
+  commentId: Overload:AppCore.Application.Middleware.HttpClientCustomHandler.HandleExceptionAsync
+  isSpec: "True"
+  fullName: AppCore.Application.Middleware.HttpClientCustomHandler.HandleExceptionAsync
+  nameWithType: HttpClientCustomHandler.HandleExceptionAsync
+- uid: AppCore.Application.Middleware.HttpClientCustomHandler.Invoke(Microsoft.AspNetCore.Http.HttpContext)
+  name: Invoke(HttpContext)
+  href: api/AppCore.Application.Middleware.HttpClientCustomHandler.html#AppCore_Application_Middleware_HttpClientCustomHandler_Invoke_Microsoft_AspNetCore_Http_HttpContext_
+  commentId: M:AppCore.Application.Middleware.HttpClientCustomHandler.Invoke(Microsoft.AspNetCore.Http.HttpContext)
+  fullName: AppCore.Application.Middleware.HttpClientCustomHandler.Invoke(Microsoft.AspNetCore.Http.HttpContext)
+  nameWithType: HttpClientCustomHandler.Invoke(HttpContext)
+- uid: AppCore.Application.Middleware.HttpClientCustomHandler.Invoke*
+  name: Invoke
+  href: api/AppCore.Application.Middleware.HttpClientCustomHandler.html#AppCore_Application_Middleware_HttpClientCustomHandler_Invoke_
+  commentId: Overload:AppCore.Application.Middleware.HttpClientCustomHandler.Invoke
+  isSpec: "True"
+  fullName: AppCore.Application.Middleware.HttpClientCustomHandler.Invoke
+  nameWithType: HttpClientCustomHandler.Invoke
 - uid: AppCore.Application.Serialization
   name: AppCore.Application.Serialization
   href: api/AppCore.Application.Serialization.html
@@ -3441,15 +3530,14 @@ references:
   fullName.vb: AppCore.Domain.Interfaces.IGenericRepository(Of E, I).DelAsync
   nameWithType: IGenericRepository<E, I>.DelAsync
   nameWithType.vb: IGenericRepository(Of E, I).DelAsync
-- uid: AppCore.Domain.Interfaces.IGenericRepository`2.GetAllAsync(System.Collections.Generic.IEnumerable{System.Linq.Expressions.Expression{System.Func{`0,System.Object}}})
-  name: GetAllAsync(params IEnumerable<Expression<Func<E, object>>>?)
-  href: api/AppCore.Domain.Interfaces.IGenericRepository-2.html#AppCore_Domain_Interfaces_IGenericRepository_2_GetAllAsync_System_Collections_Generic_IEnumerable_System_Linq_Expressions_Expression_System_Func__0_System_Object____
-  commentId: M:AppCore.Domain.Interfaces.IGenericRepository`2.GetAllAsync(System.Collections.Generic.IEnumerable{System.Linq.Expressions.Expression{System.Func{`0,System.Object}}})
-  name.vb: GetAllAsync(IEnumerable(Of Expression(Of Func(Of E, Object))))
-  fullName: AppCore.Domain.Interfaces.IGenericRepository<E, I>.GetAllAsync(params System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression<System.Func<E, object>>>?)
-  fullName.vb: AppCore.Domain.Interfaces.IGenericRepository(Of E, I).GetAllAsync(System.Collections.Generic.IEnumerable(Of System.Linq.Expressions.Expression(Of System.Func(Of E, Object))))
-  nameWithType: IGenericRepository<E, I>.GetAllAsync(params IEnumerable<Expression<Func<E, object>>>?)
-  nameWithType.vb: IGenericRepository(Of E, I).GetAllAsync(IEnumerable(Of Expression(Of Func(Of E, Object))))
+- uid: AppCore.Domain.Interfaces.IGenericRepository`2.GetAllAsync
+  name: GetAllAsync()
+  href: api/AppCore.Domain.Interfaces.IGenericRepository-2.html#AppCore_Domain_Interfaces_IGenericRepository_2_GetAllAsync
+  commentId: M:AppCore.Domain.Interfaces.IGenericRepository`2.GetAllAsync
+  fullName: AppCore.Domain.Interfaces.IGenericRepository<E, I>.GetAllAsync()
+  fullName.vb: AppCore.Domain.Interfaces.IGenericRepository(Of E, I).GetAllAsync()
+  nameWithType: IGenericRepository<E, I>.GetAllAsync()
+  nameWithType.vb: IGenericRepository(Of E, I).GetAllAsync()
 - uid: AppCore.Domain.Interfaces.IGenericRepository`2.GetAllAsync*
   name: GetAllAsync
   href: api/AppCore.Domain.Interfaces.IGenericRepository-2.html#AppCore_Domain_Interfaces_IGenericRepository_2_GetAllAsync_
@@ -3459,15 +3547,14 @@ references:
   fullName.vb: AppCore.Domain.Interfaces.IGenericRepository(Of E, I).GetAllAsync
   nameWithType: IGenericRepository<E, I>.GetAllAsync
   nameWithType.vb: IGenericRepository(Of E, I).GetAllAsync
-- uid: AppCore.Domain.Interfaces.IGenericRepository`2.GetByIdAsync(`1,System.Collections.Generic.IEnumerable{System.Linq.Expressions.Expression{System.Func{`0,System.Object}}})
-  name: GetByIdAsync(I, params IEnumerable<Expression<Func<E, object>>>?)
-  href: api/AppCore.Domain.Interfaces.IGenericRepository-2.html#AppCore_Domain_Interfaces_IGenericRepository_2_GetByIdAsync__1_System_Collections_Generic_IEnumerable_System_Linq_Expressions_Expression_System_Func__0_System_Object____
-  commentId: M:AppCore.Domain.Interfaces.IGenericRepository`2.GetByIdAsync(`1,System.Collections.Generic.IEnumerable{System.Linq.Expressions.Expression{System.Func{`0,System.Object}}})
-  name.vb: GetByIdAsync(I, IEnumerable(Of Expression(Of Func(Of E, Object))))
-  fullName: AppCore.Domain.Interfaces.IGenericRepository<E, I>.GetByIdAsync(I, params System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression<System.Func<E, object>>>?)
-  fullName.vb: AppCore.Domain.Interfaces.IGenericRepository(Of E, I).GetByIdAsync(I, System.Collections.Generic.IEnumerable(Of System.Linq.Expressions.Expression(Of System.Func(Of E, Object))))
-  nameWithType: IGenericRepository<E, I>.GetByIdAsync(I, params IEnumerable<Expression<Func<E, object>>>?)
-  nameWithType.vb: IGenericRepository(Of E, I).GetByIdAsync(I, IEnumerable(Of Expression(Of Func(Of E, Object))))
+- uid: AppCore.Domain.Interfaces.IGenericRepository`2.GetByIdAsync(`1)
+  name: GetByIdAsync(I)
+  href: api/AppCore.Domain.Interfaces.IGenericRepository-2.html#AppCore_Domain_Interfaces_IGenericRepository_2_GetByIdAsync__1_
+  commentId: M:AppCore.Domain.Interfaces.IGenericRepository`2.GetByIdAsync(`1)
+  fullName: AppCore.Domain.Interfaces.IGenericRepository<E, I>.GetByIdAsync(I)
+  fullName.vb: AppCore.Domain.Interfaces.IGenericRepository(Of E, I).GetByIdAsync(I)
+  nameWithType: IGenericRepository<E, I>.GetByIdAsync(I)
+  nameWithType.vb: IGenericRepository(Of E, I).GetByIdAsync(I)
 - uid: AppCore.Domain.Interfaces.IGenericRepository`2.GetByIdAsync*
   name: GetByIdAsync
   href: api/AppCore.Domain.Interfaces.IGenericRepository-2.html#AppCore_Domain_Interfaces_IGenericRepository_2_GetByIdAsync_
@@ -3477,15 +3564,15 @@ references:
   fullName.vb: AppCore.Domain.Interfaces.IGenericRepository(Of E, I).GetByIdAsync
   nameWithType: IGenericRepository<E, I>.GetByIdAsync
   nameWithType.vb: IGenericRepository(Of E, I).GetByIdAsync
-- uid: AppCore.Domain.Interfaces.IGenericRepository`2.GetPagedAsync(System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Linq.Expressions.Expression{System.Func{`0,System.Object}}})
-  name: GetPagedAsync(int, int, params IEnumerable<Expression<Func<E, object>>>?)
-  href: api/AppCore.Domain.Interfaces.IGenericRepository-2.html#AppCore_Domain_Interfaces_IGenericRepository_2_GetPagedAsync_System_Int32_System_Int32_System_Collections_Generic_IEnumerable_System_Linq_Expressions_Expression_System_Func__0_System_Object____
-  commentId: M:AppCore.Domain.Interfaces.IGenericRepository`2.GetPagedAsync(System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Linq.Expressions.Expression{System.Func{`0,System.Object}}})
-  name.vb: GetPagedAsync(Integer, Integer, IEnumerable(Of Expression(Of Func(Of E, Object))))
-  fullName: AppCore.Domain.Interfaces.IGenericRepository<E, I>.GetPagedAsync(int, int, params System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression<System.Func<E, object>>>?)
-  fullName.vb: AppCore.Domain.Interfaces.IGenericRepository(Of E, I).GetPagedAsync(Integer, Integer, System.Collections.Generic.IEnumerable(Of System.Linq.Expressions.Expression(Of System.Func(Of E, Object))))
-  nameWithType: IGenericRepository<E, I>.GetPagedAsync(int, int, params IEnumerable<Expression<Func<E, object>>>?)
-  nameWithType.vb: IGenericRepository(Of E, I).GetPagedAsync(Integer, Integer, IEnumerable(Of Expression(Of Func(Of E, Object))))
+- uid: AppCore.Domain.Interfaces.IGenericRepository`2.GetPagedAsync(System.Int32,System.Int32)
+  name: GetPagedAsync(int, int)
+  href: api/AppCore.Domain.Interfaces.IGenericRepository-2.html#AppCore_Domain_Interfaces_IGenericRepository_2_GetPagedAsync_System_Int32_System_Int32_
+  commentId: M:AppCore.Domain.Interfaces.IGenericRepository`2.GetPagedAsync(System.Int32,System.Int32)
+  name.vb: GetPagedAsync(Integer, Integer)
+  fullName: AppCore.Domain.Interfaces.IGenericRepository<E, I>.GetPagedAsync(int, int)
+  fullName.vb: AppCore.Domain.Interfaces.IGenericRepository(Of E, I).GetPagedAsync(Integer, Integer)
+  nameWithType: IGenericRepository<E, I>.GetPagedAsync(int, int)
+  nameWithType.vb: IGenericRepository(Of E, I).GetPagedAsync(Integer, Integer)
 - uid: AppCore.Domain.Interfaces.IGenericRepository`2.GetPagedAsync*
   name: GetPagedAsync
   href: api/AppCore.Domain.Interfaces.IGenericRepository-2.html#AppCore_Domain_Interfaces_IGenericRepository_2_GetPagedAsync_
@@ -3518,167 +3605,416 @@ references:
   commentId: T:AppCore.Domain.Interfaces.IHttpRequestRepository
   fullName: AppCore.Domain.Interfaces.IHttpRequestRepository
   nameWithType: IHttpRequestRepository
-- uid: AppCore.Infrastructure.Data.DAOs.Enum
-  name: AppCore.Infrastructure.Data.DAOs.Enum
-  href: api/AppCore.Infrastructure.Data.DAOs.Enum.html
-  commentId: N:AppCore.Infrastructure.Data.DAOs.Enum
-  fullName: AppCore.Infrastructure.Data.DAOs.Enum
-  nameWithType: AppCore.Infrastructure.Data.DAOs.Enum
-- uid: AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus
-  name: QuotationStatus
-  href: api/AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.html
-  commentId: T:AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus
-  fullName: AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus
-  nameWithType: QuotationStatus
-- uid: AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.CoverageNote
-  name: CoverageNote
-  href: api/AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.html#AppCore_Infrastructure_Data_DAOs_Enum_QuotationStatus_CoverageNote
-  commentId: F:AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.CoverageNote
-  fullName: AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.CoverageNote
-  nameWithType: QuotationStatus.CoverageNote
-- uid: AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.Finished
-  name: Finished
-  href: api/AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.html#AppCore_Infrastructure_Data_DAOs_Enum_QuotationStatus_Finished
-  commentId: F:AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.Finished
-  fullName: AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.Finished
-  nameWithType: QuotationStatus.Finished
-- uid: AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.Started
-  name: Started
-  href: api/AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.html#AppCore_Infrastructure_Data_DAOs_Enum_QuotationStatus_Started
-  commentId: F:AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.Started
-  fullName: AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.Started
-  nameWithType: QuotationStatus.Started
-- uid: AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.Updated
-  name: Updated
-  href: api/AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.html#AppCore_Infrastructure_Data_DAOs_Enum_QuotationStatus_Updated
-  commentId: F:AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.Updated
-  fullName: AppCore.Infrastructure.Data.DAOs.Enum.QuotationStatus.Updated
-  nameWithType: QuotationStatus.Updated
-- uid: AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus
-  name: S3ObjectStatus
-  href: api/AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.html
-  commentId: T:AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus
-  fullName: AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus
-  nameWithType: S3ObjectStatus
-- uid: AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.Delete
-  name: Delete
-  href: api/AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.html#AppCore_Infrastructure_Data_DAOs_Enum_S3ObjectStatus_Delete
-  commentId: F:AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.Delete
-  fullName: AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.Delete
-  nameWithType: S3ObjectStatus.Delete
-- uid: AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.Equal
-  name: Equal
-  href: api/AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.html#AppCore_Infrastructure_Data_DAOs_Enum_S3ObjectStatus_Equal
-  commentId: F:AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.Equal
-  fullName: AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.Equal
-  nameWithType: S3ObjectStatus.Equal
-- uid: AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.Saved
-  name: Saved
-  href: api/AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.html#AppCore_Infrastructure_Data_DAOs_Enum_S3ObjectStatus_Saved
-  commentId: F:AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.Saved
-  fullName: AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.Saved
-  nameWithType: S3ObjectStatus.Saved
-- uid: AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.Updated
-  name: Updated
-  href: api/AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.html#AppCore_Infrastructure_Data_DAOs_Enum_S3ObjectStatus_Updated
-  commentId: F:AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.Updated
-  fullName: AppCore.Infrastructure.Data.DAOs.Enum.S3ObjectStatus.Updated
-  nameWithType: S3ObjectStatus.Updated
-- uid: AppCore.Infrastructure.Data.Interceptors
-  name: AppCore.Infrastructure.Data.Interceptors
-  href: api/AppCore.Infrastructure.Data.Interceptors.html
-  commentId: N:AppCore.Infrastructure.Data.Interceptors
-  fullName: AppCore.Infrastructure.Data.Interceptors
-  nameWithType: AppCore.Infrastructure.Data.Interceptors
-- uid: AppCore.Infrastructure.Data.Interceptors.Extensions
-  name: Extensions
-  href: api/AppCore.Infrastructure.Data.Interceptors.Extensions.html
-  commentId: T:AppCore.Infrastructure.Data.Interceptors.Extensions
-  fullName: AppCore.Infrastructure.Data.Interceptors.Extensions
-  nameWithType: Extensions
-- uid: AppCore.Infrastructure.Data.Interceptors.Extensions.HasChangedOwnedEntities(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry)
-  name: HasChangedOwnedEntities(EntityEntry)
-  href: api/AppCore.Infrastructure.Data.Interceptors.Extensions.html#AppCore_Infrastructure_Data_Interceptors_Extensions_HasChangedOwnedEntities_Microsoft_EntityFrameworkCore_ChangeTracking_EntityEntry_
-  commentId: M:AppCore.Infrastructure.Data.Interceptors.Extensions.HasChangedOwnedEntities(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry)
-  fullName: AppCore.Infrastructure.Data.Interceptors.Extensions.HasChangedOwnedEntities(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry)
-  nameWithType: Extensions.HasChangedOwnedEntities(EntityEntry)
-- uid: AppCore.Infrastructure.Data.Interceptors.Extensions.HasChangedOwnedEntities*
-  name: HasChangedOwnedEntities
-  href: api/AppCore.Infrastructure.Data.Interceptors.Extensions.html#AppCore_Infrastructure_Data_Interceptors_Extensions_HasChangedOwnedEntities_
-  commentId: Overload:AppCore.Infrastructure.Data.Interceptors.Extensions.HasChangedOwnedEntities
+- uid: AppCore.Infrastructure.Data.DAOs.Common
+  name: AppCore.Infrastructure.Data.DAOs.Common
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.html
+  commentId: N:AppCore.Infrastructure.Data.DAOs.Common
+  fullName: AppCore.Infrastructure.Data.DAOs.Common
+  nameWithType: AppCore.Infrastructure.Data.DAOs.Common
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao
+  name: IAuditableBaseDao
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.html
+  commentId: T:AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao
+  nameWithType: IAuditableBaseDao
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.CreatedAt
+  name: CreatedAt
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.html#AppCore_Infrastructure_Data_DAOs_Common_IAuditableBaseDao_CreatedAt
+  commentId: P:AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.CreatedAt
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.CreatedAt
+  nameWithType: IAuditableBaseDao.CreatedAt
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.CreatedAt*
+  name: CreatedAt
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.html#AppCore_Infrastructure_Data_DAOs_Common_IAuditableBaseDao_CreatedAt_
+  commentId: Overload:AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.CreatedAt
   isSpec: "True"
-  fullName: AppCore.Infrastructure.Data.Interceptors.Extensions.HasChangedOwnedEntities
-  nameWithType: Extensions.HasChangedOwnedEntities
-- uid: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor
-  name: SaveChangesInterceptor
-  href: api/AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.html
-  commentId: T:AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor
-  fullName: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor
-  nameWithType: SaveChangesInterceptor
-- uid: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.#ctor(AppCore.Application.Interfaces.ICurrentUserService,AppCore.Application.Interfaces.IDateTimeService)
-  name: SaveChangesInterceptor(ICurrentUserService, IDateTimeService)
-  href: api/AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.html#AppCore_Infrastructure_Data_Interceptors_SaveChangesInterceptor__ctor_AppCore_Application_Interfaces_ICurrentUserService_AppCore_Application_Interfaces_IDateTimeService_
-  commentId: M:AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.#ctor(AppCore.Application.Interfaces.ICurrentUserService,AppCore.Application.Interfaces.IDateTimeService)
-  name.vb: New(ICurrentUserService, IDateTimeService)
-  fullName: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SaveChangesInterceptor(AppCore.Application.Interfaces.ICurrentUserService, AppCore.Application.Interfaces.IDateTimeService)
-  fullName.vb: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.New(AppCore.Application.Interfaces.ICurrentUserService, AppCore.Application.Interfaces.IDateTimeService)
-  nameWithType: SaveChangesInterceptor.SaveChangesInterceptor(ICurrentUserService, IDateTimeService)
-  nameWithType.vb: SaveChangesInterceptor.New(ICurrentUserService, IDateTimeService)
-- uid: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.#ctor*
-  name: SaveChangesInterceptor
-  href: api/AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.html#AppCore_Infrastructure_Data_Interceptors_SaveChangesInterceptor__ctor_
-  commentId: Overload:AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.#ctor
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.CreatedAt
+  nameWithType: IAuditableBaseDao.CreatedAt
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.CreatedBy
+  name: CreatedBy
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.html#AppCore_Infrastructure_Data_DAOs_Common_IAuditableBaseDao_CreatedBy
+  commentId: P:AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.CreatedBy
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.CreatedBy
+  nameWithType: IAuditableBaseDao.CreatedBy
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.CreatedBy*
+  name: CreatedBy
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.html#AppCore_Infrastructure_Data_DAOs_Common_IAuditableBaseDao_CreatedBy_
+  commentId: Overload:AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.CreatedBy
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.CreatedBy
+  nameWithType: IAuditableBaseDao.CreatedBy
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.UpdatedAt
+  name: UpdatedAt
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.html#AppCore_Infrastructure_Data_DAOs_Common_IAuditableBaseDao_UpdatedAt
+  commentId: P:AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.UpdatedAt
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.UpdatedAt
+  nameWithType: IAuditableBaseDao.UpdatedAt
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.UpdatedAt*
+  name: UpdatedAt
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.html#AppCore_Infrastructure_Data_DAOs_Common_IAuditableBaseDao_UpdatedAt_
+  commentId: Overload:AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.UpdatedAt
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.UpdatedAt
+  nameWithType: IAuditableBaseDao.UpdatedAt
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.UpdatedBy
+  name: UpdatedBy
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.html#AppCore_Infrastructure_Data_DAOs_Common_IAuditableBaseDao_UpdatedBy
+  commentId: P:AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.UpdatedBy
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.UpdatedBy
+  nameWithType: IAuditableBaseDao.UpdatedBy
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.UpdatedBy*
+  name: UpdatedBy
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.html#AppCore_Infrastructure_Data_DAOs_Common_IAuditableBaseDao_UpdatedBy_
+  commentId: Overload:AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.UpdatedBy
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao.UpdatedBy
+  nameWithType: IAuditableBaseDao.UpdatedBy
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao`1
+  name: IBaseDao<T>
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IBaseDao-1.html
+  commentId: T:AppCore.Infrastructure.Data.DAOs.Common.IBaseDao`1
+  name.vb: IBaseDao(Of T)
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao<T>
+  fullName.vb: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao(Of T)
+  nameWithType: IBaseDao<T>
+  nameWithType.vb: IBaseDao(Of T)
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao`1.Id
+  name: Id
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IBaseDao-1.html#AppCore_Infrastructure_Data_DAOs_Common_IBaseDao_1_Id
+  commentId: P:AppCore.Infrastructure.Data.DAOs.Common.IBaseDao`1.Id
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao<T>.Id
+  fullName.vb: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao(Of T).Id
+  nameWithType: IBaseDao<T>.Id
+  nameWithType.vb: IBaseDao(Of T).Id
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao`1.Id*
+  name: Id
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IBaseDao-1.html#AppCore_Infrastructure_Data_DAOs_Common_IBaseDao_1_Id_
+  commentId: Overload:AppCore.Infrastructure.Data.DAOs.Common.IBaseDao`1.Id
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao<T>.Id
+  fullName.vb: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao(Of T).Id
+  nameWithType: IBaseDao<T>.Id
+  nameWithType.vb: IBaseDao(Of T).Id
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao`1.IsNew
+  name: IsNew
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IBaseDao-1.html#AppCore_Infrastructure_Data_DAOs_Common_IBaseDao_1_IsNew
+  commentId: P:AppCore.Infrastructure.Data.DAOs.Common.IBaseDao`1.IsNew
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao<T>.IsNew
+  fullName.vb: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao(Of T).IsNew
+  nameWithType: IBaseDao<T>.IsNew
+  nameWithType.vb: IBaseDao(Of T).IsNew
+- uid: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao`1.IsNew*
+  name: IsNew
+  href: api/AppCore.Infrastructure.Data.DAOs.Common.IBaseDao-1.html#AppCore_Infrastructure_Data_DAOs_Common_IBaseDao_1_IsNew_
+  commentId: Overload:AppCore.Infrastructure.Data.DAOs.Common.IBaseDao`1.IsNew
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao<T>.IsNew
+  fullName.vb: AppCore.Infrastructure.Data.DAOs.Common.IBaseDao(Of T).IsNew
+  nameWithType: IBaseDao<T>.IsNew
+  nameWithType.vb: IBaseDao(Of T).IsNew
+- uid: AppCore.Infrastructure.Extensions
+  name: AppCore.Infrastructure.Extensions
+  href: api/AppCore.Infrastructure.Extensions.html
+  commentId: N:AppCore.Infrastructure.Extensions
+  fullName: AppCore.Infrastructure.Extensions
+  nameWithType: AppCore.Infrastructure.Extensions
+- uid: AppCore.Infrastructure.Extensions.AuditableExtensions
+  name: AuditableExtensions
+  href: api/AppCore.Infrastructure.Extensions.AuditableExtensions.html
+  commentId: T:AppCore.Infrastructure.Extensions.AuditableExtensions
+  fullName: AppCore.Infrastructure.Extensions.AuditableExtensions
+  nameWithType: AuditableExtensions
+- uid: AppCore.Infrastructure.Extensions.AuditableExtensions.SetAuditCreate(AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao,AppCore.Application.Interfaces.ICurrentUserService)
+  name: SetAuditCreate(IAuditableBaseDao, ICurrentUserService)
+  href: api/AppCore.Infrastructure.Extensions.AuditableExtensions.html#AppCore_Infrastructure_Extensions_AuditableExtensions_SetAuditCreate_AppCore_Infrastructure_Data_DAOs_Common_IAuditableBaseDao_AppCore_Application_Interfaces_ICurrentUserService_
+  commentId: M:AppCore.Infrastructure.Extensions.AuditableExtensions.SetAuditCreate(AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao,AppCore.Application.Interfaces.ICurrentUserService)
+  fullName: AppCore.Infrastructure.Extensions.AuditableExtensions.SetAuditCreate(AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao, AppCore.Application.Interfaces.ICurrentUserService)
+  nameWithType: AuditableExtensions.SetAuditCreate(IAuditableBaseDao, ICurrentUserService)
+- uid: AppCore.Infrastructure.Extensions.AuditableExtensions.SetAuditCreate*
+  name: SetAuditCreate
+  href: api/AppCore.Infrastructure.Extensions.AuditableExtensions.html#AppCore_Infrastructure_Extensions_AuditableExtensions_SetAuditCreate_
+  commentId: Overload:AppCore.Infrastructure.Extensions.AuditableExtensions.SetAuditCreate
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Extensions.AuditableExtensions.SetAuditCreate
+  nameWithType: AuditableExtensions.SetAuditCreate
+- uid: AppCore.Infrastructure.Extensions.AuditableExtensions.SetAuditUpdate(AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao,AppCore.Application.Interfaces.ICurrentUserService)
+  name: SetAuditUpdate(IAuditableBaseDao, ICurrentUserService)
+  href: api/AppCore.Infrastructure.Extensions.AuditableExtensions.html#AppCore_Infrastructure_Extensions_AuditableExtensions_SetAuditUpdate_AppCore_Infrastructure_Data_DAOs_Common_IAuditableBaseDao_AppCore_Application_Interfaces_ICurrentUserService_
+  commentId: M:AppCore.Infrastructure.Extensions.AuditableExtensions.SetAuditUpdate(AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao,AppCore.Application.Interfaces.ICurrentUserService)
+  fullName: AppCore.Infrastructure.Extensions.AuditableExtensions.SetAuditUpdate(AppCore.Infrastructure.Data.DAOs.Common.IAuditableBaseDao, AppCore.Application.Interfaces.ICurrentUserService)
+  nameWithType: AuditableExtensions.SetAuditUpdate(IAuditableBaseDao, ICurrentUserService)
+- uid: AppCore.Infrastructure.Extensions.AuditableExtensions.SetAuditUpdate*
+  name: SetAuditUpdate
+  href: api/AppCore.Infrastructure.Extensions.AuditableExtensions.html#AppCore_Infrastructure_Extensions_AuditableExtensions_SetAuditUpdate_
+  commentId: Overload:AppCore.Infrastructure.Extensions.AuditableExtensions.SetAuditUpdate
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Extensions.AuditableExtensions.SetAuditUpdate
+  nameWithType: AuditableExtensions.SetAuditUpdate
+- uid: AppCore.Infrastructure.Services
+  name: AppCore.Infrastructure.Services
+  href: api/AppCore.Infrastructure.Services.html
+  commentId: N:AppCore.Infrastructure.Services
+  fullName: AppCore.Infrastructure.Services
+  nameWithType: AppCore.Infrastructure.Services
+- uid: AppCore.Infrastructure.Services.HttpService
+  name: HttpService
+  href: api/AppCore.Infrastructure.Services.HttpService.html
+  commentId: T:AppCore.Infrastructure.Services.HttpService
+  fullName: AppCore.Infrastructure.Services.HttpService
+  nameWithType: HttpService
+- uid: AppCore.Infrastructure.Services.HttpService.#ctor(System.Net.Http.HttpClient,AppCore.Application.Interfaces.ICurrentUserService,Microsoft.Extensions.Logging.ILogger,AppCore.Domain.Interfaces.IHttpRequestRepository)
+  name: HttpService(HttpClient, ICurrentUserService, ILogger, IHttpRequestRepository?)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService__ctor_System_Net_Http_HttpClient_AppCore_Application_Interfaces_ICurrentUserService_Microsoft_Extensions_Logging_ILogger_AppCore_Domain_Interfaces_IHttpRequestRepository_
+  commentId: M:AppCore.Infrastructure.Services.HttpService.#ctor(System.Net.Http.HttpClient,AppCore.Application.Interfaces.ICurrentUserService,Microsoft.Extensions.Logging.ILogger,AppCore.Domain.Interfaces.IHttpRequestRepository)
+  name.vb: New(HttpClient, ICurrentUserService, ILogger, IHttpRequestRepository)
+  fullName: AppCore.Infrastructure.Services.HttpService.HttpService(System.Net.Http.HttpClient, AppCore.Application.Interfaces.ICurrentUserService, Microsoft.Extensions.Logging.ILogger, AppCore.Domain.Interfaces.IHttpRequestRepository?)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.New(System.Net.Http.HttpClient, AppCore.Application.Interfaces.ICurrentUserService, Microsoft.Extensions.Logging.ILogger, AppCore.Domain.Interfaces.IHttpRequestRepository)
+  nameWithType: HttpService.HttpService(HttpClient, ICurrentUserService, ILogger, IHttpRequestRepository?)
+  nameWithType.vb: HttpService.New(HttpClient, ICurrentUserService, ILogger, IHttpRequestRepository)
+- uid: AppCore.Infrastructure.Services.HttpService.#ctor*
+  name: HttpService
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService__ctor_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.#ctor
   isSpec: "True"
   name.vb: New
-  fullName: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SaveChangesInterceptor
-  fullName.vb: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.New
-  nameWithType: SaveChangesInterceptor.SaveChangesInterceptor
-  nameWithType.vb: SaveChangesInterceptor.New
-- uid: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChanges(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult{System.Int32})
-  name: SavingChanges(DbContextEventData, InterceptionResult<int>)
-  href: api/AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.html#AppCore_Infrastructure_Data_Interceptors_SaveChangesInterceptor_SavingChanges_Microsoft_EntityFrameworkCore_Diagnostics_DbContextEventData_Microsoft_EntityFrameworkCore_Diagnostics_InterceptionResult_System_Int32__
-  commentId: M:AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChanges(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult{System.Int32})
-  name.vb: SavingChanges(DbContextEventData, InterceptionResult(Of Integer))
-  fullName: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChanges(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData, Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult<int>)
-  fullName.vb: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChanges(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData, Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult(Of Integer))
-  nameWithType: SaveChangesInterceptor.SavingChanges(DbContextEventData, InterceptionResult<int>)
-  nameWithType.vb: SaveChangesInterceptor.SavingChanges(DbContextEventData, InterceptionResult(Of Integer))
-- uid: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChanges*
-  name: SavingChanges
-  href: api/AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.html#AppCore_Infrastructure_Data_Interceptors_SaveChangesInterceptor_SavingChanges_
-  commentId: Overload:AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChanges
+  fullName: AppCore.Infrastructure.Services.HttpService.HttpService
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.New
+  nameWithType: HttpService.HttpService
+  nameWithType.vb: HttpService.New
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteDeleteAsync*
+  name: ExecuteDeleteAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteDeleteAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.ExecuteDeleteAsync
   isSpec: "True"
-  fullName: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChanges
-  nameWithType: SaveChangesInterceptor.SavingChanges
-- uid: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChangesAsync(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult{System.Int32},System.Threading.CancellationToken)
-  name: SavingChangesAsync(DbContextEventData, InterceptionResult<int>, CancellationToken)
-  href: api/AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.html#AppCore_Infrastructure_Data_Interceptors_SaveChangesInterceptor_SavingChangesAsync_Microsoft_EntityFrameworkCore_Diagnostics_DbContextEventData_Microsoft_EntityFrameworkCore_Diagnostics_InterceptionResult_System_Int32__System_Threading_CancellationToken_
-  commentId: M:AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChangesAsync(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult{System.Int32},System.Threading.CancellationToken)
-  name.vb: SavingChangesAsync(DbContextEventData, InterceptionResult(Of Integer), CancellationToken)
-  fullName: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChangesAsync(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData, Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult<int>, System.Threading.CancellationToken)
-  fullName.vb: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChangesAsync(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData, Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult(Of Integer), System.Threading.CancellationToken)
-  nameWithType: SaveChangesInterceptor.SavingChangesAsync(DbContextEventData, InterceptionResult<int>, CancellationToken)
-  nameWithType.vb: SaveChangesInterceptor.SavingChangesAsync(DbContextEventData, InterceptionResult(Of Integer), CancellationToken)
-- uid: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChangesAsync*
-  name: SavingChangesAsync
-  href: api/AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.html#AppCore_Infrastructure_Data_Interceptors_SaveChangesInterceptor_SavingChangesAsync_
-  commentId: Overload:AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChangesAsync
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteDeleteAsync
+  nameWithType: HttpService.ExecuteDeleteAsync
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteDeleteAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name: ExecuteDeleteAsync<T>(string, object?, Dictionary<string, string>?)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteDeleteAsync__1_System_String_System_Object_System_Collections_Generic_Dictionary_System_String_System_String__
+  commentId: M:AppCore.Infrastructure.Services.HttpService.ExecuteDeleteAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name.vb: ExecuteDeleteAsync(Of T)(String, Object, Dictionary(Of String, String))
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteDeleteAsync<T>(string, object?, System.Collections.Generic.Dictionary<string, string>?)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.ExecuteDeleteAsync(Of T)(String, Object, System.Collections.Generic.Dictionary(Of String, String))
+  nameWithType: HttpService.ExecuteDeleteAsync<T>(string, object?, Dictionary<string, string>?)
+  nameWithType.vb: HttpService.ExecuteDeleteAsync(Of T)(String, Object, Dictionary(Of String, String))
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteDeleteRawAsync*
+  name: ExecuteDeleteRawAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteDeleteRawAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.ExecuteDeleteRawAsync
   isSpec: "True"
-  fullName: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.SavingChangesAsync
-  nameWithType: SaveChangesInterceptor.SavingChangesAsync
-- uid: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.UpdateEntities(Microsoft.EntityFrameworkCore.DbContext)
-  name: UpdateEntities(DbContext?)
-  href: api/AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.html#AppCore_Infrastructure_Data_Interceptors_SaveChangesInterceptor_UpdateEntities_Microsoft_EntityFrameworkCore_DbContext_
-  commentId: M:AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.UpdateEntities(Microsoft.EntityFrameworkCore.DbContext)
-  name.vb: UpdateEntities(DbContext)
-  fullName: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.UpdateEntities(Microsoft.EntityFrameworkCore.DbContext?)
-  fullName.vb: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.UpdateEntities(Microsoft.EntityFrameworkCore.DbContext)
-  nameWithType: SaveChangesInterceptor.UpdateEntities(DbContext?)
-  nameWithType.vb: SaveChangesInterceptor.UpdateEntities(DbContext)
-- uid: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.UpdateEntities*
-  name: UpdateEntities
-  href: api/AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.html#AppCore_Infrastructure_Data_Interceptors_SaveChangesInterceptor_UpdateEntities_
-  commentId: Overload:AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.UpdateEntities
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteDeleteRawAsync
+  nameWithType: HttpService.ExecuteDeleteRawAsync
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteDeleteRawAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name: ExecuteDeleteRawAsync<T>(string, object?, Dictionary<string, string>?)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteDeleteRawAsync__1_System_String_System_Object_System_Collections_Generic_Dictionary_System_String_System_String__
+  commentId: M:AppCore.Infrastructure.Services.HttpService.ExecuteDeleteRawAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name.vb: ExecuteDeleteRawAsync(Of T)(String, Object, Dictionary(Of String, String))
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteDeleteRawAsync<T>(string, object?, System.Collections.Generic.Dictionary<string, string>?)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.ExecuteDeleteRawAsync(Of T)(String, Object, System.Collections.Generic.Dictionary(Of String, String))
+  nameWithType: HttpService.ExecuteDeleteRawAsync<T>(string, object?, Dictionary<string, string>?)
+  nameWithType.vb: HttpService.ExecuteDeleteRawAsync(Of T)(String, Object, Dictionary(Of String, String))
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteGetAsync*
+  name: ExecuteGetAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteGetAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.ExecuteGetAsync
   isSpec: "True"
-  fullName: AppCore.Infrastructure.Data.Interceptors.SaveChangesInterceptor.UpdateEntities
-  nameWithType: SaveChangesInterceptor.UpdateEntities
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteGetAsync
+  nameWithType: HttpService.ExecuteGetAsync
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteGetAsync``1(System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String})
+  name: ExecuteGetAsync<T>(string, Dictionary<string, string>?, Dictionary<string, string>?)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteGetAsync__1_System_String_System_Collections_Generic_Dictionary_System_String_System_String__System_Collections_Generic_Dictionary_System_String_System_String__
+  commentId: M:AppCore.Infrastructure.Services.HttpService.ExecuteGetAsync``1(System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String})
+  name.vb: ExecuteGetAsync(Of T)(String, Dictionary(Of String, String), Dictionary(Of String, String))
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteGetAsync<T>(string, System.Collections.Generic.Dictionary<string, string>?, System.Collections.Generic.Dictionary<string, string>?)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.ExecuteGetAsync(Of T)(String, System.Collections.Generic.Dictionary(Of String, String), System.Collections.Generic.Dictionary(Of String, String))
+  nameWithType: HttpService.ExecuteGetAsync<T>(string, Dictionary<string, string>?, Dictionary<string, string>?)
+  nameWithType.vb: HttpService.ExecuteGetAsync(Of T)(String, Dictionary(Of String, String), Dictionary(Of String, String))
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteGetRawAsync*
+  name: ExecuteGetRawAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteGetRawAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.ExecuteGetRawAsync
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteGetRawAsync
+  nameWithType: HttpService.ExecuteGetRawAsync
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteGetRawAsync``1(System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String})
+  name: ExecuteGetRawAsync<T>(string, Dictionary<string, string>?, Dictionary<string, string>?)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteGetRawAsync__1_System_String_System_Collections_Generic_Dictionary_System_String_System_String__System_Collections_Generic_Dictionary_System_String_System_String__
+  commentId: M:AppCore.Infrastructure.Services.HttpService.ExecuteGetRawAsync``1(System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String})
+  name.vb: ExecuteGetRawAsync(Of T)(String, Dictionary(Of String, String), Dictionary(Of String, String))
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteGetRawAsync<T>(string, System.Collections.Generic.Dictionary<string, string>?, System.Collections.Generic.Dictionary<string, string>?)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.ExecuteGetRawAsync(Of T)(String, System.Collections.Generic.Dictionary(Of String, String), System.Collections.Generic.Dictionary(Of String, String))
+  nameWithType: HttpService.ExecuteGetRawAsync<T>(string, Dictionary<string, string>?, Dictionary<string, string>?)
+  nameWithType.vb: HttpService.ExecuteGetRawAsync(Of T)(String, Dictionary(Of String, String), Dictionary(Of String, String))
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteHeadAsync*
+  name: ExecuteHeadAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteHeadAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.ExecuteHeadAsync
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteHeadAsync
+  nameWithType: HttpService.ExecuteHeadAsync
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteHeadAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name: ExecuteHeadAsync<T>(string, object?, Dictionary<string, string>?)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteHeadAsync__1_System_String_System_Object_System_Collections_Generic_Dictionary_System_String_System_String__
+  commentId: M:AppCore.Infrastructure.Services.HttpService.ExecuteHeadAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name.vb: ExecuteHeadAsync(Of T)(String, Object, Dictionary(Of String, String))
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteHeadAsync<T>(string, object?, System.Collections.Generic.Dictionary<string, string>?)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.ExecuteHeadAsync(Of T)(String, Object, System.Collections.Generic.Dictionary(Of String, String))
+  nameWithType: HttpService.ExecuteHeadAsync<T>(string, object?, Dictionary<string, string>?)
+  nameWithType.vb: HttpService.ExecuteHeadAsync(Of T)(String, Object, Dictionary(Of String, String))
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteHeadRawAsync*
+  name: ExecuteHeadRawAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteHeadRawAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.ExecuteHeadRawAsync
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteHeadRawAsync
+  nameWithType: HttpService.ExecuteHeadRawAsync
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteHeadRawAsync``1(System.String,System.Collections.Generic.Dictionary{System.String,System.String})
+  name: ExecuteHeadRawAsync<T>(string, Dictionary<string, string>?)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteHeadRawAsync__1_System_String_System_Collections_Generic_Dictionary_System_String_System_String__
+  commentId: M:AppCore.Infrastructure.Services.HttpService.ExecuteHeadRawAsync``1(System.String,System.Collections.Generic.Dictionary{System.String,System.String})
+  name.vb: ExecuteHeadRawAsync(Of T)(String, Dictionary(Of String, String))
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteHeadRawAsync<T>(string, System.Collections.Generic.Dictionary<string, string>?)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.ExecuteHeadRawAsync(Of T)(String, System.Collections.Generic.Dictionary(Of String, String))
+  nameWithType: HttpService.ExecuteHeadRawAsync<T>(string, Dictionary<string, string>?)
+  nameWithType.vb: HttpService.ExecuteHeadRawAsync(Of T)(String, Dictionary(Of String, String))
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteHttpRequestRawAsync*
+  name: ExecuteHttpRequestRawAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteHttpRequestRawAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.ExecuteHttpRequestRawAsync
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteHttpRequestRawAsync
+  nameWithType: HttpService.ExecuteHttpRequestRawAsync
+- uid: AppCore.Infrastructure.Services.HttpService.ExecuteHttpRequestRawAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String},System.Net.Http.HttpMethod)
+  name: ExecuteHttpRequestRawAsync<T>(string, object?, Dictionary<string, string>?, HttpMethod)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecuteHttpRequestRawAsync__1_System_String_System_Object_System_Collections_Generic_Dictionary_System_String_System_String__System_Net_Http_HttpMethod_
+  commentId: M:AppCore.Infrastructure.Services.HttpService.ExecuteHttpRequestRawAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String},System.Net.Http.HttpMethod)
+  name.vb: ExecuteHttpRequestRawAsync(Of T)(String, Object, Dictionary(Of String, String), HttpMethod)
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecuteHttpRequestRawAsync<T>(string, object?, System.Collections.Generic.Dictionary<string, string>?, System.Net.Http.HttpMethod)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.ExecuteHttpRequestRawAsync(Of T)(String, Object, System.Collections.Generic.Dictionary(Of String, String), System.Net.Http.HttpMethod)
+  nameWithType: HttpService.ExecuteHttpRequestRawAsync<T>(string, object?, Dictionary<string, string>?, HttpMethod)
+  nameWithType.vb: HttpService.ExecuteHttpRequestRawAsync(Of T)(String, Object, Dictionary(Of String, String), HttpMethod)
+- uid: AppCore.Infrastructure.Services.HttpService.ExecutePatchAsync*
+  name: ExecutePatchAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecutePatchAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.ExecutePatchAsync
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecutePatchAsync
+  nameWithType: HttpService.ExecutePatchAsync
+- uid: AppCore.Infrastructure.Services.HttpService.ExecutePatchAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name: ExecutePatchAsync<T>(string, object?, Dictionary<string, string>?)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecutePatchAsync__1_System_String_System_Object_System_Collections_Generic_Dictionary_System_String_System_String__
+  commentId: M:AppCore.Infrastructure.Services.HttpService.ExecutePatchAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name.vb: ExecutePatchAsync(Of T)(String, Object, Dictionary(Of String, String))
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecutePatchAsync<T>(string, object?, System.Collections.Generic.Dictionary<string, string>?)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.ExecutePatchAsync(Of T)(String, Object, System.Collections.Generic.Dictionary(Of String, String))
+  nameWithType: HttpService.ExecutePatchAsync<T>(string, object?, Dictionary<string, string>?)
+  nameWithType.vb: HttpService.ExecutePatchAsync(Of T)(String, Object, Dictionary(Of String, String))
+- uid: AppCore.Infrastructure.Services.HttpService.ExecutePatchRawAsync*
+  name: ExecutePatchRawAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecutePatchRawAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.ExecutePatchRawAsync
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecutePatchRawAsync
+  nameWithType: HttpService.ExecutePatchRawAsync
+- uid: AppCore.Infrastructure.Services.HttpService.ExecutePatchRawAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name: ExecutePatchRawAsync<T>(string, object?, Dictionary<string, string>?)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecutePatchRawAsync__1_System_String_System_Object_System_Collections_Generic_Dictionary_System_String_System_String__
+  commentId: M:AppCore.Infrastructure.Services.HttpService.ExecutePatchRawAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name.vb: ExecutePatchRawAsync(Of T)(String, Object, Dictionary(Of String, String))
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecutePatchRawAsync<T>(string, object?, System.Collections.Generic.Dictionary<string, string>?)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.ExecutePatchRawAsync(Of T)(String, Object, System.Collections.Generic.Dictionary(Of String, String))
+  nameWithType: HttpService.ExecutePatchRawAsync<T>(string, object?, Dictionary<string, string>?)
+  nameWithType.vb: HttpService.ExecutePatchRawAsync(Of T)(String, Object, Dictionary(Of String, String))
+- uid: AppCore.Infrastructure.Services.HttpService.ExecutePostAsync*
+  name: ExecutePostAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecutePostAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.ExecutePostAsync
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecutePostAsync
+  nameWithType: HttpService.ExecutePostAsync
+- uid: AppCore.Infrastructure.Services.HttpService.ExecutePostAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name: ExecutePostAsync<T>(string, object?, Dictionary<string, string>?)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecutePostAsync__1_System_String_System_Object_System_Collections_Generic_Dictionary_System_String_System_String__
+  commentId: M:AppCore.Infrastructure.Services.HttpService.ExecutePostAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name.vb: ExecutePostAsync(Of T)(String, Object, Dictionary(Of String, String))
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecutePostAsync<T>(string, object?, System.Collections.Generic.Dictionary<string, string>?)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.ExecutePostAsync(Of T)(String, Object, System.Collections.Generic.Dictionary(Of String, String))
+  nameWithType: HttpService.ExecutePostAsync<T>(string, object?, Dictionary<string, string>?)
+  nameWithType.vb: HttpService.ExecutePostAsync(Of T)(String, Object, Dictionary(Of String, String))
+- uid: AppCore.Infrastructure.Services.HttpService.ExecutePostRawAsync*
+  name: ExecutePostRawAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecutePostRawAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.ExecutePostRawAsync
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecutePostRawAsync
+  nameWithType: HttpService.ExecutePostRawAsync
+- uid: AppCore.Infrastructure.Services.HttpService.ExecutePostRawAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name: ExecutePostRawAsync<T>(string, object?, Dictionary<string, string>?)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecutePostRawAsync__1_System_String_System_Object_System_Collections_Generic_Dictionary_System_String_System_String__
+  commentId: M:AppCore.Infrastructure.Services.HttpService.ExecutePostRawAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name.vb: ExecutePostRawAsync(Of T)(String, Object, Dictionary(Of String, String))
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecutePostRawAsync<T>(string, object?, System.Collections.Generic.Dictionary<string, string>?)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.ExecutePostRawAsync(Of T)(String, Object, System.Collections.Generic.Dictionary(Of String, String))
+  nameWithType: HttpService.ExecutePostRawAsync<T>(string, object?, Dictionary<string, string>?)
+  nameWithType.vb: HttpService.ExecutePostRawAsync(Of T)(String, Object, Dictionary(Of String, String))
+- uid: AppCore.Infrastructure.Services.HttpService.ExecutePutAsync*
+  name: ExecutePutAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecutePutAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.ExecutePutAsync
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecutePutAsync
+  nameWithType: HttpService.ExecutePutAsync
+- uid: AppCore.Infrastructure.Services.HttpService.ExecutePutAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name: ExecutePutAsync<T>(string, object?, Dictionary<string, string>?)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecutePutAsync__1_System_String_System_Object_System_Collections_Generic_Dictionary_System_String_System_String__
+  commentId: M:AppCore.Infrastructure.Services.HttpService.ExecutePutAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name.vb: ExecutePutAsync(Of T)(String, Object, Dictionary(Of String, String))
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecutePutAsync<T>(string, object?, System.Collections.Generic.Dictionary<string, string>?)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.ExecutePutAsync(Of T)(String, Object, System.Collections.Generic.Dictionary(Of String, String))
+  nameWithType: HttpService.ExecutePutAsync<T>(string, object?, Dictionary<string, string>?)
+  nameWithType.vb: HttpService.ExecutePutAsync(Of T)(String, Object, Dictionary(Of String, String))
+- uid: AppCore.Infrastructure.Services.HttpService.ExecutePutRawAsync*
+  name: ExecutePutRawAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecutePutRawAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.ExecutePutRawAsync
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecutePutRawAsync
+  nameWithType: HttpService.ExecutePutRawAsync
+- uid: AppCore.Infrastructure.Services.HttpService.ExecutePutRawAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name: ExecutePutRawAsync<T>(string, object?, Dictionary<string, string>?)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_ExecutePutRawAsync__1_System_String_System_Object_System_Collections_Generic_Dictionary_System_String_System_String__
+  commentId: M:AppCore.Infrastructure.Services.HttpService.ExecutePutRawAsync``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.String})
+  name.vb: ExecutePutRawAsync(Of T)(String, Object, Dictionary(Of String, String))
+  fullName: AppCore.Infrastructure.Services.HttpService.ExecutePutRawAsync<T>(string, object?, System.Collections.Generic.Dictionary<string, string>?)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.ExecutePutRawAsync(Of T)(String, Object, System.Collections.Generic.Dictionary(Of String, String))
+  nameWithType: HttpService.ExecutePutRawAsync<T>(string, object?, Dictionary<string, string>?)
+  nameWithType.vb: HttpService.ExecutePutRawAsync(Of T)(String, Object, Dictionary(Of String, String))
+- uid: AppCore.Infrastructure.Services.HttpService.HandleCustomResponseAsync*
+  name: HandleCustomResponseAsync
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_HandleCustomResponseAsync_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.HandleCustomResponseAsync
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Services.HttpService.HandleCustomResponseAsync
+  nameWithType: HttpService.HandleCustomResponseAsync
+- uid: AppCore.Infrastructure.Services.HttpService.HandleCustomResponseAsync``1(AppCore.Application.Wrappers.HttpResponse{``0},System.String,System.String,System.String,System.String,System.Int32)
+  name: HandleCustomResponseAsync<T>(HttpResponse<T>, string, string, string, string, int)
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_HandleCustomResponseAsync__1_AppCore_Application_Wrappers_HttpResponse___0__System_String_System_String_System_String_System_String_System_Int32_
+  commentId: M:AppCore.Infrastructure.Services.HttpService.HandleCustomResponseAsync``1(AppCore.Application.Wrappers.HttpResponse{``0},System.String,System.String,System.String,System.String,System.Int32)
+  name.vb: HandleCustomResponseAsync(Of T)(HttpResponse(Of T), String, String, String, String, Integer)
+  fullName: AppCore.Infrastructure.Services.HttpService.HandleCustomResponseAsync<T>(AppCore.Application.Wrappers.HttpResponse<T>, string, string, string, string, int)
+  fullName.vb: AppCore.Infrastructure.Services.HttpService.HandleCustomResponseAsync(Of T)(AppCore.Application.Wrappers.HttpResponse(Of T), String, String, String, String, Integer)
+  nameWithType: HttpService.HandleCustomResponseAsync<T>(HttpResponse<T>, string, string, string, string, int)
+  nameWithType.vb: HttpService.HandleCustomResponseAsync(Of T)(HttpResponse(Of T), String, String, String, String, Integer)
+- uid: AppCore.Infrastructure.Services.HttpService.currentUserService
+  name: currentUserService
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_currentUserService
+  commentId: P:AppCore.Infrastructure.Services.HttpService.currentUserService
+  fullName: AppCore.Infrastructure.Services.HttpService.currentUserService
+  nameWithType: HttpService.currentUserService
+- uid: AppCore.Infrastructure.Services.HttpService.currentUserService*
+  name: currentUserService
+  href: api/AppCore.Infrastructure.Services.HttpService.html#AppCore_Infrastructure_Services_HttpService_currentUserService_
+  commentId: Overload:AppCore.Infrastructure.Services.HttpService.currentUserService
+  isSpec: "True"
+  fullName: AppCore.Infrastructure.Services.HttpService.currentUserService
+  nameWithType: HttpService.currentUserService
