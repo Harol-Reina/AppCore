@@ -85,10 +85,10 @@ AppCore follows Clean Architecture principles:
 
 ## 📖 Documentation
 
-- [API Documentation](docs/API-Surface.md)
-- [Implementation Plan](docs/Implementation-Plan.md)
-- [Migration Guide](docs/Migration-Guide.md)
-- [Compatibility Matrix](docs/Compatibility-Matrix.md)
+- [API Documentation](docs/API-Reference.md)
+- [Implementation Plan](docs/technical/Implementation-Plan.md)
+- [Migration Guide (EF->Dapper)](docs/guides/Migration-EF-to-Dapper.md)
+- [Compatibility Matrix](docs/technical/Compatibility-Matrix.md)
 
 ## 🔧 Advanced Configuration
 

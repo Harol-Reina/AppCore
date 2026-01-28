@@ -11,7 +11,28 @@ namespace AppCore.Application.Extensions;
 /// AOT-compatible JSON serialization extensions using source-generated serialization context.
 /// Provides efficient JSON operations without runtime reflection.
 /// </summary>
+
 public static class JsonExtend {
+
+    /// <summary>
+    /// Global JsonSerializerOptions used by JsonExtend.
+    /// Configure this at application startup to add custom TypeInfoResolvers (JsonSerializerContexts).
+    /// </summary>
+    public static JsonSerializerOptions Options { get; set; } = new(new JsonSerializerOptions {
+        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        WriteIndented = true,
+        PropertyNameCaseInsensitive = true
+    });
+
+    // Static constructor to ensure default context is registered if needed
+    static JsonExtend() {
+        // Ensure the internal AppCore context is added by default if not already present in the chain
+        // Note: When creating new options above, since it's "new", it doesn't have the context.
+        // We must add AppCoreJsonContext to it.
+        Options.TypeInfoResolverChain.Add(AppCoreJsonContext.Default);
+    }
 
     /// <summary>
     /// Converts an object to a JsonDocument using AOT-compatible serialization.
@@ -25,7 +46,7 @@ public static class JsonExtend {
             return value switch {
                 JsonDocument doc => doc,
                 string str => ParseFromStringOrWrap(str),
-                _ => JsonDocument.Parse(JsonSerializer.Serialize(value, value.GetType(), AppCoreJsonContext.Default))
+                _ => JsonDocument.Parse(JsonSerializer.Serialize(value, Options.GetTypeInfo(value.GetType())))
             };
         } catch (Exception ex) {
             throw new SerializerException(ex);
@@ -45,7 +66,7 @@ public static class JsonExtend {
         // Esto es útil si el input es un valor simple o una cadena que no es un JSON válido.
         // Por ejemplo, si input es "Hello World", lo convertirá a {"value": "Hello World"}
         var wrapper = new Dictionary<string, object> { { "value", input } };
-        string wrapped = JsonSerializer.Serialize(wrapper, typeof(Dictionary<string, object>), AppCoreJsonContext.Default);
+        string wrapped = JsonSerializer.Serialize(wrapper, Options.GetTypeInfo(typeof(Dictionary<string, object>)));
         return JsonDocument.Parse(wrapped);
     }
 
@@ -59,7 +80,7 @@ public static class JsonExtend {
     public static T FromJsonDocument<T>(this JsonDocument jsonDocument) {
         try {
             string jsonString = jsonDocument.RootElement.GetRawText();
-            return (T)JsonSerializer.Deserialize(jsonString, typeof(T), AppCoreJsonContext.Default)!;
+            return (T)JsonSerializer.Deserialize(jsonString, (System.Text.Json.Serialization.Metadata.JsonTypeInfo<T>)Options.GetTypeInfo(typeof(T)))!;
         } catch (JsonException) {
             throw new ArgumentException("Invalid JSON string.");
         }
@@ -82,7 +103,7 @@ public static class JsonExtend {
                                       [CallerLineNumber] int sourceLineNumber = 0) {
         try {
             // Use the AOT-compatible JsonSerializerContext for serialization
-            return JsonSerializer.Serialize(value, typeof(T), AppCoreJsonContext.Default);
+            return JsonSerializer.Serialize(value, (System.Text.Json.Serialization.Metadata.JsonTypeInfo<T>)Options.GetTypeInfo(typeof(T)));
         } catch (Exception ex) {
             throw new SerializerException(ex, memberName, sourceFilePath, sourceLineNumber);
         }
@@ -105,10 +126,11 @@ public static class JsonExtend {
         if (string.IsNullOrWhiteSpace(value)) return default;
         try {
             // Use the AOT-compatible JsonSerializerContext for deserialization
-            return (T?)JsonSerializer.Deserialize(value, typeof(T), AppCoreJsonContext.Default);
+            return JsonSerializer.Deserialize(value, (System.Text.Json.Serialization.Metadata.JsonTypeInfo<T>)Options.GetTypeInfo(typeof(T)));
         } catch (Exception ex) {
             throw new SerializerException(ex, memberName, sourceFilePath, sourceLineNumber);
         }
     }
 
 }
+

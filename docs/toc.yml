@@ -1,4 +1,8 @@
 - name: Home
   href: index.md
-- name: API
-  href: api/
+- name: API Reference
+  href: API-Reference.md
+- name: Guides
+  href: guides/toc.yml
+- name: Technical Reports
+  href: technical/toc.yml

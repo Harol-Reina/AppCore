@@ -1,0 +1,22 @@
+- name: Implementation Plan
+  href: Implementation-Plan.md
+- name: Integration Plan
+  href: Integration-Plan.md
+- name: NativeAOT Compatibility
+  href: NativeAOT-Compatibility-Report.md
+- name: Role Definition
+  href: Role-Definition.md
+- name: Compatibility Matrix
+  href: Compatibility-Matrix.md
+- name: Dependency Analysis
+  href: Dependency-Analysis.md
+- name: Breaking Changes Analysis
+  href: Breaking-Changes-Analysis.md
+- name: Public API Identification
+  href: Public-API-Identification.md
+- name: Migration Guide (Legacy)
+  href: Migration-Guide.md
+- name: API Surface (Legacy)
+  href: API-Surface.md
+- name: GitHub Packages Plan
+  href: GitHub-Packages-Migration-Plan.md

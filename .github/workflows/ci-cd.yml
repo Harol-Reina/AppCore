@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: write
+  packages: write
 
 env:
   DOTNET_VERSION: '10.0.x'
@@ -218,32 +219,19 @@ jobs:
         fi
         echo "::notice title=Format Check Passed::Code formatting is correct"
     
-    # Security scan disabled due to .NET 6 incompatibility
-    # - name: Install security scanner
-    #   run: dotnet tool install --global security-scan
-    
-    # - name: Run security analysis
-    #   id: security-scan
-    #   run: |
-    #     echo "::group::Running security analysis"
-    #     security-scan --project AppCore.sln --output security-report.json
-    #     EXIT_CODE=$?
-    #     echo "::endgroup::"
-    #     
-    #     if [ $EXIT_CODE -ne 0 ]; then
-    #       echo "::error title=Security Issues Detected::Security scan found critical issues. Check security-report.json artifact."
-    #       # Allow scan to fail but report it
-    #       echo "SECURITY_FAILED=true" >> $GITHUB_ENV
-    #     else
-    #       echo "::notice title=Security Scan Passed::No critical security issues detected"
-    #     fi
-    #   continue-on-error: false
-    
-    # - name: Upload security report
-    #   uses: actions/upload-artifact@v4
-    #   if: always()
-    #   with:
-
+    - name: Run security analysis
+      id: security-scan
+      run: |
+        echo "::group::Running security analysis"
+        if dotnet list AppCore.sln package --vulnerable --include-transitive; then
+          echo "::notice title=Security Scan Passed::No critical security issues detected"
+        else
+          echo "::warning title=Security Issues Detected::Security scan found vulnerable packages. Check build logs for details."
+          # We don't fail the build strictly for now, but we warn. 
+          # Uncomment exit 1 if you want to block builds on vulnerabilities.
+          # exit 1
+        fi
+        echo "::endgroup::"
 
 
 

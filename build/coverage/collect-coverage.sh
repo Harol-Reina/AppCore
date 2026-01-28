@@ -102,8 +102,8 @@ reportgenerator \
 # Parse coverage results
 if [ -f "$COVERAGE_DIR/Summary.json" ]; then
     # Extract coverage percentage from JSON summary
-    LINE_COVERAGE=$(jq -r '.summary.linecoverage' "$COVERAGE_DIR/Summary.json" 2>/dev/null || echo "0")
-    BRANCH_COVERAGE=$(jq -r '.summary.branchcoverage' "$COVERAGE_DIR/Summary.json" 2>/dev/null || echo "0")
+    LINE_COVERAGE=$(jq -r '.summary.linecoverage // 0' "$COVERAGE_DIR/Summary.json" 2>/dev/null || echo "0")
+    BRANCH_COVERAGE=$(jq -r '.summary.branchcoverage // 0' "$COVERAGE_DIR/Summary.json" 2>/dev/null || echo "0")
     
     print_success "Coverage Analysis Complete!"
     echo "📊 Line Coverage: ${LINE_COVERAGE}%"

@@ -1,0 +1,14 @@
+<Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
+  <Application>
+    <!-- Preserve Serilog Sinks for Configuration loading -->
+    <Assembly Name="Serilog.Sinks.Console" Dynamic="Required All" />
+    <Assembly Name="Serilog.Sinks.File" Dynamic="Required All" />
+    <Assembly Name="Serilog.Sinks.Debug" Dynamic="Required All" />
+    
+    <!-- Preserve AppCore types for reflection naming if needed -->
+    <Assembly Name="OrionSoft.AppCore" Dynamic="Required All" />
+    
+    <!-- Preserve MediatR for DI -->
+    <Assembly Name="MediatR" Dynamic="Required All" />
+  </Application>
+</Directives>

@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AppCore.Infrastructure.Services;
 
-internal abstract class HttpService(HttpClient httpClient,
+public abstract class HttpService(HttpClient httpClient,
                                   ICurrentUserService currentUserService,
                                   ILogger logger,
                                   IHttpRequestRepository? httpRequestRepository = null) {
@@ -261,10 +261,7 @@ internal abstract class HttpService(HttpClient httpClient,
             $"{baseUrl}{endpoint}",
             method,
             body,
-            headers) {
-            CreatedAt = DateTime.Now,
-            CreatedBy = _currentUserService.GetUserName()
-        };
+            headers) { };
         await _httpRequestRepository!.AddAsync(auditEntity);
         return auditEntity;
     }
@@ -301,7 +298,10 @@ internal abstract class HttpService(HttpClient httpClient,
         var errorContext = new Dictionary<string, object> {
             { "TraceId", traceId },
             { "Endpoint", endpoint },
-            { "HttpResponse", httpResponse }
+            { "StatusCode", httpResponse.StatusCode },
+            { "ElapsedMilliseconds", httpResponse.Time },
+            { "ErrorMessage", httpResponse.ErrorMessage ?? "None" },
+            { "Response", httpResponse.Response ?? JsonDocument.Parse("{}") }
         };
 
         var errorMessage = JsonExtend.Serialize(errorContext);

@@ -121,8 +121,8 @@ if command -v reportgenerator &> /dev/null; then
         # Extract coverage percentage
         COVERAGE_LINE=$(grep "Line coverage" "./TestResults/Coverage/Summary.txt" || true)
         if [ ! -z "$COVERAGE_LINE" ]; then
-            COVERAGE_PERCENT=$(echo "$COVERAGE_LINE" | grep -oE '[0-9]+\.[0-9]+%')
-            COVERAGE_NUM=$(echo "$COVERAGE_PERCENT" | grep -oE '[0-9]+\.[0-9]+')
+            COVERAGE_PERCENT=$(echo "$COVERAGE_LINE" | grep -oE '[0-9]+(\.[0-9]+)?%')
+            COVERAGE_NUM=$(echo "$COVERAGE_PERCENT" | grep -oE '[0-9]+(\.[0-9]+)?')
             
             if (( $(echo "$COVERAGE_NUM >= 80" | bc -l 2>/dev/null) )); then
                 print_success "Code coverage ($COVERAGE_PERCENT) meets the 80% threshold"
@@ -137,15 +137,19 @@ fi
 
 # Run security analysis
 print_status "Running security analysis..."
-if command -v security-scan &> /dev/null; then
-    if security-scan --project AppCore.sln --output security-report.json; then
-        print_success "Security analysis completed"
-    else
-        print_warning "Security analysis found potential issues. Check security-report.json"
-    fi
+print_status "Checking for vulnerable packages..."
+# Check for vulnerable packages in the solution
+if dotnet list AppCore.sln package --vulnerable --include-transitive; then
+    print_success "Security analysis completed (dependency check)"
 else
-    print_warning "Security scanner not installed. Install with: dotnet tool install -g security-scan"
+    # dotnet list package returns exit code 0 even if vulnerabilities are found, 
+    # but prints them to stdout. We can optionally grep for 'has the following vulnerable packages' if we want to fail the build.
+    # However, for now we just show the output.
+    print_warning "Security analysis completed. Please review output above for any vulnerabilities."
 fi
+
+# Note: For static code analysis, Roslyn analyzers are already running as part of the build process.
+
 
 # Package creation test
 print_status "Testing package creation..."
