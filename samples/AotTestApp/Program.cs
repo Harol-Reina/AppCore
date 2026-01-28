@@ -98,11 +98,7 @@ class Program
         Console.WriteLine("✓");
 
         Console.Write("  • JSON serialization with AppCoreJsonContext... ");
-        var options = new JsonSerializerOptions
-        {
-            TypeInfoResolver = AppCoreJsonContext.Default
-        };
-        var json = JsonSerializer.Serialize(successResponse, options);
+        var json = JsonSerializer.Serialize(successResponse, AppCoreJsonContext.Default.ResponseString);
         if (string.IsNullOrEmpty(json) || !json.Contains("Test data"))
         {
             throw new Exception("JSON serialization failed");
