@@ -39,36 +39,36 @@ public abstract class HttpService(HttpClient httpClient,
                                                Dictionary<string, string>? headers = null,
                                                Dictionary<string, string>? queryParams = null) {
         var fullEndpoint = BuildEndpoint(endpoint, queryParams);
-        return await ExecuteHttpRequestAsync<T>(fullEndpoint, null, headers, HttpMethod.Get);
+        return await ExecuteHttpRequestAsync<T>(fullEndpoint, null, headers, HttpMethod.Get).ConfigureAwait(false);
     }
 
     protected async Task<T> ExecutePostAsync<TBody, T>(string endpoint,
                                                         TBody body,
                                                         Dictionary<string, string>? headers = null) {
-        return await ExecuteHttpRequestAsync<T>(endpoint, JsonExtend.Serialize(body), headers, HttpMethod.Post);
+        return await ExecuteHttpRequestAsync<T>(endpoint, JsonExtend.Serialize(body), headers, HttpMethod.Post).ConfigureAwait(false);
     }
 
     protected async Task<T> ExecutePutAsync<TBody, T>(string endpoint,
                                                        TBody body,
                                                        Dictionary<string, string>? headers = null) {
-        return await ExecuteHttpRequestAsync<T>(endpoint, JsonExtend.Serialize(body), headers, HttpMethod.Put);
+        return await ExecuteHttpRequestAsync<T>(endpoint, JsonExtend.Serialize(body), headers, HttpMethod.Put).ConfigureAwait(false);
     }
 
     protected async Task<T> ExecutePatchAsync<TBody, T>(string endpoint,
                                                          TBody body,
                                                          Dictionary<string, string>? headers = null) {
-        return await ExecuteHttpRequestAsync<T>(endpoint, JsonExtend.Serialize(body), headers, HttpMethod.Patch);
+        return await ExecuteHttpRequestAsync<T>(endpoint, JsonExtend.Serialize(body), headers, HttpMethod.Patch).ConfigureAwait(false);
     }
 
     protected async Task<T> ExecuteDeleteAsync<TBody, T>(string endpoint,
                                                           TBody body,
                                                           Dictionary<string, string>? headers = null)
-        => await ExecuteHttpRequestAsync<T>(endpoint, JsonExtend.Serialize(body), headers, HttpMethod.Delete);
+        => await ExecuteHttpRequestAsync<T>(endpoint, JsonExtend.Serialize(body), headers, HttpMethod.Delete).ConfigureAwait(false);
 
     protected async Task<T> ExecuteHeadAsync<TBody, T>(string endpoint,
                                                         TBody body,
                                                         Dictionary<string, string>? headers = null)
-        => await ExecuteHttpRequestAsync<T>(endpoint, JsonExtend.Serialize(body), headers, HttpMethod.Head);
+        => await ExecuteHttpRequestAsync<T>(endpoint, JsonExtend.Serialize(body), headers, HttpMethod.Head).ConfigureAwait(false);
 
     protected Task<HttpResponse<T>> ExecutePostRawAsync<TBody, T>(string endpoint,
                                                                    TBody body,
@@ -103,23 +103,23 @@ public abstract class HttpService(HttpClient httpClient,
 
     protected async Task<T> ExecutePostAsync<T>(string endpoint,
                                                 Dictionary<string, string>? headers = null)
-        => await ExecuteHttpRequestAsync<T>(endpoint, null, headers, HttpMethod.Post);
+        => await ExecuteHttpRequestAsync<T>(endpoint, null, headers, HttpMethod.Post).ConfigureAwait(false);
 
     protected async Task<T> ExecutePutAsync<T>(string endpoint,
                                                Dictionary<string, string>? headers = null)
-        => await ExecuteHttpRequestAsync<T>(endpoint, null, headers, HttpMethod.Put);
+        => await ExecuteHttpRequestAsync<T>(endpoint, null, headers, HttpMethod.Put).ConfigureAwait(false);
 
     protected async Task<T> ExecutePatchAsync<T>(string endpoint,
                                                  Dictionary<string, string>? headers = null)
-        => await ExecuteHttpRequestAsync<T>(endpoint, null, headers, HttpMethod.Patch);
+        => await ExecuteHttpRequestAsync<T>(endpoint, null, headers, HttpMethod.Patch).ConfigureAwait(false);
 
     protected async Task<T> ExecuteDeleteAsync<T>(string endpoint,
                                                   Dictionary<string, string>? headers = null)
-        => await ExecuteHttpRequestAsync<T>(endpoint, null, headers, HttpMethod.Delete);
+        => await ExecuteHttpRequestAsync<T>(endpoint, null, headers, HttpMethod.Delete).ConfigureAwait(false);
 
     protected async Task<T> ExecuteHeadAsync<T>(string endpoint,
                                                 Dictionary<string, string>? headers = null)
-        => await ExecuteHttpRequestAsync<T>(endpoint, null, headers, HttpMethod.Head);
+        => await ExecuteHttpRequestAsync<T>(endpoint, null, headers, HttpMethod.Head).ConfigureAwait(false);
 
     protected Task<HttpResponse<T>> ExecutePostRawAsync<T>(string endpoint,
                                                            Dictionary<string, string>? headers = null)
@@ -154,15 +154,15 @@ public abstract class HttpService(HttpClient httpClient,
         var traceId = ResolveTraceId(headers);
 
         if (_enableAuditing && _httpRequestRepository != null)
-            auditEntity = await CreateAuditEntity(traceId, endpoint, method, serializedBody, headers);
+            auditEntity = await CreateAuditEntity(traceId, endpoint, method, serializedBody, headers).ConfigureAwait(false);
 
         try {
             _logger.LogInformation("Executing {Method} request to {Endpoint}", method, endpoint);
 
-            var httpResponse = await ExecuteHttpMethod<T>(endpoint, serializedBody, headers, method);
+            var httpResponse = await ExecuteHttpMethod<T>(endpoint, serializedBody, headers, method).ConfigureAwait(false);
 
             if (auditEntity != null && _httpRequestRepository != null)
-                await UpdateAuditEntityAsync(auditEntity, httpResponse);
+                await UpdateAuditEntityAsync(auditEntity, httpResponse).ConfigureAwait(false);
 
             if (!IsSuccessStatus(httpResponse.StatusCode) && httpResponse.StatusCode != HttpStatusCode.NotFound) {
                 _logger.LogError(
@@ -185,7 +185,7 @@ public abstract class HttpService(HttpClient httpClient,
                                                      string? serializedBody,
                                                      Dictionary<string, string>? headers,
                                                      HttpMethod method) {
-        var httpResponse = await ExecuteHttpRequestRawAsync<T>(endpoint, serializedBody, headers, method);
+        var httpResponse = await ExecuteHttpRequestRawAsync<T>(endpoint, serializedBody, headers, method).ConfigureAwait(false);
 
         if (!IsSuccessStatus(httpResponse.StatusCode)) {
             _logger.LogWarning(
@@ -205,12 +205,12 @@ public abstract class HttpService(HttpClient httpClient,
                                                               HttpMethod method) {
         try {
             var requestMessage = CreateHttpRequestMessage(method, endpoint, serializedBody, headers);
-            var (response, elapsedMs) = await SendTimedRequestAsync(requestMessage);
+            var (response, elapsedMs) = await SendTimedRequestAsync(requestMessage).ConfigureAwait(false);
 
             if (response.StatusCode == HttpStatusCode.OK)
-                return await ParseSuccessResponseAsync<T>(response, elapsedMs);
+                return await ParseSuccessResponseAsync<T>(response, elapsedMs).ConfigureAwait(false);
 
-            var responseJson = JsonExtend.ToJsonDocument(await response.Content.ReadAsStringAsync());
+            var responseJson = JsonExtend.ToJsonDocument(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
             return new HttpResponse<T>(response.StatusCode, elapsedMs, responseJson);
         } catch (Exception ex) {
             return HandleExecutionException<T>(ex);
@@ -231,14 +231,14 @@ public abstract class HttpService(HttpClient httpClient,
     private async Task<(HttpResponseMessage Response, long ElapsedMs)> SendTimedRequestAsync(
         HttpRequestMessage requestMessage) {
         _timer.Restart();
-        var response = await _httpClient.SendAsync(requestMessage);
+        var response = await _httpClient.SendAsync(requestMessage).ConfigureAwait(false);
         _timer.Stop();
         return (response, _timer.ElapsedMilliseconds);
     }
 
     private static async Task<HttpResponse<T>> ParseSuccessResponseAsync<T>(
         HttpResponseMessage response, long elapsedMs) {
-        var responseJson = JsonExtend.ToJsonDocument(await response.Content.ReadAsStringAsync());
+        var responseJson = JsonExtend.ToJsonDocument(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
         bool isNullable = typeof(T) == typeof(object);
 
         if (!isNullable && string.IsNullOrEmpty(responseJson?.RootElement.GetRawText()))
@@ -311,7 +311,7 @@ public abstract class HttpService(HttpClient httpClient,
             method,
             bodyDoc,
             headersDoc);
-        await _httpRequestRepository!.AddAsync(auditEntity);
+        await _httpRequestRepository!.AddAsync(auditEntity).ConfigureAwait(false);
         return auditEntity;
     }
 
@@ -324,7 +324,7 @@ public abstract class HttpService(HttpClient httpClient,
         auditEntity.UpdatedAt = DateTime.Now;
         auditEntity.UpdatedBy = _currentUserService.GetUserName();
 
-        await _httpRequestRepository!.UpdateAsync(auditEntity);
+        await _httpRequestRepository!.UpdateAsync(auditEntity).ConfigureAwait(false);
     }
 
 
