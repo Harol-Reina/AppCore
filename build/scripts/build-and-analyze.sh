@@ -39,10 +39,11 @@ fi
 
 print_status "Using .NET SDK version: $(dotnet --version)"
 
-# Clean previous builds
+# Clean previous builds and artifacts
 print_status "Cleaning previous builds..."
 dotnet clean --verbosity quiet
 rm -rf TestResults/ || true
+rm -rf packages/ || true
 
 # Restore dependencies
 print_status "Restoring dependencies..."
@@ -138,14 +139,15 @@ fi
 # Run security analysis
 print_status "Running security analysis..."
 print_status "Checking for vulnerable packages..."
-# Check for vulnerable packages in the solution
-if dotnet list AppCore.sln package --vulnerable --include-transitive; then
-    print_success "Security analysis completed (dependency check)"
+SECURITY_OUTPUT=$(dotnet list AppCore.sln package --vulnerable --include-transitive 2>&1) || true
+echo "$SECURITY_OUTPUT"
+
+if echo "$SECURITY_OUTPUT" | grep -q "has the following vulnerable packages"; then
+    print_warning "Vulnerable packages detected. Please review the output above and update affected dependencies."
+    HAS_VULNERABILITIES=true
 else
-    # dotnet list package returns exit code 0 even if vulnerabilities are found, 
-    # but prints them to stdout. We can optionally grep for 'has the following vulnerable packages' if we want to fail the build.
-    # However, for now we just show the output.
-    print_warning "Security analysis completed. Please review output above for any vulnerabilities."
+    print_success "No vulnerable packages found"
+    HAS_VULNERABILITIES=false
 fi
 
 # Note: For static code analysis, Roslyn analyzers are already running as part of the build process.
@@ -179,8 +181,10 @@ if [ -f "./TestResults/Coverage/Summary.txt" ]; then
     echo "📊 Code Coverage: Available in ./TestResults/Coverage/index.html"
 fi
 
-if [ -f "security-report.json" ]; then
-    echo "🔒 Security Analysis: Available in security-report.json"
+if [ "$HAS_VULNERABILITIES" = true ]; then
+    echo "⚠️  Security: Vulnerable packages detected — review output above"
+else
+    echo "🔒 Security: No vulnerable packages found"
 fi
 
 print_success "All checks completed successfully! 🎉"
@@ -189,4 +193,6 @@ echo ""
 print_status "Next steps:"
 echo "  - Review coverage report: open ./TestResults/Coverage/index.html"
 echo "  - Review test results: check ./TestResults/*.trx"
-echo "  - Test package locally: dotnet add package ./packages/*.nupkg"
+echo "  - Test package locally:"
+echo "      dotnet nuget add source \$(pwd)/packages --name local-appcore"
+echo "      dotnet add package OrionSoft.AppCore --source local-appcore"
