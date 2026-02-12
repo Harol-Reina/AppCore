@@ -103,16 +103,18 @@ public abstract class HttpService(HttpClient httpClient,
     #endregion
 
 
+    private string ResolveTraceId(Dictionary<string, string>? headers) {
+        if (headers is not null && headers.TryGetValue("X-Trace-ID", out var existingTraceId))
+            return existingTraceId;
+        return _currentUserService.GetXtraceId();
+    }
+
     protected async Task<HttpResponse<T>> ExecuteHttpRequestRawAsync<T>(string endpoint,
                                                                         object? body,
                                                                         Dictionary<string, string>? headers,
                                                                         HttpMethod method) {
         HttpAuditEntity? auditEntity = null;
-        string traceId;
-        if (headers is not null && headers.TryGetValue("X-Trace-ID", out _))
-            traceId = Guid.NewGuid().ToString("N");
-        else
-            traceId = _currentUserService.GetXtraceId();
+        var traceId = ResolveTraceId(headers);
 
         if (_enableAuditing && _httpRequestRepository != null)
             auditEntity = await CreateAuditEntity(traceId, endpoint, method, body, headers);
@@ -153,11 +155,7 @@ public abstract class HttpService(HttpClient httpClient,
                 "HTTP request failed with status {StatusCode} for endpoint {Endpoint}",
                 httpResponse.StatusCode, endpoint);
             var baseUrl = _httpClient.BaseAddress?.ToString() ?? "Unknown";
-            string traceId;
-            if (headers is not null && headers.TryGetValue("X-Trace-ID", out var value))
-                traceId = value;
-            else
-                traceId = _currentUserService.GetXtraceId();
+            var traceId = ResolveTraceId(headers);
             HandleCustomResponseAsync(httpResponse, traceId, $"{baseUrl}{endpoint}");
         }
 
@@ -165,69 +163,85 @@ public abstract class HttpService(HttpClient httpClient,
     }
 
     private async Task<HttpResponse<T>> ExecuteHttpMethod<T>(string endpoint,
-                                                            object? body,
-                                                            Dictionary<string, string>? headers,
-                                                            HttpMethod method) {
+                                                              object? body,
+                                                              Dictionary<string, string>? headers,
+                                                              HttpMethod method) {
+        try {
+            var requestMessage = CreateHttpRequestMessage(method, endpoint, body, headers);
+            var (response, elapsedMs) = await SendTimedRequestAsync(requestMessage);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+                return await ParseSuccessResponseAsync<T>(response, elapsedMs);
+
+            var responseJson = JsonExtend.ToJsonDocument(await response.Content.ReadAsStringAsync());
+            return new HttpResponse<T>(response.StatusCode, elapsedMs, responseJson);
+        } catch (Exception ex) {
+            return HandleExecutionException<T>(ex);
+        }
+    }
+
+    private static HttpRequestMessage CreateHttpRequestMessage(HttpMethod method,
+                                                                string endpoint,
+                                                                object? body,
+                                                                Dictionary<string, string>? headers) {
+        var message = new HttpRequestMessage(method, endpoint);
+        if (body is not null)
+            message.Content = CreateContent(body);
+        AddHeaders(message, headers);
+        return message;
+    }
+
+    private async Task<(HttpResponseMessage Response, long ElapsedMs)> SendTimedRequestAsync(
+        HttpRequestMessage requestMessage) {
+        _timer.Restart();
+        var response = await _httpClient.SendAsync(requestMessage);
+        _timer.Stop();
+        return (response, _timer.ElapsedMilliseconds);
+    }
+
+    private static async Task<HttpResponse<T>> ParseSuccessResponseAsync<T>(
+        HttpResponseMessage response, long elapsedMs) {
+        var responseJson = JsonExtend.ToJsonDocument(await response.Content.ReadAsStringAsync());
+        bool isNullable = typeof(T) == typeof(object);
+
+        if (!isNullable && string.IsNullOrEmpty(responseJson?.RootElement.GetRawText()))
+            return new HttpResponse<T>(HttpStatusCode.InternalServerError, elapsedMs, responseJson) {
+                ErrorMessage = "Response content is empty but expected to be non-nullable type."
+            };
 
         try {
-            var httpRequestMessage = new HttpRequestMessage(method, endpoint);
-            if (body is not null) {
-                httpRequestMessage = new HttpRequestMessage(method, endpoint) {
-                    Content = CreateContent(body)
-                };
-            }
-            AddHeaders(httpRequestMessage, headers);
-
-            _timer.Restart();
-            var response = await _httpClient.SendAsync(httpRequestMessage);
-            _timer.Stop();
-            var responseJson = JsonExtend.ToJsonDocument(await response.Content.ReadAsStringAsync());
-
-            bool isNullable = typeof(T) == typeof(object);
-            if (response.StatusCode == HttpStatusCode.OK)
-                if (!isNullable && string.IsNullOrEmpty(responseJson?.RootElement.GetRawText()))
-                    return new HttpResponse<T>(HttpStatusCode.InternalServerError, _timer.ElapsedMilliseconds, responseJson) {
-                        ErrorMessage = "Response content is empty but expected to be non-nullable type."
-                    };
-                else {
-                    try {
-                        return new HttpResponse<T>(response.StatusCode, _timer.ElapsedMilliseconds, responseJson) {
-                            Data = isNullable ? default : JsonExtend.Deserialize<T>(responseJson!.RootElement.GetRawText())
-                        };
-                    } catch (SerializerException ex) {
-                        return new HttpResponse<T>(HttpStatusCode.InternalServerError, _timer.ElapsedMilliseconds, responseJson) {
-                            ErrorMessage = ex.MessageLog.ToString()
-                        };
-                    }
-                }
-            else
-                return new HttpResponse<T>(response.StatusCode, _timer.ElapsedMilliseconds, responseJson);
-
-        } catch (Exception ex) {
-            if (_timer.IsRunning)
-                _timer.Stop();
-
-            if (ex is HttpRequestException reExcep)
-                return new HttpResponse<T>(reExcep.StatusCode is null
-                    ? HttpStatusCode.InternalServerError
-                    : (HttpStatusCode)reExcep.StatusCode!
-                    , _timer.ElapsedMilliseconds
-                    , JsonExtend.ToJsonDocument(new { Error = "Making HTTP request." })) {
-                    ErrorMessage = reExcep.Message
-                };
-
-            if (ex is SerializerException serExcep)
-                return new HttpResponse<T>(HttpStatusCode.InternalServerError,
-                    _timer.ElapsedMilliseconds,
-                    JsonExtend.ToJsonDocument(new { Error = "Error deserializing response." })) {
-                    ErrorMessage = serExcep.MessageLog.ToString()
-                };
-
-            return new HttpResponse<T>(HttpStatusCode.InternalServerError
-                , _timer.ElapsedMilliseconds
-                , JsonExtend.ToJsonDocument(new { Error = ex.Message }));
+            return new HttpResponse<T>(response.StatusCode, elapsedMs, responseJson) {
+                Data = isNullable ? default : JsonExtend.Deserialize<T>(responseJson!.RootElement.GetRawText())
+            };
+        } catch (SerializerException ex) {
+            return new HttpResponse<T>(HttpStatusCode.InternalServerError, elapsedMs, responseJson) {
+                ErrorMessage = ex.MessageLog.ToString()
+            };
         }
+    }
 
+    private HttpResponse<T> HandleExecutionException<T>(Exception ex) {
+        if (_timer.IsRunning)
+            _timer.Stop();
+
+        return ex switch {
+            HttpRequestException httpEx => new HttpResponse<T>(
+                httpEx.StatusCode ?? HttpStatusCode.InternalServerError,
+                _timer.ElapsedMilliseconds,
+                JsonExtend.ToJsonDocument(new Dictionary<string, object> { { "Error", "Making HTTP request." } })) {
+                ErrorMessage = httpEx.Message
+            },
+            SerializerException serEx => new HttpResponse<T>(
+                HttpStatusCode.InternalServerError,
+                _timer.ElapsedMilliseconds,
+                JsonExtend.ToJsonDocument(new Dictionary<string, object> { { "Error", "Error deserializing response." } })) {
+                ErrorMessage = serEx.MessageLog.ToString()
+            },
+            _ => new HttpResponse<T>(
+                HttpStatusCode.InternalServerError,
+                _timer.ElapsedMilliseconds,
+                JsonExtend.ToJsonDocument(new Dictionary<string, object> { { "Error", ex.Message } }))
+        };
     }
 
     private static StringContent CreateContent(object? body) {
