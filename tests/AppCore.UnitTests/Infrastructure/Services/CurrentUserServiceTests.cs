@@ -368,6 +368,40 @@ public class CurrentUserServiceTests {
     }
 
     [Fact]
+    public void GetUserName_WithNonBearerAuthHeader_ShouldReturnClientIp() {
+        // Arrange — Authorization header exists but is not Bearer → HasAuthorizationToken returns false
+        var headers = new HeaderDictionary {
+            { "Authorization", new StringValues("Basic abc123") }
+        };
+        _httpRequestMock.Setup(x => x.Headers).Returns(headers);
+        var connectionMock = new Mock<ConnectionInfo>();
+        connectionMock.Setup(x => x.RemoteIpAddress).Returns(System.Net.IPAddress.Parse("10.0.0.5"));
+        _httpContextMock.Setup(x => x.Connection).Returns(connectionMock.Object);
+
+        // Act
+        var result = _currentUserService.GetUserName();
+
+        // Assert
+        result.Should().Be("10.0.0.5");
+    }
+
+    [Fact]
+    public void GetUserName_WithNoRemoteIpAddress_ShouldReturnUnknown() {
+        // Arrange — no auth, no X-Forwarded-For, no RemoteIpAddress
+        var headers = new HeaderDictionary();
+        _httpRequestMock.Setup(x => x.Headers).Returns(headers);
+        var connectionMock = new Mock<ConnectionInfo>();
+        connectionMock.Setup(x => x.RemoteIpAddress).Returns((System.Net.IPAddress?)null);
+        _httpContextMock.Setup(x => x.Connection).Returns(connectionMock.Object);
+
+        // Act
+        var result = _currentUserService.GetUserName();
+
+        // Assert
+        result.Should().Be("unknown");
+    }
+
+    [Fact]
     public void GetUserName_WithTokenMissingEmailClaim_ShouldThrowCustomException() {
         // Arrange - Token without 'email' claim
         var jwtWithoutEmail = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U";

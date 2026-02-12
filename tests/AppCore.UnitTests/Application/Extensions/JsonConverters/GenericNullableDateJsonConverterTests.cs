@@ -100,6 +100,37 @@ public class GenericNullableDateJsonConverterTests {
     }
 
     [Fact]
+    public void GenericNullableDateJsonConverter_ReadNullToken_ShouldReturnNull() {
+        // Arrange — directly exercise the Read path where TokenType == Null
+        var converter = new GenericNullableDateJsonConverter("dd/MM/yyyy");
+        var bytes = System.Text.Encoding.UTF8.GetBytes("null");
+        var reader = new Utf8JsonReader(bytes);
+        reader.Read(); // advance to the token
+
+        // Act
+        var result = converter.Read(ref reader, typeof(DateTime?), new JsonSerializerOptions());
+
+        // Assert
+        result.Should().BeNull();
+    }
+
+    [Fact]
+    public void GenericNullableDateJsonConverter_WriteNull_ShouldWriteNullValue() {
+        // Arrange — directly exercise the Write path where !value.HasValue
+        var converter = new GenericNullableDateJsonConverter("dd/MM/yyyy");
+        using var stream = new System.IO.MemoryStream();
+        using var writer = new Utf8JsonWriter(stream);
+
+        // Act
+        converter.Write(writer, null, new JsonSerializerOptions());
+        writer.Flush();
+
+        // Assert
+        var json = System.Text.Encoding.UTF8.GetString(stream.ToArray());
+        json.Should().Be("null");
+    }
+
+    [Fact]
     public void GenericNullableDateJsonConverter_RoundTrip_ShouldPreserveValue() {
         // Arrange
         var converter = new GenericNullableDateJsonConverter("yyyy-MM-dd HH:mm:ss");

@@ -185,6 +185,29 @@ public class JsonExtendTests {
     }
 
     [Fact]
+    public void ToJsonDocument_WithMalformedJsonStartingWithBrace_ShouldWrapAsValue() {
+        // Arrange — starts with '{' but is not valid JSON → triggers catch in ParseFromStringOrWrap
+        var malformedJson = "{not valid json at all";
+
+        // Act
+        var result = JsonExtend.ToJsonDocument(malformedJson);
+
+        // Assert
+        result.Should().NotBeNull();
+        result!.RootElement.GetProperty("value").GetString().Should().Contain("{not valid json at all");
+    }
+
+    [Fact]
+    public void Serialize_WithUnregisteredType_ShouldThrowSerializerException() {
+        // Arrange — a type not in AppCoreJsonContext will fail AOT serialization
+        var unregistered = new { Dynamic = "value" };
+
+        // Act & Assert
+        var act = () => JsonExtend.Serialize(unregistered);
+        act.Should().Throw<SerializerException>();
+    }
+
+    [Fact]
     public void Deserialize_WithCaseInsensitiveProperties_ShouldWork() {
         // Arrange
         var jsonString = """
