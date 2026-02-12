@@ -13,8 +13,7 @@ public class LoginResponseTests {
             FullName = "Test User",
             Roles = new List<string> { "Admin", "User" },
             Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
-            RefreshToken = "refresh-token-123",
-            ReinsuredCompanyId = 42
+            RefreshToken = "refresh-token-123"
         };
 
         // Assert
@@ -24,22 +23,5 @@ public class LoginResponseTests {
         response.Roles.Should().Contain(new[] { "Admin", "User" });
         response.Token.Should().Be("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9");
         response.RefreshToken.Should().Be("refresh-token-123");
-        response.ReinsuredCompanyId.Should().Be(42);
-    }
-
-    [Fact]
-    public void ReinsuredCompanyId_ShouldBeNullable() {
-        // Arrange & Act
-        var response = new LoginResponse {
-            UserName = "test",
-            FullName = "Test",
-            Roles = new List<string>(),
-            Token = "token",
-            RefreshToken = "refresh",
-            ReinsuredCompanyId = null
-        };
-
-        // Assert
-        response.ReinsuredCompanyId.Should().BeNull();
     }
 }
