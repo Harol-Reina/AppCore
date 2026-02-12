@@ -42,6 +42,7 @@ SOLUTION_DIR=$(cd "$SCRIPT_DIR/../.." && pwd)
 AOT_PROJECT_DIR="$SOLUTION_DIR/samples/AotTestApp"
 PUBLISH_DIR="$AOT_PROJECT_DIR/bin/Release/net10.0/linux-x64/publish"
 AOT_RESULTS_DIR="$SOLUTION_DIR/TestResults/AOT"
+WEB_PORT=5280
 
 print_section "AppCore NativeAOT Compatibility Validation"
 print_info "Solution: $SOLUTION_DIR"
@@ -70,7 +71,7 @@ mkdir -p "$AOT_RESULTS_DIR"
 START_TIME=$(date +%s)
 
 # Step 1: Build AppCore library
-print_section "Step 1/5: Building AppCore Library"
+print_section "Step 1/6: Building AppCore Library"
 dotnet build "$SOLUTION_DIR/src/AppCore/AppCore.csproj" \
     --configuration Release \
     --verbosity quiet
@@ -84,13 +85,12 @@ fi
 echo ""
 
 # Step 2: Publish AotTestApp with NativeAOT
-print_section "Step 2/5: Publishing with NativeAOT"
+print_section "Step 2/6: Publishing with NativeAOT"
 print_info "This may take 2-5 minutes depending on your system..."
 print_info "Output: $PUBLISH_DIR"
 
 PUBLISH_START=$(date +%s)
 
-# Capturar warnings durante publish
 dotnet publish "$AOT_PROJECT_DIR/AotTestApp.csproj" \
     --configuration Release \
     --runtime linux-x64 \
@@ -112,12 +112,12 @@ fi
 echo ""
 
 # Step 3: Analyze warnings
-print_section "Step 3/5: Analyzing AOT Warnings"
+print_section "Step 3/6: Analyzing AOT Warnings"
 
-IL2026_COUNT=$(grep -c "warning IL2026" "$AOT_RESULTS_DIR/publish.log" || echo "0")
-IL3050_COUNT=$(grep -c "warning IL3050" "$AOT_RESULTS_DIR/publish.log" || echo "0")
-IL2091_COUNT=$(grep -c "warning IL2091" "$AOT_RESULTS_DIR/publish.log" || echo "0")
-TOTAL_WARNINGS=$(grep -c "warning IL" "$AOT_RESULTS_DIR/publish.log" || echo "0")
+IL2026_COUNT=$(grep -c "warning IL2026" "$AOT_RESULTS_DIR/publish.log" || true)
+IL3050_COUNT=$(grep -c "warning IL3050" "$AOT_RESULTS_DIR/publish.log" || true)
+IL2091_COUNT=$(grep -c "warning IL2091" "$AOT_RESULTS_DIR/publish.log" || true)
+TOTAL_WARNINGS=$(grep -c "warning IL" "$AOT_RESULTS_DIR/publish.log" || true)
 
 echo "  IL2026 (RequiresUnreferencedCode):      $IL2026_COUNT"
 echo "  IL3050 (RequiresDynamicCode):           $IL3050_COUNT"
@@ -125,7 +125,6 @@ echo "  IL2091 (DynamicallyAccessedMembers):    $IL2091_COUNT"
 echo "  ─────────────────────────────────────────────────"
 echo "  Total AOT Warnings:                     $TOTAL_WARNINGS"
 
-# Expected warnings (from NativeAOT-Compatibility-Report.md)
 EXPECTED_IL2026=23
 EXPECTED_IL3050=21
 EXPECTED_IL2091=1
@@ -147,7 +146,7 @@ fi
 echo ""
 
 # Step 4: Analyze binary
-print_section "Step 4/5: Analyzing NativeAOT Binary"
+print_section "Step 4/6: Analyzing NativeAOT Binary"
 
 if [ ! -f "$PUBLISH_DIR/AotTestApp" ]; then
     print_error "AotTestApp executable not found at: $PUBLISH_DIR/AotTestApp"
@@ -175,12 +174,12 @@ else
 fi
 echo ""
 
-# Step 5: Execute Tests
-print_section "Step 5/5: Executing AotTestApp Tests"
+# Step 5: Execute Console Tests & Benchmarks
+print_section "Step 5/6: Executing Console Tests & Benchmarks"
 
 # Run standard tests
 print_info "Running standard compatibility tests..."
-"$PUBLISH_DIR/AotTestApp" 2>&1 | tee "$AOT_RESULTS_DIR/standard-tests.log"
+"$PUBLISH_DIR/AotTestApp" --tests 2>&1 | tee "$AOT_RESULTS_DIR/standard-tests.log"
 TESTS_EXIT_CODE=${PIPESTATUS[0]}
 
 if [ $TESTS_EXIT_CODE -eq 0 ]; then
@@ -196,17 +195,17 @@ echo ""
 
 # Run benchmarks
 print_info "Running performance benchmarks..."
-"$PUBLISH_DIR/AotTestApp" benchmark 2>&1 | tee "$AOT_RESULTS_DIR/benchmarks.log"
+"$PUBLISH_DIR/AotTestApp" --benchmark 2>&1 | tee "$AOT_RESULTS_DIR/benchmarks.log"
 BENCHMARK_EXIT_CODE=${PIPESTATUS[0]}
 
 if [ $BENCHMARK_EXIT_CODE -eq 0 ]; then
     print_success "AOT performance benchmarks completed"
-    
+
     # Extract benchmark metrics
     RESPONSE_OPS=$(grep "Operations/sec" "$AOT_RESULTS_DIR/benchmarks.log" | head -1 | awk '{print $2}')
     PAGINATION_OPS=$(grep "Operations/sec" "$AOT_RESULTS_DIR/benchmarks.log" | tail -1 | awk '{print $2}')
     MEMORY_USED=$(grep "Memory Used" "$AOT_RESULTS_DIR/benchmarks.log" | awk '{print $3, $4}')
-    
+
     echo ""
     echo "  Performance Metrics:"
     echo "  ├─ Response Wrapper:  $RESPONSE_OPS ops/sec"
@@ -214,6 +213,88 @@ if [ $BENCHMARK_EXIT_CODE -eq 0 ]; then
     echo "  └─ Memory Used:       $MEMORY_USED"
 else
     print_warning "AOT benchmarks failed (Exit code: $BENCHMARK_EXIT_CODE)"
+fi
+echo ""
+
+# Step 6: Web Endpoint Validation (HttpClientCustomHandler middleware)
+print_section "Step 6/6: Validating Web Endpoints (Middleware)"
+print_info "Starting AOT binary in web mode on port $WEB_PORT..."
+
+"$PUBLISH_DIR/AotTestApp" --urls "http://localhost:$WEB_PORT" > "$AOT_RESULTS_DIR/web-server.log" 2>&1 &
+WEB_PID=$!
+
+# Wait for server to be ready (up to 10 seconds)
+WEB_READY=false
+for i in $(seq 1 20); do
+    if curl -s -o /dev/null -w "" "http://localhost:$WEB_PORT/api/v1/exceptions/success" 2>/dev/null; then
+        WEB_READY=true
+        break
+    fi
+    sleep 0.5
+done
+
+WEB_EXIT_CODE=0
+WEB_PASSED=0
+WEB_FAILED=0
+
+if [ "$WEB_READY" = true ]; then
+    print_success "AOT web server started (PID: $WEB_PID)"
+    echo ""
+
+    # Define expected endpoints and status codes
+    declare -A ENDPOINTS=(
+        ["success"]=200
+        ["not-found"]=404
+        ["bad-request"]=400
+        ["validation"]=400
+        ["validation-multiple"]=400
+        ["unauthorized"]=401
+        ["forbidden"]=403
+        ["custom-error"]=400
+        ["unhandled"]=500
+    )
+
+    # Ordered list for consistent output
+    ENDPOINT_ORDER="success not-found bad-request validation validation-multiple unauthorized forbidden custom-error unhandled"
+
+    echo "  Endpoint                          Expected  Actual  Status"
+    echo "  ─────────────────────────────────────────────────────────────"
+
+    for endpoint in $ENDPOINT_ORDER; do
+        expected=${ENDPOINTS[$endpoint]}
+        actual=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:$WEB_PORT/api/v1/exceptions/$endpoint")
+
+        if [ "$actual" = "$expected" ]; then
+            status="✓"
+            WEB_PASSED=$((WEB_PASSED + 1))
+        else
+            status="✗"
+            WEB_FAILED=$((WEB_FAILED + 1))
+            WEB_EXIT_CODE=1
+        fi
+
+        printf "  %-35s %3s       %3s     %s\n" "/api/v1/exceptions/$endpoint" "$expected" "$actual" "$status"
+    done
+
+    echo ""
+    echo "  Results: $WEB_PASSED passed, $WEB_FAILED failed (${#ENDPOINTS[@]} total)"
+
+    # Kill the web server
+    kill $WEB_PID 2>/dev/null
+    wait $WEB_PID 2>/dev/null
+
+    if [ $WEB_EXIT_CODE -eq 0 ]; then
+        print_success "All web endpoint tests PASSED"
+    else
+        print_error "Some web endpoint tests FAILED"
+    fi
+else
+    print_error "AOT web server failed to start within 10 seconds"
+    kill $WEB_PID 2>/dev/null
+    wait $WEB_PID 2>/dev/null
+    print_error "Server log:"
+    cat "$AOT_RESULTS_DIR/web-server.log"
+    WEB_EXIT_CODE=1
 fi
 echo ""
 
@@ -257,8 +338,9 @@ Status: $([ "$TOTAL_WARNINGS" -le "$EXPECTED_TOTAL" ] && echo "✅ WITHIN EXPECT
 ═══════════════════════════════════════════════════════════════════
 TEST RESULTS
 ═══════════════════════════════════════════════════════════════════
-Standard Compatibility Tests:   $([ $TESTS_EXIT_CODE -eq 0 ] && echo "✅ PASSED" || echo "❌ FAILED")
-Performance Benchmarks:         $([ $BENCHMARK_EXIT_CODE -eq 0 ] && echo "✅ COMPLETED" || echo "⚠️ FAILED")
+Console Compatibility Tests:   $([ $TESTS_EXIT_CODE -eq 0 ] && echo "✅ PASSED" || echo "❌ FAILED")
+Performance Benchmarks:        $([ $BENCHMARK_EXIT_CODE -eq 0 ] && echo "✅ COMPLETED" || echo "⚠️ FAILED")
+Web Endpoint Validation:       $([ $WEB_EXIT_CODE -eq 0 ] && echo "✅ PASSED ($WEB_PASSED/$((WEB_PASSED + WEB_FAILED)) endpoints)" || echo "❌ FAILED ($WEB_FAILED failures)")
 
 $([ $BENCHMARK_EXIT_CODE -eq 0 ] && cat <<PERF
 Performance Metrics:
@@ -276,12 +358,13 @@ Logs Directory:         $AOT_RESULTS_DIR/
 Publish Log:            $AOT_RESULTS_DIR/publish.log
 Test Output:            $AOT_RESULTS_DIR/standard-tests.log
 Benchmark Results:      $AOT_RESULTS_DIR/benchmarks.log
+Web Server Log:         $AOT_RESULTS_DIR/web-server.log
 Binary Info:            $AOT_RESULTS_DIR/binary-info.txt
 
 ═══════════════════════════════════════════════════════════════════
 CONCLUSION
 ═══════════════════════════════════════════════════════════════════
-$([ $TESTS_EXIT_CODE -eq 0 ] && [ "$TOTAL_WARNINGS" -le "$EXPECTED_TOTAL" ] && echo "✅ AppCore is FULLY COMPATIBLE with NativeAOT" || echo "⚠️ Issues detected - review logs above")
+$([ $TESTS_EXIT_CODE -eq 0 ] && [ $WEB_EXIT_CODE -eq 0 ] && [ "$TOTAL_WARNINGS" -le "$EXPECTED_TOTAL" ] && echo "✅ AppCore is FULLY COMPATIBLE with NativeAOT" || echo "⚠️ Issues detected - review logs above")
 EOF
 
 # Display summary
@@ -291,7 +374,7 @@ print_section "AOT Validation Completed"
 print_info "Detailed summary saved to: $AOT_RESULTS_DIR/summary.txt"
 echo ""
 
-if [ $TESTS_EXIT_CODE -eq 0 ] && [ "$TOTAL_WARNINGS" -le "$EXPECTED_TOTAL" ]; then
+if [ $TESTS_EXIT_CODE -eq 0 ] && [ $WEB_EXIT_CODE -eq 0 ] && [ "$TOTAL_WARNINGS" -le "$EXPECTED_TOTAL" ]; then
     print_success "✅ All AOT compatibility checks PASSED"
     exit 0
 else
