@@ -3,7 +3,6 @@ using AppCore.Application.Extensions;
 using AppCore.Application.Wrappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging; // Added this using statement for ILogger
 
 namespace AppCore.Application.Middleware;
 
@@ -11,11 +10,63 @@ public class HttpClientCustomHandler(RequestDelegate next) {
 
     private readonly RequestDelegate _next = next;
 
+    private record ExceptionMapping(int StatusCode, Func<Exception, string> MessageFactory);
+
+    private static readonly Dictionary<Type, ExceptionMapping> ExceptionMappings = new() {
+        [typeof(ApiDBException)] = new(StatusCodes.Status400BadRequest, ex =>
+            JsonExtend.Serialize(new ValidationProblemDetails { Title = ex.Message })),
+
+        [typeof(ValidationException)] = new(StatusCodes.Status400BadRequest, ex =>
+            JsonExtend.Serialize(new ValidationProblemDetails(((ValidationException)ex).Errors) {
+                Title = "One or more validation errors have occurred."
+            })),
+
+        [typeof(NotFoundException)] = new(StatusCodes.Status404NotFound, ex =>
+            JsonExtend.Serialize(new ErrorResponse(ex.Message))),
+
+        [typeof(BadRequestException)] = new(StatusCodes.Status400BadRequest, ex =>
+            JsonExtend.Serialize(new ErrorResponse(ex.Message))),
+
+        [typeof(AuthenticationException)] = new(StatusCodes.Status401Unauthorized, ex =>
+            JsonExtend.Serialize(new ProblemDetails { Title = "Unauthorized", Detail = ex.Message })),
+
+        [typeof(ForbiddenAccessException)] = new(StatusCodes.Status403Forbidden, ex =>
+            JsonExtend.Serialize(new ProblemDetails { Title = "Forbidden", Detail = ex.Message })),
+
+        [typeof(SerializerException)] = new(StatusCodes.Status500InternalServerError, ex =>
+            JsonExtend.Serialize(new ProblemDetails { Title = ex.Message })),
+
+        [typeof(MappingException)] = new(StatusCodes.Status500InternalServerError, ex => {
+            var mappingEx = (MappingException)ex;
+            return JsonExtend.Serialize(new MappingErrorResponse(mappingEx.Message, mappingEx.Errors));
+        }),
+
+        [typeof(ApiHttpException)] = new(StatusCodes.Status400BadRequest, ex => {
+            var apiHttpEx = (ApiHttpException)ex;
+            return JsonExtend.Serialize(new ProblemDetails {
+                Title = apiHttpEx.Message,
+                Detail = apiHttpEx.MessageLog.Message?.ToString()
+            });
+        }),
+
+        [typeof(CustomException)] = new(StatusCodes.Status400BadRequest, ex => {
+            var customEx = (CustomException)ex;
+            return customEx.MessageLog.Message is DictionaryError error
+                ? JsonExtend.Serialize(new CustomErrorResponse(error with { ProviderMessage = null }))
+                : JsonExtend.Serialize(new CustomErrorResponse(customEx.MessageLog.Message!));
+        })
+    };
+
+    private static readonly ExceptionMapping DefaultMapping = new(
+        StatusCodes.Status500InternalServerError,
+        _ => JsonExtend.Serialize(new ProblemDetails {
+            Title = "An error occurred while processing your request."
+        })
+    );
+
     public async Task Invoke(HttpContext context) {
         const string TraceIdHeader = "X-Trace-ID";
-        // Obtener o generar TraceId con formato consistente
         var traceId = GetOrGenerateTraceId(context, TraceIdHeader);
-
 
         using (Serilog.Context.LogContext.PushProperty("XTraceID", traceId)) {
             try {
@@ -24,7 +75,6 @@ public class HttpClientCustomHandler(RequestDelegate next) {
                 await HandleExceptionAsync(context, exceptionObj);
             }
         }
-
     }
 
     private static string GetOrGenerateTraceId(HttpContext context, string headerName) {
@@ -35,71 +85,10 @@ public class HttpClientCustomHandler(RequestDelegate next) {
     }
 
     public static async Task HandleExceptionAsync(HttpContext httpContext, Exception exception) {
-        string message = exception switch {
-            ApiDBException ex => JsonExtend.Serialize(new ValidationProblemDetails {
-                Title = ex.Message
-            }),
+        var mapping = ExceptionMappings.GetValueOrDefault(exception.GetType()) ?? DefaultMapping;
 
-            ValidationException validationException => JsonExtend.Serialize(new ValidationProblemDetails(validationException.Errors) {
-                Title = $"One or more validation errors have occurred."
-            }),
-
-            NotFoundException notFoundException => JsonExtend.Serialize(new ErrorResponse(
-                notFoundException.Message
-            )),
-
-            BadRequestException badRequestException => JsonExtend.Serialize(new ErrorResponse(
-                badRequestException.Message
-            )),
-
-            AuthenticationException auth => JsonExtend.Serialize(new ProblemDetails {
-                Title = "Unauthorized",
-                Detail = auth.Message
-            }),
-
-            ForbiddenAccessException ex => JsonExtend.Serialize(new ProblemDetails {
-                Title = "Forbidden",
-                Detail = ex.Message
-            }),
-
-            SerializerException serializerException => JsonExtend.Serialize(new ProblemDetails {
-                Title = serializerException.Message
-            }),
-
-            MappingException mappingException => JsonExtend.Serialize(new MappingErrorResponse(
-                mappingException.Message,
-                mappingException.Errors
-            )),
-
-            ApiHttpException apiHttpException => JsonExtend.Serialize(new ProblemDetails {
-                Title = apiHttpException.Message,
-                Detail = apiHttpException.MessageLog.Message?.ToString()
-            }),
-
-            CustomException customException when customException.MessageLog.Message is DictionaryError error
-                => JsonExtend.Serialize(new CustomErrorResponse(
-                    error with { ProviderMessage = null }
-                )),
-
-            CustomException customException => JsonExtend.Serialize(new CustomErrorResponse(
-                customException.MessageLog.Message!
-            )),
-
-            _ => JsonExtend.Serialize(new ProblemDetails {
-                Title = "An error occurred while processing your request."
-            })
-        };
-
-        httpContext.Response.StatusCode = exception switch {
-            NotFoundException => StatusCodes.Status404NotFound,
-            BadRequestException => StatusCodes.Status400BadRequest,
-            AuthenticationException => StatusCodes.Status401Unauthorized,
-            ForbiddenAccessException => StatusCodes.Status403Forbidden,
-            ValidationException or ApiDBException or ApiHttpException or CustomException => StatusCodes.Status400BadRequest,
-            _ => StatusCodes.Status500InternalServerError
-        };
-
+        httpContext.Response.StatusCode = mapping.StatusCode;
         httpContext.Response.ContentType = "application/json";
-        await httpContext.Response.WriteAsync(message);
+        await httpContext.Response.WriteAsync(mapping.MessageFactory(exception));
     }
 }
