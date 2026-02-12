@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Frozen;
+using System.Diagnostics;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -303,12 +304,31 @@ public abstract class HttpService(HttpClient httpClient,
         return $"{endpoint}?{queryString}";
     }
 
+    /// <summary>
+    /// Declarative mapping of HTTP status codes to error codes and messages.
+    /// </summary>
+    private static readonly FrozenDictionary<HttpStatusCode, (string Code, string Message)> _httpErrorMappings =
+        new Dictionary<HttpStatusCode, (string Code, string Message)> {
+            [HttpStatusCode.BadRequest] = ("HTTP001", "Bad request"),
+            [HttpStatusCode.Unauthorized] = ("HTTP002", "Unauthorized"),
+            [HttpStatusCode.Forbidden] = ("HTTP003", "Forbidden"),
+            [HttpStatusCode.InternalServerError] = ("HTTP004", "Internal server error"),
+            [HttpStatusCode.BadGateway] = ("HTTP005", "Bad gateway"),
+            [HttpStatusCode.ServiceUnavailable] = ("HTTP006", "Service unavailable"),
+            [HttpStatusCode.TooManyRequests] = ("HTTP007", "Rate limit exceeded"),
+        }.ToFrozenDictionary();
+
+    private static readonly (string Code, string Message) _defaultHttpError = ("HTTP008", "HTTP request failed");
+
     protected virtual void HandleCustomResponseAsync<T>(HttpResponse<T> httpResponse,
                                                         string traceId,
                                                         string endpoint,
                                                         [CallerMemberName] string memberName = "",
                                                         [CallerFilePath] string sourceFilePath = "",
                                                         [CallerLineNumber] int sourceLineNumber = 0) {
+        if (httpResponse.StatusCode == HttpStatusCode.NotFound)
+            throw new NotFoundException();
+
         var errorContext = new Dictionary<string, object> {
             { "TraceId", traceId },
             { "Endpoint", endpoint },
@@ -319,43 +339,13 @@ public abstract class HttpService(HttpClient httpClient,
         };
 
         var errorMessage = JsonExtend.Serialize(errorContext);
+        var (code, message) = _httpErrorMappings.GetValueOrDefault(httpResponse.StatusCode, _defaultHttpError);
+        var providerMessage = code == "HTTP004"
+            ? httpResponse.ErrorMessage ?? errorMessage
+            : errorMessage;
 
-        throw httpResponse.StatusCode switch {
-            //  Los NotFounds no se manejan como excepciones, sino como respuestas HTTP normales.
-            HttpStatusCode.NotFound => new NotFoundException(),
-
-            HttpStatusCode.BadRequest => new CustomException(
-                new("HTTP001", "Bad request", errorMessage),
-                memberName, sourceFilePath, sourceLineNumber),
-
-            HttpStatusCode.Unauthorized => new CustomException(
-                new("HTTP002", "Unauthorized", errorMessage),
-                memberName, sourceFilePath, sourceLineNumber),
-
-            HttpStatusCode.Forbidden => new CustomException(
-                new("HTTP003", "Forbidden", errorMessage),
-                memberName, sourceFilePath, sourceLineNumber),
-
-            HttpStatusCode.InternalServerError => new CustomException(
-                new("HTTP004", "Internal server error",
-                    httpResponse.ErrorMessage ?? errorMessage),
-                memberName, sourceFilePath, sourceLineNumber),
-
-            HttpStatusCode.BadGateway => new CustomException(
-                new("HTTP005", "Bad gateway", errorMessage),
-                memberName, sourceFilePath, sourceLineNumber),
-
-            HttpStatusCode.ServiceUnavailable => new CustomException(
-                new("HTTP006", "Service unavailable", errorMessage),
-                memberName, sourceFilePath, sourceLineNumber),
-
-            HttpStatusCode.TooManyRequests => new CustomException(
-                new("HTTP007", "Rate limit exceeded", errorMessage),
-                memberName, sourceFilePath, sourceLineNumber),
-
-            _ => new CustomException(
-                new("HTTP008", "HTTP request failed", errorMessage),
-                memberName, sourceFilePath, sourceLineNumber)
-        };
+        throw new CustomException(
+            new(code, message, providerMessage),
+            memberName, sourceFilePath, sourceLineNumber);
     }
 }
