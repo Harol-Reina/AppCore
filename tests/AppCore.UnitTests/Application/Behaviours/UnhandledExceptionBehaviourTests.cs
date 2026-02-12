@@ -37,12 +37,14 @@ public class UnhandledExceptionBehaviourTests {
 
     [Theory]
     [InlineData(typeof(ApiDBException))]
+    [InlineData(typeof(ApiHttpException))]
     [InlineData(typeof(ValidationException))]
     [InlineData(typeof(OperationException))]
     [InlineData(typeof(NotFoundException))]
     [InlineData(typeof(BadRequestException))]
     [InlineData(typeof(ForbiddenAccessException))]
     [InlineData(typeof(AuthenticationException))]
+    [InlineData(typeof(HttpBaseException))]
     [InlineData(typeof(MappingException))]
     [InlineData(typeof(SerializerException))]
     [InlineData(typeof(CustomException))]
@@ -123,12 +125,14 @@ public class UnhandledExceptionBehaviourTests {
     private static Exception CreateExceptionOfType(Type exceptionType) {
         return exceptionType.Name switch {
             nameof(ApiDBException) => new ApiDBException(new InvalidOperationException("Test DB exception")),
+            nameof(ApiHttpException) => new ApiHttpException(new InvalidOperationException("Test HTTP exception")),
             nameof(ValidationException) => new ValidationException("TestProperty", "Test error"),
             nameof(OperationException) => new OperationException("Test operation exception"),
             nameof(NotFoundException) => new NotFoundException("Test message"),
             nameof(BadRequestException) => new BadRequestException("Test message"),
             nameof(ForbiddenAccessException) => new ForbiddenAccessException("Test message"),
             nameof(AuthenticationException) => new AuthenticationException("Test message"),
+            nameof(HttpBaseException) => new HttpBaseException("Test HTTP base exception", 500),
             nameof(MappingException) => new MappingException("Test mapping exception", (Exception?)null),
             nameof(SerializerException) => new SerializerException(new System.Text.Json.JsonException("Test serialization")),
             nameof(CustomException) => new CustomException(new DictionaryError("TEST-001", "Test custom exception")),

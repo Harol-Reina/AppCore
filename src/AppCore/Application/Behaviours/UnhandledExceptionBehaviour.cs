@@ -1,4 +1,6 @@
-﻿using AppCore.Application.Exceptions;
+﻿using System.Collections.Frozen;
+using System.Text;
+using AppCore.Application.Exceptions;
 using AppCore.Application.Wrappers;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -14,7 +16,6 @@ namespace AppCore.Application.Behaviours;
 internal class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<UnhandledExceptionBehaviour<TRequest, TResponse>> logger)
 : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> {
     private readonly ILogger<UnhandledExceptionBehaviour<TRequest, TResponse>> _logger = logger;
-    private string InnerMessage = string.Empty;
 
     /// <summary>
     /// Handles the request and manages any unhandled exceptions using AOT-compatible pattern matching.
@@ -32,12 +33,10 @@ internal class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<Unhandle
                 _logger.LogError("CleanArchitecture Request: {Request}", request);
                 throw;
             } else {
-                if (ex.InnerException != null)
-                    ShowInnerExceptionMessages(ex.InnerException);
-                InnerMessage = InnerMessage.Replace("\r\n", " ")
-                                           .Replace("\n", " ")
-                                           .Replace("\r", " ");
-                var menssage = new MessageLog {
+                var innerMessage = ex.InnerException != null
+                    ? CollectInnerMessages(ex.InnerException)
+                    : string.Empty;
+                var message = new MessageLog {
                     Tipo = ex.GetType().Name, // Use Name instead of ToString() for better AOT compatibility
                     Source = ex.Source,
                     Message = ex.Message.Split('\n', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? string.Empty,
@@ -47,44 +46,54 @@ internal class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<Unhandle
                             .Where(line => line.Contains(".Infrastructure"))
                             .Select(line => line.Trim())
                             .FirstOrDefault() ?? string.Empty,
-                    StackTrace = InnerMessage
+                    StackTrace = innerMessage
                 };
-                _logger.LogError("CleanArchitecture Request: {Request} \n{Message}", request, menssage);
+                _logger.LogError("CleanArchitecture Request: {Request} \n{Message}", request, message);
                 throw;
             }
         }
     }
 
     /// <summary>
+    /// Declarative set of known application exception types for AOT-compatible lookup.
+    /// </summary>
+    private static readonly FrozenSet<Type> _knownExceptionTypes = new Type[] {
+        typeof(ApiDBException),
+        typeof(ApiHttpException),
+        typeof(CustomException),
+        typeof(HttpBaseException),
+        typeof(BadRequestException),
+        typeof(NotFoundException),
+        typeof(ForbiddenAccessException),
+        typeof(AuthenticationException),
+        typeof(ValidationException),
+        typeof(OperationException),
+        typeof(MappingException),
+        typeof(SerializerException),
+    }.ToFrozenSet();
+
+    /// <summary>
     /// AOT-compatible method to check if an exception is a known application exception.
-    /// Uses pattern matching instead of reflection-based type checking.
+    /// Uses declarative FrozenSet lookup instead of switch expression to minimize cyclomatic complexity.
     /// </summary>
     /// <param name="exception">The exception to check</param>
     /// <returns>True if the exception is a known application exception</returns>
-    private static bool IsKnownException(Exception exception) => exception switch {
-        ApiDBException => true,
-        ValidationException => true,
-        ApiHttpException => true,
-        OperationException => true,
-        NotFoundException => true,
-        BadRequestException => true,
-        ForbiddenAccessException => true,
-        AuthenticationException => true,
-        MappingException => true,
-        SerializerException => true,
-        CustomException => true,
-        _ => false
-    };
+    private static bool IsKnownException(Exception exception) =>
+        _knownExceptionTypes.Contains(exception.GetType());
 
     /// <summary>
-    /// Recursively collects inner exception messages for logging.
+    /// Iteratively collects inner exception messages for logging.
     /// </summary>
-    /// <param name="ex">The exception to process</param>
-    private void ShowInnerExceptionMessages(Exception ex) {
-        InnerMessage += ex.Message;
-        if (ex.InnerException != null) {
-            InnerMessage += "\n\t\t";
-            ShowInnerExceptionMessages(ex.InnerException);
+    /// <param name="ex">The first inner exception to process</param>
+    /// <returns>A single-line string with all inner exception messages</returns>
+    private static string CollectInnerMessages(Exception ex) {
+        var sb = new StringBuilder();
+        var current = ex;
+        while (current != null) {
+            if (sb.Length > 0) sb.Append("\n\t\t");
+            sb.Append(current.Message);
+            current = current.InnerException;
         }
+        return sb.ToString().Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ");
     }
 }
