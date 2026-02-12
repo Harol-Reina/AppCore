@@ -1,5 +1,5 @@
-﻿using AppCore.Application.Serialization;
-using AppCore.Application.Wrappers;
+﻿using AppCore.Application.Wrappers;
+using AppCore.UnitTests.TestHelpers;
 using FluentAssertions;
 using Xunit;
 

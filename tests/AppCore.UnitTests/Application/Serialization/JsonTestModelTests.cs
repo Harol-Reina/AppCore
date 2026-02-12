@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using AppCore.Application.Serialization;
+using AppCore.UnitTests.TestHelpers;
 using FluentAssertions;
 using Xunit;
 
@@ -34,7 +34,7 @@ public class JsonTestModelTests {
         };
 
         // Act
-        var json = JsonSerializer.Serialize(model, AppCoreJsonContext.Default.JsonTestModel);
+        var json = JsonSerializer.Serialize(model, TestJsonContext.Default.JsonTestModel);
 
         // Assert
         json.Should().Contain("\"id\": 456");
@@ -56,7 +56,7 @@ public class JsonTestModelTests {
         """;
 
         // Act
-        var model = JsonSerializer.Deserialize(json, AppCoreJsonContext.Default.JsonTestModel);
+        var model = JsonSerializer.Deserialize(json, TestJsonContext.Default.JsonTestModel);
 
         // Assert
         model.Should().NotBeNull();
@@ -77,7 +77,7 @@ public class JsonTestModelTests {
         };
 
         // Act
-        var json = JsonSerializer.Serialize(model, AppCoreJsonContext.Default.JsonTestModel);
+        var json = JsonSerializer.Serialize(model, TestJsonContext.Default.JsonTestModel);
 
         // Assert
         json.Should().Contain("\"id\": 100");
@@ -96,8 +96,8 @@ public class JsonTestModelTests {
         };
 
         // Act
-        var json = JsonSerializer.Serialize(original, AppCoreJsonContext.Default.JsonTestModel);
-        var deserialized = JsonSerializer.Deserialize(json, AppCoreJsonContext.Default.JsonTestModel);
+        var json = JsonSerializer.Serialize(original, TestJsonContext.Default.JsonTestModel);
+        var deserialized = JsonSerializer.Deserialize(json, TestJsonContext.Default.JsonTestModel);
 
         // Assert
         deserialized.Should().NotBeNull();

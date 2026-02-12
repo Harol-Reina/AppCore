@@ -9,17 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace AppCore.Application.Serialization;
 
 /// <summary>
-/// Test model for JSON serialization unit tests.
-/// Public type required for AOT source generation compatibility.
-/// </summary>
-public class JsonTestModel {
-    public int Id { get; set; }
-    public string? Name { get; set; }
-    public string? Email { get; set; }
-    public bool IsActive { get; set; }
-}
-
-/// <summary>
 /// AOT-compatible JSON serialization context for AppCore types.
 /// This provides compile-time source generation for JSON serialization,
 /// eliminating the need for runtime reflection in Native AOT scenarios.
@@ -64,7 +53,6 @@ public class JsonTestModel {
 [JsonSerializable(typeof(Dictionary<string, string>))]
 [JsonSerializable(typeof(List<string>))]
 [JsonSerializable(typeof(List<DictionaryError>))]
-[JsonSerializable(typeof(JsonTestModel))]
 [JsonSourceGenerationOptions(
     PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
