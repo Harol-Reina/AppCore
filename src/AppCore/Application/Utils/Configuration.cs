@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace AppCore.Application.Utils;
 
+[Obsolete("Use IConfiguration via dependency injection instead of this static accessor. Will be removed in a future version.")]
 public static class Configuration {
     private static IConfiguration _configuration { get; set; } = null!;
 

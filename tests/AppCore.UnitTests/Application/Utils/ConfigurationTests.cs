@@ -7,6 +7,7 @@ using Xunit;
 namespace AppCore.UnitTests.Application.Utils;
 
 [Collection("ConfigurationTests")]
+#pragma warning disable CS0618 // Testing obsolete Configuration class
 public class ConfigurationTests {
     private static IConfiguration CreateConfiguration(Dictionary<string, string?> data) {
         return new ConfigurationBuilder()
