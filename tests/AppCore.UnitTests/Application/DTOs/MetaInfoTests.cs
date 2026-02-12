@@ -16,7 +16,7 @@ public class MetaInfoTests {
             Version = "1.0.0",
             DateCompile = dateCompile,
             TableName = "MyDatabase",
-            EndPoinds = new List<string> { "/api/users", "/api/orders" }
+            Endpoints = new List<string> { "/api/users", "/api/orders" }
         };
 
         // Assert
@@ -24,8 +24,8 @@ public class MetaInfoTests {
         metaInfo.Version.Should().Be("1.0.0");
         metaInfo.DateCompile.Should().Be(dateCompile);
         metaInfo.TableName.Should().Be("MyDatabase");
-        metaInfo.EndPoinds.Should().HaveCount(2);
-        metaInfo.EndPoinds.Should().Contain(new[] { "/api/users", "/api/orders" });
+        metaInfo.Endpoints.Should().HaveCount(2);
+        metaInfo.Endpoints.Should().Contain(new[] { "/api/users", "/api/orders" });
     }
 
     [Fact]
@@ -36,13 +36,13 @@ public class MetaInfoTests {
             Version = null,
             DateCompile = DateTime.UtcNow,
             TableName = null,
-            EndPoinds = null
+            Endpoints = null
         };
 
         // Assert
         metaInfo.Environment.Should().BeNull();
         metaInfo.Version.Should().BeNull();
         metaInfo.TableName.Should().BeNull();
-        metaInfo.EndPoinds.Should().BeNull();
+        metaInfo.Endpoints.Should().BeNull();
     }
 }

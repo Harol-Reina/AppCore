@@ -1,7 +1,7 @@
 ﻿namespace AppCore.Application.DTOs;
 
 public class MetaInfo {
-    /// <summary>Entorno de ejcución Delevopment|Producction. </summary>
+    /// <summary>Entorno de ejecución Development|Production.</summary>
     /// <example>Development</example>
     public string? Environment { get; set; }
 
@@ -17,6 +17,6 @@ public class MetaInfo {
     /// <example>DataBaseName</example>
     public string? TableName { get; set; }
 
-    public List<string>? EndPoinds { get; set; } = [];
+    public List<string>? Endpoints { get; set; } = [];
 }
 
