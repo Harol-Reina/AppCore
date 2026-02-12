@@ -61,6 +61,7 @@ public class JsonTestModel {
 [JsonSerializable(typeof(DateOnly))]
 [JsonSerializable(typeof(TimeOnly))]
 [JsonSerializable(typeof(Dictionary<string, object>))]
+[JsonSerializable(typeof(Dictionary<string, string>))]
 [JsonSerializable(typeof(List<string>))]
 [JsonSerializable(typeof(List<DictionaryError>))]
 [JsonSerializable(typeof(JsonTestModel))]

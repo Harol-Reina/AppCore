@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text.Json;
 using AppCore.Domain.Entities.Integrators;
 using FluentAssertions;
 using Xunit;
@@ -29,12 +30,12 @@ public class HttpAuditEntityTests {
         var traceId = Guid.NewGuid();
         var url = "https://api.example.com/test";
         var method = HttpMethod.Post;
-        var body = """{"Id": 1, "Name": "Test"}""";
-        var headers = new Dictionary<string, string>
+        var body = JsonDocument.Parse("""{"Id": 1, "Name": "Test"}""");
+        var headers = JsonDocument.Parse(JsonSerializer.Serialize(new Dictionary<string, string>
         {
             { "Authorization", "Bearer token" },
             { "Content-Type", "application/json" }
-        };
+        }));
 
         // Act
         var entity = new HttpAuditEntity(traceId, url, method, body, headers);

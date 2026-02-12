@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using AppCore.Application.Exceptions;
@@ -36,17 +35,19 @@ public static class JsonExtend {
 
     /// <summary>
     /// Converts an object to a JsonDocument using AOT-compatible serialization.
+    /// Uses compile-time type information for correct serialization in NativeAOT scenarios.
     /// </summary>
+    /// <typeparam name="T">The type of object to convert</typeparam>
     /// <param name="value">The object to convert</param>
     /// <returns>A JsonDocument representation of the object</returns>
     /// <exception cref="SerializerException">Thrown when serialization fails</exception>
-    public static JsonDocument? ToJsonDocument(object? value) {
+    public static JsonDocument? ToJsonDocument<T>(T? value) {
         if (value == null) return null;
         try {
             return value switch {
                 JsonDocument doc => doc,
                 string str => ParseFromStringOrWrap(str),
-                _ => JsonDocument.Parse(JsonSerializer.Serialize(value, Options.GetTypeInfo(value.GetType())))
+                _ => JsonDocument.Parse(JsonSerializer.Serialize(value, (System.Text.Json.Serialization.Metadata.JsonTypeInfo<T>)Options.GetTypeInfo(typeof(T))))
             };
         } catch (Exception ex) {
             throw new SerializerException(ex);

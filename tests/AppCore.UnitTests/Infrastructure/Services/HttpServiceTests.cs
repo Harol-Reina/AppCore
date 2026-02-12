@@ -172,7 +172,7 @@ public class HttpServiceTests {
             });
 
         // Act
-        var result = await _httpService.ExecutePostAsync<EmailRequest>("create", new Dictionary<string, object> { { "Key", "Value" } });
+        var result = await _httpService.ExecutePostAsync<Dictionary<string, object>, EmailRequest>("create", new Dictionary<string, object> { { "Key", "Value" } });
 
         // Assert
         result.Should().NotBeNull();
@@ -198,7 +198,7 @@ public class HttpServiceTests {
             });
 
         // Act
-        var act = () => _httpService.ExecutePostAsync<EmailRequest>("create", new Dictionary<string, object> { { "Name", "Test" } });
+        var act = () => _httpService.ExecutePostAsync<Dictionary<string, object>, EmailRequest>("create", new Dictionary<string, object> { { "Name", "Test" } });
 
         // Assert
         await act.Should().ThrowAsync<CustomException>()
@@ -268,7 +268,7 @@ public class HttpServiceTests {
             });
 
         // Act
-        var result = await _httpService.ExecutePutAsync<EmailRequest>("update", request);
+        var result = await _httpService.ExecutePutAsync<Dictionary<string, object>, EmailRequest>("update", request);
 
         // Assert
         result.Should().NotBeNull();
@@ -294,7 +294,7 @@ public class HttpServiceTests {
             });
 
         // Act
-        var result = await _httpService.ExecutePatchAsync<EmailRequest>("patch", request);
+        var result = await _httpService.ExecutePatchAsync<Dictionary<string, object>, EmailRequest>("patch", request);
 
         // Assert
         result.Should().NotBeNull();
@@ -394,7 +394,7 @@ public class HttpServiceTests {
             });
 
         // Act
-        var result = await _httpService.ExecutePostRawAsync<EmailRequest>("test", new Dictionary<string, object> { { "Name", "Test" } });
+        var result = await _httpService.ExecutePostRawAsync<Dictionary<string, object>, EmailRequest>("test", new Dictionary<string, object> { { "Name", "Test" } });
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -417,7 +417,7 @@ public class HttpServiceTests {
             });
 
         // Act
-        var result = await _httpService.ExecutePutRawAsync<EmailRequest>("test", new Dictionary<string, object> { { "Name", "Test" } });
+        var result = await _httpService.ExecutePutRawAsync<Dictionary<string, object>, EmailRequest>("test", new Dictionary<string, object> { { "Name", "Test" } });
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -440,7 +440,7 @@ public class HttpServiceTests {
             });
 
         // Act
-        var result = await _httpService.ExecutePatchRawAsync<EmailRequest>("test", new Dictionary<string, object> { { "Name", "Test" } });
+        var result = await _httpService.ExecutePatchRawAsync<Dictionary<string, object>, EmailRequest>("test", new Dictionary<string, object> { { "Name", "Test" } });
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -594,7 +594,7 @@ public class HttpServiceTests {
         var body = JsonDocument.Parse("{\"key\":\"value\"}");
 
         // Act
-        var result = await _httpService.ExecutePostRawAsync<EmailRequest>("test", body);
+        var result = await _httpService.ExecutePostRawAsync<JsonDocument, EmailRequest>("test", body);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -614,7 +614,7 @@ public class HttpServiceTests {
         SetupHttpResponse(HttpStatusCode.OK, CreateEmailJson());
 
         // Act
-        var result = await _httpService.ExecutePostRawAsync<EmailRequest>("test", body: null);
+        var result = await _httpService.ExecutePostRawAsync<EmailRequest>("test");
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.OK);
