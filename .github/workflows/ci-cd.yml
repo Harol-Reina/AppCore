@@ -262,10 +262,23 @@ jobs:
     - name: Calculate version
       id: version
       run: |
-        VERSION=$(minver -t v)
+        # Determine if this is a release build
+        if [[ "${{ github.event_name }}" == "release" ]]; then
+          # For releases, use the tag directly without MinVer calculations
+          VERSION="${{ github.event.release.tag_name }}"
+          # Remove 'v' prefix if present
+          VERSION=${VERSION#v}
+        else
+          # For regular builds, use MinVer to calculate version
+          VERSION=$(minver -t v)
+        fi
+        
         echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
         echo "::notice title=Package Version::Generated version: $VERSION"
         echo "📦 Package version: $VERSION"
+        
+        # Set additional outputs for downstream jobs
+        echo "IS_PRERELEASE=$(echo $VERSION | grep -q 'preview\|alpha\|beta\|rc' && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
     
     - name: Validate version format
       run: |
@@ -295,14 +308,28 @@ jobs:
       run: |
         VERSION="${{ steps.version.outputs.VERSION }}"
         echo "::group::Packaging AppCore $VERSION"
+        
+        # Get commit SHA for package metadata
+        COMMIT_SHA=$(git rev-parse --short HEAD)
+        BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+        
         dotnet pack src/AppCore/AppCore.csproj \
           --configuration ${{ env.BUILD_CONFIGURATION }} \
           --no-build \
           --output ./packages \
           -p:PackageVersion=$VERSION \
-          -p:SymbolPackageFormat=snupkg
+          -p:SymbolPackageFormat=snupkg \
+          -p:RepositoryCommit=${{ github.sha }} \
+          -p:BuildNumber=${{ github.run_number }} \
+          -p:ContinuousIntegrationBuild=true
+        
         echo "::endgroup::"
-        echo "✅ Package created: AppCore.$VERSION.nupkg"
+        echo "✅ Package created: OrionSoft.AppCore.$VERSION.nupkg"
+        echo "📝 Package metadata:"
+        echo "   • Version: $VERSION"
+        echo "   • Commit: $COMMIT_SHA"
+        echo "   • Build: #${{ github.run_number }}"
+        echo "   • Date: $BUILD_DATE"
         ls -lh ./packages/
     
     - name: Upload package artifacts
@@ -378,7 +405,81 @@ jobs:
           --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" \
           --api-key ${{ secrets.GITHUB_TOKEN }}
 
-  # Job 6: Update Documentation
+  # Job 6: Automatic Release (for main branch)
+  create-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: package
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Download package artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: nuget-packages
+        path: ./packages
+    
+    - name: Download symbol packages
+      uses: actions/download-artifact@v4
+      with:
+        name: symbol-packages
+        path: ./packages
+    
+    - name: Generate release notes
+      id: release-notes
+      run: |
+        VERSION="${{ needs.package.outputs.package-version }}"
+        
+        # Extract changelog section for this version
+        if [ -f CHANGELOG.md ]; then
+          # Try to extract changelog section
+          RELEASE_NOTES=$(awk "/^## \[?$VERSION\]?/,/^## \[?[0-9]/" CHANGELOG.md | head -n -1)
+          if [ -z "$RELEASE_NOTES" ]; then
+            RELEASE_NOTES="Release $VERSION - See [CHANGELOG.md](CHANGELOG.md) for details."
+          fi
+        else
+          RELEASE_NOTES="Release $VERSION"
+        fi
+        
+        # Save to file for GitHub release
+        cat > release_notes.md << 'EOF'
+        $RELEASE_NOTES
+        
+        ## 📦 Packages
+        
+        - **NuGet Package**: [OrionSoft.AppCore $VERSION](https://github.com/${{ github.repository }}/packages/)
+        - **Symbols**: Symbol packages (.snupkg) included
+        
+        ## 🏗️ Build Information
+        
+        - **Commit**: ${{ github.sha }}
+        - **Build**: #${{ github.run_number }}
+        - **Workflow**: [${{ github.workflow }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+        EOF
+        
+        echo "Generated release notes for version $VERSION"
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v${{ needs.package.outputs.package-version }}
+        name: Release v${{ needs.package.outputs.package-version }}
+        body_path: release_notes.md
+        draft: false
+        prerelease: ${{ needs.package.outputs.IS_PRERELEASE == 'true' }}
+        files: |
+          ./packages/*.nupkg
+          ./packages/*.snupkg
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Job 7: Update Documentation
   update-docs:
     name: Update Documentation
     runs-on: ubuntu-latest

@@ -1,0 +1,15 @@
+# MinVer Configuration
+# This file configures MinVer for automatic version calculation
+
+# Version configuration
+minimum-major-minor=1.0
+default-pre-release-identifiers=preview
+
+# Tag configuration  
+tag-prefix=v
+
+# Build metadata
+build-metadata=
+
+# Verbosity for debugging (remove in production)
+# verbosity=diagnostic
