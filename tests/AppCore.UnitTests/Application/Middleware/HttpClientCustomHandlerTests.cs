@@ -46,6 +46,22 @@ public class HttpClientCustomHandlerTests {
     }
 
     [Fact]
+    public async Task Invoke_WhenNextThrows_ShouldHandleExceptionAndSetResponse() {
+        // Arrange
+        var context = new DefaultHttpContext();
+        context.Response.Body = new MemoryStream();
+        RequestDelegate next = _ => throw new NotFoundException("Not found via invoke");
+        var handler = new HttpClientCustomHandler(next);
+
+        // Act
+        await handler.Invoke(context);
+
+        // Assert
+        context.Response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+        context.Response.ContentType.Should().Be("application/json");
+    }
+
+    [Fact]
     public async Task HandleExceptionAsync_WithNotFoundException_ShouldReturn404() {
         // Arrange
         var context = new DefaultHttpContext();

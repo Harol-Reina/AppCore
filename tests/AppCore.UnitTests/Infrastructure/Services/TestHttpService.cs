@@ -75,4 +75,6 @@ internal class TestHttpService : HttpService {
 
     public void InvokeHandleCustomResponse<T>(HttpResponse<T> response, string traceId, string endpoint)
         => HandleCustomResponseAsync(response, traceId, endpoint);
+
+    public ICurrentUserService GetExposedCurrentUserService() => currentUserService;
 }

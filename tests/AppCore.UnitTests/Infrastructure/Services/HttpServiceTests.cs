@@ -157,6 +157,29 @@ public class HttpServiceTests {
     }
 
     [Fact]
+    public async Task ExecutePostAsync_WithSuccessResponse_ShouldReturnData() {
+        // Arrange
+        var jsonResponse = CreateEmailJson("Posted");
+        _httpMessageHandlerMock
+            .Protected()
+            .Setup<Task<HttpResponseMessage>>(
+                "SendAsync",
+                ItExpr.Is<HttpRequestMessage>(req => req.Method == HttpMethod.Post),
+                ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync(new HttpResponseMessage {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(jsonResponse)
+            });
+
+        // Act
+        var result = await _httpService.ExecutePostAsync<EmailRequest>("create", new Dictionary<string, object> { { "Key", "Value" } });
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Subject.Should().Be("Posted");
+    }
+
+    [Fact]
     public async Task ExecutePostAsync_WithBadRequest_ShouldThrowCustomException() {
         // Arrange
         var errorResponse = new Dictionary<string, object> { { "Error", "Bad Request Details" } };
@@ -699,6 +722,21 @@ public class HttpServiceTests {
         result.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
     }
 
+    [Fact]
+    public async Task ExecuteGetRawAsync_SerializerException_ShouldReturn500WithSerializerError() {
+        // Arrange
+        SetupHttpException(new SerializerException("Test serialization error"));
+
+        // Act
+        var result = await _httpService.ExecuteGetRawAsync<EmailRequest>("test");
+
+        // Assert
+        result.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+        result.ErrorMessage.Should().NotBeNullOrEmpty();
+        result.Response.Should().NotBeNull();
+        result.Response!.RootElement.GetProperty("Error").GetString().Should().Be("Error deserializing response.");
+    }
+
     #endregion
 
     #region Group G: Auditing flow
@@ -858,6 +896,40 @@ public class HttpServiceTests {
         var error = (DictionaryError)exception.MessageLog.Message;
         error.Code.Should().Be("HTTP004");
         error.ProviderMessage.Should().NotBeNull();
+    }
+
+    #endregion
+
+    #region Group K: Property & Content Headers
+
+    [Fact]
+    public void CurrentUserService_Property_ShouldReturnInjectedService() {
+        // Act
+        var result = _httpService.GetExposedCurrentUserService();
+
+        // Assert
+        result.Should().Be(_currentUserServiceMock.Object);
+    }
+
+    [Fact]
+    public async Task ExecuteGetRawAsync_WithContentTypeHeader_ShouldAddToContentHeaders() {
+        // Arrange — "Content-Type" is rejected by HttpRequestHeaders.TryAddWithoutValidation,
+        // so it falls through to content headers (lines 263-264)
+        SetupHttpResponse(HttpStatusCode.OK, CreateEmailJson());
+        var headers = new Dictionary<string, string> { { "Content-Type", "application/xml" } };
+
+        // Act
+        var result = await _httpService.ExecuteGetRawAsync<EmailRequest>("test", headers: headers);
+
+        // Assert
+        result.StatusCode.Should().Be(HttpStatusCode.OK);
+        _httpMessageHandlerMock
+            .Protected()
+            .Verify(
+                "SendAsync",
+                Times.Once(),
+                ItExpr.Is<HttpRequestMessage>(req => req.Content != null),
+                ItExpr.IsAny<CancellationToken>());
     }
 
     #endregion
