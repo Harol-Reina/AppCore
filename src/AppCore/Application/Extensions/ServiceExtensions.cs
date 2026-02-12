@@ -1,28 +1,40 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.OpenApi;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi;
 
 namespace AppCore.Application.Extensions;
 
 public static class ServiceExtensions {
 
-    private const string BearerScheme = "Bearer";
+    public static void AddOpenApiExtension(this IServiceCollection services) {
+        // Read configuration eagerly for fail-fast validation
+        var version = Utils.Configuration.RequiredConfig("OpenApiInfo:Version");
+        var title = Utils.Configuration.RequiredConfig("OpenApiInfo:Title");
+        var description = Utils.Configuration.RequiredConfig("OpenApiInfo:Description");
+        var contactName = Utils.Configuration.RequiredConfig("OpenApiInfo:Contact:Name");
+        var contactEmail = Utils.Configuration.RequiredConfig("OpenApiInfo:Contact:Email");
+        var contactUrl = new Uri(Utils.Configuration.RequiredConfig("OpenApiInfo:Contact:Url"));
 
-    public static void AddSwaggerExtension(this IServiceCollection services) {
-        services.AddSwaggerGen(c => {
-            XmlCommentsFilePaths.ForEach(xmlfile => c.IncludeXmlComments(xmlfile));
-            c.SwaggerDoc("v1", new OpenApiInfo {
-                Version = Utils.Configuration.RequiredConfig("OpenApiInfo:Version"),
-                Title = Utils.Configuration.RequiredConfig("OpenApiInfo:Title"),
-                Description = Utils.Configuration.RequiredConfig("OpenApiInfo:Description"),
-                Contact = new OpenApiContact {
-                    Name = Utils.Configuration.RequiredConfig("OpenApiInfo:Contact:Name"),
-                    Email = Utils.Configuration.RequiredConfig("OpenApiInfo:Contact:Email"),
-                    Url = new Uri(Utils.Configuration.RequiredConfig("OpenApiInfo:Contact:Url"))
-                }
+        services.AddOpenApi("v1", options => {
+            options.AddDocumentTransformer((document, context, cancellationToken) => {
+                document.Info = new OpenApiInfo {
+                    Version = version,
+                    Title = title,
+                    Description = description,
+                    Contact = new OpenApiContact {
+                        Name = contactName,
+                        Email = contactEmail,
+                        Url = contactUrl
+                    }
+                };
+                return Task.CompletedTask;
             });
-
         });
     }
+
+    [Obsolete("Use AddOpenApiExtension instead. Swashbuckle has been replaced with Microsoft.AspNetCore.OpenApi for AOT compatibility.")]
+    public static void AddSwaggerExtension(this IServiceCollection services) =>
+        services.AddOpenApiExtension();
 
     public static void AddCorsExtension(this IServiceCollection services) {
         services.AddCors(options => {
@@ -42,10 +54,5 @@ public static class ServiceExtensions {
                        .AllowAnyMethod();
             });
         });
-    }
-
-    static List<string> XmlCommentsFilePaths {
-        get =>
-            [.. Directory.GetFiles(AppContext.BaseDirectory, "*.xml", SearchOption.TopDirectoryOnly)];
     }
 }

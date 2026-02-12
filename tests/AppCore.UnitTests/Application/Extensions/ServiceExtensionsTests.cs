@@ -27,7 +27,7 @@ public class ServiceExtensionsTests {
     }
 
     [Fact]
-    public void AddSwaggerExtension_ShouldRegisterSwaggerServices() {
+    public void AddOpenApiExtension_ShouldRegisterOpenApiServices() {
         // Arrange
         var settings = new Dictionary<string, string?> {
             {"OpenApiInfo:Version", "v1"},
@@ -41,21 +41,19 @@ public class ServiceExtensionsTests {
 
         var services = new ServiceCollection();
 
-        // Add Logging needed by SwaggerGen
+        // Add Logging needed by OpenApi
         services.AddLogging();
-        services.AddRouting(); // Needed for EndpointsApiExplorer
+        services.AddRouting();
         services.AddEndpointsApiExplorer();
         services.AddSingleton(Mock.Of<IWebHostEnvironment>(w => w.ApplicationName == "TestApp"));
         services.AddSingleton<Microsoft.Extensions.Hosting.IHostEnvironment>(sp => sp.GetRequiredService<IWebHostEnvironment>());
 
         // Act
-        services.AddSwaggerExtension();
+        services.AddOpenApiExtension();
         var provider = services.BuildServiceProvider();
 
-        // Assert
-        // SwaggerGen adds ISwaggerProvider
-        var swaggerProvider = provider.GetService<Swashbuckle.AspNetCore.Swagger.ISwaggerProvider>();
-        swaggerProvider.Should().NotBeNull();
+        // Assert - AddOpenApi registers internal OpenApi services
+        services.Should().Contain(sd => sd.ServiceType.FullName!.Contains("OpenApi"));
     }
 
     [Fact]
@@ -83,18 +81,15 @@ public class ServiceExtensionsTests {
     }
 
     [Fact]
-    public void AddSwaggerExtension_WithMissingConfig_ShouldThrowException() {
+    public void AddOpenApiExtension_WithMissingConfig_ShouldThrowException() {
         // Arrange
         var settings = new Dictionary<string, string?>(); // Empty
         SetupConfiguration(settings);
 
         var services = new ServiceCollection();
 
-        // Act
-        // We need to trigger the configuration by resolving the options
-        services.AddSwaggerExtension();
-        var provider = services.BuildServiceProvider();
-        var act = () => provider.GetRequiredService<IOptions<Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions>>().Value;
+        // Act - AddOpenApiExtension triggers configuration read immediately via document transformer registration
+        var act = () => services.AddOpenApiExtension();
 
         // Assert
         act.Should().Throw<AppCore.Application.Exceptions.NotFoundException>()
