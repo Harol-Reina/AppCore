@@ -1,6 +1,6 @@
 ﻿namespace AppCore.Application.DTOs;
 
-public class EmailRequest {
+public sealed class EmailRequest {
     public required string To { get; set; }
     public required string Subject { get; set; }
     public required string Body { get; set; }
@@ -8,7 +8,7 @@ public class EmailRequest {
     public List<AttachmentFile> AttachmentFiles { get; set; } = [];
 }
 
-public class AttachmentFile {
+public sealed class AttachmentFile {
     public required string FileBase64 { get; set; }
     public required string FileName { get; set; }
     public required string ContentType { get; set; }

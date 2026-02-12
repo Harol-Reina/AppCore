@@ -9,7 +9,7 @@ namespace AppCore.Application.Behaviours;
 /// </summary>
 /// <typeparam name="TRequest">The type of request being validated</typeparam>
 /// <typeparam name="TResponse">The type of response being returned</typeparam>
-internal class ValidationBehaviour<TRequest, TResponse>(IEnumerable<FluentValidation.IValidator<TRequest>> validators)
+internal sealed class ValidationBehaviour<TRequest, TResponse>(IEnumerable<FluentValidation.IValidator<TRequest>> validators)
 : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> {
 
     private readonly IEnumerable<FluentValidation.IValidator<TRequest>> validators = validators;
@@ -26,11 +26,11 @@ internal class ValidationBehaviour<TRequest, TResponse>(IEnumerable<FluentValida
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken) {
         if (validators.Any()) {
             var context = new FluentValidation.ValidationContext<TRequest>(request);
-            var validationResults = await Task.WhenAll(validators.Select(v => v.ValidateAsync(context, cancellationToken)));
+            var validationResults = await Task.WhenAll(validators.Select(v => v.ValidateAsync(context, cancellationToken))).ConfigureAwait(false);
             var failures = validationResults.SelectMany(r => r.Errors).Where(f => f != null).ToList();
             if (failures.Count != 0)
                 throw new ValidationException(failures);
         }
-        return await next();
+        return await next().ConfigureAwait(false);
     }
 }

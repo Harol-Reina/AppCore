@@ -1,6 +1,6 @@
 ﻿namespace AppCore.Application.DTOs;
 
-public class MetaInfo {
+public sealed class MetaInfo {
     /// <summary>Entorno de ejecución Development|Production.</summary>
     /// <example>Development</example>
     public string? Environment { get; set; }

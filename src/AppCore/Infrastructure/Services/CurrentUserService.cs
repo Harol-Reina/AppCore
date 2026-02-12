@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace AppCore.Infrastructure.Services;
 
-internal class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService {
+internal sealed class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService {
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor
             ?? throw new ArgumentNullException(nameof(httpContextAccessor));
 

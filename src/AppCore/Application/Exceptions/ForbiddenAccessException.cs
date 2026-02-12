@@ -2,7 +2,7 @@
 
 namespace AppCore.Application.Exceptions;
 
-public class ForbiddenAccessException : CustomException {
+public sealed class ForbiddenAccessException : CustomException {
     public ForbiddenAccessException(string message,
                                    [CallerMemberName] string memberName = "",
                                    [CallerFilePath] string sourceFilePath = "",

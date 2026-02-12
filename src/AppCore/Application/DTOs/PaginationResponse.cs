@@ -2,7 +2,7 @@
 
 namespace AppCore.Application.DTOs;
 
-public class PaginationResponse<T> {
+public sealed class PaginationResponse<T> {
 
     [JsonPropertyName("count")]
     public int Count { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace AppCore.Application.DTOs;
 
-public class LoginRequest(string userName, string passWord) {
+public sealed class LoginRequest(string userName, string passWord) {
     /// <summary>Usuario</summary>
     public string UserName { get; set; } = userName;
 

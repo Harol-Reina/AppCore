@@ -1,6 +1,6 @@
 ﻿namespace AppCore.Application.Settings;
 
-public class JWTSettings {
+public sealed class JWTSettings {
     public string Secret { get; set; } = null!;
     public string Issuer { get; set; } = null!;
     public string Audience { get; set; } = null!;

@@ -1,6 +1,6 @@
 ﻿namespace AppCore.Application.Wrappers;
 
-public class PageResult<T> where T : class {
+public sealed class PageResult<T> where T : class {
     public List<T> Items { get; set; } = [];
     public int TotalPages { get; set; }
     public int CurrentPage { get; set; }

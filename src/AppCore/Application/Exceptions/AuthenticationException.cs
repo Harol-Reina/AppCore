@@ -3,7 +3,7 @@ using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
 
-public class AuthenticationException : CustomException {
+public sealed class AuthenticationException : CustomException {
     readonly MessageLog mensaje;
     public AuthenticationException(string message,
                                    [CallerMemberName] string memberName = "",

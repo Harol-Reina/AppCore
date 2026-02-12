@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AppCore.Application.Middleware;
 
-public class HttpClientCustomHandler(RequestDelegate next) {
+public sealed class HttpClientCustomHandler(RequestDelegate next) {
 
     private readonly RequestDelegate _next = next;
 
@@ -70,9 +70,9 @@ public class HttpClientCustomHandler(RequestDelegate next) {
 
         using (Serilog.Context.LogContext.PushProperty("XTraceID", traceId)) {
             try {
-                await _next(context);
+                await _next(context).ConfigureAwait(false);
             } catch (Exception exceptionObj) {
-                await HandleExceptionAsync(context, exceptionObj);
+                await HandleExceptionAsync(context, exceptionObj).ConfigureAwait(false);
             }
         }
     }
@@ -89,6 +89,6 @@ public class HttpClientCustomHandler(RequestDelegate next) {
 
         httpContext.Response.StatusCode = mapping.StatusCode;
         httpContext.Response.ContentType = "application/json";
-        await httpContext.Response.WriteAsync(mapping.MessageFactory(exception));
+        await httpContext.Response.WriteAsync(mapping.MessageFactory(exception)).ConfigureAwait(false);
     }
 }

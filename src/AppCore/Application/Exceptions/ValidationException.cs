@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AppCore.Application.Exceptions;
 
-public class ValidationException : CustomException {
+public sealed class ValidationException : CustomException {
     public IDictionary<string, string[]> Errors { get; init; } = new Dictionary<string, string[]>();
 
     public ValidationException() : base(new DictionaryError("VAL-000", "Validation failed")) {

@@ -7,7 +7,7 @@ namespace AppCore.Application.Wrappers;
 /// Represents a structured log message for AOT-compatible logging.
 /// Uses object instead of dynamic for Native AOT compatibility.
 /// </summary>
-public record MessageLog {
+public sealed record MessageLog {
     /// <summary>
     /// Gets or sets the type of the log message.
     /// </summary>

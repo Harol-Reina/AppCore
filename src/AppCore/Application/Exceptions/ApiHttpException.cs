@@ -3,7 +3,7 @@ using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
 
-internal class ApiHttpException : Exception {
+internal sealed class ApiHttpException : Exception {
     public MessageLog MessageLog { get; }
 
     public ApiHttpException(Exception ex,

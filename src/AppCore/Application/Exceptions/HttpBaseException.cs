@@ -3,7 +3,7 @@ using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
 
-internal class HttpBaseException : CustomException {
+internal sealed class HttpBaseException : CustomException {
     public int StatusCode { get; }
 
     public HttpBaseException(string message, int statusCode,

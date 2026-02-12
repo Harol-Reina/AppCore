@@ -15,7 +15,7 @@ namespace AppCore.Application.Wrappers;
 /// var failure = Response&lt;User&gt;.Failure("User not found");
 /// </code>
 /// </example>
-public class Response<T>(string? message = null, T? data = default) {
+public sealed class Response<T>(string? message = null, T? data = default) {
     /// <summary>
     /// Gets or sets the message describing the operation result.
     /// </summary>

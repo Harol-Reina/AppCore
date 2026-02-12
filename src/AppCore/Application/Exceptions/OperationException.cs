@@ -3,7 +3,7 @@ using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
 
-public class OperationException : Exception {
+public sealed class OperationException : Exception {
     readonly MessageLog mensaje;
     public OperationException(string message,
                               [CallerMemberName] string memberName = "",

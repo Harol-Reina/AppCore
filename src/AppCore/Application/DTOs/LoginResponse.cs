@@ -1,6 +1,6 @@
 ﻿namespace AppCore.Application.DTOs;
 
-public class LoginResponse {
+public sealed class LoginResponse {
     /// <summary>Usuario logueado.</summary>
     public required string UserName { get; set; }
     public required string FullName { get; set; }

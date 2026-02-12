@@ -6,7 +6,7 @@ namespace AppCore.Application.Exceptions;
 /// Exception that represents a resource not found error (HTTP 404).
 /// Typically thrown when a requested resource cannot be located.
 /// </summary>
-public class NotFoundException : CustomException {
+public sealed class NotFoundException : CustomException {
     /// <summary>
     /// Initializes a new instance of the NotFoundException class.
     /// </summary>

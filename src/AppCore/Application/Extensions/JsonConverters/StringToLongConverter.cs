@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace AppCore.Application.Extensions.JsonConverters;
 
-public class StringToLongConverter : JsonConverter<long> {
+public sealed class StringToLongConverter : JsonConverter<long> {
     public override long Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
         if (reader.TokenType == JsonTokenType.String && long.TryParse(reader.GetString(), out var value))
             return value;

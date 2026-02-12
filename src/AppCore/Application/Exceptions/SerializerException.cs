@@ -3,7 +3,7 @@ using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
 
-internal class SerializerException : Exception {
+internal sealed class SerializerException : Exception {
     public MessageLog MessageLog { get; }
     private string? InnerMessage;
     public SerializerException(Exception ex,

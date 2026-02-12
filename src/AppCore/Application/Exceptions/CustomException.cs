@@ -44,7 +44,7 @@ public class CustomException : Exception {
 /// Represents a structured error with code, message, and optional additional information.
 /// Converted to record for immutability and with-expressions support.
 /// </summary>
-public record DictionaryError {
+public sealed record DictionaryError {
     /// <summary>
     /// Gets or initializes the error code.
     /// </summary>

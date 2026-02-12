@@ -7,7 +7,7 @@ namespace AppCore.Application.Exceptions;
 /// Exception thrown when object mapping operations fail.
 /// This is an AOT-compatible version that doesn't depend on AutoMapper.
 /// </summary>
-internal class MappingException : Exception {
+internal sealed class MappingException : Exception {
     /// <summary>
     /// Gets the mapping error details.
     /// </summary>

@@ -13,7 +13,7 @@ namespace AppCore.Application.Behaviours;
 /// </summary>
 /// <typeparam name="TRequest">The type of request being handled</typeparam>
 /// <typeparam name="TResponse">The type of response being returned</typeparam>
-internal class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<UnhandledExceptionBehaviour<TRequest, TResponse>> logger)
+internal sealed class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<UnhandledExceptionBehaviour<TRequest, TResponse>> logger)
 : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> {
     private readonly ILogger<UnhandledExceptionBehaviour<TRequest, TResponse>> _logger = logger;
 
@@ -26,7 +26,7 @@ internal class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<Unhandle
     /// <returns>The response from the next handler</returns>
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken) {
         try {
-            return await next();
+            return await next().ConfigureAwait(false);
         } catch (Exception ex) {
             // AOT-compatible exception handling using pattern matching instead of reflection
             if (IsKnownException(ex)) {

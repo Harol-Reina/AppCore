@@ -3,7 +3,7 @@ using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
 
-internal class ApiDBException : Exception {
+internal sealed class ApiDBException : Exception {
     readonly MessageLog mensaje;
     private string? InnerMessage;
     public ApiDBException(Exception ex,

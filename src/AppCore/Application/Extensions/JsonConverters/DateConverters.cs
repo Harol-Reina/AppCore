@@ -57,18 +57,18 @@ public class GenericNullableDateJsonConverter(string dateFormat) : JsonConverter
 /// <summary>
 /// Converters específicos usando el converter genérico
 /// </summary>
-public class DateYearMonthDayJsonConverter : GenericDateJsonConverter {
+public sealed class DateYearMonthDayJsonConverter : GenericDateJsonConverter {
     public DateYearMonthDayJsonConverter() : base("yyyy-MM-dd") { }
 }
 
-public class DateYearMonthDayNoSeparatorJsonConverter : GenericDateJsonConverter {
+public sealed class DateYearMonthDayNoSeparatorJsonConverter : GenericDateJsonConverter {
     public DateYearMonthDayNoSeparatorJsonConverter() : base("yyyyMMdd") { }
 }
 
-public class NullableDateYearMonthDayJsonConverter : GenericNullableDateJsonConverter {
+public sealed class NullableDateYearMonthDayJsonConverter : GenericNullableDateJsonConverter {
     public NullableDateYearMonthDayJsonConverter() : base("yyyy-MM-dd") { }
 }
 
-public class NullableDateYearMonthDayNoSeparatorJsonConverter : GenericNullableDateJsonConverter {
+public sealed class NullableDateYearMonthDayNoSeparatorJsonConverter : GenericNullableDateJsonConverter {
     public NullableDateYearMonthDayNoSeparatorJsonConverter() : base("yyyyMMdd") { }
 }
