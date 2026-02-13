@@ -110,7 +110,7 @@ internal class TestHttpService : HttpService {
         => base.ExecuteHeadRawAsync<T>(endpoint, headers);
 
     public void InvokeHandleCustomResponse<T>(HttpResponse<T> response, string traceId, string endpoint)
-        => HandleCustomResponseAsync(response, traceId, endpoint);
+        => HandleCustomResponse(response, traceId, endpoint);
 
     public ICurrentUserService GetExposedCurrentUserService() => currentUserService;
 }

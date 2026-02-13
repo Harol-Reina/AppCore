@@ -866,7 +866,7 @@ public class HttpServiceTests {
 
     #endregion
 
-    #region Group I: HandleCustomResponseAsync
+    #region Group I: HandleCustomResponse
 
     [Fact]
     public void HandleCustomResponse_WithUnmappedStatusCode_ShouldThrowHttp008() {

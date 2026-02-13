@@ -193,7 +193,7 @@ public abstract class HttpService(HttpClient httpClient,
                 httpResponse.StatusCode, endpoint);
             var baseUrl = _httpClient.BaseAddress?.ToString() ?? "Unknown";
             var traceId = ResolveTraceId(headers);
-            HandleCustomResponseAsync(httpResponse, traceId, $"{baseUrl}{endpoint}");
+            HandleCustomResponse(httpResponse, traceId, $"{baseUrl}{endpoint}");
         }
 
         return httpResponse.Data!;
@@ -352,7 +352,7 @@ public abstract class HttpService(HttpClient httpClient,
 
     private static readonly (string Code, string Message) _defaultHttpError = ("HTTP008", "HTTP request failed");
 
-    protected virtual void HandleCustomResponseAsync<T>(HttpResponse<T> httpResponse,
+    protected virtual void HandleCustomResponse<T>(HttpResponse<T> httpResponse,
                                                         string traceId,
                                                         string endpoint,
                                                         [CallerMemberName] string memberName = "",
