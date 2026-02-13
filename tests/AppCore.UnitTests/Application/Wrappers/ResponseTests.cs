@@ -16,6 +16,7 @@ public class ResponseTests {
 
         // Assert
         response.Should().NotBeNull();
+        response.Succeeded.Should().BeTrue();
         response.Message.Should().Be(message);
         response.Data.Should().Be(data);
     }
@@ -30,6 +31,7 @@ public class ResponseTests {
 
         // Assert
         response.Should().NotBeNull();
+        response.Succeeded.Should().BeTrue();
         response.Data.Should().Be(data);
         response.Message.Should().BeNull();
     }
@@ -44,6 +46,7 @@ public class ResponseTests {
 
         // Assert
         response.Should().NotBeNull();
+        response.Succeeded.Should().BeFalse();
         response.Message.Should().Be(errorMessage);
         response.Data.Should().BeNull();
     }
