@@ -37,10 +37,10 @@ internal sealed class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<U
                     ? CollectInnerMessages(ex.InnerException)
                     : string.Empty;
                 var message = new MessageLog {
-                    Tipo = ex.GetType().Name, // Use Name instead of ToString() for better AOT compatibility
+                    Type = ex.GetType().Name,
                     Source = ex.Source,
                     Message = ex.Message.Split('\n', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? string.Empty,
-                    Metodo = "",
+                    Method = "",
                     Path = ex.StackTrace?
                             .Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)
                             .Where(line => line.Contains(".Infrastructure"))

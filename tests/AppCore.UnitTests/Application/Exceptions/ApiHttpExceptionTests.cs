@@ -57,8 +57,8 @@ public class ApiHttpExceptionTests {
             var exception = new ApiHttpException(ex, "MyMethod");
 
             // Assert
-            exception.MessageLog.Tipo.Should().Be("ApiHttpException");
-            exception.MessageLog.Metodo.Should().Be("MyMethod");
+            exception.MessageLog.Type.Should().Be("ApiHttpException");
+            exception.MessageLog.Method.Should().Be("MyMethod");
         }
     }
 }

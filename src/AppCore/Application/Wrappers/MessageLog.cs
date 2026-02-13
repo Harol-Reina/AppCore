@@ -11,7 +11,7 @@ public sealed record MessageLog {
     /// <summary>
     /// Gets or sets the type of the log message.
     /// </summary>
-    public required string Tipo { get; init; }
+    public required string Type { get; init; }
 
     /// <summary>
     /// Gets or sets the source of the log message.
@@ -27,7 +27,7 @@ public sealed record MessageLog {
     /// <summary>
     /// Gets or sets the method that generated this log.
     /// </summary>
-    public required string Metodo { get; init; }
+    public required string Method { get; init; }
 
     /// <summary>
     /// Gets or sets the path where this log was generated.

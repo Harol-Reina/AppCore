@@ -10,10 +10,10 @@ public sealed class OperationException : Exception {
                               [CallerFilePath] string sourceFilePath = "",
                               [CallerLineNumber] int sourceLineNumber = 0) : base(message) {
         mensaje = new MessageLog {
-            Tipo = base.GetType().Name,
+            Type = base.GetType().Name,
             Source = base.Source,
             Message = message,
-            Metodo = memberName,
+            Method = memberName,
             Path = $"{sourceFilePath} Line: {sourceLineNumber}",
         };
     }

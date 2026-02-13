@@ -11,10 +11,10 @@ internal sealed class ApiHttpException : Exception {
                             [CallerFilePath] string sourceFilePath = ""
                             ) : base("The connection to the requested URL cannot be made.") {
         MessageLog = new MessageLog {
-            Tipo = base.GetType().Name,
+            Type = base.GetType().Name,
             Source = base.Source,
             Message = $"{ex.Message} :: {memberName}",
-            Metodo = memberName,
+            Method = memberName,
             Path = sourceFilePath + (ex.ToString().Contains(":line") ? ex.ToString()[ex.ToString().IndexOf(":line")..] : ""),
         };
     }

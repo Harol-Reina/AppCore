@@ -29,7 +29,7 @@ public class CustomExceptionTests {
         var stringRepresentation = exception.ToString();
 
         // Assert
-        exception.MessageLog.Metodo.Should().NotBeNullOrEmpty();
+        exception.MessageLog.Method.Should().NotBeNullOrEmpty();
         exception.MessageLog.Path.Should().NotBeNullOrEmpty();
         stringRepresentation.Should().Contain("Another test");
     }
@@ -57,7 +57,7 @@ public class CustomExceptionTests {
         var exception = new CustomException(error);
 
         // Assert
-        exception.MessageLog.Tipo.Should().Be("CustomException");
+        exception.MessageLog.Type.Should().Be("CustomException");
     }
 
     [Fact]

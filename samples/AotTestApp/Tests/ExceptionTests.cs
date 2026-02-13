@@ -226,9 +226,9 @@ public static class ExceptionTests
             }
 
             // Verify MessageLog has data
-            if (string.IsNullOrEmpty(exception.MessageLog.Metodo))
+            if (string.IsNullOrEmpty(exception.MessageLog.Method))
             {
-                Console.WriteLine("⚠ Warning: Metodo is empty (CallerInfo may not work in AOT)");
+                Console.WriteLine("⚠ Warning: Method is empty (CallerInfo may not work in AOT)");
             }
 
             Console.WriteLine("✓");

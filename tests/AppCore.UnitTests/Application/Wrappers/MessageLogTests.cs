@@ -9,23 +9,23 @@ public class MessageLogTests {
     [Fact]
     public void MessageLog_RequiredProperties_ShouldBeSetCorrectly() {
         // Arrange
-        var tipo = "ERROR";
+        var type = "ERROR";
         var message = "Test error message";
-        var metodo = "TestMethod";
+        var method = "TestMethod";
         var path = "/api/test";
 
         // Act
         var messageLog = new MessageLog {
-            Tipo = tipo,
+            Type = type,
             Message = message,
-            Metodo = metodo,
+            Method = method,
             Path = path
         };
 
         // Assert
-        messageLog.Tipo.Should().Be(tipo);
+        messageLog.Type.Should().Be(type);
         ((string)messageLog.Message).Should().Be(message);
-        messageLog.Metodo.Should().Be(metodo);
+        messageLog.Method.Should().Be(method);
         messageLog.Path.Should().Be(path);
     }
 
@@ -37,9 +37,9 @@ public class MessageLogTests {
 
         // Act
         var messageLog = new MessageLog {
-            Tipo = "INFO",
+            Type ="INFO",
             Message = "Test message",
-            Metodo = "TestMethod",
+            Method ="TestMethod",
             Path = "/api/info",
             Source = source,
             StackTrace = stackTrace
@@ -54,9 +54,9 @@ public class MessageLogTests {
     public void MessageLog_WithNullOptionalProperties_ShouldAllowNullValues() {
         // Act
         var messageLog = new MessageLog {
-            Tipo = "DEBUG",
+            Type ="DEBUG",
             Message = "Debug message",
-            Metodo = "DebugMethod",
+            Method ="DebugMethod",
             Path = "/api/debug",
             Source = null,
             StackTrace = null
@@ -79,9 +79,9 @@ public class MessageLogTests {
 
         // Act
         var messageLog = new MessageLog {
-            Tipo = "ERROR",
+            Type ="ERROR",
             Message = complexMessage,
-            Metodo = "ProcessData",
+            Method ="ProcessData",
             Path = "/api/process"
         };
 
@@ -95,10 +95,10 @@ public class MessageLogTests {
     public void MessageLog_ToString_ShouldReturnSerializedJson() {
         // Arrange
         var messageLog = new MessageLog {
-            Tipo = "INFO",
+            Type ="INFO",
             Source = "TestController",
             Message = "Operation completed successfully",
-            Metodo = "GetData",
+            Method ="GetData",
             Path = "/api/data",
             StackTrace = null
         };
@@ -108,10 +108,10 @@ public class MessageLogTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"tipo\": \"INFO\"");
+        result.Should().Contain("\"type\": \"INFO\"");
         result.Should().Contain("\"source\": \"TestController\"");
         result.Should().Contain("\"message\": \"Operation completed successfully\"");
-        result.Should().Contain("\"metodo\": \"GetData\"");
+        result.Should().Contain("\"method\": \"GetData\"");
         result.Should().Contain("\"path\": \"/api/data\"");
     }
 
@@ -126,9 +126,9 @@ public class MessageLogTests {
         };
 
         var messageLog = new MessageLog {
-            Tipo = "ERROR",
+            Type ="ERROR",
             Message = messageData,
-            Metodo = "Login",
+            Method ="Login",
             Path = "/auth/login",
             StackTrace = "Stack trace content"
         };
@@ -138,10 +138,10 @@ public class MessageLogTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"tipo\": \"ERROR\"");
+        result.Should().Contain("\"type\": \"ERROR\"");
         result.Should().Contain("\"errorCode\": \"ERR001\"");
         result.Should().Contain("\"userAction\": \"Login\"");
-        result.Should().Contain("\"metodo\": \"Login\"");
+        result.Should().Contain("\"method\": \"Login\"");
         result.Should().Contain("\"path\": \"/auth/login\"");
         result.Should().Contain("\"stackTrace\": \"Stack trace content\"");
     }
@@ -150,9 +150,9 @@ public class MessageLogTests {
     public void MessageLog_ToString_WithNullOptionalFields_ShouldHandleGracefully() {
         // Arrange
         var messageLog = new MessageLog {
-            Tipo = "WARNING",
+            Type ="WARNING",
             Message = "Warning message",
-            Metodo = "ValidateInput",
+            Method ="ValidateInput",
             Path = "/api/validate"
             // Source and StackTrace are null by default
         };
@@ -162,9 +162,9 @@ public class MessageLogTests {
 
         // Assert
         result.Should().NotBeNullOrWhiteSpace();
-        result.Should().Contain("\"tipo\": \"WARNING\"");
+        result.Should().Contain("\"type\": \"WARNING\"");
         result.Should().Contain("\"message\": \"Warning message\"");
-        result.Should().Contain("\"metodo\": \"ValidateInput\"");
+        result.Should().Contain("\"method\": \"ValidateInput\"");
         result.Should().Contain("\"path\": \"/api/validate\"");
     }
 
@@ -172,23 +172,23 @@ public class MessageLogTests {
     public void MessageLog_Record_ShouldSupportEquality() {
         // Arrange
         var messageLog1 = new MessageLog {
-            Tipo = "INFO",
+            Type ="INFO",
             Message = "Test message",
-            Metodo = "TestMethod",
+            Method ="TestMethod",
             Path = "/test"
         };
 
         var messageLog2 = new MessageLog {
-            Tipo = "INFO",
+            Type ="INFO",
             Message = "Test message",
-            Metodo = "TestMethod",
+            Method ="TestMethod",
             Path = "/test"
         };
 
         var messageLog3 = new MessageLog {
-            Tipo = "ERROR",
+            Type ="ERROR",
             Message = "Test message",
-            Metodo = "TestMethod",
+            Method ="TestMethod",
             Path = "/test"
         };
 
@@ -203,19 +203,19 @@ public class MessageLogTests {
         // Arrange & Act
         var logTypes = new[]
         {
-            new MessageLog { Tipo = "INFO", Message = "Info message", Metodo = "Method1", Path = "/path1" },
-            new MessageLog { Tipo = "DEBUG", Message = "Debug message", Metodo = "Method2", Path = "/path2" },
-            new MessageLog { Tipo = "WARNING", Message = "Warning message", Metodo = "Method3", Path = "/path3" },
-            new MessageLog { Tipo = "ERROR", Message = "Error message", Metodo = "Method4", Path = "/path4" },
-            new MessageLog { Tipo = "FATAL", Message = "Fatal message", Metodo = "Method5", Path = "/path5" }
+            new MessageLog { Type ="INFO", Message = "Info message", Method ="Method1", Path = "/path1" },
+            new MessageLog { Type ="DEBUG", Message = "Debug message", Method ="Method2", Path = "/path2" },
+            new MessageLog { Type ="WARNING", Message = "Warning message", Method ="Method3", Path = "/path3" },
+            new MessageLog { Type ="ERROR", Message = "Error message", Method ="Method4", Path = "/path4" },
+            new MessageLog { Type ="FATAL", Message = "Fatal message", Method ="Method5", Path = "/path5" }
         };
 
         // Assert
         foreach (var log in logTypes) {
             log.ToString().Should().NotBeNullOrWhiteSpace();
-            log.Tipo.Should().NotBeNullOrEmpty();
+            log.Type.Should().NotBeNullOrEmpty();
             ((string)log.Message).Should().NotBeNull(); // Cast to string for FluentAssertions
-            log.Metodo.Should().NotBeNullOrEmpty();
+            log.Method.Should().NotBeNullOrEmpty();
             log.Path.Should().NotBeNullOrEmpty();
         }
     }
@@ -227,9 +227,9 @@ public class MessageLogTests {
 
         // Act
         var messageLog = new MessageLog {
-            Tipo = "INFO",
+            Type ="INFO",
             Message = stringMessage,
-            Metodo = "StringTest",
+            Method ="StringTest",
             Path = "/string/test"
         };
 
@@ -245,9 +245,9 @@ public class MessageLogTests {
 
         // Act
         var messageLog = new MessageLog {
-            Tipo = "DEBUG",
+            Type ="DEBUG",
             Message = numericMessage,
-            Metodo = "NumericTest",
+            Method ="NumericTest",
             Path = "/numeric/test"
         };
 
