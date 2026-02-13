@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Text.Json;
-using AppCore.Application.Extensions;
+using OrionSoft.AppCore.Application.Extensions;
 
-namespace AppCore.Application.Wrappers;
+namespace OrionSoft.AppCore.Application.Wrappers;
 
 public sealed record HttpResponse<T>(HttpStatusCode StatusCode, long Time, JsonDocument? Response = null) {
     public T? Data { get; set; }

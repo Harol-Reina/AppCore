@@ -1,18 +1,18 @@
 ﻿using System.Net;
 using System.Text.Json;
-using AppCore.Application.DTOs;
-using AppCore.Application.Exceptions;
-using AppCore.Application.Interfaces;
-using AppCore.Application.Wrappers;
-using AppCore.Domain.Entities.Integrators;
-using AppCore.Domain.Interfaces;
+using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Domain.Entities.Integrators;
+using OrionSoft.AppCore.Domain.Interfaces;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Moq.Protected;
 using Xunit;
 
-namespace AppCore.UnitTests.Infrastructure.Services;
+namespace OrionSoft.AppCore.UnitTests.Infrastructure.Services;
 
 public class HttpServiceTests {
     private readonly Mock<ICurrentUserService> _currentUserServiceMock;

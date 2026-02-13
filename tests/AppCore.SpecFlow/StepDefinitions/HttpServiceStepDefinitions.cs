@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Text;
-using AppCore.Application.Exceptions;
-using AppCore.Application.Interfaces;
-using AppCore.Infrastructure.Services;
+using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Infrastructure.Services;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -10,7 +10,7 @@ using Moq;
 using Moq.Protected;
 using TechTalk.SpecFlow;
 
-namespace AppCore.SpecFlow.StepDefinitions;
+namespace OrionSoft.AppCore.SpecFlow.StepDefinitions;
 
 [Binding]
 public class HttpServiceStepDefinitions {

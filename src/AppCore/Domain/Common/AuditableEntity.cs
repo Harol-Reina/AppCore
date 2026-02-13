@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace AppCore.Domain.Common;
+namespace OrionSoft.AppCore.Domain.Common;
 
 /// <summary>
 /// Abstract base class that provides audit trail properties for entities.

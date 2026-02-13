@@ -1,5 +1,5 @@
-﻿using AppCore.Application.Exceptions;
-using AppCore.Application.Wrappers;
+﻿using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Wrappers;
 using System.Text.Json;
 
 namespace AotTestApp.Tests;

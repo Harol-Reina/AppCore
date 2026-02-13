@@ -1,15 +1,15 @@
-﻿using AppCore;
-using AppCore.Application.Behaviours;
-using AppCore.Application.Interfaces;
+﻿using OrionSoft.AppCore;
+using OrionSoft.AppCore.Application.Behaviours;
+using OrionSoft.AppCore.Application.Interfaces;
 
-using AppCore.Infrastructure.Services;
+using OrionSoft.AppCore.Infrastructure.Services;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace AppCore.UnitTests;
+namespace OrionSoft.AppCore.UnitTests;
 
 public class DependencyInjectionTests {
     [Fact]

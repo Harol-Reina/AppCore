@@ -1,8 +1,8 @@
-﻿using AppCore.Application.DTOs;
+﻿using OrionSoft.AppCore.Application.DTOs;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Application.DTOs;
+namespace OrionSoft.AppCore.UnitTests.Application.DTOs;
 
 public class LoginRequestTests {
     [Fact]

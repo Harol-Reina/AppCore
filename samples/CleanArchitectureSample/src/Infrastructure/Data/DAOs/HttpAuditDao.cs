@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using AppCore.Infrastructure.Data.DAOs.Common;
+using OrionSoft.AppCore.Infrastructure.Data.DAOs.Common;
 
 namespace App.Infrastructure.Data.DAOs;
 

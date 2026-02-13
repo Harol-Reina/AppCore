@@ -1,10 +1,10 @@
-﻿using AppCore.Application.Exceptions;
-using AppCore.Application.Utils;
+﻿using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Utils;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Xunit;
 
-namespace AppCore.UnitTests.Application.Utils;
+namespace OrionSoft.AppCore.UnitTests.Application.Utils;
 
 [Collection("ConfigurationTests")]
 #pragma warning disable CS0618 // Testing obsolete Configuration class

@@ -1,11 +1,11 @@
 ﻿using System.Net;
 using System.Text.Json;
-using AppCore.Application.Serialization;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Serialization;
+using OrionSoft.AppCore.Application.Wrappers;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Application.Wrappers;
+namespace OrionSoft.AppCore.UnitTests.Application.Wrappers;
 
 public class HttpResponseTests {
     [Fact]

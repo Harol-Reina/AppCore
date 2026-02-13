@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Text.Json;
-using AppCore.Domain.Common;
+using OrionSoft.AppCore.Domain.Common;
 
-namespace AppCore.Domain.Entities.Integrators;
+namespace OrionSoft.AppCore.Domain.Entities.Integrators;
 
 public sealed class HttpAuditEntity(Guid traceId,
                              string url,

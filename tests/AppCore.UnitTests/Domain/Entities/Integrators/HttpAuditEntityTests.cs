@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Text.Json;
-using AppCore.Domain.Entities.Integrators;
+using OrionSoft.AppCore.Domain.Entities.Integrators;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Domain.Entities.Integrators;
+namespace OrionSoft.AppCore.UnitTests.Domain.Entities.Integrators;
 
 public class HttpAuditEntityTests {
     [Fact]

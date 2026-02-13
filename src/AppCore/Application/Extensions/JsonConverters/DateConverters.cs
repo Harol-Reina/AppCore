@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace AppCore.Application.Extensions.JsonConverters;
+namespace OrionSoft.AppCore.Application.Extensions.JsonConverters;
 
 /// <summary>
 /// JsonConverter genérico para fechas con formato personalizable

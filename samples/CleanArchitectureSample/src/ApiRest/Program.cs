@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using App.Application.Common;
-using AppCore.Application.Utils;
-using AppCore.Application.Extensions;
-using AppCore.Application.Middleware;
+using OrionSoft.AppCore.Application.Utils;
+using OrionSoft.AppCore.Application.Extensions;
+using OrionSoft.AppCore.Application.Middleware;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
@@ -33,7 +33,7 @@ builder.Services.AddSingleton<JsonSerializerOptions>(provider => {
         PropertyNameCaseInsensitive = true
     };
     options.TypeInfoResolverChain.Insert(0, SampleJsonContext.Default);
-    options.TypeInfoResolverChain.Add(AppCore.Application.Serialization.AppCoreJsonContext.Default);
+    options.TypeInfoResolverChain.Add(OrionSoft.AppCore.Application.Serialization.AppCoreJsonContext.Default);
     
     return options;
 });
@@ -45,7 +45,7 @@ var globalOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web) {
     PropertyNameCaseInsensitive = true
 };
 globalOptions.TypeInfoResolverChain.Insert(0, SampleJsonContext.Default);
-globalOptions.TypeInfoResolverChain.Add(AppCore.Application.Serialization.AppCoreJsonContext.Default);
+globalOptions.TypeInfoResolverChain.Add(OrionSoft.AppCore.Application.Serialization.AppCoreJsonContext.Default);
 JsonExtend.Options = globalOptions;
 
 builder.Services.AddApplication();
@@ -58,7 +58,7 @@ builder.Services.ConfigureHttpJsonOptions(options => {
     var jsonOptions = options.SerializerOptions;
     jsonOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault | JsonIgnoreCondition.WhenWritingNull;
     jsonOptions.TypeInfoResolverChain.Insert(0, SampleJsonContext.Default);
-    jsonOptions.TypeInfoResolverChain.Add(AppCore.Application.Serialization.AppCoreJsonContext.Default);
+    jsonOptions.TypeInfoResolverChain.Add(OrionSoft.AppCore.Application.Serialization.AppCoreJsonContext.Default);
 });
 
 // CreateSlimBuilder does not register regex constraint by default. We need it for Swagger or specific routes.

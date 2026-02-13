@@ -1,10 +1,10 @@
-﻿using AppCore.Application.Interfaces;
-using AppCore.Domain.Interfaces;
+﻿using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Domain.Interfaces;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace AppCore.UnitTests;
+namespace OrionSoft.AppCore.UnitTests;
 
 /// <summary>
 /// Global configuration tests to ensure the AppCore package is properly set up
@@ -27,7 +27,7 @@ public class GlobalConfigurationTests {
     [Fact]
     public void AssemblyInfo_ShouldHaveCorrectMetadata() {
         // Arrange & Act
-        var assembly = typeof(AppCore.Application.Wrappers.Response<>).Assembly;
+        var assembly = typeof(OrionSoft.AppCore.Application.Wrappers.Response<>).Assembly;
 
         // Assert
         assembly.Should().NotBeNull();
@@ -50,12 +50,12 @@ public class GlobalConfigurationTests {
 
 // Dummy implementation for testing DI registration
 internal class DummyRepository<E, I> : IGenericRepository<E, I>
-    where E : AppCore.Domain.Common.BaseEntity<I> {
+    where E : OrionSoft.AppCore.Domain.Common.BaseEntity<I> {
     public Task<List<E>?> GetAllAsync()
         => Task.FromResult<List<E>?>(new List<E>());
 
-    public Task<AppCore.Application.DTOs.PaginationResponse<E>> GetPagedAsync(int page, int pageSize)
-        => Task.FromResult(new AppCore.Application.DTOs.PaginationResponse<E> { Results = [], Count = 0, Pages = 1 });
+    public Task<OrionSoft.AppCore.Application.DTOs.PaginationResponse<E>> GetPagedAsync(int page, int pageSize)
+        => Task.FromResult(new OrionSoft.AppCore.Application.DTOs.PaginationResponse<E> { Results = [], Count = 0, Pages = 1 });
 
     public Task<E?> GetByIdAsync(I id)
         => Task.FromResult<E?>(default);

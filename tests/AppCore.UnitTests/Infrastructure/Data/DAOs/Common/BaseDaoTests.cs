@@ -1,8 +1,8 @@
-﻿using AppCore.Infrastructure.Data.DAOs.Common;
+﻿using OrionSoft.AppCore.Infrastructure.Data.DAOs.Common;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Infrastructure.Data.DAOs.Common;
+namespace OrionSoft.AppCore.UnitTests.Infrastructure.Data.DAOs.Common;
 
 internal class TestDao : IBaseDao<int> {
     public int Id { get; set; }

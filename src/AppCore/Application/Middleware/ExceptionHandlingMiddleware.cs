@@ -1,11 +1,11 @@
-﻿using AppCore.Application.Exceptions;
-using AppCore.Application.Extensions;
-using AppCore.Application.Wrappers;
+﻿using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Extensions;
+using OrionSoft.AppCore.Application.Wrappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace AppCore.Application.Middleware;
+namespace OrionSoft.AppCore.Application.Middleware;
 
 public sealed class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger) {
 

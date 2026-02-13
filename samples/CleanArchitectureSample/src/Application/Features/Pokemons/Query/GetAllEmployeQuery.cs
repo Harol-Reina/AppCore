@@ -1,6 +1,6 @@
 using App.Application.Domain.Entities;
 using App.Application.Interfaces.Services;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Wrappers;
 using MediatR;
 
 namespace App.Application.Features.Pokemons.Query;

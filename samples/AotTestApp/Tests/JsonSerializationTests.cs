@@ -1,6 +1,6 @@
-﻿using AppCore.Application.Serialization;
-using AppCore.Application.Wrappers;
-using AppCore.Application.DTOs;
+﻿using OrionSoft.AppCore.Application.Serialization;
+using OrionSoft.AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.DTOs;
 using System.Text.Json;
 
 namespace AotTestApp.Tests;
@@ -36,7 +36,7 @@ public static class JsonSerializationTests
             var successResponse = Response<string>.Success("Operation successful", "Test data");
             var failureResponse = Response<int>.Failure("Operation failed");
 
-            // Serialize using AppCoreJsonContext (AOT-compatible) - Explicit TypeInfo
+            // Serialize using OrionSoft.AppCoreJsonContext (AOT-compatible) - Explicit TypeInfo
             var successJson = JsonSerializer.Serialize(successResponse, AppCoreJsonContext.Default.ResponseString);
             var failureJson = JsonSerializer.Serialize(failureResponse, AppCoreJsonContext.Default.ResponseInt32);
 

@@ -3,10 +3,10 @@ using App.Application.Common;
 using App.Application.Domain.Entities;
 using App.Application.DTOs.Response;
 using App.Application.Interfaces.Services;
-using AppCore.Application.Extensions;
-using AppCore.Application.Interfaces;
-using AppCore.Domain.Interfaces;
-using AppCore.Infrastructure.Services;
+using OrionSoft.AppCore.Application.Extensions;
+using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Domain.Interfaces;
+using OrionSoft.AppCore.Infrastructure.Services;
 using Microsoft.Extensions.Logging;
 
 namespace App.Infrastructure.Services;

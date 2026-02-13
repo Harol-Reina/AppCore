@@ -1,10 +1,10 @@
 ﻿using System;
-using AppCore.Application.Interfaces;
-using AppCore.Infrastructure.Services;
+using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Infrastructure.Services;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Infrastructure.Services;
+namespace OrionSoft.AppCore.UnitTests.Infrastructure.Services;
 
 public class DateTimeServiceTests {
     private readonly IDateTimeService _dateTimeService;

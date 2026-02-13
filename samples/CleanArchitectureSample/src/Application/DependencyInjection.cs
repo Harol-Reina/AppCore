@@ -1,15 +1,15 @@
 ﻿using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using AppCore;
+using OrionSoft.AppCore;
 using App.Application.DTOs.Request;
 using App.Application.DTOs.Response;
 using App.Application.Features.Employes.Command;
-using AppCore.Application.DTOs;
+using OrionSoft.AppCore.Application.DTOs;
 using App.Application.Features.Employes.Query;
 using App.Application.Features.Pokemons.Query;
 using MediatR;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Wrappers;
 using App.Application.Domain.Entities;
 
 namespace App.Application;

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi;
 
-namespace AppCore.Application.Extensions;
+namespace OrionSoft.AppCore.Application.Extensions;
 
 public static class ServiceExtensions {
 

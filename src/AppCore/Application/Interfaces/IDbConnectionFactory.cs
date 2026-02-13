@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace AppCore.Application.Interfaces;
+namespace OrionSoft.AppCore.Application.Interfaces;
 
 /// <summary>
 /// Factory interface for creating database connections.

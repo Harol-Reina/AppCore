@@ -1,8 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
-using AppCore.Application.Exceptions;
-using AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Interfaces;
 
-namespace AppCore.Infrastructure.Services;
+namespace OrionSoft.AppCore.Infrastructure.Services;
 
 /// <summary>
 /// Base class for AOT-compatible mapping services that provides common functionality

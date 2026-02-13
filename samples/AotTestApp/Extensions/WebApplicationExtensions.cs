@@ -1,5 +1,5 @@
 using AotTestApp.Endpoints;
-using AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Application.Interfaces;
 
 namespace AotTestApp.Extensions;
 

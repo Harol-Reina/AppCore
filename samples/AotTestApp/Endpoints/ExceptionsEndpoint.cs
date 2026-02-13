@@ -1,6 +1,6 @@
-using AppCore.Application.Exceptions;
-using AppCore.Application.Interfaces;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Application.Wrappers;
 
 namespace AotTestApp.Endpoints;
 

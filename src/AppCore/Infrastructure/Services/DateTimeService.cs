@@ -1,6 +1,6 @@
-﻿using AppCore.Application.Interfaces;
+﻿using OrionSoft.AppCore.Application.Interfaces;
 
-namespace AppCore.Infrastructure.Services;
+namespace OrionSoft.AppCore.Infrastructure.Services;
 
 internal sealed class DateTimeService : IDateTimeService {
     public DateTime NowUtc => DateTime.UtcNow;

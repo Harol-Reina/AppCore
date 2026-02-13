@@ -1,4 +1,4 @@
-﻿using AppCore.Infrastructure.Data.DAOs.Common;
+﻿using OrionSoft.AppCore.Infrastructure.Data.DAOs.Common;
 
 namespace App.Infrastructure.Data.DAOs;
 

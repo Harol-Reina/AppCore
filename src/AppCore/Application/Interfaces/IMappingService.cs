@@ -1,4 +1,4 @@
-﻿namespace AppCore.Application.Interfaces;
+﻿namespace OrionSoft.AppCore.Application.Interfaces;
 
 /// <summary>
 /// Provides AOT-compatible mapping services for converting between different object types.

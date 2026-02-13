@@ -1,6 +1,6 @@
 using App.Application.Domain.Entities;
 using App.Application.Interfaces;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Wrappers;
 using MediatR;
 using App.Application.DTOs.Request;
 using App.Application.DTOs.Response;

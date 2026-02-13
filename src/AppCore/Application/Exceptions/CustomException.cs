@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using AppCore.Application.Extensions;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Extensions;
+using OrionSoft.AppCore.Application.Wrappers;
 
-namespace AppCore.Application.Exceptions;
+namespace OrionSoft.AppCore.Application.Exceptions;
 
 /// <summary>
 /// Base class for custom application exceptions that provides enhanced error tracking and logging capabilities.

@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
-using AppCore.Application.Extensions.JsonConverters;
+using OrionSoft.AppCore.Application.Extensions.JsonConverters;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Application.Extensions.JsonConverters;
+namespace OrionSoft.AppCore.UnitTests.Application.Extensions.JsonConverters;
 
 public class NullableDateYearMonthDayNoSeparatorJsonConverterTests {
     private readonly JsonSerializerOptions _options;

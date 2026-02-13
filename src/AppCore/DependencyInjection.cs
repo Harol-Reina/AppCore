@@ -1,12 +1,12 @@
-﻿using AppCore.Application.Behaviours;
-using AppCore.Application.Interfaces;
+﻿using OrionSoft.AppCore.Application.Behaviours;
+using OrionSoft.AppCore.Application.Interfaces;
 
-using AppCore.Infrastructure.Services;
+using OrionSoft.AppCore.Infrastructure.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AppCore;
+namespace OrionSoft.AppCore;
 
 /// <summary>
 /// Provides extension methods for configuring AppCore services in the dependency injection container.

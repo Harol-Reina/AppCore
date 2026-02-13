@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Exceptions;
 using Microsoft.Extensions.Configuration;
 
-namespace AppCore.Application.Utils;
+namespace OrionSoft.AppCore.Application.Utils;
 
 [Obsolete("Use IConfiguration via dependency injection instead of this static accessor. Will be removed in a future version.")]
 public static class Configuration {

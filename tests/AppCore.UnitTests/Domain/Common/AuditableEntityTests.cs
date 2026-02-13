@@ -1,8 +1,8 @@
-﻿using AppCore.Domain.Common;
+﻿using OrionSoft.AppCore.Domain.Common;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Domain.Common;
+namespace OrionSoft.AppCore.UnitTests.Domain.Common;
 
 // Test implementation of AuditableEntity for testing purposes
 public class TestAuditableEntity : AuditableEntity {

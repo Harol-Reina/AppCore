@@ -1,4 +1,4 @@
-﻿namespace AppCore.Application.Interfaces;
+﻿namespace OrionSoft.AppCore.Application.Interfaces;
 
 /// <summary>
 /// Provides abstraction for date and time operations to support testability.

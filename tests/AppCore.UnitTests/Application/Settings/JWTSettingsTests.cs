@@ -1,8 +1,8 @@
-﻿using AppCore.Application.Settings;
+﻿using OrionSoft.AppCore.Application.Settings;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Application.Settings;
+namespace OrionSoft.AppCore.UnitTests.Application.Settings;
 
 public class JWTSettingsTests {
     [Fact]

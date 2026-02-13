@@ -3,12 +3,12 @@ using App.Application.Domain.Entities;
 using App.Application.Common;
 using App.Application.Interfaces;
 using App.Infrastructure.Data.DAOs;
-using AppCore.Application.DTOs;
-using AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Application.Interfaces;
 
 using Dapper;
 
-using AppCore.Infrastructure.Extensions;
+using OrionSoft.AppCore.Infrastructure.Extensions;
 
 namespace App.Infrastructure.Repositories;
 

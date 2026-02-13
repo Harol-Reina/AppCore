@@ -1,5 +1,5 @@
 ﻿using App.Application.Common;
-using AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Application.Interfaces;
 using Dapper;
 using Microsoft.Extensions.Logging;
 

@@ -1,13 +1,13 @@
 ﻿using System.Text.Json;
-using AppCore.Application.DTOs;
-using AppCore.Application.Exceptions;
-using AppCore.Application.Extensions;
-using AppCore.Application.Serialization;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Extensions;
+using OrionSoft.AppCore.Application.Serialization;
+using OrionSoft.AppCore.Application.Wrappers;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Application.Extensions;
+namespace OrionSoft.AppCore.UnitTests.Application.Extensions;
 
 public class JsonExtendTests {
     private readonly EmailRequest _testModel = new() {

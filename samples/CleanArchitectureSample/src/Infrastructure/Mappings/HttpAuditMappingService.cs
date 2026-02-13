@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using App.Infrastructure.Data.DAOs;
-using AppCore.Application.Interfaces;
-using AppCore.Domain.Entities.Integrators;
+using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Domain.Entities.Integrators;
 
 namespace App.Infrastructure.Mappings;
 

@@ -1,6 +1,6 @@
 using App.Application.Domain.Entities;
-using AppCore.Application.DTOs;
-using AppCore.Domain.Interfaces;
+using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Domain.Interfaces;
 
 namespace App.Application.Interfaces;
 

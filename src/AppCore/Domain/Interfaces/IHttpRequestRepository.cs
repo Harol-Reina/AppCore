@@ -1,6 +1,6 @@
-﻿using AppCore.Domain.Entities.Integrators;
+﻿using OrionSoft.AppCore.Domain.Entities.Integrators;
 
-namespace AppCore.Domain.Interfaces;
+namespace OrionSoft.AppCore.Domain.Interfaces;
 
 public interface IHttpRequestRepository
 : IGenericRepository<HttpAuditEntity, int> { }

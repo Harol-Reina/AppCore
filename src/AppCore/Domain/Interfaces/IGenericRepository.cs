@@ -1,7 +1,7 @@
-﻿using AppCore.Application.DTOs;
-using AppCore.Domain.Common;
+﻿using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Domain.Common;
 
-namespace AppCore.Domain.Interfaces;
+namespace OrionSoft.AppCore.Domain.Interfaces;
 
 /// <summary>
 /// Interfaz de repositorio genérico para realizar operaciones CRUD en entidades.

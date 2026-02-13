@@ -1,13 +1,13 @@
-﻿using AppCore.Application.Behaviours;
-using AppCore.Application.Exceptions;
+﻿using OrionSoft.AppCore.Application.Behaviours;
+using OrionSoft.AppCore.Application.Exceptions;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
-using static AppCore.Application.Exceptions.CustomException;
+using static OrionSoft.AppCore.Application.Exceptions.CustomException;
 
-namespace AppCore.UnitTests.Application.Behaviours;
+namespace OrionSoft.AppCore.UnitTests.Application.Behaviours;
 
 public class UnhandledExceptionBehaviourTests {
     private readonly Mock<ILogger<UnhandledExceptionBehaviour<TestRequest, TestResponse>>> _loggerMock;

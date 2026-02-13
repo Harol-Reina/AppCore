@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
-using AppCore.UnitTests.TestHelpers;
+using OrionSoft.AppCore.UnitTests.TestHelpers;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Application.Serialization;
+namespace OrionSoft.AppCore.UnitTests.Application.Serialization;
 
 public class JsonTestModelTests {
     [Fact]

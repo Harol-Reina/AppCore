@@ -1,4 +1,4 @@
-﻿namespace AppCore.Application.Wrappers;
+﻿namespace OrionSoft.AppCore.Application.Wrappers;
 
 public sealed class PageResult<T> where T : class {
     public List<T> Items { get; set; } = [];

@@ -1,10 +1,10 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Runtime.CompilerServices;
-using AppCore.Application.Exceptions;
-using AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Interfaces;
 using Microsoft.AspNetCore.Http;
 
-namespace AppCore.Infrastructure.Services;
+namespace OrionSoft.AppCore.Infrastructure.Services;
 
 internal sealed class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService {
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor

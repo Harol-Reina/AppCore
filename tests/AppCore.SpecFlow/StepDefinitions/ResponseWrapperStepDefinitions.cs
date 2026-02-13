@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Wrappers;
 using FluentAssertions;
 using TechTalk.SpecFlow;
 
-namespace AppCore.SpecFlow.StepDefinitions;
+namespace OrionSoft.AppCore.SpecFlow.StepDefinitions;
 
 [Binding]
 public class ResponseWrapperStepDefinitions {

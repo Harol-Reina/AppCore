@@ -1,6 +1,6 @@
 using System.Data;
 using App.Application.Common;
-using AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Application.Interfaces;
 using Npgsql;
 
 namespace App.Infrastructure.Data;

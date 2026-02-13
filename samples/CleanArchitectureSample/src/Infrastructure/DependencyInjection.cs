@@ -8,9 +8,9 @@ using App.Infrastructure.Services;
 using App.Infrastructure.Mappings;
 using App.Application.Domain.Entities;
 using App.Infrastructure.Data.DAOs;
-using AppCore.Application.Interfaces;
-using AppCore.Domain.Entities.Integrators;
-using AppCore.Domain.Interfaces;
+using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Domain.Entities.Integrators;
+using OrionSoft.AppCore.Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace App.Infrastructure;

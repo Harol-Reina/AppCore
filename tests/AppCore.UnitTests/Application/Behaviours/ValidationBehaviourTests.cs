@@ -1,14 +1,14 @@
-﻿using AppCore.Application.Behaviours;
-using AppCore.Application.Exceptions;
+﻿using OrionSoft.AppCore.Application.Behaviours;
+using OrionSoft.AppCore.Application.Exceptions;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using Moq;
 using Xunit;
-using AppValidationException = AppCore.Application.Exceptions.ValidationException;
+using AppValidationException = OrionSoft.AppCore.Application.Exceptions.ValidationException;
 
-namespace AppCore.UnitTests.Application.Behaviours;
+namespace OrionSoft.AppCore.UnitTests.Application.Behaviours;
 
 // Test request and response for testing
 public class TestRequest : IRequest<TestResponse> {

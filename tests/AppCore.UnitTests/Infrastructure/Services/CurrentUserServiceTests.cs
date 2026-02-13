@@ -1,14 +1,14 @@
 ﻿using System.Security.Claims;
-using AppCore.Application.Exceptions;
-using AppCore.Application.Interfaces;
-using AppCore.Infrastructure.Services;
+using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Infrastructure.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using Xunit;
 
-namespace AppCore.UnitTests.Infrastructure.Services;
+namespace OrionSoft.AppCore.UnitTests.Infrastructure.Services;
 
 public class CurrentUserServiceTests {
     private readonly Mock<IHttpContextAccessor> _httpContextAccessorMock;

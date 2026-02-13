@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AppCore.Application.Exceptions;
+namespace OrionSoft.AppCore.Application.Exceptions;
 
 public sealed class ValidationException : CustomException {
     public IDictionary<string, string[]> Errors { get; init; } = new Dictionary<string, string[]>();

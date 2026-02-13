@@ -3,7 +3,7 @@ using App.Application.DTOs.Request;
 using App.Application.DTOs.Response;
 using App.Application.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Wrappers;
 using App.Application.Features.Employes.Command;
 
 namespace App.ApiRest;

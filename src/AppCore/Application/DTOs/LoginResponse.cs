@@ -1,4 +1,4 @@
-﻿namespace AppCore.Application.DTOs;
+﻿namespace OrionSoft.AppCore.Application.DTOs;
 
 public sealed class LoginResponse {
     /// <summary>Usuario logueado.</summary>

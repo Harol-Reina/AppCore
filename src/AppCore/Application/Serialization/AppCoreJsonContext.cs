@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
-using AppCore.Application.DTOs;
-using AppCore.Application.Exceptions;
-using AppCore.Application.Wrappers;
-using AppCore.Domain.Common;
-using AppCore.Domain.Entities.Integrators;
+using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Domain.Common;
+using OrionSoft.AppCore.Domain.Entities.Integrators;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AppCore.Application.Serialization;
+namespace OrionSoft.AppCore.Application.Serialization;
 
 /// <summary>
 /// AOT-compatible JSON serialization context for AppCore types.

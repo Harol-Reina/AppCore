@@ -1,10 +1,10 @@
-﻿using AppCore.Application.Interfaces;
-using AppCore.Application.Wrappers;
-using AppCore.Domain.Interfaces;
-using AppCore.Infrastructure.Services;
+﻿using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Domain.Interfaces;
+using OrionSoft.AppCore.Infrastructure.Services;
 using Microsoft.Extensions.Logging;
 
-namespace AppCore.UnitTests.Infrastructure.Services;
+namespace OrionSoft.AppCore.UnitTests.Infrastructure.Services;
 
 internal class TestHttpService : HttpService {
     public TestHttpService(HttpClient httpClient,

@@ -1,8 +1,8 @@
-﻿using AppCore.Domain.Common;
+﻿using OrionSoft.AppCore.Domain.Common;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Domain.Common;
+namespace OrionSoft.AppCore.UnitTests.Domain.Common;
 
 // Test implementations of BaseEntity for testing purposes
 public class TestStringEntity : BaseEntity<string> {

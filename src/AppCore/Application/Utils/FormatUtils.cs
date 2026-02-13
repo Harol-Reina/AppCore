@@ -1,6 +1,6 @@
-﻿using AppCore.Application.Exceptions;
+﻿using OrionSoft.AppCore.Application.Exceptions;
 
-namespace AppCore.Application.Utils;
+namespace OrionSoft.AppCore.Application.Utils;
 
 internal static class FormatUtils {
     public static Guid ParseGuid(string? input, string parameterName = "Id") {

@@ -1,10 +1,10 @@
-﻿using AppCore.Application.Exceptions;
+﻿using OrionSoft.AppCore.Application.Exceptions;
 using FluentAssertions;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
-namespace AppCore.UnitTests.Application.Exceptions;
+namespace OrionSoft.AppCore.UnitTests.Application.Exceptions;
 
 public class ValidationExceptionTests {
     [Fact]

@@ -1,4 +1,4 @@
-﻿namespace AppCore.Infrastructure.Data.DAOs.Common;
+﻿namespace OrionSoft.AppCore.Infrastructure.Data.DAOs.Common;
 
 public interface IAuditableBaseDao {
 

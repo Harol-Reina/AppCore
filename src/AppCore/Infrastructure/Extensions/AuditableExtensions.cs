@@ -1,7 +1,7 @@
-﻿using AppCore.Application.Interfaces;
-using AppCore.Infrastructure.Data.DAOs.Common;
+﻿using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Infrastructure.Data.DAOs.Common;
 
-namespace AppCore.Infrastructure.Extensions;
+namespace OrionSoft.AppCore.Infrastructure.Extensions;
 
 public static class AuditableExtensions {
     public static void SetAuditCreate(this IAuditableBaseDao entity, ICurrentUserService userService) {

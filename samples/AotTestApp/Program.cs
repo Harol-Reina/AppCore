@@ -1,11 +1,11 @@
 using System.Diagnostics;
 using AotTestApp.Extensions;
 using AotTestApp.Tests;
-using AppCore.Application.DTOs;
-using AppCore.Application.Extensions;
-using AppCore.Application.Middleware;
-using AppCore.Application.Serialization;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Application.Extensions;
+using OrionSoft.AppCore.Application.Middleware;
+using OrionSoft.AppCore.Application.Serialization;
+using OrionSoft.AppCore.Application.Wrappers;
 using Serilog;
 using System.Text.Json;
 

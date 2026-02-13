@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace AppCore.Application.Extensions.JsonConverters;
+namespace OrionSoft.AppCore.Application.Extensions.JsonConverters;
 
 public sealed class StringToLongConverter : JsonConverter<long> {
     public override long Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {

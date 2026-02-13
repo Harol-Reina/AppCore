@@ -1,8 +1,8 @@
-﻿using AppCore.Application.Exceptions;
+﻿using OrionSoft.AppCore.Application.Exceptions;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Application.Exceptions;
+namespace OrionSoft.AppCore.UnitTests.Application.Exceptions;
 
 public class HttpBaseExceptionTests {
     [Fact]

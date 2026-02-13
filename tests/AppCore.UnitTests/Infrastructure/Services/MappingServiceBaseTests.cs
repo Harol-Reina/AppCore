@@ -1,9 +1,9 @@
-﻿using AppCore.Application.Exceptions;
-using AppCore.Infrastructure.Services;
+﻿using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Infrastructure.Services;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Infrastructure.Services;
+namespace OrionSoft.AppCore.UnitTests.Infrastructure.Services;
 
 public class MappingServiceBaseTests {
     private class SourceModel {

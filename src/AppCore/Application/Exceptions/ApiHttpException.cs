@@ -1,8 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
-using AppCore.Application.Extensions;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Extensions;
+using OrionSoft.AppCore.Application.Wrappers;
 
-namespace AppCore.Application.Exceptions;
+namespace OrionSoft.AppCore.Application.Exceptions;
 
 internal sealed class ApiHttpException : Exception {
     public MessageLog MessageLog { get; }

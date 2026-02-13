@@ -1,4 +1,4 @@
-﻿namespace AppCore.Application.Exceptions;
+﻿namespace OrionSoft.AppCore.Application.Exceptions;
 
 /// <summary>
 /// Exception that represents a bad request error (HTTP 400).

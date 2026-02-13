@@ -1,13 +1,13 @@
 ﻿using System.Reflection;
-using AppCore.Application.Exceptions;
-using AppCore.Application.Middleware;
+using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Middleware;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
-namespace AppCore.UnitTests.Application.Middleware;
+namespace OrionSoft.AppCore.UnitTests.Application.Middleware;
 
 public class ExceptionHandlingMiddlewareTests {
     [Fact]

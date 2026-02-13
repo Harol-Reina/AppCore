@@ -1,8 +1,8 @@
 using App.Application.DTOs.Response;
-using AppCore.Application.DTOs;
+using OrionSoft.AppCore.Application.DTOs;
 using App.Application.Interfaces;
-using AppCore.Application.Exceptions;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Wrappers;
 using App.Application.Common.Mappings;
 using MediatR;
 

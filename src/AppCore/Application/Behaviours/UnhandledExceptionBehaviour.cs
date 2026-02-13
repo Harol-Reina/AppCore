@@ -1,12 +1,12 @@
 ﻿using System.Collections.Frozen;
 using System.Text;
-using AppCore.Application.Exceptions;
-using AppCore.Application.Extensions;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Extensions;
+using OrionSoft.AppCore.Application.Wrappers;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace AppCore.Application.Behaviours;
+namespace OrionSoft.AppCore.Application.Behaviours;
 
 /// <summary>
 /// Pipeline behavior for handling unhandled exceptions in MediatR requests.

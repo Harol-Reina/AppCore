@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace AppCore.Application.Wrappers;
+namespace OrionSoft.AppCore.Application.Wrappers;
 
 /// <summary>
 /// Standard response wrapper for API operations providing consistent structure for success and error responses.

@@ -1,4 +1,4 @@
-﻿namespace AppCore.Application.DTOs;
+﻿namespace OrionSoft.AppCore.Application.DTOs;
 
 public sealed class MetaInfo {
     /// <summary>Entorno de ejecución Development|Production.</summary>

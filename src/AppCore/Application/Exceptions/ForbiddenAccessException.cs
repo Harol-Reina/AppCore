@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace AppCore.Application.Exceptions;
+namespace OrionSoft.AppCore.Application.Exceptions;
 
 public sealed class ForbiddenAccessException : CustomException {
     public ForbiddenAccessException(string message,

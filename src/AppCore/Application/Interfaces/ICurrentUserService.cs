@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Runtime.CompilerServices;
 
-namespace AppCore.Application.Interfaces;
+namespace OrionSoft.AppCore.Application.Interfaces;
 
 /// <summary>
 /// Provides access to current authenticated user information.

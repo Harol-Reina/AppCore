@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace AppCore.Application.DTOs;
+namespace OrionSoft.AppCore.Application.DTOs;
 
 public sealed class PaginationResponse<T> {
 

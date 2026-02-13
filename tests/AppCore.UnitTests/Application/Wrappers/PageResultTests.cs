@@ -1,9 +1,9 @@
-﻿using AppCore.Application.Wrappers;
-using AppCore.UnitTests.TestHelpers;
+﻿using OrionSoft.AppCore.Application.Wrappers;
+using OrionSoft.AppCore.UnitTests.TestHelpers;
 using FluentAssertions;
 using Xunit;
 
-namespace AppCore.UnitTests.Application.Wrappers;
+namespace OrionSoft.AppCore.UnitTests.Application.Wrappers;
 
 public class PageResultTests {
     [Fact]

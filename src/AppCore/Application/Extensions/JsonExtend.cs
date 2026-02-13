@@ -1,10 +1,10 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using AppCore.Application.Exceptions;
-using AppCore.Application.Serialization;
+using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Serialization;
 
-namespace AppCore.Application.Extensions;
+namespace OrionSoft.AppCore.Application.Extensions;
 
 /// <summary>
 /// AOT-compatible JSON serialization extensions using source-generated serialization context.

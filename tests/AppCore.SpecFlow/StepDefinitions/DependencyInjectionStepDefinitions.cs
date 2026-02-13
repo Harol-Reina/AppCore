@@ -1,14 +1,14 @@
-﻿using AppCore;
-using AppCore.Application.Interfaces;
-using AppCore.Domain.Common;
-using AppCore.Domain.Interfaces;
+﻿using OrionSoft.AppCore;
+using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Domain.Common;
+using OrionSoft.AppCore.Domain.Interfaces;
 
-using AppCore.Infrastructure.Services;
+using OrionSoft.AppCore.Infrastructure.Services;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using TechTalk.SpecFlow;
 
-namespace AppCore.SpecFlow.StepDefinitions;
+namespace OrionSoft.AppCore.SpecFlow.StepDefinitions;
 
 [Binding]
 public class DependencyInjectionStepDefinitions {
@@ -290,7 +290,7 @@ public class DependencyInjectionStepDefinitions {
             => Task.FromResult<TEntity?>(null);
         public Task<List<TEntity>?> GetAllAsync()
             => Task.FromResult<List<TEntity>?>(new List<TEntity>());
-        public Task<AppCore.Application.DTOs.PaginationResponse<TEntity>> GetPagedAsync(int page, int pageSize)
-            => Task.FromResult(new AppCore.Application.DTOs.PaginationResponse<TEntity>());
+        public Task<OrionSoft.AppCore.Application.DTOs.PaginationResponse<TEntity>> GetPagedAsync(int page, int pageSize)
+            => Task.FromResult(new OrionSoft.AppCore.Application.DTOs.PaginationResponse<TEntity>());
     }
 }

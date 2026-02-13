@@ -1,11 +1,11 @@
-﻿using AppCore.Application.Interfaces;
-using AppCore.Infrastructure.Data.DAOs.Common;
-using AppCore.Infrastructure.Extensions;
+﻿using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Infrastructure.Data.DAOs.Common;
+using OrionSoft.AppCore.Infrastructure.Extensions;
 using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace AppCore.UnitTests.Infrastructure.Extensions;
+namespace OrionSoft.AppCore.UnitTests.Infrastructure.Extensions;
 
 internal class TestAuditableDao : IAuditableBaseDao {
     public DateTime? CreatedAt { get; set; }

@@ -4,15 +4,15 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
-using AppCore.Application.Exceptions;
-using AppCore.Application.Extensions;
-using AppCore.Application.Interfaces;
-using AppCore.Application.Wrappers;
-using AppCore.Domain.Entities.Integrators;
-using AppCore.Domain.Interfaces;
+using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Extensions;
+using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Domain.Entities.Integrators;
+using OrionSoft.AppCore.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 
-namespace AppCore.Infrastructure.Services;
+namespace OrionSoft.AppCore.Infrastructure.Services;
 
 public abstract class HttpService(HttpClient httpClient,
                                   ICurrentUserService currentUserService,

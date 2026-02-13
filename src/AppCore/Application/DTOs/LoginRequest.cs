@@ -1,4 +1,4 @@
-﻿namespace AppCore.Application.DTOs;
+﻿namespace OrionSoft.AppCore.Application.DTOs;
 
 public sealed class LoginRequest(string userName, string passWord) {
     /// <summary>Usuario</summary>

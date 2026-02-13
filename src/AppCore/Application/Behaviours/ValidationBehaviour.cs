@@ -1,7 +1,7 @@
-﻿using AppCore.Application.Exceptions;
+﻿using OrionSoft.AppCore.Application.Exceptions;
 using MediatR;
 
-namespace AppCore.Application.Behaviours;
+namespace OrionSoft.AppCore.Application.Behaviours;
 
 /// <summary>
 /// Pipeline behavior for validating MediatR requests using FluentValidation.

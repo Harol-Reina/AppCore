@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Wrappers;
 
-namespace AppCore.Application.Exceptions;
+namespace OrionSoft.AppCore.Application.Exceptions;
 
 public sealed class AuthenticationException : CustomException {
     public AuthenticationException(string message,

@@ -1,6 +1,6 @@
 ﻿using App.Application.Domain.Entities;
 using App.Infrastructure.Data.DAOs;
-using AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Application.Interfaces;
 
 namespace App.Infrastructure.Mappings;
 

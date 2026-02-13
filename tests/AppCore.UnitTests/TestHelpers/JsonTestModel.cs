@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace AppCore.UnitTests.TestHelpers;
+namespace OrionSoft.AppCore.UnitTests.TestHelpers;
 
 public class JsonTestModel {
     public int Id { get; set; }

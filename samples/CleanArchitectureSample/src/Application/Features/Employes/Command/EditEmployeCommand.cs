@@ -1,9 +1,9 @@
 using App.Application.Domain.Entities;
 using App.Application.Interfaces;
 using App.Application.DTOs.Request;
-using AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Wrappers;
 using MediatR;
-using AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Exceptions;
 
 namespace App.Application.Features.Employes.Command;
 

@@ -1,8 +1,8 @@
-﻿using AppCore.Application.Exceptions;
+﻿using OrionSoft.AppCore.Application.Exceptions;
 using FluentAssertions;
 using TechTalk.SpecFlow;
 
-namespace AppCore.SpecFlow.StepDefinitions;
+namespace OrionSoft.AppCore.SpecFlow.StepDefinitions;
 
 [Binding]
 public class ExceptionHandlingStepDefinitions {

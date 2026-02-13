@@ -1,4 +1,4 @@
-﻿namespace AppCore.Application.Settings;
+﻿namespace OrionSoft.AppCore.Application.Settings;
 
 public sealed class JWTSettings {
     public string Secret { get; set; } = null!;

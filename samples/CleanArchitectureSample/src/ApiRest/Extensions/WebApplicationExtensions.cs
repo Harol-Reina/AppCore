@@ -1,5 +1,5 @@
 using App.ApiRest.EndPoinds;
-using AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Application.Interfaces;
 
 namespace App.ApiRest.Extensions;
 

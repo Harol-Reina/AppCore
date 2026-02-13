@@ -1,5 +1,5 @@
-using AppCore.Application.Interfaces;
-using AppCore.Domain.Common;
+using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Domain.Common;
 
 namespace App.Application.Domain.Entities;
 

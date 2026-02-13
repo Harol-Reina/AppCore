@@ -1,4 +1,4 @@
-﻿using AppCore.Application.Extensions;
+﻿using OrionSoft.AppCore.Application.Extensions;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
 
-namespace AppCore.UnitTests.Application.Extensions;
+namespace OrionSoft.AppCore.UnitTests.Application.Extensions;
 
 [Collection("ConfigurationTests")]
 public class ServiceExtensionsTests {

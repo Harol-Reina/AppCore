@@ -1,7 +1,7 @@
 using App.Application.Domain.Entities;
-using AppCore.Application.Interfaces;
-using AppCore.Application.Wrappers;
-using AppCore.Application.DTOs;
+using OrionSoft.AppCore.Application.Interfaces;
+using OrionSoft.AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

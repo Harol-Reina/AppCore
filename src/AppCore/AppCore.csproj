@@ -5,7 +5,8 @@
     <PackageId>OrionSoft.AppCore</PackageId>
     <Product>OrionSoft.AppCore</Product>
     <AssemblyName>OrionSoft.AppCore</AssemblyName>
-    
+    <RootNamespace>OrionSoft.AppCore</RootNamespace>
+
     <!-- MinVer: Automatic versioning from Git tags -->
     <MinVerTagPrefix>v</MinVerTagPrefix>
     <MinVerDefaultPreReleaseIdentifiers>preview</MinVerDefaultPreReleaseIdentifiers>

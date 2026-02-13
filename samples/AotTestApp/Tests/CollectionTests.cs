@@ -1,4 +1,4 @@
-﻿using AppCore.Application.DTOs;
+﻿using OrionSoft.AppCore.Application.DTOs;
 
 namespace AotTestApp.Tests;
 

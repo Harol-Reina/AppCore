@@ -1,5 +1,5 @@
-﻿using AppCore.Application.Exceptions;
-using AppCore.Application.Utils;
+﻿using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Utils;
 
 namespace App.Application.Common;
 
