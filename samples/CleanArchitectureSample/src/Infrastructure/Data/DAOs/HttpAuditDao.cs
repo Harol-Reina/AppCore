@@ -14,7 +14,7 @@ public class HttpAuditDao : IBaseDao<int> {
     public JsonDocument? Body { get; set; }
     public JsonDocument? Response { get; set; }
     public string? InternalError { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
     public string? CreatedBy { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public string? UpdatedBy { get; set; }

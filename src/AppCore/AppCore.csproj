@@ -26,7 +26,11 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>AppCore.IntegrationTests</_Parameter1>
     </AssemblyAttribute>
-    <!-- Allow Moq to create proxies for internal types in testing -->
+    <!--
+      Required by Moq (Castle.DynamicProxy) to create proxies for internal types in tests.
+      Used by: AppCore.UnitTests, AppCore.SpecFlow.
+      TODO: Remove after migrating from Moq to NSubstitute (AOT-friendly alternative).
+    -->
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
     </AssemblyAttribute>
