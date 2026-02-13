@@ -5,31 +5,12 @@
 
 set -e
 
+# Load shared functions and configuration
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+source "$SCRIPT_DIR/common.sh"
+SOLUTION_DIR=$(cd "$SCRIPT_DIR/../.." && pwd)
+
 echo "🚀 Starting AppCore build and analysis..."
-
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
-
-# Function to print colored output
-print_status() {
-    echo -e "${BLUE}[INFO]${NC} $1"
-}
-
-print_success() {
-    echo -e "${GREEN}[SUCCESS]${NC} $1"
-}
-
-print_warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1"
-}
-
-print_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-}
 
 # Check if .NET is installed
 if ! command -v dotnet &> /dev/null; then
@@ -37,20 +18,20 @@ if ! command -v dotnet &> /dev/null; then
     exit 1
 fi
 
-print_status "Using .NET SDK version: $(dotnet --version)"
+print_info "Using .NET SDK version: $(dotnet --version)"
 
 # Clean previous builds and artifacts
-print_status "Cleaning previous builds..."
+print_info "Cleaning previous builds..."
 dotnet clean --verbosity quiet
 rm -rf TestResults/ || true
 rm -rf packages/ || true
 
 # Restore dependencies
-print_status "Restoring dependencies..."
+print_info "Restoring dependencies..."
 dotnet restore
 
 # Build the solution
-print_status "Building solution..."
+print_info "Building solution..."
 if dotnet build --configuration Release --no-restore; then
     print_success "Build completed successfully"
 else
@@ -59,7 +40,7 @@ else
 fi
 
 # Run code formatting check
-print_status "Checking code formatting..."
+print_info "Checking code formatting..."
 if command -v dotnet-format &> /dev/null; then
     if dotnet format --verify-no-changes --verbosity diagnostic; then
         print_success "Code formatting is correct"
@@ -70,75 +51,13 @@ else
     print_warning "dotnet-format not installed. Install with: dotnet tool install -g dotnet-format"
 fi
 
-# Run unit tests with coverage
-print_status "Running unit tests with code coverage..."
-mkdir -p TestResults
-
-if dotnet test tests/AppCore.UnitTests \
-    --configuration Release \
-    --no-build \
-    --logger "trx;LogFileName=unit-tests.trx" \
-    --collect:"XPlat Code Coverage" \
-    --results-directory ./TestResults \
-    --settings "./build/coverage/coverage.runsettings" \
-    --verbosity minimal; then
-    print_success "Unit tests passed"
-else
-    print_error "Unit tests failed"
-    exit 1
-fi
-
-# Run SpecFlow tests
-print_status "Running SpecFlow BDD tests..."
-if dotnet test tests/AppCore.SpecFlow \
-    --configuration Release \
-    --no-build \
-    --logger "trx;LogFileName=specflow-tests.trx" \
-    --results-directory ./TestResults \
-    --collect:"XPlat Code Coverage" \
-    --settings "./build/coverage/coverage.runsettings" \
-    --verbosity minimal; then
-    print_success "SpecFlow tests passed"
-else
-    print_error "SpecFlow tests failed"
-    exit 1
-fi
-
-# Generate coverage report
-print_status "Generating code coverage report..."
-if command -v reportgenerator &> /dev/null; then
-    reportgenerator \
-        "-reports:./TestResults/**/coverage.cobertura.xml" \
-        "-targetdir:./TestResults/Coverage" \
-        "-reporttypes:Html;Cobertura;TextSummary" \
-        "-filefilters:-*.g.cs;-**/obj/**;-**/bin/**" \
-        "-classfilters:-System.Text.Json.SourceGeneration.*" \
-        -verbosity:Warning
-    
-    if [ -f "./TestResults/Coverage/Summary.txt" ]; then
-        print_status "Coverage Summary:"
-        cat "./TestResults/Coverage/Summary.txt"
-        
-        # Extract coverage percentage
-        COVERAGE_LINE=$(grep "Line coverage" "./TestResults/Coverage/Summary.txt" || true)
-        if [ ! -z "$COVERAGE_LINE" ]; then
-            COVERAGE_PERCENT=$(echo "$COVERAGE_LINE" | grep -oE '[0-9]+(\.[0-9]+)?%')
-            COVERAGE_NUM=$(echo "$COVERAGE_PERCENT" | grep -oE '[0-9]+(\.[0-9]+)?')
-            
-            if (( $(echo "$COVERAGE_NUM >= 80" | bc -l 2>/dev/null) )); then
-                print_success "Code coverage ($COVERAGE_PERCENT) meets the 80% threshold"
-            else
-                print_warning "Code coverage ($COVERAGE_PERCENT) is below the 80% threshold"
-            fi
-        fi
-    fi
-else
-    print_warning "ReportGenerator not installed. Install with: dotnet tool install -g dotnet-reportgenerator-globaltool"
-fi
+# Run tests with coverage (delegated to collect-coverage.sh)
+print_info "Running tests and collecting coverage..."
+bash "$SOLUTION_DIR/build/coverage/collect-coverage.sh" --no-build
 
 # Run security analysis
-print_status "Running security analysis..."
-print_status "Checking for vulnerable packages..."
+print_info "Running security analysis..."
+print_info "Checking for vulnerable packages..."
 SECURITY_OUTPUT=$(dotnet list AppCore.sln package --vulnerable --include-transitive 2>&1) || true
 echo "$SECURITY_OUTPUT"
 
@@ -154,16 +73,16 @@ fi
 
 
 # Package creation test
-print_status "Testing package creation..."
+print_info "Testing package creation..."
 if dotnet pack src/AppCore/AppCore.csproj \
     --configuration Release \
     --no-build \
     --output ./packages \
     --verbosity minimal; then
     print_success "Package created successfully"
-    
+
     # List created packages
-    print_status "Created packages:"
+    print_info "Created packages:"
     ls -la packages/*.nupkg packages/*.snupkg 2>/dev/null || true
 else
     print_error "Package creation failed"
@@ -171,10 +90,9 @@ else
 fi
 
 # Final summary
-print_status "Build and analysis summary:"
+print_info "Build and analysis summary:"
 echo "✅ Build: Successful"
-echo "✅ Unit Tests: Passed"
-echo "✅ SpecFlow Tests: Passed"
+echo "✅ Tests & Coverage: Passed"
 echo "✅ Package Creation: Successful"
 
 if [ -f "./TestResults/Coverage/Summary.txt" ]; then
@@ -190,7 +108,7 @@ fi
 print_success "All checks completed successfully! 🎉"
 
 echo ""
-print_status "Next steps:"
+print_info "Next steps:"
 echo "  - Review coverage report: open ./TestResults/Coverage/index.html"
 echo "  - Review test results: check ./TestResults/*.trx"
 echo "  - Test package locally:"

@@ -69,78 +69,33 @@ jobs:
     - name: NativeAOT Compilation (Dry Run)
       if: matrix.mode == 'aot'
       run: |
-        echo "::group::NativeAOT Compilation"
+        source build/scripts/common.sh
+        RUNTIME_ID="${AOT_RUNTIME:-$(detect_runtime_id)}"
+        echo "::group::NativeAOT Compilation (${RUNTIME_ID})"
         dotnet publish src/AppCore/AppCore.csproj \
           --configuration Release \
-          --runtime linux-x64 \
+          --runtime "$RUNTIME_ID" \
           -p:PublishAot=true \
           -p:InvariantGlobalization=true \
           --self-contained \
           -o ./aot-output
         EXIT_CODE=$?
         echo "::endgroup::"
-        
+
         if [ $EXIT_CODE -ne 0 ]; then
           echo "::error title=NativeAOT Failed::NativeAOT compilation failed with exit code $EXIT_CODE"
           exit $EXIT_CODE
         fi
-        
+
         # Cleanup
         rm -rf ./aot-output
         echo "::notice title=NativeAOT Passed::NativeAOT compilation successful"
 
-    # JIT Specific: Unit Tests
-    - name: Run unit tests
+    # JIT Specific: Tests + Coverage (delegated to collect-coverage.sh)
+    - name: Run tests and collect coverage
       if: matrix.mode == 'jit'
-      id: unit-tests
-      run: |
-        echo "::group::Running unit tests"
-        dotnet test tests/AppCore.UnitTests \
-          --configuration ${{ env.BUILD_CONFIGURATION }} \
-          --no-build \
-          --logger "trx;LogFileName=unit-tests.trx" \
-          --collect:"XPlat Code Coverage" \
-          --settings "./build/coverage/coverage.runsettings" \
-          --results-directory ./TestResults
-        EXIT_CODE=$?
-        echo "::endgroup::"
-        if [ $EXIT_CODE -ne 0 ]; then
-          echo "::error title=Unit Tests Failed::Unit tests failed with exit code $EXIT_CODE"
-          exit $EXIT_CODE
-        fi
-        echo "::notice title=Unit Tests Passed::All unit tests passed successfully"
-    
-    # JIT Specific: SpecFlow Tests
-    - name: Run SpecFlow tests
-      if: matrix.mode == 'jit'
-      id: specflow-tests
-      run: |
-        echo "::group::Running SpecFlow tests"
-        dotnet test tests/AppCore.SpecFlow \
-          --configuration ${{ env.BUILD_CONFIGURATION }} \
-          --no-build \
-          --logger "trx;LogFileName=specflow-tests.trx" \
-          --collect:"XPlat Code Coverage" \
-          --settings "./build/coverage/coverage.runsettings" \
-          --results-directory ./TestResults
-        EXIT_CODE=$?
-        echo "::endgroup::"
-        if [ $EXIT_CODE -ne 0 ]; then
-          echo "::error title=SpecFlow Tests Failed::SpecFlow tests failed with exit code $EXIT_CODE"
-          exit $EXIT_CODE
-        fi
-        echo "::notice title=SpecFlow Tests Passed::All SpecFlow tests passed successfully"
-    
-    # JIT Specific: Coverage Report
-    - name: Generate code coverage report
-      if: matrix.mode == 'jit'
-      run: |
-        dotnet tool install --global dotnet-reportgenerator-globaltool
-        reportgenerator \
-          "-reports:./TestResults/**/coverage.cobertura.xml" \
-          "-targetdir:./TestResults/Coverage" \
-          "-reporttypes:Html;Cobertura"
-    
+      run: bash build/coverage/collect-coverage.sh --no-build
+
     # JIT Specific: Upload Results
     - name: Upload test results
       uses: actions/upload-artifact@v4
@@ -148,41 +103,13 @@ jobs:
       with:
         name: test-results
         path: ./TestResults/**/*.trx
-    
+
     - name: Upload coverage reports
       uses: actions/upload-artifact@v4
       if: matrix.mode == 'jit' && always()
       with:
         name: coverage-report
         path: ./TestResults/Coverage/
-    
-    # JIT Specific: Coverage Gate
-    - name: Code Coverage Summary
-      if: matrix.mode == 'jit'
-      id: coverage-gate
-      run: |
-        echo "::group::Validating code coverage"
-        if [ ! -f ./TestResults/Coverage/Cobertura.xml ]; then
-          echo "::error title=Coverage Report Missing::Cobertura.xml not found in ./TestResults/Coverage/"
-          exit 1
-        fi
-        
-        COVERAGE_PERCENTAGE=$(grep -oPm1 'line-rate="\K[^"]*' ./TestResults/Coverage/Cobertura.xml | awk '{printf "%.1f", $1 * 100}')
-        
-        if [ -z "$COVERAGE_PERCENTAGE" ]; then
-          echo "::error title=Coverage Parse Failed::Could not parse coverage percentage from Cobertura.xml"
-          exit 1
-        fi
-        
-        echo "::endgroup::"
-        echo "📊 Code Coverage: ${COVERAGE_PERCENTAGE}%"
-        
-        if (( $(echo "${COVERAGE_PERCENTAGE} < 80" | bc -l) )); then
-          echo "::error title=Coverage Below Threshold::Code coverage ${COVERAGE_PERCENTAGE}% is below 80% threshold"
-          exit 1
-        else
-          echo "::notice title=Coverage Gate Passed::Code coverage ${COVERAGE_PERCENTAGE}% meets 80% threshold"
-        fi
 
   # Job 2: Code Quality Analysis
   code-quality:

@@ -6,41 +6,15 @@
 
 set -e
 
-# Colors for output
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-CYAN='\033[0;36m'
-NC='\033[0m' # No Color
-
-print_info() {
-    echo -e "${BLUE}[INFO]${NC} $1"
-}
-
-print_success() {
-    echo -e "${GREEN}[SUCCESS]${NC} $1"
-}
-
-print_warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1"
-}
-
-print_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-}
-
-print_section() {
-    echo -e "${CYAN}===================================================================${NC}"
-    echo -e "${CYAN}  $1${NC}"
-    echo -e "${CYAN}===================================================================${NC}"
-}
+# Load shared functions and configuration
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+source "$SCRIPT_DIR/common.sh"
 
 # Configuration
-SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 SOLUTION_DIR=$(cd "$SCRIPT_DIR/../.." && pwd)
 AOT_PROJECT_DIR="$SOLUTION_DIR/samples/AotTestApp"
-PUBLISH_DIR="$AOT_PROJECT_DIR/bin/Release/net10.0/linux-x64/publish"
+RUNTIME_ID="${AOT_RUNTIME:-$(detect_runtime_id)}"
+PUBLISH_DIR="$AOT_PROJECT_DIR/bin/Release/net10.0/$RUNTIME_ID/publish"
 AOT_RESULTS_DIR="$SOLUTION_DIR/TestResults/AOT"
 WEB_PORT=5280
 
@@ -93,7 +67,7 @@ PUBLISH_START=$(date +%s)
 
 dotnet publish "$AOT_PROJECT_DIR/AotTestApp.csproj" \
     --configuration Release \
-    --runtime linux-x64 \
+    --runtime "$RUNTIME_ID" \
     --self-contained \
     --output "$PUBLISH_DIR" \
     --verbosity normal 2>&1 | tee "$AOT_RESULTS_DIR/publish.log"
@@ -312,7 +286,7 @@ AppCore NativeAOT Validation Summary
 ====================================
 Date:                   $(date)
 Build Configuration:    Release
-Target Runtime:         linux-x64 (NativeAOT)
+Target Runtime:         $RUNTIME_ID (NativeAOT)
 Total Execution Time:   ${MINUTES}m ${SECONDS}s
 
 ═══════════════════════════════════════════════════════════════════
