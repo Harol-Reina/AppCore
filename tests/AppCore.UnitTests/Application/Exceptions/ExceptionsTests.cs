@@ -119,6 +119,6 @@ public class ExceptionsTests {
         // Assert
         messageLog.Should().NotBeNull();
         messageLog.Message.Should().Be("Mapping failed");
-        messageLog.Tipo.Should().Be(nameof(MappingException));
+        messageLog.Type.Should().Be(nameof(MappingException));
     }
 }

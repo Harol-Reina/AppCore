@@ -29,15 +29,35 @@ public class CustomException : Exception {
                               [CallerFilePath] string sourceFilePath = "",
                               [CallerLineNumber] int sourceLineNumber = 0) : base(error.Message) {
         MessageLog = new MessageLog {
-            Tipo = GetType().Name,
+            Type = GetType().Name,
             Source = base.Source,
             Message = error,
-            Metodo = memberName,
+            Method = memberName,
             Path = $"{sourceFilePath} Line: {sourceLineNumber}",
         };
     }
     public override string ToString()
          => MessageLog.ToString();
+}
+
+internal static class ExceptionHelpers {
+    /// <summary>
+    /// Collects all inner exception messages into a single newline-separated string.
+    /// </summary>
+    internal static string? CollectInnerMessages(Exception? innerException) {
+        if (innerException is null)
+            return null;
+
+        var sb = new System.Text.StringBuilder();
+        var current = innerException;
+        while (current is not null) {
+            if (sb.Length > 0)
+                sb.Append("\n\t\t");
+            sb.Append(current.Message);
+            current = current.InnerException;
+        }
+        return sb.ToString();
+    }
 }
 
 /// <summary>

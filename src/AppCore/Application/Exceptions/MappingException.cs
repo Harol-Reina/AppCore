@@ -35,31 +35,13 @@ internal sealed class MappingException : Exception {
         }
 
         _message = new MessageLog {
-            Tipo = nameof(MappingException),
+            Type = nameof(MappingException),
             Source = sourceFilePath,
             Message = message,
-            Metodo = memberName,
+            Method = memberName,
             Path = $"{sourceFilePath}:{sourceLineNumber}",
             StackTrace = StackTrace ?? string.Empty
         };
-    }
-
-    /// <summary>
-    /// Legacy constructor for compatibility with AutoMapper exceptions.
-    /// This maintains compatibility while removing the AutoMapper dependency.
-    /// </summary>
-    /// <param name="autoMapperMessage">The AutoMapper-style error message</param>
-    /// <param name="memberName">The calling member name (automatically captured)</param>
-    /// <param name="sourceFilePath">The source file path (automatically captured)</param>
-    /// <param name="sourceLineNumber">The source line number (automatically captured)</param>
-    [Obsolete("Use the main constructor without AutoMapper dependency")]
-    public MappingException(
-        string autoMapperMessage,
-        [CallerMemberName] string memberName = "",
-        [CallerFilePath] string sourceFilePath = "",
-        [CallerLineNumber] int sourceLineNumber = 0)
-        : this("Object mapping configuration error: " + autoMapperMessage, null, memberName, sourceFilePath, sourceLineNumber) {
-        Errors.Add("LegacyAutoMapperError", autoMapperMessage);
     }
 
     /// <summary>
