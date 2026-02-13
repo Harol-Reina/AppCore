@@ -1,8 +1,6 @@
 - name: Home
   href: index.md
-- name: API Reference
-  href: API-Reference.md
-- name: Guides
-  href: guides/toc.yml
-- name: Technical Reports
-  href: technical/toc.yml
+- name: Release Process
+  href: guides/Release-Process.md
+- name: Versioning Guide
+  href: guides/Versioning-Guide.md
