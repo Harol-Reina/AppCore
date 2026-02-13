@@ -6,9 +6,7 @@
         <Configuration>
           <Format>cobertura</Format>
           <Include>[OrionSoft.AppCore]*</Include>
-          <Exclude>[OrionSoft.AppCore]AppCore.Infrastructure.Data.*.DAOs.*</Exclude>
-          <Exclude>[OrionSoft.AppCore]AppCore.Infrastructure.Data.Interceptors.*</Exclude>
-          <Exclude>[OrionSoft.AppCore]AppCore.Infrastructure.Converters.*</Exclude>
+          <Exclude>[OrionSoft.AppCore]OrionSoft.AppCore.Infrastructure.Data.*.DAOs.*</Exclude>
           <Exclude>[*.Tests]*</Exclude>
           <Exclude>[*.SpecFlow]*</Exclude>
           <Exclude>[*]*.Generated.*</Exclude>
@@ -18,7 +16,6 @@
           <ExcludeByFile>**/Migrations/*.cs</ExcludeByFile>
           <ExcludeByFile>**/Program.cs</ExcludeByFile>
           <ExcludeByFile>**/Startup.cs</ExcludeByFile>
-          <ExcludeByAttribute>Obsolete</ExcludeByAttribute>
           <ExcludeByAttribute>GeneratedCodeAttribute</ExcludeByAttribute>
           <ExcludeByAttribute>CompilerGeneratedAttribute</ExcludeByAttribute>
           <ExcludeByAttribute>ExcludeFromCodeCoverage</ExcludeByAttribute>
