@@ -7,7 +7,7 @@ using Xunit;
 
 namespace AppCore.UnitTests.Application.Middleware;
 
-public class HttpClientCustomHandlerTests {
+public class ExceptionHandlingMiddlewareTests {
     [Fact]
     public async Task Invoke_WithXTraceIdHeader_ShouldUseProvidedTraceId() {
         // Arrange
@@ -18,7 +18,7 @@ public class HttpClientCustomHandlerTests {
             nextCalled = true;
             return Task.CompletedTask;
         };
-        var handler = new HttpClientCustomHandler(next);
+        var handler = new ExceptionHandlingMiddleware(next);
 
         // Act
         await handler.Invoke(context);
@@ -36,7 +36,7 @@ public class HttpClientCustomHandlerTests {
             nextCalled = true;
             return Task.CompletedTask;
         };
-        var handler = new HttpClientCustomHandler(next);
+        var handler = new ExceptionHandlingMiddleware(next);
 
         // Act
         await handler.Invoke(context);
@@ -51,7 +51,7 @@ public class HttpClientCustomHandlerTests {
         var context = new DefaultHttpContext();
         context.Response.Body = new MemoryStream();
         RequestDelegate next = _ => throw new NotFoundException("Not found via invoke");
-        var handler = new HttpClientCustomHandler(next);
+        var handler = new ExceptionHandlingMiddleware(next);
 
         // Act
         await handler.Invoke(context);
@@ -69,7 +69,7 @@ public class HttpClientCustomHandlerTests {
         var exception = new NotFoundException("Resource not found");
 
         // Act
-        await HttpClientCustomHandler.HandleExceptionAsync(context, exception);
+        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
@@ -84,7 +84,7 @@ public class HttpClientCustomHandlerTests {
         var exception = new BadRequestException("Invalid input");
 
         // Act
-        await HttpClientCustomHandler.HandleExceptionAsync(context, exception);
+        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
@@ -99,7 +99,7 @@ public class HttpClientCustomHandlerTests {
         var exception = new AuthenticationException("Unauthorized access");
 
         // Act
-        await HttpClientCustomHandler.HandleExceptionAsync(context, exception);
+        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
@@ -114,7 +114,7 @@ public class HttpClientCustomHandlerTests {
         var exception = new ForbiddenAccessException("Forbidden resource");
 
         // Act
-        await HttpClientCustomHandler.HandleExceptionAsync(context, exception);
+        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status403Forbidden);
@@ -129,7 +129,7 @@ public class HttpClientCustomHandlerTests {
         var exception = new ValidationException("Validation failed");
 
         // Act
-        await HttpClientCustomHandler.HandleExceptionAsync(context, exception);
+        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
@@ -144,7 +144,7 @@ public class HttpClientCustomHandlerTests {
         var exception = new InvalidOperationException("Unexpected error");
 
         // Act
-        await HttpClientCustomHandler.HandleExceptionAsync(context, exception);
+        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
@@ -160,7 +160,7 @@ public class HttpClientCustomHandlerTests {
         var exception = new NotFoundException("Item not found");
 
         // Act
-        await HttpClientCustomHandler.HandleExceptionAsync(context, exception);
+        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
 
         // Assert
         responseBody.Length.Should().BeGreaterThan(0);
@@ -175,7 +175,7 @@ public class HttpClientCustomHandlerTests {
         // Arrange
         var context = new DefaultHttpContext();
         context.Request.Headers["X-Trace-ID"] = "existing-trace-123";
-        var method = typeof(HttpClientCustomHandler).GetMethod("GetOrGenerateTraceId",
+        var method = typeof(ExceptionHandlingMiddleware).GetMethod("GetOrGenerateTraceId",
             BindingFlags.NonPublic | BindingFlags.Static);
 
         // Act
@@ -189,7 +189,7 @@ public class HttpClientCustomHandlerTests {
     public void GetOrGenerateTraceId_WithoutTraceId_ShouldGenerateGuid() {
         // Arrange
         var context = new DefaultHttpContext();
-        var method = typeof(HttpClientCustomHandler).GetMethod("GetOrGenerateTraceId",
+        var method = typeof(ExceptionHandlingMiddleware).GetMethod("GetOrGenerateTraceId",
             BindingFlags.NonPublic | BindingFlags.Static);
 
         // Act
@@ -209,7 +209,7 @@ public class HttpClientCustomHandlerTests {
         var exception = new ApiDBException(inner);
 
         // Act
-        await HttpClientCustomHandler.HandleExceptionAsync(context, exception);
+        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
@@ -224,7 +224,7 @@ public class HttpClientCustomHandlerTests {
         var exception = new SerializerException("Serialization error");
 
         // Act
-        await HttpClientCustomHandler.HandleExceptionAsync(context, exception);
+        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
@@ -240,7 +240,7 @@ public class HttpClientCustomHandlerTests {
         var exception = new MappingException("Mapping error", innerException: null) { Errors = errors };
 
         // Act
-        await HttpClientCustomHandler.HandleExceptionAsync(context, exception);
+        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
 
         // Assert
         // MappingException falls into the switch case that returns 500?
@@ -262,7 +262,7 @@ public class HttpClientCustomHandlerTests {
         var exception = new ApiHttpException(inner);
 
         // Act
-        await HttpClientCustomHandler.HandleExceptionAsync(context, exception);
+        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
@@ -278,7 +278,7 @@ public class HttpClientCustomHandlerTests {
         var exception = new CustomException(error);
 
         // Act
-        await HttpClientCustomHandler.HandleExceptionAsync(context, exception);
+        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);

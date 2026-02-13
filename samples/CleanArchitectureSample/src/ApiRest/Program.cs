@@ -76,7 +76,7 @@ if (app.Environment.IsDevelopment()) {
     app.UseCors("prod");
 }
 
-app.UseMiddleware<HttpClientCustomHandler>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapHealthChecks("/health", new HealthCheckOptions {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });

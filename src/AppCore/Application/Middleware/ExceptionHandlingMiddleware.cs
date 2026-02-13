@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AppCore.Application.Middleware;
 
-public sealed class HttpClientCustomHandler(RequestDelegate next) {
+public sealed class ExceptionHandlingMiddleware(RequestDelegate next) {
 
     private readonly RequestDelegate _next = next;
 

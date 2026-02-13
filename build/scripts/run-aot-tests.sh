@@ -216,7 +216,7 @@ else
 fi
 echo ""
 
-# Step 6: Web Endpoint Validation (HttpClientCustomHandler middleware)
+# Step 6: Web Endpoint Validation (ExceptionHandlingMiddleware)
 print_section "Step 6/6: Validating Web Endpoints (Middleware)"
 print_info "Starting AOT binary in web mode on port $WEB_PORT..."
 

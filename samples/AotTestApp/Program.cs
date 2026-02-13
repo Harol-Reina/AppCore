@@ -85,7 +85,7 @@ static void RunWebMode(string[] args) {
 
     var app = builder.Build();
 
-    app.UseMiddleware<HttpClientCustomHandler>();
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
     app.MapEndpoints();
 
     app.Run();
@@ -108,14 +108,14 @@ static void RunBasicIntegrationTests() {
     }
     Console.WriteLine("✓");
 
-    Console.Write("  • PaginationDto with collection expression... ");
-    var pagination = new PaginationDto<string> {
+    Console.Write("  • PaginationResponse with collection expression... ");
+    var pagination = new PaginationResponse<string> {
         Count = 3,
         Pages = 1,
         Results = ["Item1", "Item2", "Item3"]
     };
     if (pagination.Count != 3 || pagination.Results.Count != 3) {
-        throw new Exception("PaginationDto initialization failed");
+        throw new Exception("PaginationResponse initialization failed");
     }
     Console.WriteLine("✓");
 
@@ -181,7 +181,7 @@ static TimeSpan RunPaginationBenchmark(int iterations) {
     var sw = Stopwatch.StartNew();
 
     for (int i = 0; i < iterations; i++) {
-        var dto = new PaginationDto<int> {
+        var dto = new PaginationResponse<int> {
             Count = 10,
             Pages = 2,
             Results = [1, 2, 3, 4, 5]
