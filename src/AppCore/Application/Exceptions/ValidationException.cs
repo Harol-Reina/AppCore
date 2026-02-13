@@ -8,12 +8,12 @@ namespace OrionSoft.AppCore.Application.Exceptions;
 public sealed class ValidationException : CustomException {
     public IDictionary<string, string[]> Errors { get; init; } = new Dictionary<string, string[]>();
 
-    public ValidationException() : base(new DictionaryError("VAL-000", "Validation failed")) {
-        Errors = new Dictionary<string, string[]>();
+    public ValidationException()
+        : base(new DictionaryError("VAL-000", "Validation failed")) {
     }
 
-    public ValidationException(string message) : base(new DictionaryError("VAL-001", message)) {
-        Errors = new Dictionary<string, string[]>();
+    public ValidationException(string message)
+        : base(new DictionaryError("VAL-001", message)) {
     }
 
     public ValidationException(IEnumerable<ValidationFailure> failures,

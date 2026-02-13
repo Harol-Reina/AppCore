@@ -1,15 +1,24 @@
-﻿using System.Reflection;
+using System.Reflection;
 using OrionSoft.AppCore.Application.Exceptions;
 using OrionSoft.AppCore.Application.Middleware;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace OrionSoft.AppCore.UnitTests.Application.Middleware;
 
 public class ExceptionHandlingMiddlewareTests {
+
+    private static ExceptionHandlingMiddleware CreateMiddleware(RequestDelegate next) =>
+        new(next, NullLogger<ExceptionHandlingMiddleware>.Instance);
+
+    private static DefaultHttpContext CreateContextWithBody() {
+        var context = new DefaultHttpContext();
+        context.Response.Body = new MemoryStream();
+        return context;
+    }
+
     [Fact]
     public async Task Invoke_WithXTraceIdHeader_ShouldUseProvidedTraceId() {
         // Arrange
@@ -20,7 +29,7 @@ public class ExceptionHandlingMiddlewareTests {
             nextCalled = true;
             return Task.CompletedTask;
         };
-        var handler = new ExceptionHandlingMiddleware(next, NullLogger<ExceptionHandlingMiddleware>.Instance);
+        var handler = CreateMiddleware(next);
 
         // Act
         await handler.Invoke(context);
@@ -38,7 +47,7 @@ public class ExceptionHandlingMiddlewareTests {
             nextCalled = true;
             return Task.CompletedTask;
         };
-        var handler = new ExceptionHandlingMiddleware(next, NullLogger<ExceptionHandlingMiddleware>.Instance);
+        var handler = CreateMiddleware(next);
 
         // Act
         await handler.Invoke(context);
@@ -50,10 +59,9 @@ public class ExceptionHandlingMiddlewareTests {
     [Fact]
     public async Task Invoke_WhenNextThrows_ShouldHandleExceptionAndSetResponse() {
         // Arrange
-        var context = new DefaultHttpContext();
-        context.Response.Body = new MemoryStream();
+        var context = CreateContextWithBody();
         RequestDelegate next = _ => throw new NotFoundException("Not found via invoke");
-        var handler = new ExceptionHandlingMiddleware(next, NullLogger<ExceptionHandlingMiddleware>.Instance);
+        var handler = CreateMiddleware(next);
 
         // Act
         await handler.Invoke(context);
@@ -64,14 +72,13 @@ public class ExceptionHandlingMiddlewareTests {
     }
 
     [Fact]
-    public async Task HandleExceptionAsync_WithNotFoundException_ShouldReturn404() {
+    public async Task Invoke_WithNotFoundException_ShouldReturn404() {
         // Arrange
-        var context = new DefaultHttpContext();
-        context.Response.Body = new MemoryStream();
-        var exception = new NotFoundException("Resource not found");
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new NotFoundException("Resource not found"));
 
         // Act
-        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
+        await handler.Invoke(context);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
@@ -79,14 +86,13 @@ public class ExceptionHandlingMiddlewareTests {
     }
 
     [Fact]
-    public async Task HandleExceptionAsync_WithBadRequestException_ShouldReturn400() {
+    public async Task Invoke_WithBadRequestException_ShouldReturn400() {
         // Arrange
-        var context = new DefaultHttpContext();
-        context.Response.Body = new MemoryStream();
-        var exception = new BadRequestException("Invalid input");
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new BadRequestException("Invalid input"));
 
         // Act
-        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
+        await handler.Invoke(context);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
@@ -94,14 +100,13 @@ public class ExceptionHandlingMiddlewareTests {
     }
 
     [Fact]
-    public async Task HandleExceptionAsync_WithAuthenticationException_ShouldReturn401() {
+    public async Task Invoke_WithAuthenticationException_ShouldReturn401() {
         // Arrange
-        var context = new DefaultHttpContext();
-        context.Response.Body = new MemoryStream();
-        var exception = new AuthenticationException("Unauthorized access");
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new AuthenticationException("Unauthorized access"));
 
         // Act
-        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
+        await handler.Invoke(context);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
@@ -109,14 +114,13 @@ public class ExceptionHandlingMiddlewareTests {
     }
 
     [Fact]
-    public async Task HandleExceptionAsync_WithForbiddenAccessException_ShouldReturn403() {
+    public async Task Invoke_WithForbiddenAccessException_ShouldReturn403() {
         // Arrange
-        var context = new DefaultHttpContext();
-        context.Response.Body = new MemoryStream();
-        var exception = new ForbiddenAccessException("Forbidden resource");
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new ForbiddenAccessException("Forbidden resource"));
 
         // Act
-        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
+        await handler.Invoke(context);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status403Forbidden);
@@ -124,14 +128,13 @@ public class ExceptionHandlingMiddlewareTests {
     }
 
     [Fact]
-    public async Task HandleExceptionAsync_WithValidationException_ShouldReturn400() {
+    public async Task Invoke_WithValidationException_ShouldReturn400() {
         // Arrange
-        var context = new DefaultHttpContext();
-        context.Response.Body = new MemoryStream();
-        var exception = new ValidationException("Validation failed");
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new ValidationException("Validation failed"));
 
         // Act
-        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
+        await handler.Invoke(context);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
@@ -139,14 +142,69 @@ public class ExceptionHandlingMiddlewareTests {
     }
 
     [Fact]
-    public async Task HandleExceptionAsync_WithGenericException_ShouldReturn500() {
+    public async Task Invoke_WithConflictException_ShouldReturn409() {
         // Arrange
-        var context = new DefaultHttpContext();
-        context.Response.Body = new MemoryStream();
-        var exception = new InvalidOperationException("Unexpected error");
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new ConflictException("Resource already exists"));
 
         // Act
-        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
+        await handler.Invoke(context);
+
+        // Assert
+        context.Response.StatusCode.Should().Be(StatusCodes.Status409Conflict);
+        context.Response.ContentType.Should().Be("application/json");
+    }
+
+    [Fact]
+    public async Task Invoke_WithUnprocessableEntityException_ShouldReturn422() {
+        // Arrange
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new UnprocessableEntityException("Semantic error"));
+
+        // Act
+        await handler.Invoke(context);
+
+        // Assert
+        context.Response.StatusCode.Should().Be(422);
+        context.Response.ContentType.Should().Be("application/json");
+    }
+
+    [Fact]
+    public async Task Invoke_WithServiceUnavailableException_ShouldReturn503() {
+        // Arrange
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new ServiceUnavailableException("Redis", "Cache unavailable"));
+
+        // Act
+        await handler.Invoke(context);
+
+        // Assert
+        context.Response.StatusCode.Should().Be(StatusCodes.Status503ServiceUnavailable);
+        context.Response.ContentType.Should().Be("application/json");
+    }
+
+    [Fact]
+    public async Task Invoke_WithGatewayTimeoutException_ShouldReturn504() {
+        // Arrange
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new GatewayTimeoutException("Upstream timed out"));
+
+        // Act
+        await handler.Invoke(context);
+
+        // Assert
+        context.Response.StatusCode.Should().Be(StatusCodes.Status504GatewayTimeout);
+        context.Response.ContentType.Should().Be("application/json");
+    }
+
+    [Fact]
+    public async Task Invoke_WithOperationException_ShouldReturn500() {
+        // Arrange
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new OperationException("Operation failed"));
+
+        // Act
+        await handler.Invoke(context);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
@@ -154,20 +212,32 @@ public class ExceptionHandlingMiddlewareTests {
     }
 
     [Fact]
-    public async Task HandleExceptionAsync_ShouldWriteResponseBody() {
+    public async Task Invoke_WithGenericException_ShouldReturn500() {
         // Arrange
-        var context = new DefaultHttpContext();
-        var responseBody = new MemoryStream();
-        context.Response.Body = responseBody;
-        var exception = new NotFoundException("Item not found");
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new InvalidOperationException("Unexpected error"));
 
         // Act
-        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
+        await handler.Invoke(context);
 
         // Assert
-        responseBody.Length.Should().BeGreaterThan(0);
-        responseBody.Position = 0;
-        using var reader = new StreamReader(responseBody);
+        context.Response.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
+        context.Response.ContentType.Should().Be("application/json");
+    }
+
+    [Fact]
+    public async Task Invoke_ShouldWriteResponseBody() {
+        // Arrange
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new NotFoundException("Item not found"));
+
+        // Act
+        await handler.Invoke(context);
+
+        // Assert
+        context.Response.Body.Length.Should().BeGreaterThan(0);
+        context.Response.Body.Position = 0;
+        using var reader = new StreamReader(context.Response.Body);
         var content = await reader.ReadToEndAsync();
         content.Should().Contain("Item not found");
     }
@@ -203,15 +273,13 @@ public class ExceptionHandlingMiddlewareTests {
     }
 
     [Fact]
-    public async Task HandleExceptionAsync_WithApiDBException_ShouldReturn400() {
+    public async Task Invoke_WithApiDBException_ShouldReturn400() {
         // Arrange
-        var context = new DefaultHttpContext();
-        context.Response.Body = new MemoryStream();
-        var inner = new Exception("DB Error");
-        var exception = new ApiDBException(inner);
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new ApiDBException(new Exception("DB Error")));
 
         // Act
-        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
+        await handler.Invoke(context);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
@@ -219,14 +287,13 @@ public class ExceptionHandlingMiddlewareTests {
     }
 
     [Fact]
-    public async Task HandleExceptionAsync_WithSerializerException_ShouldReturn500() {
+    public async Task Invoke_WithSerializerException_ShouldReturn500() {
         // Arrange
-        var context = new DefaultHttpContext();
-        context.Response.Body = new MemoryStream();
-        var exception = new SerializerException("Serialization error");
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new SerializerException("Serialization error"));
 
         // Act
-        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
+        await handler.Invoke(context);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
@@ -234,37 +301,29 @@ public class ExceptionHandlingMiddlewareTests {
     }
 
     [Fact]
-    public async Task HandleExceptionAsync_WithMappingException_ShouldReturn500() {
+    public async Task Invoke_WithMappingException_ShouldReturn500() {
         // Arrange
-        var context = new DefaultHttpContext();
-        context.Response.Body = new MemoryStream();
-        var errors = new Dictionary<string, string> { { "Key", "Value" } };
-        var exception = new MappingException("Mapping error", innerException: null) { Errors = errors };
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new MappingException("Mapping error", innerException: null) {
+            Errors = new Dictionary<string, string> { { "Key", "Value" } }
+        });
 
         // Act
-        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
+        await handler.Invoke(context);
 
         // Assert
-        // MappingException falls into the switch case that returns 500?
-        // Let's check the handler code.
-        // MappingException mappingException => ...
-        // Status code switch: 
-        // ValidationException or ApiDBException or ApiHttpException or CustomException => StatusCodes.Status400BadRequest
-        // MappingException isn't listed in the 400 group, so it goes to default 500.
         context.Response.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
         context.Response.ContentType.Should().Be("application/json");
     }
 
     [Fact]
-    public async Task HandleExceptionAsync_WithApiHttpException_ShouldReturn400() {
+    public async Task Invoke_WithApiHttpException_ShouldReturn400() {
         // Arrange
-        var context = new DefaultHttpContext();
-        context.Response.Body = new MemoryStream();
-        var inner = new HttpRequestException("HTTP Error");
-        var exception = new ApiHttpException(inner);
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new ApiHttpException(new HttpRequestException("HTTP Error")));
 
         // Act
-        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
+        await handler.Invoke(context);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
@@ -272,15 +331,13 @@ public class ExceptionHandlingMiddlewareTests {
     }
 
     [Fact]
-    public async Task HandleExceptionAsync_WithCustomException_ShouldReturn400() {
+    public async Task Invoke_WithCustomException_ShouldReturn400() {
         // Arrange
-        var context = new DefaultHttpContext();
-        context.Response.Body = new MemoryStream();
-        var error = new DictionaryError { Code = "TEST", Message = "Custom Error" };
-        var exception = new CustomException(error);
+        var context = CreateContextWithBody();
+        var handler = CreateMiddleware(_ => throw new CustomException(new DictionaryError { Code = "TEST", Message = "Custom Error" }));
 
         // Act
-        await ExceptionHandlingMiddleware.HandleExceptionAsync(context, exception);
+        await handler.Invoke(context);
 
         // Assert
         context.Response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);

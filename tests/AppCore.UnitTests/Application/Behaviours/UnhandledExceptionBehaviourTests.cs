@@ -1,11 +1,10 @@
-﻿using OrionSoft.AppCore.Application.Behaviours;
+using OrionSoft.AppCore.Application.Behaviours;
 using OrionSoft.AppCore.Application.Exceptions;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
-using static OrionSoft.AppCore.Application.Exceptions.CustomException;
 
 namespace OrionSoft.AppCore.UnitTests.Application.Behaviours;
 
@@ -44,7 +43,10 @@ public class UnhandledExceptionBehaviourTests {
     [InlineData(typeof(BadRequestException))]
     [InlineData(typeof(ForbiddenAccessException))]
     [InlineData(typeof(AuthenticationException))]
-    [InlineData(typeof(HttpBaseException))]
+    [InlineData(typeof(ConflictException))]
+    [InlineData(typeof(UnprocessableEntityException))]
+    [InlineData(typeof(ServiceUnavailableException))]
+    [InlineData(typeof(GatewayTimeoutException))]
     [InlineData(typeof(MappingException))]
     [InlineData(typeof(SerializerException))]
     [InlineData(typeof(CustomException))]
@@ -132,7 +134,10 @@ public class UnhandledExceptionBehaviourTests {
             nameof(BadRequestException) => new BadRequestException("Test message"),
             nameof(ForbiddenAccessException) => new ForbiddenAccessException("Test message"),
             nameof(AuthenticationException) => new AuthenticationException("Test message"),
-            nameof(HttpBaseException) => new HttpBaseException("Test HTTP base exception", 500),
+            nameof(ConflictException) => new ConflictException("Test conflict"),
+            nameof(UnprocessableEntityException) => new UnprocessableEntityException("Test unprocessable"),
+            nameof(ServiceUnavailableException) => new ServiceUnavailableException("TestService", "Test unavailable"),
+            nameof(GatewayTimeoutException) => new GatewayTimeoutException("Test timeout"),
             nameof(MappingException) => new MappingException("Test mapping exception", (Exception?)null),
             nameof(SerializerException) => new SerializerException(new System.Text.Json.JsonException("Test serialization")),
             nameof(CustomException) => new CustomException(new DictionaryError("TEST-001", "Test custom exception")),

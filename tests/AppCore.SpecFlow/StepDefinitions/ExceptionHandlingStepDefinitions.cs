@@ -1,4 +1,4 @@
-﻿using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Exceptions;
 using FluentAssertions;
 using TechTalk.SpecFlow;
 
@@ -40,6 +40,26 @@ public class ExceptionHandlingStepDefinitions {
         _errorMessage = "Authentication failed: Invalid credentials";
     }
 
+    [Given(@"I have a resource conflict")]
+    public void GivenIHaveAResourceConflict() {
+        _errorMessage = "Resource already exists";
+    }
+
+    [Given(@"I have semantically invalid data")]
+    public void GivenIHaveSemanticallyInvalidData() {
+        _errorMessage = "The entity cannot be processed";
+    }
+
+    [Given(@"I have a service that is down")]
+    public void GivenIHaveAServiceThatIsDown() {
+        _errorMessage = "Payment service is unavailable";
+    }
+
+    [Given(@"I have an upstream service timeout")]
+    public void GivenIHaveAnUpstreamServiceTimeout() {
+        _errorMessage = "Upstream service timed out";
+    }
+
     [Given(@"I have various AppCore exceptions")]
     public void GivenIHaveVariousAppCoreExceptions() {
         // Will be used for hierarchy testing
@@ -63,6 +83,26 @@ public class ExceptionHandlingStepDefinitions {
     [When(@"I create an AuthenticationException with details")]
     public void WhenICreateAnAuthenticationExceptionWithDetails() {
         _thrownException = new AuthenticationException(_errorMessage!);
+    }
+
+    [When(@"I create a ConflictException with details")]
+    public void WhenICreateAConflictExceptionWithDetails() {
+        _thrownException = new ConflictException(_errorMessage!);
+    }
+
+    [When(@"I create an UnprocessableEntityException with details")]
+    public void WhenICreateAnUnprocessableEntityExceptionWithDetails() {
+        _thrownException = new UnprocessableEntityException(_errorMessage!);
+    }
+
+    [When(@"I create a ServiceUnavailableException with details")]
+    public void WhenICreateAServiceUnavailableExceptionWithDetails() {
+        _thrownException = new ServiceUnavailableException("PaymentGateway", _errorMessage!);
+    }
+
+    [When(@"I create a GatewayTimeoutException with details")]
+    public void WhenICreateAGatewayTimeoutExceptionWithDetails() {
+        _thrownException = new GatewayTimeoutException(_errorMessage!);
     }
 
     [When(@"I check their inheritance chain")]
@@ -124,6 +164,54 @@ public class ExceptionHandlingStepDefinitions {
         _thrownException.Should().BeOfType<AuthenticationException>();
     }
 
+    [Then(@"the exception should have the conflict message")]
+    public void ThenTheExceptionShouldHaveTheConflictMessage() {
+        _thrownException.Should().NotBeNull();
+        _thrownException!.Message.Should().Be(_errorMessage);
+    }
+
+    [Then(@"the exception should be of type ConflictException")]
+    public void ThenTheExceptionShouldBeOfTypeConflictException() {
+        _thrownException.Should().NotBeNull();
+        _thrownException.Should().BeOfType<ConflictException>();
+    }
+
+    [Then(@"the exception should have the unprocessable message")]
+    public void ThenTheExceptionShouldHaveTheUnprocessableMessage() {
+        _thrownException.Should().NotBeNull();
+        _thrownException!.Message.Should().Be(_errorMessage);
+    }
+
+    [Then(@"the exception should be of type UnprocessableEntityException")]
+    public void ThenTheExceptionShouldBeOfTypeUnprocessableEntityException() {
+        _thrownException.Should().NotBeNull();
+        _thrownException.Should().BeOfType<UnprocessableEntityException>();
+    }
+
+    [Then(@"the exception should have the service unavailable message")]
+    public void ThenTheExceptionShouldHaveTheServiceUnavailableMessage() {
+        _thrownException.Should().NotBeNull();
+        _thrownException!.Message.Should().Be(_errorMessage);
+    }
+
+    [Then(@"the exception should be of type ServiceUnavailableException")]
+    public void ThenTheExceptionShouldBeOfTypeServiceUnavailableException() {
+        _thrownException.Should().NotBeNull();
+        _thrownException.Should().BeOfType<ServiceUnavailableException>();
+    }
+
+    [Then(@"the exception should have the timeout message")]
+    public void ThenTheExceptionShouldHaveTheTimeoutMessage() {
+        _thrownException.Should().NotBeNull();
+        _thrownException!.Message.Should().Be(_errorMessage);
+    }
+
+    [Then(@"the exception should be of type GatewayTimeoutException")]
+    public void ThenTheExceptionShouldBeOfTypeGatewayTimeoutException() {
+        _thrownException.Should().NotBeNull();
+        _thrownException.Should().BeOfType<GatewayTimeoutException>();
+    }
+
     [Then(@"all public exceptions should inherit from CustomException")]
     public void ThenAllPublicExceptionsShouldInheritFromCustomException() {
         var exceptionTypes = new[]
@@ -132,7 +220,12 @@ public class ExceptionHandlingStepDefinitions {
             typeof(NotFoundException),
             typeof(BadRequestException),
             typeof(AuthenticationException),
-            typeof(ForbiddenAccessException)
+            typeof(ForbiddenAccessException),
+            typeof(ConflictException),
+            typeof(UnprocessableEntityException),
+            typeof(ServiceUnavailableException),
+            typeof(GatewayTimeoutException),
+            typeof(OperationException)
         };
 
         foreach (var exceptionType in exceptionTypes) {
@@ -158,7 +251,12 @@ public class ExceptionHandlingStepDefinitions {
             typeof(NotFoundException),
             typeof(BadRequestException),
             typeof(AuthenticationException),
-            typeof(ForbiddenAccessException)
+            typeof(ForbiddenAccessException),
+            typeof(ConflictException),
+            typeof(UnprocessableEntityException),
+            typeof(ServiceUnavailableException),
+            typeof(GatewayTimeoutException),
+            typeof(OperationException)
         };
 
         foreach (var exceptionType in specificExceptions) {

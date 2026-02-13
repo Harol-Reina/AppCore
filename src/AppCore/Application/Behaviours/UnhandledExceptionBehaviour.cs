@@ -1,5 +1,4 @@
-﻿using System.Collections.Frozen;
-using System.Text;
+using System.Collections.Frozen;
 using OrionSoft.AppCore.Application.Exceptions;
 using OrionSoft.AppCore.Application.Extensions;
 using OrionSoft.AppCore.Application.Wrappers;
@@ -21,21 +20,17 @@ internal sealed class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<U
     /// <summary>
     /// Handles the request and manages any unhandled exceptions using AOT-compatible pattern matching.
     /// </summary>
-    /// <param name="request">The request being processed</param>
-    /// <param name="next">The next handler in the pipeline</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The response from the next handler</returns>
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken) {
         try {
             return await next().ConfigureAwait(false);
         } catch (Exception ex) {
             // AOT-compatible exception handling using pattern matching instead of reflection
             if (IsKnownException(ex)) {
-                _logger.LogError("CleanArchitecture Request: {Request}", request);
+                _logger.LogError("AppCore Request: {Request}", request);
                 throw;
             } else {
                 var innerMessage = ex.InnerException != null
-                    ? CollectInnerMessages(ex.InnerException)
+                    ? ExceptionHelpers.CollectInnerMessages(ex.InnerException)
                     : string.Empty;
                 var message = new MessageLog {
                     Type = ex.GetType().Name,
@@ -49,7 +44,7 @@ internal sealed class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<U
                             .FirstOrDefault() ?? string.Empty,
                     StackTrace = innerMessage
                 };
-                _logger.LogError("CleanArchitecture Request: {Request} \n{Message}", request, message);
+                _logger.LogError("AppCore Request: {Request} \n{Message}", request, message);
                 throw;
             }
         }
@@ -62,12 +57,15 @@ internal sealed class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<U
         typeof(ApiDBException),
         typeof(ApiHttpException),
         typeof(CustomException),
-        typeof(HttpBaseException),
         typeof(BadRequestException),
         typeof(NotFoundException),
         typeof(ForbiddenAccessException),
         typeof(AuthenticationException),
         typeof(ValidationException),
+        typeof(ConflictException),
+        typeof(UnprocessableEntityException),
+        typeof(ServiceUnavailableException),
+        typeof(GatewayTimeoutException),
         typeof(OperationException),
         typeof(MappingException),
         typeof(SerializerException),
@@ -77,24 +75,6 @@ internal sealed class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<U
     /// AOT-compatible method to check if an exception is a known application exception.
     /// Uses declarative FrozenSet lookup instead of switch expression to minimize cyclomatic complexity.
     /// </summary>
-    /// <param name="exception">The exception to check</param>
-    /// <returns>True if the exception is a known application exception</returns>
     private static bool IsKnownException(Exception exception) =>
         _knownExceptionTypes.Contains(exception.GetType());
-
-    /// <summary>
-    /// Iteratively collects inner exception messages for logging.
-    /// </summary>
-    /// <param name="ex">The first inner exception to process</param>
-    /// <returns>A single-line string with all inner exception messages</returns>
-    private static string CollectInnerMessages(Exception ex) {
-        var sb = new StringBuilder();
-        var current = ex;
-        while (current != null) {
-            if (sb.Length > 0) sb.Append("\n\t\t");
-            sb.Append(current.Message);
-            current = current.InnerException;
-        }
-        return sb.ToString().Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ");
-    }
 }

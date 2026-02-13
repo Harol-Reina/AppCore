@@ -13,12 +13,12 @@ public class GenericDateJsonConverter(string dateFormat) : JsonConverter<DateTim
     public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
         var value = reader.GetString();
         if (string.IsNullOrEmpty(value))
-            throw new JsonException($"No se puede convertir valor vacío a DateTime");
+            throw new JsonException("Cannot convert empty value to DateTime");
 
         if (DateTime.TryParseExact(value, _dateFormat, null, DateTimeStyles.None, out var date))
             return date;
 
-        throw new JsonException($"No se puede convertir '{value}' a DateTime usando el formato {_dateFormat}");
+        throw new JsonException($"Cannot convert '{value}' to DateTime using format {_dateFormat}");
     }
 
     public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options) {

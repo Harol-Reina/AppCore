@@ -1,4 +1,4 @@
-﻿using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Exceptions;
 using FluentAssertions;
 using Xunit;
 
@@ -17,8 +17,10 @@ public class ExceptionsTests {
 
         // Assert
         apiException.Should().NotBeNull();
+        apiException.Should().BeAssignableTo<CustomException>();
         apiException.Message.Should().Contain("An error occurred validating an operation in the DB");
-        apiException.ToString().Should().Contain("Inner Error");
+        apiException.Error.Code.Should().Be("API-DB-001");
+        apiException.Error.Exception.Should().Contain("Inner Error");
     }
 
     [Fact]
@@ -32,13 +34,12 @@ public class ExceptionsTests {
         var apiException = new ApiDBException(outer);
 
         // Assert
-        var text = apiException.ToString();
-        text.Should().Contain("Middle DB error");
-        text.Should().Contain("Innermost DB error");
+        apiException.Error.Exception.Should().Contain("Middle DB error");
+        apiException.Error.Exception.Should().Contain("Innermost DB error");
     }
 
     [Fact]
-    public void ApiDBException_WithoutInnerException_ShouldNotContainStackTrace() {
+    public void ApiDBException_WithoutInnerException_ShouldHaveExceptionMessage() {
         // Arrange
         var ex = new Exception("Simple error");
 
@@ -46,7 +47,7 @@ public class ExceptionsTests {
         var apiException = new ApiDBException(ex);
 
         // Assert
-        apiException.ToString().Should().Contain("Simple error");
+        apiException.Error.Exception.Should().Contain("Simple error");
     }
 
     [Fact]
@@ -59,9 +60,11 @@ public class ExceptionsTests {
 
         // Assert
         exception.Should().NotBeNull();
+        exception.Should().BeAssignableTo<CustomException>();
         exception.Message.Should().Contain("An error occurred while serializing or deserializing an object");
         exception.MessageLog.Should().NotBeNull();
-        exception.MessageLog.Message.GetString().Should().Be("Serialization Failed");
+        exception.Error.Code.Should().Be("SERIALIZER-001");
+        exception.Error.Exception.Should().Contain("Serialization Failed");
     }
 
     [Fact]
@@ -75,9 +78,8 @@ public class ExceptionsTests {
         var exception = new SerializerException(outer);
 
         // Assert
-        var text = exception.ToString();
-        text.Should().Contain("JSON parse error");
-        text.Should().Contain("Root cause");
+        exception.Error.Exception.Should().Contain("JSON parse error");
+        exception.Error.Exception.Should().Contain("Root cause");
     }
 
     [Fact]
@@ -105,20 +107,30 @@ public class ExceptionsTests {
         exception.Should().NotBeNull();
         exception.Message.Should().Contain("An error occurred while serializing or deserializing an object");
         exception.MessageLog.Should().NotBeNull();
-        exception.MessageLog.Message.GetString().Should().Be(message);
+        exception.Error.Code.Should().Be("SERIALIZER-002");
+        exception.Error.ProviderMessage.Should().NotBeNull();
     }
 
     [Fact]
-    public void MappingException_GetMessageLog_ShouldReturnMessageLog() {
+    public void MappingException_ShouldInheritFromCustomException() {
         // Arrange
         var exception = new MappingException("Mapping failed", new InvalidOperationException("Source null"));
 
-        // Act
-        var messageLog = exception.GetMessageLog();
+        // Act & Assert
+        exception.Should().BeAssignableTo<CustomException>();
+        exception.MessageLog.Should().NotBeNull();
+        exception.Error.Code.Should().Be("MAPPING-001");
+        exception.Error.Message.Should().Be("Mapping failed");
+    }
+
+    [Fact]
+    public void MappingException_WithInnerException_ShouldPopulateErrors() {
+        // Arrange & Act
+        var exception = new MappingException("Mapping failed", new InvalidOperationException("Source null"));
 
         // Assert
-        messageLog.Should().NotBeNull();
-        messageLog.Message.GetString().Should().Be("Mapping failed");
-        messageLog.Type.Should().Be(nameof(MappingException));
+        exception.Errors.Should().ContainKey("InnerExceptionType");
+        exception.Errors["InnerExceptionType"].Should().Be("InvalidOperationException");
+        exception.Errors["InnerExceptionMessage"].Should().Be("Source null");
     }
 }

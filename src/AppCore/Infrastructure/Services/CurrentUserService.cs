@@ -1,4 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+using System.IdentityModel.Tokens.Jwt;
 using System.Runtime.CompilerServices;
 using OrionSoft.AppCore.Application.Exceptions;
 using OrionSoft.AppCore.Application.Interfaces;
@@ -14,7 +14,7 @@ internal sealed class CurrentUserService(IHttpContextAccessor httpContextAccesso
         if (httpContext.Request.Headers.TryGetValue(headerName, out var headerValues)) {
             return headerValues.FirstOrDefault()?.Trim();
         }
-        return null; // Devuelve null si no existe el encabezado
+        return null; // Returns null if the header does not exist
     }
 
     public string GetXtraceId([CallerMemberName] string memberName = "",
@@ -28,26 +28,26 @@ internal sealed class CurrentUserService(IHttpContextAccessor httpContextAccesso
         return traceId;
     }
 
-    // Método para obtener un encabezado obligatorio
+    // Method to get a required header value
     private static string GetRequiredHeaderValue(HttpContext httpContext, string headerName, string displayName, [CallerMemberName] string memberName = "",
                                                  [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0) {
         var value = GetOptionalHeaderValue(httpContext, headerName);
         if (string.IsNullOrEmpty(value)) {
-            // para guardarlo en la base de datos con createdby y updatedby
+            // Used for storing in the database with createdby and updatedby
             throw new AuthenticationException($"{displayName} not found in headers.", memberName, sourceFilePath, sourceLineNumber);
         }
         return value;
     }
 
-    // Método para obtener un claim obligatorio
+    // Method to get a required claim value
     private static string GetRequiredClaimValue(JwtSecurityToken token, string claimType, [CallerMemberName] string memberName = "",
                                                 [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0) {
         var claim = token.Claims.FirstOrDefault(c => c.Type == claimType)?.Value;
         if (string.IsNullOrEmpty(claim)) {
-            throw new CustomException(
-                new DictionaryError("AUTH-001", "No se pudo obtener el usuario", $"the required claim {claimType} not found in token claims."),
+            throw new AuthenticationException(
+                $"Required claim '{claimType}' not found in token claims.",
                 memberName, sourceFilePath, sourceLineNumber
-          );
+            );
         }
         return claim;
     }
@@ -55,26 +55,26 @@ internal sealed class CurrentUserService(IHttpContextAccessor httpContextAccesso
     public string GetUserId([CallerMemberName] string memberName = "",
                             [CallerFilePath] string sourceFilePath = "",
                             [CallerLineNumber] int sourceLineNumber = 0) {
-        // Verificar si existe el token
+        // Check if a token exists
         if (!HasAuthorizationToken()) {
-            // Si no hay token, retornar el hostname
+            // If no token, return the hostname
             return GetHostName();
         }
 
-        // Si hay token, obtener el claim (si no existe el claim, lanzará excepción)
+        // If a token exists, get the claim (throws if the claim is missing)
         return GetRequiredClaimValue(GetJwtToken(), "sub", memberName, sourceFilePath, sourceLineNumber);
     }
 
     public string GetUserName([CallerMemberName] string memberName = "",
                               [CallerFilePath] string sourceFilePath = "",
                               [CallerLineNumber] int sourceLineNumber = 0) {
-        // Verificar si existe el token
+        // Check if a token exists
         if (!HasAuthorizationToken()) {
-            // Si no hay token, retornar la IP del cliente
+            // If no token, return the client IP address
             return GetClientIpAddress();
         }
 
-        // Si hay token, obtener el claim (si no existe el claim, lanzará excepción)
+        // If a token exists, get the claim (throws if the claim is missing)
         return GetRequiredClaimValue(GetJwtToken(), "email", memberName, sourceFilePath, sourceLineNumber);
     }
 
@@ -85,8 +85,9 @@ internal sealed class CurrentUserService(IHttpContextAccessor httpContextAccesso
         var authHeader = GetRequiredHeaderValue(httpContext, "Authorization", "Token", memberName, sourceFilePath, sourceLineNumber);
 
         if (!authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
-            throw new CustomException(
-                new DictionaryError("AUTH-001", "No se pudo obtener el usuario", "Authorization header is not a valid Bearer token.")
+            throw new AuthenticationException(
+                "Authorization header is not a valid Bearer token.",
+                memberName, sourceFilePath, sourceLineNumber
             );
         return authHeader["Bearer ".Length..].Trim();
     }
@@ -97,9 +98,10 @@ internal sealed class CurrentUserService(IHttpContextAccessor httpContextAccesso
         var token = GetToken();
         var jwtHandler = new JwtSecurityTokenHandler();
         if (!jwtHandler.CanReadToken(token))
-            throw new CustomException(
-               new DictionaryError("AUTH-001", "No se pudo obtener el usuario", "Token is not a valid JW.")
-           );
+            throw new AuthenticationException(
+                "Token is not a valid JWT.",
+                memberName, sourceFilePath, sourceLineNumber
+            );
         return jwtHandler.ReadJwtToken(token);
     }
 
@@ -123,7 +125,7 @@ internal sealed class CurrentUserService(IHttpContextAccessor httpContextAccesso
         if (httpContext == null)
             return "unknown";
 
-        // Intentar obtener la IP del encabezado X-Forwarded-For (para proxies/load balancers)
+        // Try to get the IP from the X-Forwarded-For header (for proxies/load balancers)
         var forwardedFor = GetOptionalHeaderValue(httpContext, "X-Forwarded-For");
         if (!string.IsNullOrEmpty(forwardedFor)) {
             var ips = forwardedFor.Split(',');
@@ -131,10 +133,10 @@ internal sealed class CurrentUserService(IHttpContextAccessor httpContextAccesso
                 return ips[0].Trim();
         }
 
-        // Si no hay X-Forwarded-For, obtener la IP directamente de la conexión
+        // If no X-Forwarded-For, get the IP directly from the connection
         var remoteIpAddress = httpContext.Connection.RemoteIpAddress;
         if (remoteIpAddress != null) {
-            // Si es IPv6 localhost, convertir a IPv4
+            // If IPv6 localhost, convert to IPv4
             if (remoteIpAddress.ToString() == "::1")
                 return "127.0.0.1";
             return remoteIpAddress.ToString();
@@ -148,12 +150,12 @@ internal sealed class CurrentUserService(IHttpContextAccessor httpContextAccesso
         if (httpContext == null)
             return "unknown";
 
-        // Intentar obtener el hostname del encabezado Host
+        // Try to get the hostname from the Host header
         var host = GetOptionalHeaderValue(httpContext, "Host");
         if (!string.IsNullOrEmpty(host))
             return host;
 
-        // Si no hay Host header, usar el hostname del servidor
+        // If no Host header, use the server hostname
         return Environment.MachineName;
     }
 }

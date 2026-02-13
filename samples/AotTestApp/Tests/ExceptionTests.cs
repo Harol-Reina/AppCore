@@ -1,4 +1,4 @@
-﻿using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Exceptions;
 using OrionSoft.AppCore.Application.Wrappers;
 using System.Text.Json;
 
@@ -34,19 +34,45 @@ public static class ExceptionTests
         {
             // Test all public exception types
             var validation = new ValidationException("TestProperty", "Test validation error");
-            var notFound = new NotFoundException("Entity", "123");
+            var notFound = new NotFoundException("Entity", (object)"123");
             var badRequest = new BadRequestException("Bad request test");
             var authentication = new AuthenticationException("Auth failed");
             var forbidden = new ForbiddenAccessException("Access denied");
+            var conflict = new ConflictException("User", "john@test.com");
+            var unprocessable = new UnprocessableEntityException("Cannot process");
+            var serviceUnavailable = new ServiceUnavailableException("Redis", "Cache down");
+            var gatewayTimeout = new GatewayTimeoutException("Upstream timed out");
 
             // Verify messages
             if (string.IsNullOrEmpty(validation.Message) ||
                 string.IsNullOrEmpty(notFound.Message) ||
                 string.IsNullOrEmpty(badRequest.Message) ||
                 string.IsNullOrEmpty(authentication.Message) ||
-                string.IsNullOrEmpty(forbidden.Message))
+                string.IsNullOrEmpty(forbidden.Message) ||
+                string.IsNullOrEmpty(conflict.Message) ||
+                string.IsNullOrEmpty(unprocessable.Message) ||
+                string.IsNullOrEmpty(serviceUnavailable.Message) ||
+                string.IsNullOrEmpty(gatewayTimeout.Message))
             {
                 throw new Exception("Exception message is null or empty");
+            }
+
+            // Verify NotFoundException entity+key format
+            if (!notFound.Message.Contains("Entity") || !notFound.Message.Contains("123"))
+            {
+                throw new Exception($"NotFoundException entity+key format is wrong: {notFound.Message}");
+            }
+
+            // Verify ConflictException entity+key format
+            if (!conflict.Message.Contains("User") || !conflict.Message.Contains("john@test.com"))
+            {
+                throw new Exception($"ConflictException entity+key format is wrong: {conflict.Message}");
+            }
+
+            // Verify ServiceUnavailableException.ServiceName
+            if (serviceUnavailable.ServiceName != "Redis")
+            {
+                throw new Exception($"ServiceUnavailableException.ServiceName is wrong: {serviceUnavailable.ServiceName}");
             }
 
             Console.WriteLine("✓");
@@ -65,15 +91,25 @@ public static class ExceptionTests
         try
         {
             var validation = new ValidationException("TestProperty", "Test error");
-            var notFound = new NotFoundException("Entity", "123");
+            var notFound = new NotFoundException("Entity", (object)"123");
             var badRequest = new BadRequestException("Bad request");
             var authentication = new AuthenticationException("Auth failed");
+            var conflict = new ConflictException("Duplicate resource");
+            var unprocessable = new UnprocessableEntityException("Semantic error");
+            var serviceUnavailable = new ServiceUnavailableException("Svc", "Down");
+            var gatewayTimeout = new GatewayTimeoutException("Timeout");
+            var operation = new OperationException("Op failed");
 
             // All should inherit from CustomException
             if (validation is not CustomException ||
                 notFound is not CustomException ||
                 badRequest is not CustomException ||
-                authentication is not CustomException)
+                authentication is not CustomException ||
+                conflict is not CustomException ||
+                unprocessable is not CustomException ||
+                serviceUnavailable is not CustomException ||
+                gatewayTimeout is not CustomException ||
+                operation is not CustomException)
             {
                 throw new Exception("Exception inheritance chain is broken");
             }
@@ -106,10 +142,15 @@ public static class ExceptionTests
             var exceptions = new Exception[]
             {
                 new ValidationException("Test", "Error"),
-                new NotFoundException("Entity", "1"),
+                new NotFoundException("Entity", (object)"1"),
                 new BadRequestException("Bad"),
                 new AuthenticationException("Auth"),
                 new ForbiddenAccessException("Forbidden"),
+                new ConflictException("Conflict"),
+                new UnprocessableEntityException("Unprocessable"),
+                new ServiceUnavailableException("Svc", "Down"),
+                new GatewayTimeoutException("Timeout"),
+                new OperationException("Operation"),
                 new CustomException(new DictionaryError("TEST-001", "Custom"))
             };
 
@@ -123,6 +164,11 @@ public static class ExceptionTests
                     BadRequestException => true,
                     AuthenticationException => true,
                     ForbiddenAccessException => true,
+                    ConflictException => true,
+                    UnprocessableEntityException => true,
+                    ServiceUnavailableException => true,
+                    GatewayTimeoutException => true,
+                    OperationException => true,
                     CustomException => true,
                     _ => false
                 };
@@ -149,7 +195,7 @@ public static class ExceptionTests
         try
         {
             var validation = new ValidationException("Email", "Invalid email format");
-            var notFound = new NotFoundException("User", "123");
+            var notFound = new NotFoundException("User", (object)"123");
 
             // Create error responses like middleware does
             var validationResponse = Response<object>.Failure(validation.Message);

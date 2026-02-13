@@ -1,5 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
-using OrionSoft.AppCore.Application.Wrappers;
 
 namespace OrionSoft.AppCore.Application.Exceptions;
 

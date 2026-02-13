@@ -24,6 +24,14 @@ public class ExceptionsEndpoint : IEndpointGroupBase {
         group.MapGet("/custom-error", GetCustomError);
 
         group.MapGet("/unhandled", GetUnhandled);
+
+        group.MapGet("/conflict", GetConflict);
+
+        group.MapGet("/unprocessable", GetUnprocessable);
+
+        group.MapGet("/service-unavailable", GetServiceUnavailable);
+
+        group.MapGet("/gateway-timeout", GetGatewayTimeout);
     }
 
     private static IResult GetSuccess() {
@@ -64,5 +72,21 @@ public class ExceptionsEndpoint : IEndpointGroupBase {
 
     private static IResult GetUnhandled() {
         throw new OperationException("Unhandled operation error for testing");
+    }
+
+    private static IResult GetConflict() {
+        throw new ConflictException("User", "john@test.com");
+    }
+
+    private static IResult GetUnprocessable() {
+        throw new UnprocessableEntityException("The entity cannot be processed due to semantic errors");
+    }
+
+    private static IResult GetServiceUnavailable() {
+        throw new ServiceUnavailableException("PaymentGateway", "Payment service is currently unavailable");
+    }
+
+    private static IResult GetGatewayTimeout() {
+        throw new GatewayTimeoutException("Upstream service did not respond in time");
     }
 }

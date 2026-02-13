@@ -1,4 +1,4 @@
-﻿using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Exceptions;
 using FluentAssertions;
 using Xunit;
 
@@ -57,5 +57,35 @@ public class NotFoundExceptionTests {
         // Assert
         stringRepresentation.Should().Contain("Item not found");
         stringRepresentation.Should().Contain("NotFoundException");
+    }
+
+    [Fact]
+    public void Constructor_WithEntityAndKey_ShouldFormatMessage() {
+        // Arrange & Act
+        var exception = new NotFoundException("User", 123);
+
+        // Assert
+        exception.Message.Should().Be("User with key '123' was not found.");
+        exception.Error.Code.Should().Be("NOT-FOUND-002");
+    }
+
+    [Fact]
+    public void Constructor_WithEntityAndStringKey_ShouldFormatMessage() {
+        // Arrange & Act
+        var exception = new NotFoundException("Product", (object)"ABC-456");
+
+        // Assert
+        exception.Message.Should().Be("Product with key 'ABC-456' was not found.");
+        exception.Error.Code.Should().Be("NOT-FOUND-002");
+    }
+
+    [Fact]
+    public void Constructor_WithEntityAndKey_ShouldCaptureCallerInfo() {
+        // Arrange & Act
+        var exception = new NotFoundException("Order", 99);
+
+        // Assert
+        exception.MessageLog.Method.Should().NotBeNullOrEmpty();
+        exception.MessageLog.Path.Should().NotBeNullOrEmpty();
     }
 }

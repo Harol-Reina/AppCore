@@ -1,4 +1,4 @@
-﻿using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Exceptions;
 using FluentAssertions;
 using Xunit;
 
@@ -48,5 +48,15 @@ public class BadRequestExceptionTests {
         exception.Message.Should().BeEmpty();
         var error = exception.Error;
         error.Code.Should().Be("BAD-REQ-001");
+    }
+
+    [Fact]
+    public void Constructor_ShouldCaptureCallerInformation() {
+        // Arrange & Act
+        var exception = new BadRequestException("Caller test");
+
+        // Assert
+        exception.MessageLog.Method.Should().NotBeNullOrEmpty();
+        exception.MessageLog.Path.Should().NotBeNullOrEmpty();
     }
 }

@@ -34,6 +34,34 @@ Scenario: Creating an authentication exception
     And the exception should be of type AuthenticationException
     And the exception should inherit from CustomException
 
+Scenario: Creating a conflict exception
+    Given I have a resource conflict
+    When I create a ConflictException with details
+    Then the exception should have the conflict message
+    And the exception should be of type ConflictException
+    And the exception should inherit from CustomException
+
+Scenario: Creating an unprocessable entity exception
+    Given I have semantically invalid data
+    When I create an UnprocessableEntityException with details
+    Then the exception should have the unprocessable message
+    And the exception should be of type UnprocessableEntityException
+    And the exception should inherit from CustomException
+
+Scenario: Creating a service unavailable exception
+    Given I have a service that is down
+    When I create a ServiceUnavailableException with details
+    Then the exception should have the service unavailable message
+    And the exception should be of type ServiceUnavailableException
+    And the exception should inherit from CustomException
+
+Scenario: Creating a gateway timeout exception
+    Given I have an upstream service timeout
+    When I create a GatewayTimeoutException with details
+    Then the exception should have the timeout message
+    And the exception should be of type GatewayTimeoutException
+    And the exception should inherit from CustomException
+
 Scenario: Exception hierarchy consistency
     Given I have various AppCore exceptions
     When I check their inheritance chain

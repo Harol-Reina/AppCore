@@ -1,26 +1,14 @@
-﻿using System.Runtime.CompilerServices;
-using OrionSoft.AppCore.Application.Extensions;
-using OrionSoft.AppCore.Application.Wrappers;
+using System.Runtime.CompilerServices;
 
 namespace OrionSoft.AppCore.Application.Exceptions;
 
-internal sealed class ApiDBException : Exception {
-    readonly MessageLog mensaje;
+internal sealed class ApiDBException : CustomException {
     public ApiDBException(Exception ex,
                           [CallerMemberName] string memberName = "",
                           [CallerFilePath] string sourceFilePath = "",
                           [CallerLineNumber] int sourceLineNumber = 0)
-                          : base("An error occurred validating an operation in the DB.") {
-        mensaje = new MessageLog {
-            Type = base.GetType().Name,
-            Source = base.Source,
-            Message = JsonExtend.ToJsonElement($"{ex.Message.Split("\n").ToArray()[0]}"),
-            Method = memberName,
-            Path = $"{sourceFilePath} Line: {sourceLineNumber}",
-            StackTrace = ExceptionHelpers.CollectInnerMessages(ex.InnerException)
-        };
+        : base(new DictionaryError("API-DB-001", "An error occurred validating an operation in the DB.",
+                   null, ExceptionHelpers.CollectInnerMessages(ex)),
+               memberName, sourceFilePath, sourceLineNumber) {
     }
-
-    public override string ToString()
-        => mensaje.ToString();
 }

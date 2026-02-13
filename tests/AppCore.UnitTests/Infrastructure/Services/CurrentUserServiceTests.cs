@@ -156,7 +156,7 @@ public class CurrentUserServiceTests {
     }
 
     [Fact]
-    public void GetToken_WithNonBearerToken_ShouldThrowCustomException() {
+    public void GetToken_WithNonBearerToken_ShouldThrowAuthenticationException() {
         // Arrange
         var headers = new HeaderDictionary
         {
@@ -165,7 +165,7 @@ public class CurrentUserServiceTests {
         _httpRequestMock.Setup(x => x.Headers).Returns(headers);
 
         // Act & Assert
-        Assert.Throws<CustomException>(() => _currentUserService.GetToken());
+        Assert.Throws<AuthenticationException>(() => _currentUserService.GetToken());
     }
 
     [Fact]
@@ -204,7 +204,7 @@ public class CurrentUserServiceTests {
     }
 
     [Fact]
-    public void GetJwtToken_WithInvalidToken_ShouldThrowCustomException() {
+    public void GetJwtToken_WithInvalidToken_ShouldThrowAuthenticationException() {
         // Arrange
         var headers = new HeaderDictionary
         {
@@ -213,7 +213,7 @@ public class CurrentUserServiceTests {
         _httpRequestMock.Setup(x => x.Headers).Returns(headers);
 
         // Act & Assert
-        Assert.Throws<CustomException>(() => _currentUserService.GetJwtToken());
+        Assert.Throws<AuthenticationException>(() => _currentUserService.GetJwtToken());
     }
 
     [Fact]
@@ -354,7 +354,7 @@ public class CurrentUserServiceTests {
     }
 
     [Fact]
-    public void GetUserId_WithTokenMissingSubClaim_ShouldThrowCustomException() {
+    public void GetUserId_WithTokenMissingSubClaim_ShouldThrowAuthenticationException() {
         // Arrange - Token without 'sub' claim
         var jwtWithoutSub = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UifQ.xuEv8qrfXu424LZk8bVgr9MQJUIrp1rHcPyZw_KSsds";
         var headers = new HeaderDictionary
@@ -364,7 +364,7 @@ public class CurrentUserServiceTests {
         _httpRequestMock.Setup(x => x.Headers).Returns(headers);
 
         // Act & Assert
-        Assert.Throws<CustomException>(() => _currentUserService.GetUserId());
+        Assert.Throws<AuthenticationException>(() => _currentUserService.GetUserId());
     }
 
     [Fact]
@@ -402,7 +402,7 @@ public class CurrentUserServiceTests {
     }
 
     [Fact]
-    public void GetUserName_WithTokenMissingEmailClaim_ShouldThrowCustomException() {
+    public void GetUserName_WithTokenMissingEmailClaim_ShouldThrowAuthenticationException() {
         // Arrange - Token without 'email' claim
         var jwtWithoutEmail = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U";
         var headers = new HeaderDictionary
@@ -412,6 +412,6 @@ public class CurrentUserServiceTests {
         _httpRequestMock.Setup(x => x.Headers).Returns(headers);
 
         // Act & Assert
-        Assert.Throws<CustomException>(() => _currentUserService.GetUserName());
+        Assert.Throws<AuthenticationException>(() => _currentUserService.GetUserName());
     }
 }

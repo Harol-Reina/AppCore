@@ -1,4 +1,4 @@
-﻿using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Exceptions;
 using FluentAssertions;
 using Xunit;
 
@@ -12,6 +12,17 @@ public class OperationExceptionTests {
 
         // Assert
         exception.Message.Should().Be("Operation failed");
+    }
+
+    [Fact]
+    public void Constructor_ShouldInheritFromCustomException() {
+        // Arrange & Act
+        var exception = new OperationException("Test error");
+
+        // Assert
+        exception.Should().BeAssignableTo<CustomException>();
+        exception.Error.Code.Should().Be("OPERATION-001");
+        exception.Error.Message.Should().Be("Test error");
     }
 
     [Fact]
@@ -31,10 +42,10 @@ public class OperationExceptionTests {
     public void Constructor_ShouldCaptureCallerInformation() {
         // Arrange & Act
         var exception = new OperationException("Caller info test");
-        var stringRepresentation = exception.ToString();
 
         // Assert
-        stringRepresentation.Should().Contain("Caller info test");
-        stringRepresentation.Should().Contain("OperationException");
+        exception.MessageLog.Should().NotBeNull();
+        exception.MessageLog.Method.Should().NotBeNullOrEmpty();
+        exception.ToString().Should().Contain("OperationException");
     }
 }

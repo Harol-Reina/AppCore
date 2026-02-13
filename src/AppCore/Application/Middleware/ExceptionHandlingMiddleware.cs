@@ -1,4 +1,4 @@
-﻿using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Exceptions;
 using OrionSoft.AppCore.Application.Extensions;
 using OrionSoft.AppCore.Application.Wrappers;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +35,17 @@ public sealed class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Ex
         [typeof(ForbiddenAccessException)] = new(StatusCodes.Status403Forbidden, ex =>
             JsonExtend.Serialize(new ProblemDetails { Title = "Forbidden", Detail = ex.Message })),
 
+        [typeof(ConflictException)] = new(StatusCodes.Status409Conflict, ex =>
+            JsonExtend.Serialize(new ErrorResponse(ex.Message))),
+
+        [typeof(UnprocessableEntityException)] = new(422, ex =>
+            JsonExtend.Serialize(new ProblemDetails { Title = "Unprocessable Entity", Detail = ex.Message })),
+
+        [typeof(OperationException)] = new(StatusCodes.Status500InternalServerError, ex => {
+            var opEx = (CustomException)ex;
+            return JsonExtend.Serialize(new ProblemDetails { Title = opEx.Message });
+        }),
+
         [typeof(SerializerException)] = new(StatusCodes.Status500InternalServerError, ex =>
             JsonExtend.Serialize(new ProblemDetails { Title = ex.Message })),
 
@@ -43,11 +54,19 @@ public sealed class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Ex
             return JsonExtend.Serialize(new MappingErrorResponse(mappingEx.Message, mappingEx.Errors));
         }),
 
+        [typeof(ServiceUnavailableException)] = new(StatusCodes.Status503ServiceUnavailable, ex => {
+            var svcEx = (ServiceUnavailableException)ex;
+            return JsonExtend.Serialize(new ProblemDetails { Title = "Service Unavailable", Detail = svcEx.Message });
+        }),
+
+        [typeof(GatewayTimeoutException)] = new(StatusCodes.Status504GatewayTimeout, ex =>
+            JsonExtend.Serialize(new ProblemDetails { Title = "Gateway Timeout", Detail = ex.Message })),
+
         [typeof(ApiHttpException)] = new(StatusCodes.Status400BadRequest, ex => {
-            var apiHttpEx = (ApiHttpException)ex;
+            var apiHttpEx = (CustomException)ex;
             return JsonExtend.Serialize(new ProblemDetails {
                 Title = apiHttpEx.Message,
-                Detail = apiHttpEx.MessageLog.Message.ToString()
+                Detail = apiHttpEx.Error.Exception
             });
         }),
 
@@ -73,6 +92,7 @@ public sealed class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Ex
             try {
                 await _next(context).ConfigureAwait(false);
             } catch (Exception exceptionObj) {
+                _logger.LogError(exceptionObj, "Unhandled exception in HTTP pipeline");
                 await HandleExceptionAsync(context, exceptionObj).ConfigureAwait(false);
             }
         }
@@ -85,8 +105,10 @@ public sealed class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Ex
         return traceId;
     }
 
-    public static async Task HandleExceptionAsync(HttpContext httpContext, Exception exception) {
-        var mapping = ExceptionMappings.GetValueOrDefault(exception.GetType()) ?? DefaultMapping;
+    private static async Task HandleExceptionAsync(HttpContext httpContext, Exception exception) {
+        var mapping = ExceptionMappings.GetValueOrDefault(exception.GetType())
+            ?? (exception is CustomException ? ExceptionMappings[typeof(CustomException)] : null)
+            ?? DefaultMapping;
 
         httpContext.Response.StatusCode = mapping.StatusCode;
         httpContext.Response.ContentType = "application/json";

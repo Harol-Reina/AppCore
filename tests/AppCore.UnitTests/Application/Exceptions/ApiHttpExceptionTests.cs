@@ -1,4 +1,4 @@
-﻿using OrionSoft.AppCore.Application.Exceptions;
+using OrionSoft.AppCore.Application.Exceptions;
 using FluentAssertions;
 using Xunit;
 
@@ -30,7 +30,9 @@ public class ApiHttpExceptionTests {
 
             // Assert
             exception.Message.Should().Be("The connection to the requested URL cannot be made.");
+            exception.Should().BeAssignableTo<CustomException>();
             exception.MessageLog.Should().NotBeNull();
+            exception.Error.Code.Should().Be("API-HTTP-001");
         }
     }
 
@@ -60,5 +62,19 @@ public class ApiHttpExceptionTests {
             exception.MessageLog.Type.Should().Be("ApiHttpException");
             exception.MessageLog.Method.Should().Be("MyMethod");
         }
+    }
+
+    [Fact]
+    public void Constructor_ShouldCaptureInnerExceptionMessages() {
+        // Arrange
+        var inner = new Exception("Inner cause");
+        var outer = new Exception("Outer cause", inner);
+
+        // Act
+        var exception = new ApiHttpException(outer);
+
+        // Assert
+        exception.Error.Exception.Should().Contain("Outer cause");
+        exception.Error.Exception.Should().Contain("Inner cause");
     }
 }

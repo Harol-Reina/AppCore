@@ -52,7 +52,7 @@ public class GenericDateJsonConverterTests {
 
         // Assert
         act.Should().Throw<JsonException>()
-            .WithMessage("*No se puede convertir*");
+            .WithMessage("*Cannot convert*");
     }
 
     [Fact]

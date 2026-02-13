@@ -111,4 +111,5 @@ public class ValidationExceptionTests {
         // Assert
         exception.Errors.Should().BeEmpty();
     }
+
 }
