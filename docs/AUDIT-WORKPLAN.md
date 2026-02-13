@@ -1,7 +1,7 @@
 # Plan de Trabajo - Auditoría AppCore: Hallazgos Pendientes
 
 > **Objetivo**: Completar el 100% de los hallazgos de `docs/AUDIT.md`
-> **Estado actual**: 25/33 hallazgos accionables resueltos (76%)
+> **Estado actual**: 32/33 hallazgos accionables resueltos (97%)
 > **Meta**: 33/33 (100%)
 > **Fecha**: Febrero 2026
 
