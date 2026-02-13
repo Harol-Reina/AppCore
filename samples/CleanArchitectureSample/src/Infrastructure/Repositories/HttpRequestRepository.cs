@@ -91,11 +91,11 @@ public class HttpRequestRepository(IDbConnectionFactory connectionFactory,
     }
 
     [DapperAot]
-    public Task<PaginationDto<HttpAuditEntity>> GetPagedAsync(int page, int pageSize)
+    public Task<PaginationResponse<HttpAuditEntity>> GetPagedAsync(int page, int pageSize)
         => GetPagedAsync(page, pageSize, "Id", true); // Default sort
 
     [DapperAot]
-    public async Task<PaginationDto<HttpAuditEntity>> GetPagedAsync(int page, int pageSize, string sort, bool asc) {
+    public async Task<PaginationResponse<HttpAuditEntity>> GetPagedAsync(int page, int pageSize, string sort, bool asc) {
          using var db = await _connectionFactory.CreateConnectionAsync();
         var offset = (page - 1) * pageSize;
 
@@ -116,7 +116,7 @@ public class HttpRequestRepository(IDbConnectionFactory connectionFactory,
         var totalItems = await multi.ReadFirstAsync<int>();
         var daos = await multi.ReadAsync<HttpAuditDao>();
 
-        return new PaginationDto<HttpAuditEntity> {
+        return new PaginationResponse<HttpAuditEntity> {
             Count = totalItems,
             Pages = (int)Math.Ceiling((double)totalItems / pageSize),
             Results = _toEntity.Map(daos.ToList()).ToList()

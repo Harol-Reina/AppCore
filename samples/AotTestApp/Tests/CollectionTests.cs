@@ -18,7 +18,7 @@ public static class CollectionTests
         TestCollectionInitializer();
         TestSpreadOperator();
         TestMixedSpreadsAndElements();
-        TestPaginationDtoWithCollectionExpressions();
+        TestPaginationResponseWithCollectionExpressions();
         TestArrayCollectionConversions();
 
         Console.WriteLine("✅ All collection expression tests passed\n");
@@ -157,14 +157,14 @@ public static class CollectionTests
         }
     }
 
-    private static void TestPaginationDtoWithCollectionExpressions()
+    private static void TestPaginationResponseWithCollectionExpressions()
     {
         Console.Write("  • Using collection expressions in DTOs... ");
 
         try
         {
-            // Create PaginationDto using collection expressions
-            var pagination = new PaginationDto<int>
+            // Create PaginationResponse using collection expressions
+            var pagination = new PaginationResponse<int>
             {
                 Count = 10,
                 Pages = 1,
@@ -173,16 +173,16 @@ public static class CollectionTests
 
             if (pagination.Results == null || pagination.Results.Count != 10)
             {
-                throw new Exception("PaginationDto collection expression failed");
+                throw new Exception("PaginationResponse collection expression failed");
             }
 
             if (pagination.Results[0] != 1 || pagination.Results[9] != 10)
             {
-                throw new Exception("PaginationDto collection values incorrect");
+                throw new Exception("PaginationResponse collection values incorrect");
             }
 
             // Empty results
-            var emptyPagination = new PaginationDto<string>
+            var emptyPagination = new PaginationResponse<string>
             {
                 Count = 0,
                 Pages = 0,
@@ -191,7 +191,7 @@ public static class CollectionTests
 
             if (emptyPagination.Results == null || emptyPagination.Results.Count != 0)
             {
-                throw new Exception("Empty PaginationDto collection expression failed");
+                throw new Exception("Empty PaginationResponse collection expression failed");
             }
 
             Console.WriteLine("✓");

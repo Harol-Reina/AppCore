@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using AppCore.Application.DTOs;
+﻿using AppCore.Application.DTOs;
 using AppCore.Domain.Common;
 
 namespace AppCore.Domain.Interfaces;
@@ -50,5 +49,5 @@ public interface IGenericRepository<E, I> where E : BaseEntity<I> {
     /// <param name="page">El número de página.</param>
     /// <param name="pageSize">El tamaño de la página.</param>
     /// <returns>Una tarea que representa la operación asincrónica. El resultado de la tarea contiene una lista de entidades.</returns>
-    Task<PaginationDto<E>> GetPagedAsync(int page, int pageSize);
+    Task<PaginationResponse<E>> GetPagedAsync(int page, int pageSize);
 }

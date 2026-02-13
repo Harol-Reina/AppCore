@@ -58,4 +58,26 @@ public class PaginationResponseTests {
         response.Pages.Should().Be(10);
         response.Results.Should().HaveCount(3);
     }
+
+    [Fact]
+    public void WithComplexType_ShouldWork() {
+        // Arrange
+        var items = new List<LoginRequest>
+        {
+            new LoginRequest("user1", "pass1"),
+            new LoginRequest("user2", "pass2")
+        };
+
+        // Act
+        var response = new PaginationResponse<LoginRequest> {
+            Count = 2,
+            Pages = 1,
+            Results = items
+        };
+
+        // Assert
+        response.Count.Should().Be(2);
+        response.Results.Should().HaveCount(2);
+        response.Results[0].UserName.Should().Be("user1");
+    }
 }

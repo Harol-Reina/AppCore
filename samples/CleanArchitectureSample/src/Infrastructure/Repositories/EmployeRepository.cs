@@ -84,11 +84,11 @@ public class EmployeRepository(IDbConnectionFactory connectionFactory,
     }
 
     [DapperAot] // Mark overload for AOT analysis just in case
-    public Task<PaginationDto<EmployeEntity>> GetPagedAsync(int page, int pageSize) 
+    public Task<PaginationResponse<EmployeEntity>> GetPagedAsync(int page, int pageSize) 
         => GetPagedAsync(page, pageSize, "Id", true);
 
     [DapperAot]
-    public async Task<PaginationDto<EmployeEntity>> GetPagedAsync(int page, int pageSize, string sort, bool asc) {
+    public async Task<PaginationResponse<EmployeEntity>> GetPagedAsync(int page, int pageSize, string sort, bool asc) {
         using var db = await _connectionFactory.CreateConnectionAsync();
         var offset = (page - 1) * pageSize;
 
@@ -111,7 +111,7 @@ public class EmployeRepository(IDbConnectionFactory connectionFactory,
         var totalItems = await multi.ReadFirstAsync<int>();
         var daos = await multi.ReadAsync<EmployeDao>();
         
-        return new PaginationDto<EmployeEntity> {
+        return new PaginationResponse<EmployeEntity> {
             Count = totalItems,
             Pages = (int)Math.Ceiling((double)totalItems / pageSize),
             Results = _toEntity.Map(daos.ToList()).ToList()

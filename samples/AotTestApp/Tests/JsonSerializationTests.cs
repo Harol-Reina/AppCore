@@ -67,18 +67,18 @@ public static class JsonSerializationTests
 
     private static void TestPaginationSerialization()
     {
-        Console.Write("  • Serializing PaginationDto<T>... ");
+        Console.Write("  • Serializing PaginationResponse<T>... ");
 
         try
         {
-            var pagination = new PaginationDto<string>
+            var pagination = new PaginationResponse<string>
             {
                 Count = 3,
                 Pages = 1,
                 Results = ["Item1", "Item2", "Item3"]
             };
 
-            var json = JsonSerializer.Serialize(pagination, AppCoreJsonContext.Default.PaginationDtoString);
+            var json = JsonSerializer.Serialize(pagination, AppCoreJsonContext.Default.PaginationResponseString);
 
             if (string.IsNullOrEmpty(json))
             {
@@ -102,23 +102,23 @@ public static class JsonSerializationTests
 
     private static void TestNestedObjectSerialization()
     {
-        Console.Write("  • Serializing nested Response<PaginationDto<T>>... ");
+        Console.Write("  • Serializing nested Response<PaginationResponse<T>>... ");
 
         try
         {
-            var pagination = new PaginationDto<int>
+            var pagination = new PaginationResponse<int>
             {
                 Count = 5,
                 Pages = 2,
                 Results = [1, 2, 3, 4, 5]
             };
 
-            var response = Response<PaginationDto<int>>.Success(
+            var response = Response<PaginationResponse<int>>.Success(
                 "Pagination retrieved successfully",
                 pagination
             );
 
-            var json = JsonSerializer.Serialize(response, AppCoreJsonContext.Default.ResponsePaginationDtoInt32);
+            var json = JsonSerializer.Serialize(response, AppCoreJsonContext.Default.ResponsePaginationResponseInt32);
 
             if (string.IsNullOrEmpty(json))
             {
@@ -179,14 +179,14 @@ public static class JsonSerializationTests
         try
         {
             // Test that C# 14 collection expressions serialize correctly
-            var dto = new PaginationDto<string>
+            var dto = new PaginationResponse<string>
             {
                 Count = 5,
                 Pages = 1,
                 Results = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon"]
             };
 
-            var json = JsonSerializer.Serialize(dto, AppCoreJsonContext.Default.PaginationDtoString);
+            var json = JsonSerializer.Serialize(dto, AppCoreJsonContext.Default.PaginationResponseString);
 
             // Verify all items from collection expression are present
             if (!json.Contains("Alpha") || !json.Contains("Epsilon"))

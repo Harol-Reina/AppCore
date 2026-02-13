@@ -14,7 +14,7 @@ public class EmployesEndpoint : IEndpointGroupBase {
     public void MapEndpoints(RouteGroupBuilder group, string groupName) {
 
         group.MapGet("", GetAllEmploye)
-            .Produces<Response<PaginationDto<EmployeEntity>>>();
+            .Produces<Response<PaginationResponse<EmployeEntity>>>();
 
         group.MapGet("/{EmployeId}", GetEmployeById)
             .Produces<Response<EmployeEntity>>();

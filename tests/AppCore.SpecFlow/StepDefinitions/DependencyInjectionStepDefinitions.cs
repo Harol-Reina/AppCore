@@ -290,7 +290,7 @@ public class DependencyInjectionStepDefinitions {
             => Task.FromResult<TEntity?>(null);
         public Task<List<TEntity>?> GetAllAsync()
             => Task.FromResult<List<TEntity>?>(new List<TEntity>());
-        public Task<AppCore.Application.DTOs.PaginationDto<TEntity>> GetPagedAsync(int page, int pageSize)
-            => Task.FromResult(new AppCore.Application.DTOs.PaginationDto<TEntity>());
+        public Task<AppCore.Application.DTOs.PaginationResponse<TEntity>> GetPagedAsync(int page, int pageSize)
+            => Task.FromResult(new AppCore.Application.DTOs.PaginationResponse<TEntity>());
     }
 }

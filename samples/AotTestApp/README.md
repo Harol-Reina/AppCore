@@ -22,8 +22,8 @@
 ### 2. JSON Serialization Tests (`Tests/JsonSerializationTests.cs`)
 - ✅ `AppCoreJsonContext` source generator validation
 - ✅ `Response<T>` serialization for multiple types
-- ✅ `PaginationDto<T>` serialization
-- ✅ Nested generic types (`Response<PaginationDto<T>>`)
+- ✅ `PaginationResponse<T>` serialization
+- ✅ Nested generic types (`Response<PaginationResponse<T>>`)
 - ✅ Round-trip serialization/deserialization
 
 ### 3. Collection Expression Tests (`Tests/CollectionTests.cs`)
@@ -35,7 +35,7 @@
 
 ### 4. Integration Tests (in `Program.cs`)
 - ✅ Response wrapper creation
-- ✅ PaginationDto with collection expressions
+- ✅ PaginationResponse with collection expressions
 - ✅ JSON serialization with `AppCoreJsonContext`
 
 ## Running Tests
@@ -135,7 +135,7 @@ Enable with: `RUN_AOT_TESTS=true ./build/scripts/build-and-analyze.sh`
 When run with `--benchmark` or `benchmark` argument, the application executes performance tests:
 
 - **Response Wrapper Creation**: 100,000 iterations
-- **PaginationDto Creation**: 10,000 iterations (with collection expressions)
+- **PaginationResponse Creation**: 10,000 iterations (with collection expressions)
 - **Memory Usage**: GC statistics (Gen0/Gen1/Gen2 collections)
 
 Example output:

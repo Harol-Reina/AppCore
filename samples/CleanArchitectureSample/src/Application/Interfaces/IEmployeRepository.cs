@@ -5,5 +5,5 @@ using AppCore.Domain.Interfaces;
 namespace App.Application.Interfaces;
 
 public interface IEmployeRepository : IGenericRepository<EmployeEntity, int> {
-    Task<PaginationDto<EmployeEntity>> GetPagedAsync(int page, int pageSize, string sort, bool asc);
+    Task<PaginationResponse<EmployeEntity>> GetPagedAsync(int page, int pageSize, string sort, bool asc);
 }

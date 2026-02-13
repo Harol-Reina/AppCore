@@ -20,7 +20,7 @@ public static class DependencyInjection {
         
         // MediatR
         // MediatR Handlers registration
-        services.AddTransient<IRequestHandler<GetAllEmployeQuery, Response<PaginationDto<EmployeResponseDto>>>, GetAllEmployeQueryHandler>();
+        services.AddTransient<IRequestHandler<GetAllEmployeQuery, Response<PaginationResponse<EmployeResponseDto>>>, GetAllEmployeQueryHandler>();
         services.AddTransient<IRequestHandler<GetByIdEmployeQuery, Response<EmployeResponseDto>>, GetByIdEmployeQueryHandler>();
         services.AddTransient<IRequestHandler<AddEmployeCommand, Response<EmployeResponseDto>>, AddEmployeCommandHandler>();
         services.AddTransient<IRequestHandler<EditEmployeCommand, Response<EmployeEntity>>, EditEmployeCommandHandler>();
