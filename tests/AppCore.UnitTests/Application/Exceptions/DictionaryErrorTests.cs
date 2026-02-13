@@ -34,12 +34,12 @@ public class DictionaryErrorTests {
         var innerException = new InvalidOperationException("Inner error");
 
         // Act
-        var error = new DictionaryError("ERR-003", "Error with exception", exception: innerException);
+        var error = new DictionaryError("ERR-003", "Error with exception", exception: innerException.ToString());
 
         // Assert
         error.Code.Should().Be("ERR-003");
         error.Message.Should().Be("Error with exception");
-        error.Exception.Should().Be(innerException);
+        error.Exception.Should().Contain("Inner error");
     }
 
     [Fact]

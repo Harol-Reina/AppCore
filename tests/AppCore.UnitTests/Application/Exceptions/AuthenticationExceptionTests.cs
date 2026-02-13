@@ -21,10 +21,9 @@ public class AuthenticationExceptionTests {
 
         // Assert
         exception.MessageLog.Should().NotBeNull();
-        exception.MessageLog.Message.Should().BeOfType<DictionaryError>();
-        var error = (DictionaryError)exception.MessageLog.Message;
-        error.Code.Should().Be("AUTH-001");
-        error.Message.Should().Be("Authentication failed");
+        exception.Error.Should().NotBeNull();
+        exception.Error.Code.Should().Be("AUTH-001");
+        exception.Error.Message.Should().Be("Authentication failed");
     }
 
     [Fact]

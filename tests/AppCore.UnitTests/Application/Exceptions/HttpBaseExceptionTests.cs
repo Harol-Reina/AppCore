@@ -31,7 +31,7 @@ public class HttpBaseExceptionTests {
         // Assert
         exception.StatusCode.Should().Be(401);
         exception.MessageLog.Should().NotBeNull();
-        exception.MessageLog.Message.Should().BeOfType<DictionaryError>();
+        exception.Error.Should().NotBeNull();
     }
 
     [Fact]
@@ -40,9 +40,9 @@ public class HttpBaseExceptionTests {
         var exception = new HttpBaseException("Bad request", 400, "MyMethod", "/src/file.cs", 10);
 
         // Assert
-        var error = exception.MessageLog.Message as DictionaryError;
+        var error = exception.Error;
         error.Should().NotBeNull();
-        error!.Code.Should().Be("HTTP-400");
+        error.Code.Should().Be("HTTP-400");
         error.Message.Should().Be("Bad request");
     }
 
@@ -55,7 +55,7 @@ public class HttpBaseExceptionTests {
         var exception = new HttpBaseException("Test", statusCode);
 
         // Assert
-        var error = exception.MessageLog.Message as DictionaryError;
-        error!.Code.Should().Be(expectedCode);
+        var error = exception.Error;
+        error.Code.Should().Be(expectedCode);
     }
 }

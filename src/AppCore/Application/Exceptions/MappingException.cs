@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using AppCore.Application.Extensions;
 using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
@@ -37,7 +38,7 @@ internal sealed class MappingException : Exception {
         _message = new MessageLog {
             Type = nameof(MappingException),
             Source = sourceFilePath,
-            Message = message,
+            Message = JsonExtend.ToJsonElement(message),
             Method = memberName,
             Path = $"{sourceFilePath}:{sourceLineNumber}",
             StackTrace = StackTrace ?? string.Empty

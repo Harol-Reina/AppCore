@@ -22,6 +22,6 @@ public sealed record ErrorResponse(string Message);
 public sealed record MappingErrorResponse(string Title, IDictionary<string, string> Errors);
 
 /// <summary>
-/// Custom error response wrapper. Used for AOT-compatible serialization.
+/// Custom error response wrapper. Uses JsonElement for AOT-compatible serialization.
 /// </summary>
-public sealed record CustomErrorResponse(object Error);
+public sealed record CustomErrorResponse(JsonElement Error);

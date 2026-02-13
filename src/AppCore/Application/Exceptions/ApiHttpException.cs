@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using AppCore.Application.Extensions;
 using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
@@ -13,7 +14,7 @@ internal sealed class ApiHttpException : Exception {
         MessageLog = new MessageLog {
             Type = base.GetType().Name,
             Source = base.Source,
-            Message = $"{ex.Message} :: {memberName}",
+            Message = JsonExtend.ToJsonElement($"{ex.Message} :: {memberName}"),
             Method = memberName,
             Path = sourceFilePath + (ex.ToString().Contains(":line") ? ex.ToString()[ex.ToString().IndexOf(":line")..] : ""),
         };

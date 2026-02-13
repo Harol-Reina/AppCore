@@ -13,7 +13,7 @@ public class ValidationExceptionTests {
         var exception = new ValidationException();
 
         // Assert
-        var error = (DictionaryError)exception.MessageLog.Message;
+        var error = exception.Error;
         error.Code.Should().Be("VAL-000");
         error.Message.Should().Be("Validation failed");
         exception.Errors.Should().BeEmpty();
@@ -26,7 +26,7 @@ public class ValidationExceptionTests {
 
         // Assert
         exception.Message.Should().Be("Custom validation error");
-        var error = (DictionaryError)exception.MessageLog.Message;
+        var error = exception.Error;
         error.Code.Should().Be("VAL-001");
         exception.Errors.Should().BeEmpty();
     }
@@ -45,7 +45,7 @@ public class ValidationExceptionTests {
         var exception = new ValidationException(failures);
 
         // Assert
-        var error = (DictionaryError)exception.MessageLog.Message;
+        var error = exception.Error;
         error.Code.Should().Be("VAL-002");
         exception.Errors.Should().HaveCount(2);
         exception.Errors["Email"].Should().HaveCount(2);
@@ -58,7 +58,7 @@ public class ValidationExceptionTests {
         var exception = new ValidationException("Username", "Username is already taken");
 
         // Assert
-        var error = (DictionaryError)exception.MessageLog.Message;
+        var error = exception.Error;
         error.Code.Should().Be("VAL-003");
         exception.Errors.Should().ContainKey("Username");
         exception.Errors["Username"].Should().Contain("Username is already taken");
@@ -73,7 +73,7 @@ public class ValidationExceptionTests {
         var exception = new ValidationException(innerException);
 
         // Assert
-        var error = (DictionaryError)exception.MessageLog.Message;
+        var error = exception.Error;
         error.Code.Should().Be("VAL-004");
         exception.Errors.Should().NotBeEmpty();
     }
@@ -93,7 +93,7 @@ public class ValidationExceptionTests {
         var exception = new ValidationException(problemDetails);
 
         // Assert
-        var error = (DictionaryError)exception.MessageLog.Message;
+        var error = exception.Error;
         error.Code.Should().Be("VAL-005");
         exception.Errors.Should().HaveCount(2);
         exception.Errors["Field1"].Should().HaveCount(2);

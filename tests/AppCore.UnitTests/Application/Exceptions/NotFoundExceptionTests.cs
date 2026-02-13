@@ -30,7 +30,7 @@ public class NotFoundExceptionTests {
 
         // Assert
         exception.MessageLog.Should().NotBeNull();
-        var error = (DictionaryError)exception.MessageLog.Message;
+        var error = exception.Error;
         error.Code.Should().Be("NOT-FOUND-001");
         error.Message.Should().Be("Product with ID 123 not found");
     }

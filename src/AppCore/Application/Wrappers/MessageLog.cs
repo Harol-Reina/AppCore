@@ -5,7 +5,7 @@ namespace AppCore.Application.Wrappers;
 
 /// <summary>
 /// Represents a structured log message for AOT-compatible logging.
-/// Uses object instead of dynamic for Native AOT compatibility.
+/// Uses JsonElement for Native AOT compatibility (no runtime type metadata needed).
 /// </summary>
 public sealed record MessageLog {
     /// <summary>
@@ -19,10 +19,9 @@ public sealed record MessageLog {
     public string? Source { get; init; }
 
     /// <summary>
-    /// Gets or sets the message content. 
-    /// Changed from dynamic to object for AOT compatibility.
+    /// Gets or sets the message content as a pre-serialized JSON value.
     /// </summary>
-    public required object Message { get; init; }
+    public required JsonElement Message { get; init; }
 
     /// <summary>
     /// Gets or sets the method that generated this log.

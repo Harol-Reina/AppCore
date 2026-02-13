@@ -3,6 +3,8 @@ using AppCore.Application.Exceptions;
 using AppCore.Application.Middleware;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace AppCore.UnitTests.Application.Middleware;
@@ -18,7 +20,7 @@ public class ExceptionHandlingMiddlewareTests {
             nextCalled = true;
             return Task.CompletedTask;
         };
-        var handler = new ExceptionHandlingMiddleware(next);
+        var handler = new ExceptionHandlingMiddleware(next, NullLogger<ExceptionHandlingMiddleware>.Instance);
 
         // Act
         await handler.Invoke(context);
@@ -36,7 +38,7 @@ public class ExceptionHandlingMiddlewareTests {
             nextCalled = true;
             return Task.CompletedTask;
         };
-        var handler = new ExceptionHandlingMiddleware(next);
+        var handler = new ExceptionHandlingMiddleware(next, NullLogger<ExceptionHandlingMiddleware>.Instance);
 
         // Act
         await handler.Invoke(context);
@@ -51,7 +53,7 @@ public class ExceptionHandlingMiddlewareTests {
         var context = new DefaultHttpContext();
         context.Response.Body = new MemoryStream();
         RequestDelegate next = _ => throw new NotFoundException("Not found via invoke");
-        var handler = new ExceptionHandlingMiddleware(next);
+        var handler = new ExceptionHandlingMiddleware(next, NullLogger<ExceptionHandlingMiddleware>.Instance);
 
         // Act
         await handler.Invoke(context);

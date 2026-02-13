@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using AppCore.Application.Extensions;
 using AppCore.Application.Wrappers;
 
 namespace AppCore.Application.Exceptions;
@@ -12,7 +13,7 @@ public sealed class OperationException : Exception {
         mensaje = new MessageLog {
             Type = base.GetType().Name,
             Source = base.Source,
-            Message = message,
+            Message = JsonExtend.ToJsonElement(message),
             Method = memberName,
             Path = $"{sourceFilePath} Line: {sourceLineNumber}",
         };

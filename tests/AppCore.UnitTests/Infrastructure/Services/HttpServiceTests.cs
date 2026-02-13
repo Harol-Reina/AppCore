@@ -202,7 +202,7 @@ public class HttpServiceTests {
 
         // Assert
         await act.Should().ThrowAsync<CustomException>()
-            .Where(e => ((DictionaryError)e.MessageLog.Message).Code == "HTTP001");
+            .Where(e => e.Error.Code == "HTTP001");
     }
 
     [Fact]
@@ -225,7 +225,7 @@ public class HttpServiceTests {
 
         // Assert
         await act.Should().ThrowAsync<CustomException>()
-            .Where(e => ((DictionaryError)e.MessageLog.Message).Code == "HTTP004");
+            .Where(e => e.Error.Code == "HTTP004");
     }
 
     [Fact]
@@ -347,7 +347,7 @@ public class HttpServiceTests {
 
         // Assert
         await act.Should().ThrowAsync<CustomException>()
-            .Where(e => ((DictionaryError)e.MessageLog.Message).Code == errorCode);
+            .Where(e => e.Error.Code == errorCode);
     }
 
     #endregion
@@ -878,7 +878,7 @@ public class HttpServiceTests {
 
         // Assert
         act.Should().Throw<CustomException>()
-            .Where(e => ((DictionaryError)e.MessageLog.Message).Code == "HTTP008");
+            .Where(e => e.Error.Code == "HTTP008");
     }
 
     [Fact]
@@ -893,7 +893,7 @@ public class HttpServiceTests {
 
         // Assert
         var exception = act.Should().Throw<CustomException>().Which;
-        var error = (DictionaryError)exception.MessageLog.Message;
+        var error = exception.Error;
         error.Code.Should().Be("HTTP004");
         error.ProviderMessage.Should().NotBeNull();
     }

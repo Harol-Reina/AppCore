@@ -16,7 +16,7 @@ public class CustomExceptionTests {
         // Assert
         exception.Message.Should().Be("Test error message");
         exception.MessageLog.Should().NotBeNull();
-        exception.MessageLog.Message.Should().Be(error);
+        exception.Error.Should().Be(error);
     }
 
     [Fact]
@@ -64,16 +64,15 @@ public class CustomExceptionTests {
     public void Constructor_WithComplexError_ShouldPreserveAllData() {
         // Arrange
         var innerException = new InvalidOperationException("Inner");
-        var error = new DictionaryError("TEST-005", "Complex error", """{"key":"value"}""", innerException);
+        var error = new DictionaryError("TEST-005", "Complex error", """{"key":"value"}""", innerException.ToString());
 
         // Act
         var exception = new CustomException(error);
 
         // Assert
         exception.Message.Should().Be("Complex error");
-        var messageError = (DictionaryError)exception.MessageLog.Message;
-        messageError.Code.Should().Be("TEST-005");
-        messageError.ProviderMessage.Should().NotBeNull();
-        messageError.Exception.Should().Be(innerException);
+        exception.Error.Code.Should().Be("TEST-005");
+        exception.Error.ProviderMessage.Should().NotBeNull();
+        exception.Error.Exception.Should().Contain("Inner");
     }
 }

@@ -61,7 +61,7 @@ public class ExceptionsTests {
         exception.Should().NotBeNull();
         exception.Message.Should().Contain("An error occurred while serializing or deserializing an object");
         exception.MessageLog.Should().NotBeNull();
-        exception.MessageLog.Message.Should().Be("Serialization Failed");
+        exception.MessageLog.Message.GetString().Should().Be("Serialization Failed");
     }
 
     [Fact]
@@ -105,7 +105,7 @@ public class ExceptionsTests {
         exception.Should().NotBeNull();
         exception.Message.Should().Contain("An error occurred while serializing or deserializing an object");
         exception.MessageLog.Should().NotBeNull();
-        exception.MessageLog.Message.Should().Be(message);
+        exception.MessageLog.Message.GetString().Should().Be(message);
     }
 
     [Fact]
@@ -118,7 +118,7 @@ public class ExceptionsTests {
 
         // Assert
         messageLog.Should().NotBeNull();
-        messageLog.Message.Should().Be("Mapping failed");
+        messageLog.Message.GetString().Should().Be("Mapping failed");
         messageLog.Type.Should().Be(nameof(MappingException));
     }
 }

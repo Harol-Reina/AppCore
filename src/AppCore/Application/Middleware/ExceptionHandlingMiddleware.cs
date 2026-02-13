@@ -3,12 +3,14 @@ using AppCore.Application.Extensions;
 using AppCore.Application.Wrappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace AppCore.Application.Middleware;
 
-public sealed class ExceptionHandlingMiddleware(RequestDelegate next) {
+public sealed class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger) {
 
     private readonly RequestDelegate _next = next;
+    private readonly ILogger<ExceptionHandlingMiddleware> _logger = logger;
 
     private record ExceptionMapping(int StatusCode, Func<Exception, string> MessageFactory);
 
@@ -45,15 +47,14 @@ public sealed class ExceptionHandlingMiddleware(RequestDelegate next) {
             var apiHttpEx = (ApiHttpException)ex;
             return JsonExtend.Serialize(new ProblemDetails {
                 Title = apiHttpEx.Message,
-                Detail = apiHttpEx.MessageLog.Message?.ToString()
+                Detail = apiHttpEx.MessageLog.Message.ToString()
             });
         }),
 
         [typeof(CustomException)] = new(StatusCodes.Status400BadRequest, ex => {
             var customEx = (CustomException)ex;
-            return customEx.MessageLog.Message is DictionaryError error
-                ? JsonExtend.Serialize(new CustomErrorResponse(error with { ProviderMessage = null }))
-                : JsonExtend.Serialize(new CustomErrorResponse(customEx.MessageLog.Message!));
+            var errorElement = JsonExtend.ToJsonElement(customEx.Error with { ProviderMessage = null });
+            return JsonExtend.Serialize(new CustomErrorResponse(errorElement));
         })
     };
 
@@ -68,7 +69,7 @@ public sealed class ExceptionHandlingMiddleware(RequestDelegate next) {
         const string TraceIdHeader = "X-Trace-ID";
         var traceId = GetOrGenerateTraceId(context, TraceIdHeader);
 
-        using (Serilog.Context.LogContext.PushProperty("XTraceID", traceId)) {
+        using (_logger.BeginScope(new Dictionary<string, object> { ["XTraceID"] = traceId })) {
             try {
                 await _next(context).ConfigureAwait(false);
             } catch (Exception exceptionObj) {

@@ -21,7 +21,7 @@ public class BadRequestExceptionTests {
 
         // Assert
         exception.MessageLog.Should().NotBeNull();
-        var error = (DictionaryError)exception.MessageLog.Message;
+        var error = exception.Error;
         error.Code.Should().Be("BAD-REQ-001");
         error.Message.Should().Be("Bad request");
     }
@@ -46,7 +46,7 @@ public class BadRequestExceptionTests {
 
         // Assert
         exception.Message.Should().BeEmpty();
-        var error = (DictionaryError)exception.MessageLog.Message;
+        var error = exception.Error;
         error.Code.Should().Be("BAD-REQ-001");
     }
 }

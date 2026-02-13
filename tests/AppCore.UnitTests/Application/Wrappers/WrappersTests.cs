@@ -1,4 +1,6 @@
-﻿using AppCore.Application.Wrappers;
+﻿using System.Text.Json;
+using AppCore.Application.Extensions;
+using AppCore.Application.Wrappers;
 using FluentAssertions;
 using Xunit;
 
@@ -9,14 +11,16 @@ public class WrappersTests {
     [Fact]
     public void CustomErrorResponse_ShouldInitializeCorrectly() {
         // Arrange
-        var errorObj = new { code = "TEST", detail = "Details" };
+        var errorData = new Dictionary<string, string> { { "code", "TEST" }, { "detail", "Details" } };
+        var errorElement = JsonExtend.ToJsonElement(errorData);
 
         // Act
-        var response = new CustomErrorResponse(errorObj);
+        var response = new CustomErrorResponse(errorElement);
 
         // Assert
         response.Should().NotBeNull();
-        response.Error.Should().Be(errorObj);
+        response.Error.GetProperty("code").GetString().Should().Be("TEST");
+        response.Error.GetProperty("detail").GetString().Should().Be("Details");
     }
 
     [Fact]

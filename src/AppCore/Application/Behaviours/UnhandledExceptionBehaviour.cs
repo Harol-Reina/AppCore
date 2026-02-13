@@ -1,6 +1,7 @@
 ﻿using System.Collections.Frozen;
 using System.Text;
 using AppCore.Application.Exceptions;
+using AppCore.Application.Extensions;
 using AppCore.Application.Wrappers;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -39,7 +40,7 @@ internal sealed class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<U
                 var message = new MessageLog {
                     Type = ex.GetType().Name,
                     Source = ex.Source,
-                    Message = ex.Message.Split('\n', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? string.Empty,
+                    Message = JsonExtend.ToJsonElement(ex.Message.Split('\n', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? string.Empty),
                     Method = "",
                     Path = ex.StackTrace?
                             .Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)

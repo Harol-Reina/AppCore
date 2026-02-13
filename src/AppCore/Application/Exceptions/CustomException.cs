@@ -18,6 +18,11 @@ public class CustomException : Exception {
     public MessageLog MessageLog { get; }
 
     /// <summary>
+    /// Gets the original structured error information.
+    /// </summary>
+    public DictionaryError Error { get; }
+
+    /// <summary>
     /// Initializes a new instance of the CustomException class with a dictionary error.
     /// </summary>
     /// <param name="error">The structured error information.</param>
@@ -28,10 +33,11 @@ public class CustomException : Exception {
                               [CallerMemberName] string memberName = "",
                               [CallerFilePath] string sourceFilePath = "",
                               [CallerLineNumber] int sourceLineNumber = 0) : base(error.Message) {
+        Error = error;
         MessageLog = new MessageLog {
             Type = GetType().Name,
             Source = base.Source,
-            Message = error,
+            Message = JsonExtend.ToJsonElement(error),
             Method = memberName,
             Path = $"{sourceFilePath} Line: {sourceLineNumber}",
         };
@@ -81,10 +87,9 @@ public sealed record DictionaryError {
     public JsonDocument? ProviderMessage { get; init; }
 
     /// <summary>
-    /// Gets or initializes the exception details.
-    /// Changed from dynamic to object for AOT compatibility.
+    /// Gets or initializes the exception details as a string representation.
     /// </summary>
-    public object? Exception { get; init; }
+    public string? Exception { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the DictionaryError record.
@@ -97,9 +102,9 @@ public sealed record DictionaryError {
     /// <param name="code">The error code</param>
     /// <param name="message">The error message</param>
     /// <param name="providerMessage">Optional provider message</param>
-    /// <param name="exception">Optional exception details (changed from dynamic to object for AOT)</param>
+    /// <param name="exception">Optional exception details as string</param>
     [SetsRequiredMembers]
-    public DictionaryError(string code, string message, string? providerMessage = null, object? exception = null) {
+    public DictionaryError(string code, string message, string? providerMessage = null, string? exception = null) {
         Code = code;
         Message = message;
         Exception = exception;

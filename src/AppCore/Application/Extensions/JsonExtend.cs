@@ -34,6 +34,16 @@ public static class JsonExtend {
     }
 
     /// <summary>
+    /// Converts a value to a standalone JsonElement using AOT-compatible serialization.
+    /// </summary>
+    public static JsonElement ToJsonElement<T>(T value) {
+        var bytes = JsonSerializer.SerializeToUtf8Bytes(value,
+            (System.Text.Json.Serialization.Metadata.JsonTypeInfo<T>)Options.GetTypeInfo(typeof(T)));
+        using var doc = JsonDocument.Parse(bytes);
+        return doc.RootElement.Clone();
+    }
+
+    /// <summary>
     /// Converts an object to a JsonDocument using AOT-compatible serialization.
     /// Uses compile-time type information for correct serialization in NativeAOT scenarios.
     /// </summary>
