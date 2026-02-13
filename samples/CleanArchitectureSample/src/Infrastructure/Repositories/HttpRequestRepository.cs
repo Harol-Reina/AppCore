@@ -13,7 +13,8 @@ namespace App.Infrastructure.Repositories;
 public class HttpRequestRepository(IDbConnectionFactory connectionFactory,
                                    IMappingService<HttpAuditEntity, HttpAuditDao> toDao,
                                    IMappingService<HttpAuditDao, HttpAuditEntity> toEntity,
-                                   ICurrentUserService currentUserService)
+                                   ICurrentUserService currentUserService,
+                                   AppSettings appSettings)
 : IHttpRequestRepository {
 
     private readonly IDbConnectionFactory _connectionFactory = connectionFactory;
@@ -21,7 +22,7 @@ public class HttpRequestRepository(IDbConnectionFactory connectionFactory,
     private readonly IMappingService<HttpAuditDao, HttpAuditEntity> _toEntity = toEntity;
     private readonly ICurrentUserService _currentUserService = currentUserService;
 
-    private static readonly string TableName = $"{AppConstants.SchemaDB}.HttpAudit";
+    private readonly string TableName = $"{appSettings.SchemaDB}.HttpAudit";
 
     [DapperAot]
     public async Task<List<HttpAuditEntity>?> GetAllAsync() {

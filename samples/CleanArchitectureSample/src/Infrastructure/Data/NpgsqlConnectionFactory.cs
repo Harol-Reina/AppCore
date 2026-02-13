@@ -8,8 +8,8 @@ namespace App.Infrastructure.Data;
 /// <summary>
 /// PostgreSQL implementation of IDbConnectionFactory using Npgsql.
 /// </summary>
-public sealed class NpgsqlConnectionFactory : IDbConnectionFactory {
-    private readonly string _connectionString = AppConstants.DefaultConnection;
+public sealed class NpgsqlConnectionFactory(AppSettings appSettings) : IDbConnectionFactory {
+    private readonly string _connectionString = appSettings.DefaultConnection;
 
     public async Task<IDbConnection> CreateConnectionAsync(CancellationToken cancellationToken = default) {
         var connection = new NpgsqlDataSourceBuilder(_connectionString).Build().CreateConnection();

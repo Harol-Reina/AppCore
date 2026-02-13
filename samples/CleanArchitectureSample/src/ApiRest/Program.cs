@@ -1,7 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using App.Application.Common;
-using OrionSoft.AppCore.Application.Utils;
 using OrionSoft.AppCore.Application.Extensions;
 using OrionSoft.AppCore.Application.Middleware;
 using HealthChecks.UI.Client;
@@ -14,10 +13,17 @@ using App.ApiRest.Extensions;
 using App.ApiRest;
 
 var builder = WebApplication.CreateSlimBuilder(args);
-Configuration.Initialize(builder.Configuration);
+
+// Bind AppSettings from configuration
+var appSettings = new AppSettings {
+    DefaultConnection = builder.Configuration["DefaultConnection"] ?? throw new KeyNotFoundException("Configuration key 'DefaultConnection' is not set."),
+    SchemaDB = builder.Configuration["SchemaDB"] ?? throw new KeyNotFoundException("Configuration key 'SchemaDB' is not set."),
+    PokemonHost = builder.Configuration["PokemonHost"] ?? "https://pokeapi.co/api/v2/"
+};
+builder.Services.AddSingleton(appSettings);
 
 builder.Host.UseSerilog(
-    (context, configuration) 
+    (context, configuration)
     => configuration
         .ReadFrom.Configuration(context.Configuration)
         .Enrich.FromLogContext()
@@ -34,7 +40,7 @@ builder.Services.AddSingleton<JsonSerializerOptions>(provider => {
     };
     options.TypeInfoResolverChain.Insert(0, SampleJsonContext.Default);
     options.TypeInfoResolverChain.Add(OrionSoft.AppCore.Application.Serialization.AppCoreJsonContext.Default);
-    
+
     return options;
 });
 
@@ -51,8 +57,7 @@ JsonExtend.Options = globalOptions;
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerExtension();
+builder.Services.AddOpenApiExtension(builder.Configuration);
 
 builder.Services.ConfigureHttpJsonOptions(options => {
     var jsonOptions = options.SerializerOptions;
@@ -61,16 +66,12 @@ builder.Services.ConfigureHttpJsonOptions(options => {
     jsonOptions.TypeInfoResolverChain.Add(OrionSoft.AppCore.Application.Serialization.AppCoreJsonContext.Default);
 });
 
-// CreateSlimBuilder does not register regex constraint by default. We need it for Swagger or specific routes.
-builder.Services.Configure<RouteOptions>(options => options.SetParameterPolicy<Microsoft.AspNetCore.Routing.Constraints.RegexInlineRouteConstraint>("regex"));
-
-builder.Services.AddCorsExtension();
+builder.Services.AddCorsExtension(builder.Configuration);
 builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment()) {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
     app.UseCors("dev");
 } else {
     app.UseCors("prod");
@@ -82,7 +83,6 @@ app.MapHealthChecks("/health", new HealthCheckOptions {
 });
 app.UseHttpsRedirection();
 app.UseSerilogRequestLogging();
-AppConstants.Init();
 
 using (var scope = app.Services.CreateScope()) {
     var initializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();

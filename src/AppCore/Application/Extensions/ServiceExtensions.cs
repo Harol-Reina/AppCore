@@ -33,10 +33,6 @@ public static class ServiceExtensions {
         });
     }
 
-    [Obsolete("Use AddOpenApiExtension instead. Swashbuckle has been replaced with Microsoft.AspNetCore.OpenApi for AOT compatibility.")]
-    public static void AddSwaggerExtension(this IServiceCollection services, IConfiguration configuration) =>
-        services.AddOpenApiExtension(configuration);
-
     public static void AddCorsExtension(this IServiceCollection services, IConfiguration configuration) {
         var section = configuration.GetSection("Cors:Origins");
         if (!section.Exists())

@@ -5,14 +5,15 @@ using Microsoft.Extensions.Logging;
 
 namespace App.Infrastructure.Data;
 
-public class DbInitializer(IDbConnectionFactory connectionFactory, ILogger<DbInitializer> logger) {
+public class DbInitializer(IDbConnectionFactory connectionFactory, ILogger<DbInitializer> logger, AppSettings appSettings) {
     private readonly IDbConnectionFactory _connectionFactory = connectionFactory;
     private readonly ILogger<DbInitializer> _logger = logger;
+    private readonly AppSettings _appSettings = appSettings;
 
     public async Task InitAsync() {
         try {
             using var connection = await _connectionFactory.CreateConnectionAsync();
-            var schema = AppConstants.SchemaDB;
+            var schema = _appSettings.SchemaDB;
 
             _logger.LogInformation("Initializing database schema...");
 

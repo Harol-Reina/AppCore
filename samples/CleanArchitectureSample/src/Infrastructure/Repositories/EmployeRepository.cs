@@ -12,18 +12,19 @@ using OrionSoft.AppCore.Infrastructure.Extensions;
 
 namespace App.Infrastructure.Repositories;
 
-public class EmployeRepository(IDbConnectionFactory connectionFactory, 
+public class EmployeRepository(IDbConnectionFactory connectionFactory,
                                IMappingService<EmployeEntity, EmployeDao> toDao,
                                IMappingService<EmployeDao, EmployeEntity> toEntity,
-                               ICurrentUserService currentUserService)
+                               ICurrentUserService currentUserService,
+                               AppSettings appSettings)
 : IEmployeRepository {
 
     private readonly IDbConnectionFactory _connectionFactory = connectionFactory;
     private readonly IMappingService<EmployeEntity, EmployeDao> _toDao = toDao;
     private readonly IMappingService<EmployeDao, EmployeEntity> _toEntity = toEntity;
     private readonly ICurrentUserService _currentUserService = currentUserService;
-    
-    private static readonly string TableName = $"{AppConstants.SchemaDB}.Employes";
+
+    private readonly string TableName = $"{appSettings.SchemaDB}.Employes";
 
     [DapperAot]
     public async Task<List<EmployeEntity>?> GetAllAsync() {

@@ -15,8 +15,9 @@ public class PokemonService : HttpService, IPokeService {
     public PokemonService(HttpClient httpClient,
                           ICurrentUserService currentUserService,
                           IHttpRequestRepository httpRequestRepository,
-                          ILogger<PokemonService> logger) : base(httpClient, currentUserService, logger, httpRequestRepository) {
-        httpClient.BaseAddress = new Uri(AppConstants.PokemonHost);
+                          ILogger<PokemonService> logger,
+                          AppSettings appSettings) : base(httpClient, currentUserService, logger, httpRequestRepository) {
+        httpClient.BaseAddress = new Uri(appSettings.PokemonHost);
     }
 
     public async Task<List<PokemonEntity>> GetAllAsync() {
