@@ -1,10 +1,10 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using OrionSoft.AppCore.Application.Extensions;
-using OrionSoft.AppCore.Application.Wrappers;
+using OrionSoft.AppCore.Application.Exceptions;
 using FluentAssertions;
 using Xunit;
 
-namespace OrionSoft.AppCore.UnitTests.Application.Wrappers;
+namespace OrionSoft.AppCore.UnitTests.Application.Exceptions;
 
 public class MessageLogTests {
     [Fact]

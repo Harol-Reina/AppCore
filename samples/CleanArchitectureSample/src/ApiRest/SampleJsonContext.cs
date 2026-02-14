@@ -12,7 +12,7 @@ namespace App.ApiRest;
 [JsonSerializable(typeof(Response<List<EmployeResponseDto>>))]
 [JsonSerializable(typeof(Response<EmployeEntity>))]
 [JsonSerializable(typeof(Response<List<EmployeEntity>>))]
-[JsonSerializable(typeof(Response<bool>))]
+[JsonSerializable(typeof(Response))]
 [JsonSerializable(typeof(Response<List<PokemonEntity>>))]
 [JsonSerializable(typeof(HttpResponse<PokemonResponse>))]
 [JsonSerializable(typeof(PokemonResponse))]

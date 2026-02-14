@@ -3,7 +3,7 @@ using App.Application.Domain.Entities;
 using App.Application.Common;
 using App.Application.Interfaces;
 using App.Infrastructure.Data.DAOs;
-using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Domain.Common;
 using OrionSoft.AppCore.Application.Interfaces;
 
 using Dapper;

@@ -1,7 +1,7 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using OrionSoft.AppCore.Application.Extensions;
 
-namespace OrionSoft.AppCore.Application.Wrappers;
+namespace OrionSoft.AppCore.Application.Exceptions;
 
 /// <summary>
 /// Represents a structured log message for AOT-compatible logging.

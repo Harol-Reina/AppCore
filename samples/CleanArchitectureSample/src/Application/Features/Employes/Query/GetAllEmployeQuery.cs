@@ -1,5 +1,5 @@
 using App.Application.DTOs.Response;
-using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Domain.Common;
 using App.Application.Interfaces;
 using OrionSoft.AppCore.Application.Exceptions;
 using OrionSoft.AppCore.Application.Wrappers;

@@ -1,4 +1,4 @@
-﻿using OrionSoft.AppCore.Application.DTOs;
+﻿using OrionSoft.AppCore.Domain.Common;
 
 namespace AotTestApp.Tests;
 

@@ -54,8 +54,8 @@ internal class DummyRepository<E, I> : IGenericRepository<E, I>
     public Task<List<E>?> GetAllAsync()
         => Task.FromResult<List<E>?>(new List<E>());
 
-    public Task<OrionSoft.AppCore.Application.DTOs.PaginationResponse<E>> GetPagedAsync(int page, int pageSize)
-        => Task.FromResult(new OrionSoft.AppCore.Application.DTOs.PaginationResponse<E> { Results = [], Count = 0, Pages = 1 });
+    public Task<OrionSoft.AppCore.Domain.Common.PaginationResponse<E>> GetPagedAsync(int page, int pageSize)
+        => Task.FromResult(new OrionSoft.AppCore.Domain.Common.PaginationResponse<E> { Results = [], Count = 0, Pages = 1 });
 
     public Task<E?> GetByIdAsync(I id)
         => Task.FromResult<E?>(default);

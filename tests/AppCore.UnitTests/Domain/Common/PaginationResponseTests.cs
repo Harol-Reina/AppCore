@@ -1,8 +1,9 @@
-﻿using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Domain.Common;
 using FluentAssertions;
 using Xunit;
 
-namespace OrionSoft.AppCore.UnitTests.Application.DTOs;
+namespace OrionSoft.AppCore.UnitTests.Domain.Common;
 
 public class PaginationResponseTests {
     [Fact]
@@ -30,12 +31,12 @@ public class PaginationResponseTests {
     }
 
     [Fact]
-    public void Success_StaticMethod_ShouldReturnPaginationResponse() {
+    public void Create_StaticMethod_ShouldReturnPaginationResponse() {
         // Arrange
         var data = new List<int> { 1, 2, 3, 4, 5 };
 
         // Act
-        var response = PaginationResponse<int>.Success(data);
+        var response = PaginationResponse<int>.Create(data);
 
         // Assert
         response.Should().NotBeNull();

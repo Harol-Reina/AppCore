@@ -1,7 +1,7 @@
 using App.Application.Domain.Entities;
 using OrionSoft.AppCore.Application.Interfaces;
 using OrionSoft.AppCore.Application.Wrappers;
-using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +26,7 @@ public class EmployesEndpoint : IEndpointGroupBase {
             .Produces<Response<EmployeEntity>>();
 
         group.MapDelete("/{employeId}", DelEmployeById)
-            .Produces<Response<bool>>();
+            .Produces<Response>();
     }
 
 

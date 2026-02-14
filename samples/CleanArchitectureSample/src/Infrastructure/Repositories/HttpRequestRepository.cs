@@ -1,7 +1,7 @@
 using System.Data;
 using App.Application.Common;
 using App.Infrastructure.Data.DAOs;
-using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Domain.Common;
 using OrionSoft.AppCore.Application.Interfaces;
 using OrionSoft.AppCore.Domain.Interfaces;
 using OrionSoft.AppCore.Domain.Entities.Integrators;

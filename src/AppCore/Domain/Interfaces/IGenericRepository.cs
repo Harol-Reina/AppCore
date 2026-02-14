@@ -1,5 +1,4 @@
-﻿using OrionSoft.AppCore.Application.DTOs;
-using OrionSoft.AppCore.Domain.Common;
+﻿using OrionSoft.AppCore.Domain.Common;
 
 namespace OrionSoft.AppCore.Domain.Interfaces;
 

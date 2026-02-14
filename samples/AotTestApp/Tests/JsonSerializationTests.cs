@@ -1,6 +1,6 @@
 ﻿using OrionSoft.AppCore.Application.Serialization;
 using OrionSoft.AppCore.Application.Wrappers;
-using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Domain.Common;
 using System.Text.Json;
 
 namespace AotTestApp.Tests;
@@ -147,17 +147,17 @@ public static class JsonSerializationTests
         {
             var stringResponse = Response<string>.Success("OK", "String data");
             var intResponse = Response<int>.Success("OK", 42);
-            var boolResponse = Response<bool>.Success("OK", true);
+            var nonGenericResponse = Response.Success("OK");
             var guidResponse = Response<Guid>.Success("OK", Guid.NewGuid());
 
             var stringJson = JsonSerializer.Serialize(stringResponse, AppCoreJsonContext.Default.ResponseString);
             var intJson = JsonSerializer.Serialize(intResponse, AppCoreJsonContext.Default.ResponseInt32);
-            var boolJson = JsonSerializer.Serialize(boolResponse, AppCoreJsonContext.Default.ResponseBoolean);
+            var nonGenericJson = JsonSerializer.Serialize(nonGenericResponse, AppCoreJsonContext.Default.Response);
             var guidJson = JsonSerializer.Serialize(guidResponse, AppCoreJsonContext.Default.ResponseGuid);
 
             if (string.IsNullOrEmpty(stringJson) ||
                 string.IsNullOrEmpty(intJson) ||
-                string.IsNullOrEmpty(boolJson) ||
+                string.IsNullOrEmpty(nonGenericJson) ||
                 string.IsNullOrEmpty(guidJson))
             {
                 throw new Exception("Generic serialization failed for some types");

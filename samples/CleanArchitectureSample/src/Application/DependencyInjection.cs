@@ -5,7 +5,7 @@ using OrionSoft.AppCore;
 using App.Application.DTOs.Request;
 using App.Application.DTOs.Response;
 using App.Application.Features.Employes.Command;
-using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Domain.Common;
 using App.Application.Features.Employes.Query;
 using App.Application.Features.Pokemons.Query;
 using MediatR;
@@ -24,7 +24,7 @@ public static class DependencyInjection {
         services.AddTransient<IRequestHandler<GetByIdEmployeQuery, Response<EmployeResponseDto>>, GetByIdEmployeQueryHandler>();
         services.AddTransient<IRequestHandler<AddEmployeCommand, Response<EmployeResponseDto>>, AddEmployeCommandHandler>();
         services.AddTransient<IRequestHandler<EditEmployeCommand, Response<EmployeEntity>>, EditEmployeCommandHandler>();
-        services.AddTransient<IRequestHandler<DeleteEmployeCommand, Response<bool>>, DeleteEmployeCommandHandler>();
+        services.AddTransient<IRequestHandler<DeleteEmployeCommand, Response>, DeleteEmployeCommandHandler>();
         
         services.AddTransient<IRequestHandler<GetAllPokemonQuery, Response<List<PokemonEntity>>>, GetAllPokemonQueryHandler>();
 

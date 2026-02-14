@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using AotTestApp.Extensions;
 using AotTestApp.Tests;
-using OrionSoft.AppCore.Application.DTOs;
+using OrionSoft.AppCore.Domain.Common;
 using OrionSoft.AppCore.Application.Extensions;
 using OrionSoft.AppCore.Application.Middleware;
 using OrionSoft.AppCore.Application.Serialization;

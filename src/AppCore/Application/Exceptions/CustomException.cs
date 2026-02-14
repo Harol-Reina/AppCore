@@ -2,8 +2,6 @@
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using OrionSoft.AppCore.Application.Extensions;
-using OrionSoft.AppCore.Application.Wrappers;
-
 namespace OrionSoft.AppCore.Application.Exceptions;
 
 /// <summary>

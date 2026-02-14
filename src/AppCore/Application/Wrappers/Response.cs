@@ -34,7 +34,7 @@ public sealed class Response<T> {
     /// </summary>
     /// <value>The actual data being returned by the operation.</value>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public T? Data { get; set; }
+    public T? Data { get; init; }
 
     /// <summary>
     /// Creates a successful response with a message and optional data.
@@ -64,4 +64,35 @@ public sealed class Response<T> {
     public static Response<T> Failure(string message, T? data = default) {
         return new Response<T> { Succeeded = false, Message = message, Data = data };
     }
+}
+
+/// <summary>
+/// Standard response wrapper for API operations that don't return data.
+/// </summary>
+public sealed class Response {
+    /// <summary>
+    /// Indicates whether the operation completed successfully.
+    /// </summary>
+    public bool Succeeded { get; init; }
+
+    /// <summary>
+    /// Gets the message describing the operation result.
+    /// </summary>
+    public string? Message { get; init; }
+
+    /// <summary>
+    /// Creates a successful response with a message.
+    /// </summary>
+    /// <param name="message">The success message.</param>
+    /// <returns>A Response instance indicating success.</returns>
+    public static Response Success(string message)
+        => new() { Succeeded = true, Message = message };
+
+    /// <summary>
+    /// Creates a failure response with an error message.
+    /// </summary>
+    /// <param name="message">The error message describing what went wrong.</param>
+    /// <returns>A Response instance indicating failure.</returns>
+    public static Response Failure(string message)
+        => new() { Succeeded = false, Message = message };
 }

@@ -17,7 +17,7 @@ namespace OrionSoft.AppCore.Application.Serialization;
 [JsonSerializable(typeof(Response<string>))]
 [JsonSerializable(typeof(Response<int>))]
 [JsonSerializable(typeof(Response<long>))]
-[JsonSerializable(typeof(Response<bool>))]
+[JsonSerializable(typeof(Response))]
 [JsonSerializable(typeof(Response<Guid>))]
 [JsonSerializable(typeof(Response<DictionaryError>))]
 [JsonSerializable(typeof(Response<PaginationResponse<int>>))]
